@@ -46,7 +46,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 susn=usn.getText().toString();
                 spassword=password.getText().toString();
-                /// TODO: 17-Oct-16 to integrate server login
 
                 Login login=new Login();
                 login.execute();
