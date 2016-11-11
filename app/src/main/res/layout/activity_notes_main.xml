@@ -10,4 +10,58 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.samkeet.smartreva.Notes.NotesMainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_margin="15dp"
+            >
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:text="UPLOAD NOTES"
+                android:id="@+id/upload_notes_button"
+                android:onClick="UploadNotes"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_margin="15dp"
+            >
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:text="VIEW NOTES"
+                android:id="@+id/view_notes_button"
+                android:onClick="ViewNotes"
+
+                />
+        </LinearLayout>
+
+
+
+    </LinearLayout>
 </RelativeLayout>

@@ -10,4 +10,77 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.samkeet.smartreva.Attendence.AttendenceMainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_margin="15dp"
+            >
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:text="TAKE ATTENDENCE"
+                android:id="@+id/take_attendence_button"
+                android:onClick="TakeAttendence"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_margin="15dp"
+            >
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:text="VIEW ATTENDENCE"
+                android:id="@+id/view_attendence_button"
+                android:onClick="ViewAttendence"
+
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_margin="15dp"
+            >
+
+            <Button
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:text="GENERATE REPORT"
+                android:id="@+id/generate_attendence_report_button"
+                android:onClick="GenerateAttendenceReport"
+
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
 </RelativeLayout>

@@ -30,7 +30,12 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Notification.NotificationMainActivity"></activity>
+        <activity android:name=".Notification.NotificationMainActivity" />
+        <activity android:name=".Attendence.TakeAttendence" />
+        <activity android:name=".Attendence.ViewAttendence" />
+        <activity android:name=".Attendence.GenerateAttendenceReport" />
+        <activity android:name=".Notes.UploadNotes" />
+        <activity android:name=".Notes.ViewNotes"></activity>
     </application>
 
 </manifest>
