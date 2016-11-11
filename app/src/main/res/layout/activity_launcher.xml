@@ -68,7 +68,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:id="@+id/attendence_button"
-
+                        android:onClick="Attendence"
                         />
                 </LinearLayout>
 
@@ -84,6 +84,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:id="@+id/result_button"
+                        android:onClick="Result"
 
                         />
                 </LinearLayout>
@@ -108,6 +109,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:id="@+id/notes_button"
+                        android:onClick="Notes"
 
                         />
                 </LinearLayout>
@@ -124,6 +126,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:id="@+id/notification_button"
+                        android:onClick="Notification"
 
                         />
                 </LinearLayout>
@@ -148,6 +151,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:id="@+id/events_button"
+                        android:onClick="Events"
 
                         />
                 </LinearLayout>
@@ -164,6 +168,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:id="@+id/councling_button"
+                        android:onClick="Councling"
 
                         />
                 </LinearLayout>
@@ -188,6 +193,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:id="@+id/library_button"
+                        android:onClick="Library"
 
                         />
                 </LinearLayout>
