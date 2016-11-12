@@ -16,6 +16,7 @@
         android:orientation="vertical"
 
         >
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
@@ -23,130 +24,132 @@
             >
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Faculty"
-                android:textSize="24dp"
+                android:gravity="end"
                 android:padding="10dp"
-                />
+                android:text="Faculty"
+                android:textSize="16dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
 
             >
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
                     android:text="Name:"
-                    android:textSize="22sp"
                     android:textColor="#000000"
-                    android:paddingRight="10dp"
+                    android:textSize="22sp"
 
 
                     />
+
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    />
+                    android:layout_weight="1" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
                     android:text="Emp Code:"
-                    android:textSize="22sp"
                     android:textColor="#000000"
-                    android:paddingRight="10dp"
-                    />
+                    android:textSize="22sp" />
+
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
                     android:text="Email::"
-                    android:textSize="22sp"
                     android:textColor="#000000"
-                    android:paddingRight="10dp"
-                    />
+                    android:textSize="22sp" />
+
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
                     android:text="Phone Number:"
-                    android:textSize="22sp"
                     android:textColor="#000000"
-                    android:paddingRight="10dp"
-                    />
+                    android:textSize="22sp" />
+
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingRight="10dp"
                     android:text="Designation:"
-                    android:textSize="22sp"
                     android:textColor="#000000"
-                    android:paddingRight="10dp"
-                    />
+                    android:textSize="22sp" />
+
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address:"
-                    android:textSize="22sp"
-                    android:textColor="#000000"
                     android:paddingRight="10dp"
-                    />
+                    android:text="Address:"
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
+
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine"
-                    />
+                    android:inputType="textMultiLine" />
             </LinearLayout>
 
         </LinearLayout>
