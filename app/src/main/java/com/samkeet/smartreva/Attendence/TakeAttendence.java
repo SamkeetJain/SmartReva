@@ -12,7 +12,7 @@ public class TakeAttendence extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_attendence);
-        //content
+
     }
     public void BackButton(View v){
         finish();

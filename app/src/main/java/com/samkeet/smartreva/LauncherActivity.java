@@ -27,6 +27,8 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
+        Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES,MODE_PRIVATE));
+
         Attendence = (Button) findViewById(R.id.attendence_button);
         Results = (Button) findViewById(R.id.result_button);
         Notes = (Button) findViewById(R.id.notes_button);

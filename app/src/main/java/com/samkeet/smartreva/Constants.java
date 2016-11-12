@@ -17,7 +17,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class Constants {
 
     public static class URLs {
-        public static String LOGIN = "";
+        public static String LOGIN = "http://revacounselling.16mb.com/reva_login.php";
     }
 
     public static class UserData {
@@ -51,9 +51,9 @@ public class Constants {
         public static String USER_ID = "user_ID";
         public static String TOKEN = "token";
 
-        public static void initSharedPreferenceData(SharedPreferences sharedPreferences1, SharedPreferences.Editor editor1){
+        public static void initSharedPreferenceData(SharedPreferences sharedPreferences1){
             sharedPreferences=sharedPreferences1;
-            editor=editor1;
+            editor=sharedPreferences.edit();
         }
 
         public static String getIsLoggedIn() {

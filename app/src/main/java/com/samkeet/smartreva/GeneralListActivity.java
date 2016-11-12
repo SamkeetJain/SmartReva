@@ -1,16 +1,15 @@
 package com.samkeet.smartreva;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -21,39 +20,31 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class LoginActivity extends AppCompatActivity {
+public class GeneralListActivity extends AppCompatActivity {
 
-    public EditText usn,password;
-    public Button login_button;
-    public String susn,spassword;
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
+    private Context progressDialogContext;
     public ProgressDialog pd;
-    public Context progressDialogContext;
 
-    public String token;
+    public String URL;
+    public JSONObject jsonObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_general_list);
         progressDialogContext=this;
-        usn=(EditText)findViewById(R.id.usn);
-        password=(EditText)findViewById(R.id.password);
-        login_button= (Button) findViewById(R.id.login_button);
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
-        login_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                susn=usn.getText().toString();
-                spassword=password.getText().toString();
+//        mAdapter = new MyAppointmentAdapter(mTitles,mDesc);
+//        mRecyclerView.setAdapter(mAdapter);
 
-                Login login=new Login();
-                login.execute();
-
-//                Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-//                startActivity(intent);
-            }
-        });
     }
 
     private class Login extends AsyncTask<Void, Void, Integer> {
@@ -72,14 +63,14 @@ public class LoginActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                URL url = new URL(Constants.URLs.LOGIN);
+                java.net.URL url = new URL(Constants.URLs.LOGIN);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("usn",susn ).appendQueryParameter("password",spassword );
+                Uri.Builder _data = new Uri.Builder();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -100,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 // Create a JSON object hierarchy from the results
                 JSONObject jsonObj = new JSONObject(jsonResults.toString());
-                token=jsonObj.getString("token");
 
                 return 1;
 
@@ -114,23 +104,9 @@ public class LoginActivity extends AppCompatActivity {
             if (pd!=null) {
                 pd.dismiss();
             }
-            if(token.equals("false")){
-                Toast.makeText(getApplicationContext(),"Authentication FAILED!!!",Toast.LENGTH_SHORT).show();
-                finish();
-            }else {
-                Constants.SharedPreferenceData.setIsLoggedIn(token);
-                Constants.SharedPreferenceData.setTOKEN(token);
-                Constants.SharedPreferenceData.setUserId(susn);
-
-                Constants.UserData.setUserId(susn);
-                Constants.UserData.setTOKEN(token);
-                finish();
-            }
 
         }
     }
-
-
 
 
 
