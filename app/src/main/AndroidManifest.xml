@@ -36,7 +36,9 @@
         <activity android:name=".Attendence.GenerateAttendenceReport" />
         <activity android:name=".Notes.UploadNotes" />
         <activity android:name=".Notes.ViewNotes" />
-        <activity android:name=".GeneralListActivity"></activity>
+        <activity android:name=".GeneralListActivity" />
+        <activity android:name=".ProfileStudentActivity" />
+        <activity android:name=".ProfileFacultyActivity"></activity>
     </application>
 
 </manifest>
