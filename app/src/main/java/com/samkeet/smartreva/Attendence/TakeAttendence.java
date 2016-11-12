@@ -3,6 +3,8 @@ package com.samkeet.smartreva.Attendence;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.samkeet.smartreva.R;
+
 public class TakeAttendence extends AppCompatActivity {
 
     @Override

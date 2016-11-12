@@ -100,7 +100,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 // Create a JSON object hierarchy from the results
                 JSONObject jsonObj = new JSONObject(jsonResults.toString());
-                token=jsonObj.getString("token");
                 return 1;
 
             } catch (Exception ex) {
@@ -113,11 +112,7 @@ public class LoginActivity extends AppCompatActivity {
             if (pd!=null) {
                 pd.dismiss();
             }
-            if(token.equals("false")){
-                Toast.makeText(getApplicationContext(),"Login Failed",Toast.LENGTH_SHORT).show();
-            }else {
 
-            }
         }
     }
 

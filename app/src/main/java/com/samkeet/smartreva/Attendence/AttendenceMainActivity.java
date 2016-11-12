@@ -10,14 +10,16 @@ import com.samkeet.smartreva.R;
 
 public class AttendenceMainActivity extends AppCompatActivity {
 
+    public Button TakeAttendence, ViewAttendence, GenerateAttendenceReport;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_attendence_main);
 
         TakeAttendence = (Button) findViewById(R.id.take_attendence_button);
-        ViewAttendence = findViewById(R.id.view_attendence_button);
-        GenerateAttendenceReport = findViewById(R.id.generate_attendence_report_button);
+        ViewAttendence = (Button) findViewById(R.id.view_attendence_button);
+        GenerateAttendenceReport = (Button) findViewById(R.id.generate_attendence_report_button);
 
     }
 
@@ -37,5 +39,4 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
     }
 
-}
 }
