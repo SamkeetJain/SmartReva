@@ -29,8 +29,9 @@ public class GeneralListActivity extends AppCompatActivity {
     private Context progressDialogContext;
     public ProgressDialog pd;
 
-    public String URL;
-    public JSONObject jsonObject;
+    public String type;
+
+    public String results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +43,17 @@ public class GeneralListActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-//        mAdapter = new MyAppointmentAdapter(mTitles,mDesc);
-//        mRecyclerView.setAdapter(mAdapter);
-
+        GetData getData=new GetData();
+        getData.execute();
     }
 
-    private class Login extends AsyncTask<Void, Void, Integer> {
+    private class GetData extends AsyncTask<Void, Void, Integer> {
 
 
 
         protected void onPreExecute() {
             pd =new ProgressDialog(progressDialogContext);
-            pd.setTitle("Logging...");
+            pd.setTitle("Loading...");
             pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pd.setMessage("Please wait.");
             pd.setCancelable(false);
@@ -70,7 +70,7 @@ public class GeneralListActivity extends AppCompatActivity {
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder();
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token",Constants.UserData.getTOKEN()).appendQueryParameter("type",type);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -90,7 +90,7 @@ public class GeneralListActivity extends AppCompatActivity {
                 Log.d("return from server",jsonResults.toString());
 
                 // Create a JSON object hierarchy from the results
-                JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                results=jsonResults.toString();
 
                 return 1;
 
@@ -104,7 +104,9 @@ public class GeneralListActivity extends AppCompatActivity {
             if (pd!=null) {
                 pd.dismiss();
             }
-
+            String temp[]=results.split("\\|");
+            mAdapter = new GeneralListAdapter(temp);
+            mRecyclerView.setAdapter(mAdapter);
         }
     }
 
