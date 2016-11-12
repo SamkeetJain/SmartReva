@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:text="Faculty"
                 android:textSize="24dp"
+                android:padding="10dp"
                 />
         </LinearLayout>
         <LinearLayout
