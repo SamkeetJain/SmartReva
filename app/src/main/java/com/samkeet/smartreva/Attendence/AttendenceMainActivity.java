@@ -47,4 +47,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
     }
 
+    public void BackButton(View v){
+        finish();
+    }
 }

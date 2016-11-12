@@ -34,4 +34,7 @@ public class NotesMainActivity extends AppCompatActivity {
         Intent intent =new Intent(getApplicationContext(),ViewNotes.class);
         startActivity(intent);
     }
+    public void BackButton(View v){
+        finish();
+    }
 }

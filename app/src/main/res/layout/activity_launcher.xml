@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_launcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.LauncherActivity"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context="com.samkeet.smartreva.LauncherActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/apppppp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/apppppp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
@@ -25,23 +25,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/app_name"
-                android:textSize="20sp"
                 android:textColor="#ffffff"
-                />
+                android:textSize="20sp" />
 
         </android.support.v7.widget.Toolbar>
+
         <View
             android:layout_width="match_parent"
-            android:background="@color/colorAccent"
-            android:layout_height="2dp"/>
+            android:layout_height="2dp"
+            android:background="@color/colorAccent" />
 
 
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_below="@+id/apppppp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/apppppp">
 
 
         <LinearLayout
@@ -60,33 +60,51 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
+
 
                     <Button
+                        android:id="@+id/attendence_button"
                         android:layout_width="125dp"
                         android:layout_height="125dp"
                         android:layout_gravity="center"
                         android:background="@drawable/border"
-                        android:id="@+id/attendence_button"
-                        android:onClick="Attendence"
-                        />
+                        android:onClick="Attendence" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:text="Attendence"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/result_button"
                         android:layout_width="125dp"
                         android:layout_height="125dp"
                         android:layout_gravity="center"
                         android:background="@drawable/border"
-                        android:id="@+id/result_button"
                         android:onClick="Result"
 
                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:text="Results"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -101,34 +119,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/notes_button"
                         android:layout_width="125dp"
                         android:layout_height="125dp"
                         android:layout_gravity="center"
                         android:background="@drawable/border"
-                        android:id="@+id/notes_button"
                         android:onClick="Notes"
 
                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:text="Notes"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/notification_button"
                         android:layout_width="125dp"
                         android:layout_height="125dp"
                         android:layout_gravity="center"
                         android:background="@drawable/border"
-                        android:id="@+id/notification_button"
                         android:onClick="Notification"
 
                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:text="Notification"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -143,34 +179,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/events_button"
                         android:layout_width="125dp"
                         android:layout_height="125dp"
                         android:layout_gravity="center"
                         android:background="@drawable/border"
-                        android:id="@+id/events_button"
                         android:onClick="Events"
 
                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:text="Events"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/councling_button"
                         android:layout_width="125dp"
                         android:layout_height="125dp"
                         android:layout_gravity="center"
                         android:background="@drawable/border"
-                        android:id="@+id/councling_button"
                         android:onClick="Councling"
 
                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:text="Councling"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -185,24 +239,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <Button
+                        android:id="@+id/library_button"
                         android:layout_width="125dp"
                         android:layout_height="125dp"
                         android:layout_gravity="center"
                         android:background="@drawable/border"
-                        android:id="@+id/library_button"
                         android:onClick="Library"
 
                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:text="Library"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <Button
                         android:layout_width="125dp"
@@ -211,6 +275,14 @@
                         android:background="@drawable/border"
 
                         />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="5dp"
+                        android:text="Junk"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="18sp" />
                 </LinearLayout>
             </LinearLayout>
 
