@@ -43,7 +43,7 @@ public class LauncherActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void Results(View v) {
+    public void Result(View v) {
         Intent intent=new Intent(getApplicationContext(), ResultsMainActivity.class);
         startActivity(intent);
     }

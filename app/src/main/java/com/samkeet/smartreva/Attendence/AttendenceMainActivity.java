@@ -24,16 +24,24 @@ public class AttendenceMainActivity extends AppCompatActivity {
     }
 
     public void TakeAttendence(View v){
+
+        //TODO Connect to server for Authentication and then proceed.
         Intent intent =new Intent(getApplicationContext(),TakeAttendence.class);
         startActivity(intent);
     }
 
     public void ViewAttendence(View v){
+
+        //TODO Connect to server for Authentication and then proceed.
+
         Intent intent =new Intent(getApplicationContext(),ViewAttendence.class);
         startActivity(intent);
     }
 
     public void GenerateAttendenceReport(View v) {
+
+        //TODO Connect to server for Authentication and then proceed.
+
         Intent intent = new Intent(getApplicationContext(),GenerateAttendenceReport.class);
         startActivity(intent);
 

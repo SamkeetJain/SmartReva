@@ -22,11 +22,15 @@ public class NotesMainActivity extends AppCompatActivity {
     }
 
     public void UploadNotes(View v) {
+        //TODO Connect to server for Authentication and then proceed.
+
         Intent intent = new Intent(getApplicationContext(),UploadNotes.class);
         startActivity(intent);
     }
 
     public void ViewNotes(View v) {
+        //TODO Connect to server for Authentication and then proceed.
+
         Intent intent =new Intent(getApplicationContext(),ViewNotes.class);
         startActivity(intent);
     }
