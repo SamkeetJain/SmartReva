@@ -21,6 +21,8 @@ public class Constants {
         public static String AUTHENTICATION = "http://revacounselling.16mb.com/getAuthentication.php";
         public static String GENERALLIST = "http://revacounselling.16mb.com/getGeneralList.php";
         public static String GETSTUDENTLIST = "http://revacounselling.16mb.com/getStudentsList.php";
+        public static String INSERTINTOATTENDENCE = "http://revacounselling.16mb.com/insertIntoAttendence.php";
+
     }
 
     public static class UserData {

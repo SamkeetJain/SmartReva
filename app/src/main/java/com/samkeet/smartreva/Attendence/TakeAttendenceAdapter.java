@@ -20,7 +20,6 @@ public class TakeAttendenceAdapter extends RecyclerView.Adapter<TakeAttendenceAd
 
     private String[] mTitle;
     private boolean[] checks;
-    public ArrayList<String> fsds=new ArrayList<>();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -34,6 +33,10 @@ public class TakeAttendenceAdapter extends RecyclerView.Adapter<TakeAttendenceAd
     }
     public TakeAttendenceAdapter(String[] mTitle) {
         this.mTitle = mTitle;
+        checks=new boolean[this.mTitle.length];
+        for(int i=0;i<checks.length;i++){
+            checks[i]=true;
+        }
     }
 
     @Override
@@ -52,12 +55,33 @@ public class TakeAttendenceAdapter extends RecyclerView.Adapter<TakeAttendenceAd
         final int pos=position;
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTitleView.setText(mTitle[position]);
+        holder.mTitleView.setText(mTitle[pos]);
+        holder.mCheckBox.setChecked(checks[pos]);
+        holder.mCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checks[pos]==true){
+                    checks[pos]=false;
+                }
+                else {
+                    checks[pos]=true;
+                }
+            }
+        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mTitle.length;
+    }
+
+    public boolean[] getCheckBoxes(){
+
+        return checks;
+    }
+    public String[] getTitles(){
+
+        return mTitle;
     }
 }
