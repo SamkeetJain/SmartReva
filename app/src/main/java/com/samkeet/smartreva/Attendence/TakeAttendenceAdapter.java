@@ -48,7 +48,6 @@ public class TakeAttendenceAdapter extends RecyclerView.Adapter<TakeAttendenceAd
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTitleView.setText(mTitle[position]);
-        holder.mCheckBox.setChecked(true);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
