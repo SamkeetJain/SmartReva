@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class TakeAttendence extends AppCompatActivity {
 
@@ -30,6 +31,7 @@ public class TakeAttendence extends AppCompatActivity {
     public ProgressDialog pd;
 
     public String table;
+    public String studentsList[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +96,8 @@ public class TakeAttendence extends AppCompatActivity {
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                // Create a JSON object hierarchy from the results
-
+                String temp=jsonResults.toString();
+                studentsList=temp.split("\\|");
                 return 1;
 
             } catch (Exception ex) {
@@ -109,6 +111,17 @@ public class TakeAttendence extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
+            ArrayList<String> arrayList=new ArrayList<String>();
+            for(int i=0;i<studentsList.length;i++){
+                arrayList.add(studentsList[i]);
+            }
+
+            arrayList.remove(arrayList.size()-1);
+            arrayList.remove(0);
+
+            String[] newList=arrayList.toArray(new String[arrayList.size()]);
+            mAdapter = new TakeAttendenceAdapter(newList);
+            mRecyclerView.setAdapter(mAdapter);
 
 
         }
