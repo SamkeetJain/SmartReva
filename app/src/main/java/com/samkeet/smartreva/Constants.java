@@ -8,6 +8,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -22,6 +24,10 @@ public class Constants {
         public static String GENERALLIST = "http://revacounselling.16mb.com/getGeneralList.php";
         public static String GETSTUDENTLIST = "http://revacounselling.16mb.com/getStudentsList.php";
         public static String INSERTINTOATTENDENCE = "http://revacounselling.16mb.com/insertIntoAttendence.php";
+
+        public static String GET_WALL_POSTS="http://revacounselling.16mb.com/getWallPosts.php";
+        public static String GET_RESERVATION_DETAILS="http://revacounselling.16mb.com/getReservationDetails.php";
+        public static String MAKE_APPOINTMENTS="http://revacounselling.16mb.com/makeAppointment.php";
 
     }
 
@@ -112,6 +118,17 @@ public class Constants {
                 toast.show();
                 return false;
             }
+        }
+    }
+
+    public static class TimeSlots {
+
+        public static ArrayList<String> SLOTS=new ArrayList<String>();
+        public static ArrayList<String> AVALIBILITY=new ArrayList<String>();
+
+        public static void clearData() {
+            SLOTS.clear();
+            AVALIBILITY.clear();
         }
     }
 

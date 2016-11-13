@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Smart Reva</string>
+    <string name="drawer_item_first">Inbox</string>
+    <string name="drawer_item_second">New Appointment</string>
+    <string name="drawer_item_third">My Appointments</string>
+    <string name="drawer_item_fourth">Notifications</string>
+    <string name="drawer_item_fifth">Developers</string>
+    <string name="drawer_item_sixth">About Us</string>
 </resources>

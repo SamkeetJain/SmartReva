@@ -19,11 +19,17 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".Attendence.AttendenceMainActivity" />
-        <activity android:name=".Councling.CounclingMainActivity" />
         <activity android:name=".Events.EventsMainActivity" />
         <activity android:name=".Library.LibraryMainActivity" />
         <activity android:name=".Notes.NotesMainActivity" />
         <activity android:name=".Results.ResultsMainActivity" />
+        <activity android:name=".Councling.CounclingMainActivity" />
+        <activity android:name=".Councling.CounclingNewAppointment" />
+        <activity android:name=".Councling.CounclingMyAppointment" />
+        <activity
+            android:name=".Councling.CounclingTimePickActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"></activity>
+        <activity android:name=".Councling.CounclingAboutUs"></activity>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
