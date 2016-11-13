@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.samkeet.smartreva.R;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Sam on 12-Nov-16.
@@ -18,6 +20,7 @@ public class TakeAttendenceAdapter extends RecyclerView.Adapter<TakeAttendenceAd
 
     private String[] mTitle;
     private boolean[] checks;
+    public ArrayList<String> fsds=new ArrayList<>();
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -44,7 +47,9 @@ public class TakeAttendenceAdapter extends RecyclerView.Adapter<TakeAttendenceAd
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+
+        final int pos=position;
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTitleView.setText(mTitle[position]);
