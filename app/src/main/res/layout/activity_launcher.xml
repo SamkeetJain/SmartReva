@@ -71,7 +71,8 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:onClick="Attendence"
-
+                        android:src="@drawable/finalattendance"
+                        android:scaleType="fitCenter"
                         />
 
                     <TextView
@@ -97,6 +98,8 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:onClick="Result"
+                        android:src="@drawable/finalresult"
+                        android:scaleType="fitCenter"
 
                         />
 
@@ -131,6 +134,9 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:onClick="Notes"
+                        android:src="@drawable/finalnotes"
+                        android:scaleType="fitCenter"
+
 
                         />
 
@@ -157,6 +163,8 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:onClick="Notification"
+                        android:src="@drawable/notifications"
+                        android:scaleType="fitCenter"
 
                         />
 
@@ -191,6 +199,8 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:onClick="Events"
+                        android:src="@drawable/events"
+                        android:scaleType="fitCenter"
 
                         />
 
@@ -217,6 +227,8 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:onClick="Councling"
+                        android:src="@drawable/councling"
+                        android:scaleType="fitCenter"
 
                         />
 
@@ -251,6 +263,8 @@
                         android:layout_gravity="center"
                         android:background="@drawable/border"
                         android:onClick="Library"
+                        android:src="@drawable/library"
+                        android:scaleType="fitCenter"
 
                         />
 
@@ -276,6 +290,7 @@
                         android:layout_gravity="center"
                         android:onClick="Junk"
                         android:background="@drawable/border"
+
 
                         />
 
