@@ -22,7 +22,7 @@ import static android.R.attr.button;
 public class LauncherActivity extends AppCompatActivity {
 
 
-    public ImageView Attendence, Results, Notes, Notification, Events, Councling, Library;
+    public ImageView Attendence, Results, Notes, Notification, Events, Councling, Library, Profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,8 @@ public class LauncherActivity extends AppCompatActivity {
         Events = (ImageView) findViewById(R.id.events_button);
         Councling = (ImageView) findViewById(R.id.councling_button);
         Library = (ImageView) findViewById(R.id.library_button);
+        Profile = (ImageView) findViewById(R.id.Profile_button);
+
 
         if(!Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")){
             Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
@@ -84,12 +86,17 @@ public class LauncherActivity extends AppCompatActivity {
 
     }
 
-    public void Junk(View v){
+    public void Profile(View v){
+        Intent intent=new Intent(getApplicationContext(), ProfileStudentActivity.class);
+        startActivity(intent);
+    }
+
+    /*public void LogOut(View v){
         Constants.UserData.USER_ID=null;
         Constants.UserData.TOKEN=null;
         Constants.SharedPreferenceData.clearData();
         Toast.makeText(getApplicationContext(),"Loged Out",Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
     @Override
     protected void onResume() {
