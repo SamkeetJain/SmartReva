@@ -63,7 +63,6 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-
                     <ImageView
                         android:id="@+id/attendence_button"
                         android:layout_width="125dp"
