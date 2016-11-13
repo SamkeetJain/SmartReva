@@ -18,6 +18,9 @@ public class Constants {
 
     public static class URLs {
         public static String LOGIN = "http://revacounselling.16mb.com/reva_login.php";
+        public static String AUTHENTICATION = "http://revacounselling.16mb.com/getAuthentication.php";
+        public static String GENERALLIST = "http://revacounselling.16mb.com/getGeneralList.php";
+        public static String GETSTUDENTLIST = "http://revacounselling.16mb.com/getStudentsList.php";
     }
 
     public static class UserData {
@@ -38,6 +41,9 @@ public class Constants {
 
         public static void setTOKEN(String TOKEN) {
             UserData.TOKEN = TOKEN;
+        }
+
+        public static void clearData(){
         }
     }
 
@@ -81,6 +87,12 @@ public class Constants {
         public static void setUserId(String userId) {
             editor.putString(USER_ID,userId);
             editor.apply();
+        }
+
+        public static void clearData(){
+            editor.clear();
+            editor.apply();
+
         }
     }
 

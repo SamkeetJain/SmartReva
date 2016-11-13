@@ -29,19 +29,20 @@ public class TakeAttendence extends AppCompatActivity {
     private Context progressDialogContext;
     public ProgressDialog pd;
 
-    public String type;
+    public String table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_attendence);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         progressDialogContext = this;
 
-        type = getIntent().getStringExtra("TYPE");
+        table = getIntent().getStringExtra("TABLE");
 
         GetStudentsList getStudentsList=new GetStudentsList();
         getStudentsList.execute();
@@ -67,14 +68,14 @@ public class TakeAttendence extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.LOGIN);
+                java.net.URL url = new URL(Constants.URLs.GETSTUDENTLIST);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.UserData.getTOKEN()).appendQueryParameter("type", type);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("table", table);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -95,7 +96,6 @@ public class TakeAttendence extends AppCompatActivity {
 
                 // Create a JSON object hierarchy from the results
 
-
                 return 1;
 
             } catch (Exception ex) {
@@ -110,9 +110,6 @@ public class TakeAttendence extends AppCompatActivity {
                 pd.dismiss();
             }
 
-//            String temp[]=results.split("\\|");
-//            mAdapter = new GeneralListAdapter(temp);
-//            mRecyclerView.setAdapter(mAdapter);
 
         }
     }

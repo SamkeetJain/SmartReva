@@ -272,6 +272,7 @@
                         android:layout_width="125dp"
                         android:layout_height="125dp"
                         android:layout_gravity="center"
+                        android:onClick="Junk"
                         android:background="@drawable/border"
 
                         />

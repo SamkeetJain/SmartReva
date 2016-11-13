@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.samkeet.smartreva.Attendence.AttendenceMainActivity;
 import com.samkeet.smartreva.Councling.CounclingMainActivity;
@@ -37,6 +38,10 @@ public class LauncherActivity extends AppCompatActivity {
         Councling = (Button) findViewById(R.id.councling_button);
         Library = (Button) findViewById(R.id.library_button);
 
+        if(!Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")){
+            Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(intent);
+        }
 
     }
 
@@ -76,5 +81,21 @@ public class LauncherActivity extends AppCompatActivity {
         Intent intent=new Intent(getApplicationContext(), LibraryMainActivity.class);
         startActivity(intent);
 
+    }
+
+    public void Junk(View v){
+        Constants.UserData.USER_ID=null;
+        Constants.UserData.TOKEN=null;
+        Constants.SharedPreferenceData.clearData();
+        Toast.makeText(getApplicationContext(),"Loged Out",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")){
+            Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+            startActivity(intent);
+        }
     }
 }

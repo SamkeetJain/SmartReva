@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("usn",susn ).appendQueryParameter("password",spassword );
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("user_ID",susn ).appendQueryParameter("password",spassword );
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();

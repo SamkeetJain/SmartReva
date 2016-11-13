@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.samkeet.smartreva">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher1"
@@ -36,7 +38,9 @@
         <activity android:name=".Attendence.GenerateAttendenceReport" />
         <activity android:name=".Notes.UploadNotes" />
         <activity android:name=".Notes.ViewNotes" />
-        <activity android:name=".GeneralListActivity" />
+        <activity android:name=".Attendence.GeneralListActivity"
+            android:label=""
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
         <activity android:name=".ProfileStudentActivity" />
         <activity android:name=".ProfileFacultyActivity"></activity>
     </application>

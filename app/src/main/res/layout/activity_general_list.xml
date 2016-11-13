@@ -4,7 +4,7 @@
     android:id="@+id/activity_general_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.GeneralListActivity">
+    tools:context="com.samkeet.smartreva.Attendence.GeneralListActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/my_recycler_view"
