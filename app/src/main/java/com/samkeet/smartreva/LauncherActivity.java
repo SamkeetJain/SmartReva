@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.samkeet.smartreva.Attendence.AttendenceMainActivity;
@@ -21,7 +22,7 @@ import static android.R.attr.button;
 public class LauncherActivity extends AppCompatActivity {
 
 
-    public Button Attendence, Results, Notes, Notification, Events, Councling, Library;
+    public ImageView Attendence, Results, Notes, Notification, Events, Councling, Library;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +31,13 @@ public class LauncherActivity extends AppCompatActivity {
 
         Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES,MODE_PRIVATE));
 
-        Attendence = (Button) findViewById(R.id.attendence_button);
-        Results = (Button) findViewById(R.id.result_button);
-        Notes = (Button) findViewById(R.id.notes_button);
-        Notification = (Button) findViewById(R.id.notification_button);
-        Events = (Button) findViewById(R.id.events_button);
-        Councling = (Button) findViewById(R.id.councling_button);
-        Library = (Button) findViewById(R.id.library_button);
+        Attendence = (ImageView) findViewById(R.id.attendence_button);
+        Results = (ImageView) findViewById(R.id.result_button);
+        Notes = (ImageView) findViewById(R.id.notes_button);
+        Notification = (ImageView) findViewById(R.id.notification_button);
+        Events = (ImageView) findViewById(R.id.events_button);
+        Councling = (ImageView) findViewById(R.id.councling_button);
+        Library = (ImageView) findViewById(R.id.library_button);
 
         if(!Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")){
             Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
