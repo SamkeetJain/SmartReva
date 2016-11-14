@@ -169,7 +169,7 @@ public class CounclingTimePickActivity extends AppCompatActivity {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     String slot = jsonObject.getString("resID");
-                    String avalibility = jsonObject.getString("availability");
+                    String avalibility = jsonObject.getString("avalibility");
 //                    Constant.TimeSlots.SLOTS.add("" + slot.charAt(9) + slot.charAt(10) + ":00");
                     Constants.TimeSlots.SLOTS.add(slot);
                     Constants.TimeSlots.AVALIBILITY.add(avalibility);
