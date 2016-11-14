@@ -78,6 +78,8 @@
                 android:layout_height="wrap_content"
                 android:text="USN:"
                 android:textSize="18sp"
+                android:textColor="#000000"
+
                 />
             <EditText
                 android:layout_width="match_parent"
@@ -85,6 +87,8 @@
                 android:textSize="18sp"
                 android:paddingLeft="15dp"
                 android:hint="USN"
+                android:textColor="@color/colorAccent"
+
                 />
         </LinearLayout>
         <LinearLayout
@@ -97,6 +101,8 @@
                 android:layout_height="wrap_content"
                 android:text="Semister:"
                 android:textSize="18sp"
+                android:textColor="#000000"
+
                 />
 
         </LinearLayout>
@@ -110,6 +116,8 @@
                 android:layout_height="wrap_content"
                 android:text="Component:"
                 android:textSize="18sp"
+                android:textColor="#000000"
+
                 />
 
         </LinearLayout>
