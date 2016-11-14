@@ -82,6 +82,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/profile2"
                 android:scaleType="fitCenter"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
                 />
 
             <TextView
