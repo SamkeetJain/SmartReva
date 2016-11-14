@@ -24,6 +24,7 @@ public class Constants {
         public static String GENERALLIST = "http://revacounselling.16mb.com/getGeneralList.php";
         public static String GETSTUDENTLIST = "http://revacounselling.16mb.com/getStudentsList.php";
         public static String INSERTINTOATTENDENCE = "http://revacounselling.16mb.com/insertIntoAttendence.php";
+        public static String GETATTENDENCE = "http://revacounselling.16mb.com/getMyAttendence.php";
 
         public static String GET_WALL_POSTS="http://revacounselling.16mb.com/getWallPosts.php";
         public static String GET_RESERVATION_DETAILS="http://revacounselling.16mb.com/getReservationDetails.php";
@@ -131,5 +132,7 @@ public class Constants {
             AVALIBILITY.clear();
         }
     }
+
+    public static String[] subjectlist={"btcs14f5100","btcs14f5200","btcs14f5300","btcs14f5400","btcs14f5500","btcs14f5650","btcs14f5660","btcs14f5700","btcs14f5800"};
 
 }

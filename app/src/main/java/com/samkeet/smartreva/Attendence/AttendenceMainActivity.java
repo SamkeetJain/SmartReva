@@ -202,6 +202,8 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 pd.dismiss();
             }
             if (results.equals("true")) {
+                Intent intent =new Intent(getApplicationContext(),ViewAttendence.class);
+                startActivity(intent);
 
             } else {
                 Toast.makeText(getApplicationContext(), "You are not Autherised for this task!!!", Toast.LENGTH_SHORT).show();
