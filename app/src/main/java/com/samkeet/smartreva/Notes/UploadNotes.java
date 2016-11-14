@@ -16,4 +16,8 @@ public class UploadNotes extends AppCompatActivity {
     public void BackButton(View v){
         finish();
     }
+
+    public void NotesUploadSelectFile(View v){
+
+    }
 }

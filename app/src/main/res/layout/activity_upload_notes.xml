@@ -46,6 +46,14 @@
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="25dp"
+                    android:src="@drawable/ic_send_black_24dp"
+                    />
+
             </RelativeLayout>
 
 
@@ -77,6 +85,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:onClick="NotesUploadSelectFile"
+                android:background="@drawable/border"
                 android:text="Select File"
 
                 />
@@ -87,30 +96,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:padding="15dp">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:hint="Description..."
+                android:gravity="top"
                 android:inputType="textMultiLine" />
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:onClick="UploadNotesSubbmit"
-                android:text="Submmit" />
-
-        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.samkeet.smartreva.Events;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,11 @@ public class EventsMainActivity extends AppCompatActivity {
 
     public void BackButton(View v){
         finish();
+    }
+
+    public void AddEvent(View v){
+        Intent intent =new Intent(getApplicationContext(),AddEventActivity.class);
+        startActivity(intent);
     }
 
 

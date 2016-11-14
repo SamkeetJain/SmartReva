@@ -65,11 +65,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/apppppp"
         android:orientation="vertical"
-        android:gravity="center"
-        android:padding="15dp"
-        >
+        android:layout_below="@+id/apppppp"
+        android:padding="15dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,6 +84,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Event Name"
+                android:paddingLeft="15dp"
+                android:textSize="18sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -104,6 +104,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Event Type"
+                android:paddingLeft="15sp"
+                android:textSize="18sp"
                 />
         </LinearLayout>
         <LinearLayout
@@ -122,12 +124,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Event Date"
+                android:textSize="18sp"
+                android:paddingLeft="15dp"
                 />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -139,9 +143,10 @@
                 />
             <EditText
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="match_parent"
                 android:hint="Description..."
                 android:inputType="textMultiLine"
+                android:gravity="top"
                 />
         </LinearLayout>
 
