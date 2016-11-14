@@ -309,6 +309,7 @@
                     app:srcCompat="@drawable/eventfab"
                     android:id="@+id/floatingActionButton"
                     android:layout_gravity="bottom"
+                    android:onClick="AddEvent"
                     />
             </LinearLayout>
         </ScrollView>
