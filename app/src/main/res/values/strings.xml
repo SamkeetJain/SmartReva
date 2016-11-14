@@ -6,4 +6,21 @@
     <string name="drawer_item_fourth">Notifications</string>
     <string name="drawer_item_fifth">Developers</string>
     <string name="drawer_item_sixth">About Us</string>
+    <string-array name="Semister">
+        <item>First</item>
+        <item>Second</item>
+        <item>Third</item>
+        <item>Forth</item>
+        <item>Fifth</item>
+        <item>Sixth</item>
+        <item>Seventh</item>
+        <item>Eighth</item>
+
+    </string-array>
+    <string-array name="Component">
+        <item>C1</item>
+        <item>C2</item>
+        <item>C3</item>
+    </string-array>
+    <string name="title_activity_events_main">EventsMainActivity</string>
 </resources>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_results_main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_add_event"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.Results.ResultsMainActivity"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context="com.samkeet.smartreva.Events.AddEventActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/apppppp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/apppppp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.v7.widget.Toolbar
@@ -41,7 +41,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Results"
+                    android:text="Add Event"
                     android:textColor="#ffffff"
                     android:textSize="20sp"
                     android:layout_toRightOf="@+id/back_button"
@@ -53,10 +53,11 @@
 
 
         </android.support.v7.widget.Toolbar>
+
         <View
             android:layout_width="match_parent"
-            android:background="@color/colorAccent"
-            android:layout_height="2dp"/>
+            android:layout_height="2dp"
+            android:background="@color/colorAccent" />
 
 
     </android.support.design.widget.AppBarLayout>
@@ -64,10 +65,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/apppppp"
-        android:padding="15dp"
-        android:gravity="center"
+        android:layout_below="@+id/apppppp"
         android:orientation="vertical"
+        android:gravity="center"
+        android:padding="15dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,13 +78,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="USN:"
+                android:text="Event Name:"
                 android:textSize="18sp"
+
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="USN"
+                android:hint="Event Name"
                 />
         </LinearLayout>
         <LinearLayout
@@ -94,10 +96,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Semister:"
+                android:text="Event Type:"
                 android:textSize="18sp"
-                />
 
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Event Type"
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -107,12 +114,36 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Component:"
+                android:text="Event Date:"
                 android:textSize="18sp"
-                android:layout_weight="1"
-                />
 
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Event Date"
+                />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Description:"
+                android:layout_gravity="top"
+                android:textSize="18sp"
+
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="Description..."
+                android:inputType="textMultiLine"
+                />
+        </LinearLayout>
+
     </LinearLayout>
-
 </RelativeLayout>

@@ -51,7 +51,8 @@
         <activity android:name=".ProfileStudentActivity" />
         <activity android:name=".ProfileFacultyActivity" />
         <activity android:name=".Setings.SettingsMainActivity" />
-        <activity android:name=".Timetable.TimetableMainActivity"></activity>
+        <activity android:name=".Timetable.TimetableMainActivity" />
+        <activity android:name=".Events.AddEventActivity" />
     </application>
 
 </manifest>
