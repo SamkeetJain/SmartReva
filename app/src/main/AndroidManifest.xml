@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.samkeet.smartreva">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -28,8 +28,8 @@
         <activity android:name=".Councling.CounclingMyAppointment" />
         <activity
             android:name=".Councling.CounclingTimePickActivity"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"></activity>
-        <activity android:name=".Councling.CounclingAboutUs"></activity>
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity android:name=".Councling.CounclingAboutUs" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -44,11 +44,14 @@
         <activity android:name=".Attendence.GenerateAttendenceReport" />
         <activity android:name=".Notes.UploadNotes" />
         <activity android:name=".Notes.ViewNotes" />
-        <activity android:name=".Attendence.GeneralListActivity"
+        <activity
+            android:name=".Attendence.GeneralListActivity"
             android:label=""
-            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity android:name=".ProfileStudentActivity" />
-        <activity android:name=".ProfileFacultyActivity"></activity>
+        <activity android:name=".ProfileFacultyActivity" />
+        <activity android:name=".Setings.SettingsMainActivity" />
+        <activity android:name=".Timetable.TimetableMainActivity"></activity>
     </application>
 
 </manifest>

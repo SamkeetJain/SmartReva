@@ -13,11 +13,13 @@ import com.samkeet.smartreva.Library.LibraryMainActivity;
 import com.samkeet.smartreva.Notes.NotesMainActivity;
 import com.samkeet.smartreva.Notification.NotificationMainActivity;
 import com.samkeet.smartreva.Results.ResultsMainActivity;
+import com.samkeet.smartreva.Setings.SettingsMainActivity;
+import com.samkeet.smartreva.Timetable.TimetableMainActivity;
 
 public class LauncherActivity extends AppCompatActivity {
 
 
-    public ImageView Attendence, Results, Notes, Notification, Events, Councling, Library, Profile;
+    public ImageView Attendence, Results, Notes, Notification, Events, Councling, Library, Profile, Settings, Timetable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class LauncherActivity extends AppCompatActivity {
         Councling = (ImageView) findViewById(R.id.councling_button);
         Library = (ImageView) findViewById(R.id.library_button);
         Profile = (ImageView) findViewById(R.id.Profile_button);
+        Settings= (ImageView) findViewById(R.id.Settings_button);
+        Timetable = (ImageView) findViewById(R.id.Timetable_button);
 
 
         if(!Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")){
@@ -83,6 +87,16 @@ public class LauncherActivity extends AppCompatActivity {
 
     public void Profile(View v){
         Intent intent=new Intent(getApplicationContext(), ProfileStudentActivity.class);
+        startActivity(intent);
+    }
+
+    public void Settings(View v){
+        Intent intent=new Intent(getApplicationContext(), SettingsMainActivity.class);
+        startActivity(intent);
+    }
+
+    public void Timetable(View v){
+        Intent intent=new Intent(getApplicationContext(), TimetableMainActivity.class);
         startActivity(intent);
     }
 
