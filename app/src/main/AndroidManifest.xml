@@ -53,6 +53,7 @@
         <activity android:name=".Setings.SettingsMainActivity" />
         <activity android:name=".Timetable.TimetableMainActivity" />
         <activity android:name=".Events.AddEventActivity" />
+        <activity android:name=".Councling.CounclingNewPost"></activity>
     </application>
 
 </manifest>

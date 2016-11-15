@@ -50,4 +50,28 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:paddingTop="10dp"
+        android:layout_below="@+id/apppppp"
+        android:id="@+id/my_recycler_view"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="15dp"
+        android:clickable="true"
+        android:onClick="NewPost"
+        android:src="@drawable/ic_add_black_24dp"
+        app:elevation="4dp"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/eventfab" />
+
+
 </RelativeLayout>

@@ -2,15 +2,13 @@ package com.samkeet.smartreva.Councling;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.samkeet.smartreva.Constants;
@@ -24,43 +22,47 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class CounclingMyAppointment extends AppCompatActivity {
+public class CounclingNewPost extends AppCompatActivity {
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
+    public EditText mTitle,mName,mDesc;
     public ProgressDialog pd;
     public Context progressDialogContext;
 
-    public String mTitles[];
-    public String mDesc[];
-    public String mDates[];
-
-    String results;
+    public String title,name,desc,datetext;
+    public String responce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_councling_my_appointment);
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        setContentView(R.layout.activity_councling_new_post);
 
         progressDialogContext=this;
 
-        GetMyAppoitnments getMyAppoitnments=new GetMyAppoitnments();
-        getMyAppoitnments.execute();
+        mTitle= (EditText) findViewById(R.id.title);
+        mName= (EditText) findViewById(R.id.name);
+        mDesc= (EditText) findViewById(R.id.message);
+
 
     }
 
-    public void GoBack(View v) {
+    public void BackButton(View v) {
         finish();
     }
 
-    public class GetMyAppoitnments extends AsyncTask<Void, Void, Integer> {
+    public void Send(View v) {
+        name=mName.getText().toString();
+        desc=mDesc.getText().toString();
+        title=mTitle.getText().toString();
+        datetext = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+
+        SendNewPost sendNewPost=new SendNewPost();
+        sendNewPost.execute();
+    }
+
+    public class SendNewPost extends AsyncTask<Void, Void, Integer> {
 
 
         protected void onPreExecute() {
@@ -77,15 +79,15 @@ public class CounclingMyAppointment extends AppCompatActivity {
             try {
 
                 int random = (int )(Math.random() * 5000 + 1);
-                String appID= String.valueOf(random);
-                URL url = new URL(Constants.URLs.GET_APPOINMENTS);
+                String postID= String.valueOf(random);
+                URL url = new URL(Constants.URLs.SEND_NEW_POST);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("usn",Constants.SharedPreferenceData.getUserId());
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("postID",postID).appendQueryParameter("name",name).appendQueryParameter("date",datetext).appendQueryParameter("message",desc).appendQueryParameter("title",title);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -103,20 +105,7 @@ public class CounclingMyAppointment extends AppCompatActivity {
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
-
-                JSONArray jsonArray=new JSONArray(jsonResults.toString());
-                mTitles=new String[jsonArray.length()];
-                mDesc=new String[jsonArray.length()];
-                mDates=new String[jsonArray.length()];
-                for(int i=0;i<jsonArray.length();i++){
-                    JSONObject jsonObject=jsonArray.getJSONObject(i);
-                    mTitles[i]=jsonObject.getString("title");
-                    mDesc[i]=jsonObject.getString("message");
-                    mDates[i]=jsonObject.getString("resID");
-                }
-
-
-
+                responce=jsonResults.toString();
 
                 return 1;
 
@@ -131,11 +120,12 @@ public class CounclingMyAppointment extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-
-            mAdapter = new CounclingMyAppointmentAdapter(mTitles,mDesc,mDates);
-            mRecyclerView.setAdapter(mAdapter);
+            responce=responce.replaceAll("\\t","");
+            if(!responce.equals("Posted Succesfully")){
+                Toast.makeText(getApplicationContext(),"Error: Post Unsuccessful !!!",Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(),responce ,Toast.LENGTH_SHORT).show();
+            }
         }
     }
-
-
 }

@@ -68,7 +68,13 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
 
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        String date=""+dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+        String temp;
+        if(dayOfMonth<10){
+            temp="0"+dayOfMonth;
+        }else {
+            temp=""+dayOfMonth;
+        }
+        String date=""+temp+"/"+(++monthOfYear)+"/"+year;
         dateView.setText(date);
     }
 

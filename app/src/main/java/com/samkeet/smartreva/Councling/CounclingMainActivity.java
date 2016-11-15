@@ -1,10 +1,17 @@
 package com.samkeet.smartreva.Councling;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,7 +29,17 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
 import com.mikepenz.materialize.util.UIUtils;
+import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class CounclingMainActivity extends AppCompatActivity {
 
@@ -31,6 +48,18 @@ public class CounclingMainActivity extends AppCompatActivity {
     private MiniDrawer miniResult = null;
     private CrossfadeDrawerLayout crossfadeDrawerLayout = null;
     private Toolbar toolbar;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    public ProgressDialog pd;
+    public Context progressDialogContext;
+
+    public String mTitles[];
+    public String mDesc[];
+    public String mDates[];
+    public String mNames[];
 
 
     @Override
@@ -61,9 +90,9 @@ public class CounclingMainActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_first).withIcon(FontAwesome.Icon.faw_inbox).withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_second).withIcon(MaterialDesignIconic.Icon.gmi_open_in_new).withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_third).withIcon(MaterialDesignIconic.Icon.gmi_archive).withIdentifier(3),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_fourth).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(4),
+//                        new PrimaryDrawerItem().withName(R.string.drawer_item_fourth).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(4),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_fifth).withIcon(FontAwesome.Icon.faw_android).withIdentifier(5),
+//                        new PrimaryDrawerItem().withName(R.string.drawer_item_fifth).withIcon(FontAwesome.Icon.faw_android).withIdentifier(5),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_sixth).withIcon(FontAwesome.Icon.faw_wikipedia_w).withIdentifier(6)
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -83,7 +112,7 @@ public class CounclingMainActivity extends AppCompatActivity {
                     }
                 })
                 .withSavedInstance(savedInstanceState)
-                .withShowDrawerOnFirstLaunch(true)
+                .withShowDrawerOnFirstLaunch(false)
                 .build();
         crossfadeDrawerLayout = (CrossfadeDrawerLayout) result.getDrawerLayout();
 
@@ -125,7 +154,105 @@ public class CounclingMainActivity extends AppCompatActivity {
                 //Log.e("CrossfadeDrawerLayout", "crossfade: " + currentSlidePercentage + " - " + slideOffset);
             }
         });
+
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        progressDialogContext=this;
+
+        GetWallPosts getWallPosts =new GetWallPosts();
+        getWallPosts.execute();
+
+
     }
+
+    public class GetWallPosts extends AsyncTask<Void, Void, Integer> {
+
+
+        protected void onPreExecute() {
+            pd = new ProgressDialog(progressDialogContext);
+            pd.setTitle("Loading...");
+            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pd.setMessage("Please wait.");
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+
+                int random = (int )(Math.random() * 5000 + 1);
+                String postID= String.valueOf(random);
+                URL url = new URL(Constants.URLs.GET_WALL_POSTS);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Log.d("POST", "DATA ready to sent");
+
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("postID",postID);
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+                Log.d("POST", "DATA SENT");
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                Log.d("return from server", jsonResults.toString());
+
+                JSONArray jsonArray=new JSONArray(jsonResults.toString());
+                mTitles=new String[jsonArray.length()];
+                mDesc=new String[jsonArray.length()];
+                mDates=new String[jsonArray.length()];
+                mNames=new String[jsonArray.length()];
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject jsonObject=jsonArray.getJSONObject(i);
+                    mTitles[i]=jsonObject.getString("title");
+                    mDesc[i]=jsonObject.getString("message");
+                    mDates[i]=jsonObject.getString("timeStamp");
+                    mNames[i]=jsonObject.getString("name");
+                }
+
+
+
+
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+
+            mAdapter = new CounclingMainActiviryAdapter(mTitles,mDesc,mDates,mNames);
+            mRecyclerView.setAdapter(mAdapter);
+        }
+    }
+
+    public void NewPost(View v){
+        Intent intent=new Intent(getApplicationContext(),CounclingNewPost.class);
+        startActivity(intent);
+    }
+
 
 
 }

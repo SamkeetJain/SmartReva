@@ -121,7 +121,10 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textColor="@color/colorAccent"
+
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -139,7 +142,9 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -157,7 +162,9 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -175,7 +182,9 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -193,7 +202,9 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -211,7 +222,9 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -229,7 +242,9 @@
 
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -248,7 +263,9 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/colorAccent"
+                    />
             </LinearLayout>
 
         </LinearLayout>
