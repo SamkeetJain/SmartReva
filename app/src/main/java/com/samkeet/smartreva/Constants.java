@@ -25,6 +25,8 @@ public class Constants {
         public static String GETSTUDENTLIST = "http://revacounselling.16mb.com/getStudentsList.php";
         public static String INSERTINTOATTENDENCE = "http://revacounselling.16mb.com/insertIntoAttendence.php";
         public static String GETATTENDENCE = "http://revacounselling.16mb.com/getMyAttendence.php";
+        public static String GETALLEVENTS = "http://revacounselling.16mb.com/getAllEvents.php";
+        public static String NEWEVENT = "http://revacounselling.16mb.com/newEvent.php";
 
         public static String GET_WALL_POSTS="http://revacounselling.16mb.com/getWallPosts.php";
         public static String GET_RESERVATION_DETAILS="http://revacounselling.16mb.com/getReservationDetails.php";

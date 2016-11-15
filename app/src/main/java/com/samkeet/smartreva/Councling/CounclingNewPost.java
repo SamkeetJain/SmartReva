@@ -126,6 +126,7 @@ public class CounclingNewPost extends AppCompatActivity {
             }else {
                 Toast.makeText(getApplicationContext(),responce ,Toast.LENGTH_SHORT).show();
             }
+            finish();
         }
     }
 }

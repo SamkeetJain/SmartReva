@@ -1,18 +1,59 @@
 package com.samkeet.smartreva.Events;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
+import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
 
-public class EventsMainActivity extends AppCompatActivity {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class EventsMainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
+    public ProgressDialog pd;
+    public Context progressDialogContext;
+
+    public SwipeRefreshLayout swipeRefreshLayout;
+
+    public String[] mTypes,mNames,mDesc,mDates;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events_main);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        progressDialogContext = this;
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        GetEvents getEvents=new GetEvents();
+        getEvents.execute();
     }
 
     public void BackButton(View v){
@@ -24,5 +65,87 @@ public class EventsMainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
+    @Override
+    public void onRefresh() {
+        GetEvents getEvents=new GetEvents();
+        getEvents.execute();
+    }
+
+    public class GetEvents extends AsyncTask<Void, Void, Integer> {
+
+
+        protected void onPreExecute() {
+            pd = new ProgressDialog(progressDialogContext);
+            pd.setTitle("Loading...");
+            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pd.setMessage("Please wait.");
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+
+                int random = (int) (Math.random() * 5000 + 1);
+                String postID = String.valueOf(random);
+                URL url = new URL(Constants.URLs.GETALLEVENTS);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Log.d("POST", "DATA ready to sent");
+
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("postID", postID);
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+                Log.d("POST", "DATA SENT");
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                Log.d("return from server", jsonResults.toString());
+
+                JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                mTypes = new String[jsonArray.length()];
+                mDesc = new String[jsonArray.length()];
+                mDates = new String[jsonArray.length()];
+                mNames = new String[jsonArray.length()];
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    mTypes[i] = jsonObject.getString("type");
+                    mDesc[i] = jsonObject.getString("description");
+                    mDates[i] = jsonObject.getString("edate");
+                    mNames[i] = jsonObject.getString("name");
+                }
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            swipeRefreshLayout.setRefreshing(false);
+            mAdapter = new EventsMainActivityAdapter(mTypes, mDesc, mDates, mNames);
+            mRecyclerView.setAdapter(mAdapter);
+
+        }
+    }
 
 }

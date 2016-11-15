@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,7 +42,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class CounclingMainActivity extends AppCompatActivity {
+public class CounclingMainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private AccountHeader headerResult = null;
     private Drawer result = null;
@@ -60,6 +61,8 @@ public class CounclingMainActivity extends AppCompatActivity {
     public String mDesc[];
     public String mDates[];
     public String mNames[];
+
+    public SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -99,13 +102,15 @@ public class CounclingMainActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem.getIdentifier() == 2) {
-                            Intent intent = new Intent(getApplicationContext(),CounclingNewAppointment.class);
+                            Intent intent = new Intent(getApplicationContext(), CounclingNewAppointment.class);
                             startActivity(intent);
-                        }if (drawerItem.getIdentifier() == 3) {
-                            Intent intent = new Intent(getApplicationContext(),CounclingMyAppointment.class);
+                        }
+                        if (drawerItem.getIdentifier() == 3) {
+                            Intent intent = new Intent(getApplicationContext(), CounclingMyAppointment.class);
                             startActivity(intent);
-                        }if(drawerItem.getIdentifier() == 6){
-                            Intent intent = new Intent(getApplicationContext(),CounclingAboutUs.class);
+                        }
+                        if (drawerItem.getIdentifier() == 6) {
+                            Intent intent = new Intent(getApplicationContext(), CounclingAboutUs.class);
                             startActivity(intent);
                         }
                         return false;
@@ -161,12 +166,27 @@ public class CounclingMainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        progressDialogContext=this;
+        progressDialogContext = this;
 
-        GetWallPosts getWallPosts =new GetWallPosts();
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        GetWallPosts getWallPosts = new GetWallPosts();
         getWallPosts.execute();
 
 
+    }
+
+    @Override
+    public void onRefresh() {
+        refreshData();
+
+    }
+
+    public void refreshData() {
+        GetWallPosts getWallPosts = new GetWallPosts();
+        getWallPosts.execute();
     }
 
     public class GetWallPosts extends AsyncTask<Void, Void, Integer> {
@@ -185,8 +205,8 @@ public class CounclingMainActivity extends AppCompatActivity {
         protected Integer doInBackground(Void... params) {
             try {
 
-                int random = (int )(Math.random() * 5000 + 1);
-                String postID= String.valueOf(random);
+                int random = (int) (Math.random() * 5000 + 1);
+                String postID = String.valueOf(random);
                 URL url = new URL(Constants.URLs.GET_WALL_POSTS);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
@@ -194,7 +214,7 @@ public class CounclingMainActivity extends AppCompatActivity {
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("postID",postID);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("postID", postID);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -213,22 +233,18 @@ public class CounclingMainActivity extends AppCompatActivity {
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                JSONArray jsonArray=new JSONArray(jsonResults.toString());
-                mTitles=new String[jsonArray.length()];
-                mDesc=new String[jsonArray.length()];
-                mDates=new String[jsonArray.length()];
-                mNames=new String[jsonArray.length()];
-                for(int i=0;i<jsonArray.length();i++){
-                    JSONObject jsonObject=jsonArray.getJSONObject(i);
-                    mTitles[i]=jsonObject.getString("title");
-                    mDesc[i]=jsonObject.getString("message");
-                    mDates[i]=jsonObject.getString("timeStamp");
-                    mNames[i]=jsonObject.getString("name");
+                JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                mTitles = new String[jsonArray.length()];
+                mDesc = new String[jsonArray.length()];
+                mDates = new String[jsonArray.length()];
+                mNames = new String[jsonArray.length()];
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    mTitles[i] = jsonObject.getString("title");
+                    mDesc[i] = jsonObject.getString("message");
+                    mDates[i] = jsonObject.getString("timeStamp");
+                    mNames[i] = jsonObject.getString("name");
                 }
-
-
-
-
                 return 1;
 
             } catch (Exception ex) {
@@ -242,17 +258,15 @@ public class CounclingMainActivity extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-
-            mAdapter = new CounclingMainActiviryAdapter(mTitles,mDesc,mDates,mNames);
+            swipeRefreshLayout.setRefreshing(false);
+            mAdapter = new CounclingMainActiviryAdapter(mTitles, mDesc, mDates, mNames);
             mRecyclerView.setAdapter(mAdapter);
+
         }
     }
 
-    public void NewPost(View v){
-        Intent intent=new Intent(getApplicationContext(),CounclingNewPost.class);
+    public void NewPost(View v) {
+        Intent intent = new Intent(getApplicationContext(), CounclingNewPost.class);
         startActivity(intent);
     }
-
-
-
 }
