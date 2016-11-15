@@ -2,12 +2,15 @@ package com.samkeet.smartreva.Councling;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+
+import com.samkeet.smartreva.Constants;
 
 public class CounclingAboutUs extends AppCompatActivity {
 
@@ -34,6 +37,6 @@ public class CounclingAboutUs extends AppCompatActivity {
             }
         });
 
-        webview.loadUrl("https://drive.google.com/file/d/0B-fMO4kPsvslcFRDNUNQd1NIa2Q1Zk9NYkRTZTA3U1pwZ1ZF/view");
+        webview.loadUrl(Constants.URLs.ABOUTUS);
     }
 }
