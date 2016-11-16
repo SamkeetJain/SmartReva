@@ -41,7 +41,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Generate Attendence Report"
+                    android:text="Generate Attendance Report"
                     android:textColor="#ffffff"
                     android:textSize="20sp"
                     android:layout_toRightOf="@+id/back_button"

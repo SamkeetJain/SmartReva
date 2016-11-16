@@ -3,6 +3,8 @@
     package="com.samkeet.smartreva">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -54,6 +56,7 @@
         <activity android:name=".Timetable.TimetableMainActivity" />
         <activity android:name=".Events.AddEventActivity" />
         <activity android:name=".Councling.CounclingNewPost"></activity>
+        <activity android:name=".Notes.UploadToServer"></activity>
     </application>
 
 </manifest>

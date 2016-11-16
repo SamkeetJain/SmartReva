@@ -76,7 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
-                        android:text="Attendence"
+                        android:text="Attendance"
                         android:textColor="#000000"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -102,7 +102,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingTop="5dp"
-                        android:text="Councling"
+                        android:text="Counselling"
                         android:textColor="#000000"
                         android:textSize="18sp" />
                 </LinearLayout>
