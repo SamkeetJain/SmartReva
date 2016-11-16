@@ -35,19 +35,22 @@ public class UploadToServer extends Activity {
     /**********
      * File Path
      *************/
-    final String uploadFilePath = "/storage/emulated/0/";
-    final String uploadFileName = "Ssss.pdf";
+//    final String uploadFilePath = "/storage/emulated/0/";
+//    final String uploadFileName = "Ssss.pdf";
+
+    String post;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_to_server);
+        post=getIntent().getStringExtra("POST");
 
         uploadButton = (Button) findViewById(R.id.uploadButton);
         messageText = (TextView) findViewById(R.id.messageText);
 
-        messageText.setText("Uploading file path :- '/mnt/sdcard/" + uploadFileName + "'");
+        messageText.setText("Uploading file path :- "+post + "'");
 
         /************* Php script path ****************/
         upLoadServerUri = "http://revacounselling.16mb.com/u2s.php";
@@ -66,7 +69,7 @@ public class UploadToServer extends Activity {
                             }
                         });
 
-                        uploadFile(uploadFilePath + "" + uploadFileName);
+                        uploadFile(post);
 
                     }
                 }).start();
@@ -94,12 +97,12 @@ public class UploadToServer extends Activity {
             dialog.dismiss();
 
             Log.e("uploadFile", "Source File not exist :"
-                    + uploadFilePath + "" + uploadFileName);
+                    + post);
 
             runOnUiThread(new Runnable() {
                 public void run() {
                     messageText.setText("Source File not exist :"
-                            + uploadFilePath + "" + uploadFileName);
+                            + post);
                 }
             });
 
@@ -165,8 +168,8 @@ public class UploadToServer extends Activity {
                         public void run() {
 
                             String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
-                                    + " http://www.androidexample.com/media/uploads/"
-                                    + uploadFileName;
+                                    + " http://revacounselling.16mb.com/uploads"
+                                    ;
 
                             messageText.setText(msg);
                             Toast.makeText(UploadToServer.this, "File Upload Complete.",

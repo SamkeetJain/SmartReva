@@ -1,8 +1,10 @@
 package com.samkeet.smartreva.Notes;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.samkeet.smartreva.R;
@@ -17,11 +19,12 @@ public class UploadNotes extends AppCompatActivity {
         setContentView(R.layout.activity_upload_notes);
 
     }
-    public void BackButton(View v){
+
+    public void BackButton(View v) {
         finish();
     }
 
-    public void NotesUploadSelectFile(View v){
+    public void NotesUploadSelectFile(View v) {
         Intent intent = new Intent();
         intent.setType("*/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -30,9 +33,16 @@ public class UploadNotes extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode==PICK_FILE_REQUEST){
-            Intent intent=new Intent(getApplicationContext(),UploadToServer.class);
-            startActivity(intent);
+        if (requestCode == PICK_FILE_REQUEST) {
+//            if (requestCode == RESULT_OK) {
+                Uri post = data.getData();
+                String loc=post.toString();
+                loc=loc.replaceAll("file://","");
+                Log.d("File location",post.toString());
+                Intent intent = new Intent(getApplicationContext(), UploadToServer.class);
+                intent.putExtra("POST",loc);
+                startActivity(intent);
+//            }
         }
     }
 }
