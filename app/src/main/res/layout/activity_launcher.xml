@@ -5,6 +5,7 @@
     android:id="@+id/activity_launcher"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lavender"
     tools:context="com.samkeet.smartreva.LauncherActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -51,312 +52,490 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    app:cardCornerRadius="2dp">
 
-                    <ImageView
-                        android:id="@+id/attendence_button"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:onClick="Attendence"
-                        android:src="@drawable/finalattendance"
-                        android:scaleType="fitCenter"
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="Attendance"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
-                <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/attendence_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Attendence"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/finalattendance" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Attendance"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_margin="5dp"
+                    android:layout_weight="1">
 
-                    <ImageView
-                        android:id="@+id/councling_button"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:onClick="Councling"
-                        android:src="@drawable/councling"
-                        android:scaleType="fitCenter"
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="Counselling"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/councling_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Councling"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/councling"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Counselling"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <LinearLayout
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    app:cardCornerRadius="2dp">
 
-                    <ImageView
-                        android:id="@+id/notes_button"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:onClick="Notes"
-                        android:src="@drawable/finalnotes"
-                        android:scaleType="fitCenter"
-
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="Notes"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                <LinearLayout
+                        <ImageView
+                            android:id="@+id/notes_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Notes"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/finalnotes"
+
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Notes"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    app:cardCornerRadius="2dp">
 
-                    <ImageView
-                        android:id="@+id/notification_button"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:onClick="Notification"
-                        android:src="@drawable/notifications"
-                        android:scaleType="fitCenter"
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="Notification"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/notification_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Notification"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/notifications"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Notification"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    app:cardCornerRadius="2dp">
 
-                    <ImageView
-                        android:id="@+id/events_button"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:onClick="Events"
-                        android:src="@drawable/events"
-                        android:scaleType="fitCenter"
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="Events"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                <LinearLayout
+                        <ImageView
+                            android:id="@+id/events_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Events"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/events"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Events"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    app:cardCornerRadius="2dp">
 
-                    <ImageView
-                        android:id="@+id/result_button"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:onClick="Result"
-                        android:src="@drawable/finalresult"
-                        android:scaleType="fitCenter"
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="Results"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/result_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Result"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/finalresult"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Results"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    app:cardCornerRadius="2dp">
 
-                    <ImageView
-                        android:id="@+id/library_button"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:onClick="Library"
-                        android:src="@drawable/library"
-                        android:scaleType="fitCenter"
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="Library"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                <LinearLayout
+                        <ImageView
+                            android:id="@+id/library_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Library"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/library"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Library"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    app:cardCornerRadius="2dp">
 
-                    <ImageView
-                        android:id="@+id/Timetable_button"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:onClick="Timetable"
-                        android:src="@drawable/timetable"
-                        android:scaleType="fitCenter"
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="Time Table"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/Timetable_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Timetable"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/timetable"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Time Table"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    app:cardCornerRadius="2dp">
 
-                    <ImageView
-                        android:id="@+id/Settings_button"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:onClick="Settings"
-                        android:src="@drawable/settings"
-                        android:scaleType="fitCenter"
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="Settings"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
 
-                <LinearLayout
+                        <ImageView
+                            android:id="@+id/Fee_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Fees"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/settings"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Fees"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    app:cardCornerRadius="2dp">
 
-                    <ImageView
-                        android:id="@+id/Profile_button"
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_gravity="center"
-                        android:onClick="Profile"
-                        android:src="@drawable/profile"
-                        android:scaleType="fitCenter"
-
-                        />
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="5dp"
-                        android:text="Profile"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/Alumini_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Alumini"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/profile"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Alumini Cell"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
             </LinearLayout>
-            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/Settings_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Settings"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/settings"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Settings"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="2dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/Profile_button"
+                            android:layout_width="125dp"
+                            android:layout_height="125dp"
+                            android:layout_gravity="center"
+                            android:onClick="Profile"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/profile"
+
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="5dp"
+                            android:text="Profile"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>

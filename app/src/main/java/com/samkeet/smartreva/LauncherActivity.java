@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.samkeet.smartreva.AluminiCell.AluminiCellActivity;
 import com.samkeet.smartreva.Attendence.AttendenceMainActivity;
 import com.samkeet.smartreva.Councling.CounclingMainActivity;
 import com.samkeet.smartreva.Events.EventsMainActivity;
+import com.samkeet.smartreva.Fees.FeesMainActivity;
 import com.samkeet.smartreva.Library.LibraryMainActivity;
 import com.samkeet.smartreva.Notes.NotesMainActivity;
 import com.samkeet.smartreva.Notification.NotificationMainActivity;
@@ -100,12 +102,15 @@ public class LauncherActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*public void LogOut(View v){
-        Constants.UserData.USER_ID=null;
-        Constants.UserData.TOKEN=null;
-        Constants.SharedPreferenceData.clearData();
-        Toast.makeText(getApplicationContext(),"Loged Out",Toast.LENGTH_SHORT).show();
-    }*/
+    public void Alumini(View v){
+        Intent intent = new Intent(getApplicationContext(),AluminiCellActivity.class);
+        startActivity(intent);
+    }
+
+    public void Fees(View v){
+        Intent intent = new Intent(getApplicationContext(),FeesMainActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onResume() {

@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#ed9d3a</color>
     <color name="colorAccent">#ffa332</color>
     <color name="colorPrimaryLight">#f1c07c</color>
+    <color name="lavender">#f7f7fd</color>
 
 </resources>

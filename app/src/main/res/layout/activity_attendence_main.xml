@@ -64,14 +64,18 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:background="@color/lavender"
         android:layout_height="match_parent"
+        android:layout_below="@id/apppppp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="75dp">
 
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -85,7 +89,7 @@
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="@drawable/border"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:gravity="center"
                 android:onClick="TakeAttendence"
                 android:text="TAKE ATTENDANCE"
@@ -105,7 +109,7 @@
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="@drawable/border"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:gravity="center"
                 android:onClick="ViewAttendence"
                 android:text="VIEW ATTENDANCE"
@@ -125,7 +129,7 @@
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:background="@drawable/border"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:gravity="center"
                 android:onClick="GenerateAttendenceReport"
                 android:text="GENERATE REPORT"
