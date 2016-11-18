@@ -28,6 +28,10 @@ public class Constants {
         public static String GETALLEVENTS = "http://revacounselling.16mb.com/getAllEvents.php";
         public static String NEWEVENT = "http://revacounselling.16mb.com/newEvent.php";
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
+        public static String EVENTMANAGER = "http://revacounselling.16mb.com/EventManager.php";
+        public static String FEE = "http://revacounselling.16mb.com/Fee.php";
+
+
 
         public static String GET_WALL_POSTS="http://revacounselling.16mb.com/getWallPosts.php";
         public static String GET_RESERVATION_DETAILS="http://revacounselling.16mb.com/getReservationDetails.php";

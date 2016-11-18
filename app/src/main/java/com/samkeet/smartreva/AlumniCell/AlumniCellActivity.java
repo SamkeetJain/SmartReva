@@ -1,15 +1,19 @@
-package com.samkeet.smartreva.AluminiCell;
+package com.samkeet.smartreva.AlumniCell;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.samkeet.smartreva.R;
 
-public class AluminiCellActivity extends AppCompatActivity {
+public class AlumniCellActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alumini_cell);
+    }
+    public void BackButton(View v){
+        finish();
     }
 }

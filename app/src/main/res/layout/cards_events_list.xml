@@ -60,6 +60,7 @@
             android:id="@+id/desc"
             android:inputType="textMultiLine"
             android:paddingTop="5dp"
+            android:maxLines="4"
             android:textSize="16dp" />
 
 

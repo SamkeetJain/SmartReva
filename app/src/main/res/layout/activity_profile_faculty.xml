@@ -67,6 +67,7 @@
         android:orientation="vertical"
         android:layout_below="@+id/apppppp"
         android:padding="15dp"
+        android:background="@color/lavender"
 
         >
 

@@ -67,7 +67,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_below="@+id/apppppp"
-
+        android:background="@color/lavender"
         >
 
         <LinearLayout

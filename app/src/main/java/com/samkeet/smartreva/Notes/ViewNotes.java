@@ -8,6 +8,8 @@ import com.samkeet.smartreva.R;
 
 public class ViewNotes extends AppCompatActivity {
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

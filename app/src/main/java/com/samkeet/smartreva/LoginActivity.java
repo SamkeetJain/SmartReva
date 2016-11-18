@@ -1,5 +1,6 @@
 package com.samkeet.smartreva;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -49,9 +50,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 Login login=new Login();
                 login.execute();
-
-//                Intent intent =new Intent(getApplicationContext(),MainActivity.class);
-//                startActivity(intent);
             }
         });
     }
@@ -62,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
         protected void onPreExecute() {
             pd =new ProgressDialog(progressDialogContext);
-            pd.setTitle("Logging...");
+            pd.setTitle("Loading...");
             pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pd.setMessage("Please wait.");
             pd.setCancelable(false);
@@ -124,6 +122,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 Constants.UserData.setUserId(susn);
                 Constants.UserData.setTOKEN(token);
+                Intent returnIntent = new Intent();
+                setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
 

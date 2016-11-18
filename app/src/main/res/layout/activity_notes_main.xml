@@ -64,7 +64,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@id/apppppp"
+        android:background="@color/lavender"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp">
@@ -81,10 +84,10 @@
 
             <Button
                 android:layout_width="200dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:background="@drawable/border"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:text="UPLOAD NOTES"
                 android:id="@+id/upload_notes_button"
                 android:onClick="UploadNotes"
@@ -101,10 +104,10 @@
 
             <Button
                 android:layout_width="200dp"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:background="@drawable/border"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:text="VIEW NOTES"
                 android:id="@+id/view_notes_button"
                 android:onClick="ViewNotes"

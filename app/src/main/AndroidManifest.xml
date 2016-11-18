@@ -58,7 +58,9 @@
         <activity android:name=".Councling.CounclingNewPost" />
         <activity android:name=".Notes.UploadToServer" />
         <activity android:name=".Fees.FeesMainActivity" />
-        <activity android:name=".AluminiCell.AluminiCellActivity"></activity>
+        <activity android:name=".AlumniCell.AlumniCellActivity" />
+        <activity android:name=".SplashActivity" />
+        <activity android:name=".Events.EventManager"></activity>
     </application>
 
 </manifest>

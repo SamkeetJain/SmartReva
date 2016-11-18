@@ -1,5 +1,6 @@
 package com.samkeet.smartreva.Events;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.samkeet.smartreva.Constants;
@@ -36,7 +39,8 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
 
     public SwipeRefreshLayout swipeRefreshLayout;
 
-    public String[] mTypes,mNames,mDesc,mDates;
+    public String[] mTypes,mNames,mDesc,mDates,mIDs;
+    public JSONObject[] eventsObjects;
 
 
     @Override
@@ -51,6 +55,41 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
         progressDialogContext = this;
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        final GestureDetector mGestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+
+        });
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent motionEvent) {
+
+                View child = mRecyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+                if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
+                    int temp = mRecyclerView.getChildPosition(child);
+                    Intent intent=new Intent(getApplicationContext(),EventManager.class);
+                    intent.putExtra("DATA",eventsObjects[temp].toString());
+                    startActivity(intent);
+
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
 
         GetEvents getEvents=new GetEvents();
         getEvents.execute();
@@ -117,16 +156,20 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
                 Log.d("return from server", jsonResults.toString());
 
                 JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                eventsObjects=new JSONObject[jsonArray.length()];
                 mTypes = new String[jsonArray.length()];
                 mDesc = new String[jsonArray.length()];
                 mDates = new String[jsonArray.length()];
                 mNames = new String[jsonArray.length()];
+                mIDs = new String[jsonArray.length()];
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    eventsObjects[i]=jsonObject;
                     mTypes[i] = jsonObject.getString("type");
                     mDesc[i] = jsonObject.getString("description");
                     mDates[i] = jsonObject.getString("edate");
                     mNames[i] = jsonObject.getString("name");
+                    mIDs[i] = jsonObject.getString("event_ID");
                 }
                 return 1;
 

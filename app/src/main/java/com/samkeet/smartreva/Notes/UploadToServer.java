@@ -4,24 +4,34 @@ package com.samkeet.smartreva.Notes;
  * Created by FROST on 11/16/2016.
  */
 
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
+
+import org.json.JSONObject;
 
 public class UploadToServer extends Activity {
 
@@ -32,13 +42,15 @@ public class UploadToServer extends Activity {
 
     String upLoadServerUri = null;
 
-    /**********
-     * File Path
-     *************/
-//    final String uploadFilePath = "/storage/emulated/0/";
-//    final String uploadFileName = "Ssss.pdf";
+    public String title,message;
+    public EditText mTitle,mMessage;
+
+    public Context progressDialogContext;
+    public ProgressDialog pd;
 
     String post;
+    String responcess;
+    String fn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +58,9 @@ public class UploadToServer extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_to_server);
         post=getIntent().getStringExtra("POST");
+        mMessage= (EditText) findViewById(R.id.message);
+        mTitle= (EditText) findViewById(R.id.title);
+        progressDialogContext=this;
 
         uploadButton = (Button) findViewById(R.id.uploadButton);
         messageText = (TextView) findViewById(R.id.messageText);
@@ -80,7 +95,7 @@ public class UploadToServer extends Activity {
     public int uploadFile(String sourceFileUri) {
 
 
-        String fileName = sourceFileUri;
+        final String fileName = sourceFileUri;
 
         HttpURLConnection conn = null;
         DataOutputStream dos = null;
@@ -174,6 +189,7 @@ public class UploadToServer extends Activity {
                             messageText.setText(msg);
                             Toast.makeText(UploadToServer.this, "File Upload Complete.",
                                     Toast.LENGTH_SHORT).show();
+                            afterFinishUploading(fileName);
                         }
                     });
                 }
@@ -216,4 +232,81 @@ public class UploadToServer extends Activity {
 
         } // End else block
     }
+
+    public void afterFinishUploading(String filename){
+
+        title=mTitle.getText().toString();
+        message=mMessage.getText().toString();
+        fn=filename;
+
+        UploadNotes uploadNotes=new UploadNotes();
+        uploadNotes.execute();
+
+    }
+
+    private class UploadNotes extends AsyncTask<Void, Void, Integer> {
+
+
+
+        protected void onPreExecute() {
+            pd =new ProgressDialog(progressDialogContext);
+            pd.setTitle("Logging...");
+            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pd.setMessage("Please wait.");
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                int random = (int )(Math.random() * 5000 + 1);
+                String notesid= String.valueOf(random);
+                URL url = new URL(Constants.URLs.LOGIN);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Log.d("POST", "DATA ready to sent");
+
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("id",notesid ).appendQueryParameter("title",title ).appendQueryParameter("message",message).appendQueryParameter("filename",fn);
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+                Log.d("POST", "DATA SENT");
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                Log.d("return from server",jsonResults.toString());
+
+                responcess=jsonResults.toString();
+
+
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+        protected void onPostExecute(Integer result) {
+            if (pd!=null) {
+                pd.dismiss();
+            }
+            Toast.makeText(getApplicationContext(),responcess,Toast.LENGTH_SHORT).show();
+            finish();
+
+        }
+    }
+
 }

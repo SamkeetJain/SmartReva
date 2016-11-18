@@ -387,6 +387,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    android:elevation="4dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="2dp">
 
@@ -404,7 +405,7 @@
                             android:layout_gravity="center"
                             android:onClick="Fees"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/settings"
+                            android:src="@drawable/fee"
 
                             />
 
@@ -440,7 +441,7 @@
                             android:layout_gravity="center"
                             android:onClick="Alumini"
                             android:scaleType="fitCenter"
-                            android:src="@drawable/profile"
+                            android:src="@drawable/alumni"
 
                             />
 
