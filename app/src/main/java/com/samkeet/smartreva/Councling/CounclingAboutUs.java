@@ -46,8 +46,5 @@ public class CounclingAboutUs extends AppCompatActivity {
         webview.loadUrl(Constants.URLs.ABOUTUS);
     }
 
-    public void UploadDetails(View v){
-        Intent intent=new Intent(getApplicationContext(), UploadActivity.class);
-        startActivity(intent);
-    }
+
 }

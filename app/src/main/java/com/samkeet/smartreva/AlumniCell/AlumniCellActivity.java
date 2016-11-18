@@ -1,6 +1,7 @@
 package com.samkeet.smartreva.AlumniCell;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -43,5 +44,9 @@ public class AlumniCellActivity extends AppCompatActivity {
     }
     public void BackButton(View v){
         finish();
+    }
+    public void UploadDetails(View v){
+        Intent intent=new Intent(getApplicationContext(), UploadActivity.class);
+        startActivity(intent);
     }
 }
