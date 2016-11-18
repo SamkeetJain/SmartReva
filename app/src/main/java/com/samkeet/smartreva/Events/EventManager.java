@@ -36,6 +36,7 @@ public class EventManager extends AppCompatActivity {
     public Context progressDialogContext;
 
     public String results;
+    public String request;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +134,9 @@ public class EventManager extends AppCompatActivity {
                 pd.dismiss();
             }
             if (results.equals("true")) {
-
+                request="fetch";
+                EManager eManager=new EManager();
+                eManager.execute();
             } else {
                 Toast.makeText(getApplicationContext(), "You are not Autherised for this task!!!", Toast.LENGTH_SHORT).show();
             }
@@ -199,7 +202,9 @@ public class EventManager extends AppCompatActivity {
                 pd.dismiss();
             }
             if (results.equals("true")) {
-
+                request="add";
+                EManager eManager=new EManager();
+                eManager.execute();
 
             } else {
                 Toast.makeText(getApplicationContext(), "You are not Autherised for this task!!!", Toast.LENGTH_SHORT).show();
@@ -208,5 +213,72 @@ public class EventManager extends AppCompatActivity {
         }
     }
 
+    private class EManager extends AsyncTask<Void, Void, Integer> {
+
+
+        protected void onPreExecute() {
+            pd = new ProgressDialog(progressDialogContext);
+            pd.setTitle("Loading...");
+            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pd.setMessage("Please wait.");
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                java.net.URL url = new URL(Constants.URLs.EVENTMANAGER);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Log.d("POST", "DATA ready to sent");
+
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("request", request).appendQueryParameter("id",event_ID).appendQueryParameter("member",Constants.SharedPreferenceData.getUserId());
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+                Log.d("POST", _data.toString());
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                Log.d("return from server", jsonResults.toString());
+
+                results = jsonResults.toString();
+
+
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (request.equals("add")) {
+                Toast.makeText(getApplicationContext(),results,Toast.LENGTH_SHORT).show();
+            } else if(request.equals("fetch")) {
+                Intent intent=new Intent(getApplicationContext(),MemberListActivity.class);
+                intent.putExtra("DATA",results);
+                startActivity(intent);
+            }
+
+        }
+    }
 
 }

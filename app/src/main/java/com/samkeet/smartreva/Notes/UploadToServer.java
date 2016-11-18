@@ -42,8 +42,8 @@ public class UploadToServer extends Activity {
 
     String upLoadServerUri = null;
 
-    public String title,message;
-    public EditText mTitle,mMessage;
+    public String title, message;
+    public EditText mTitle, mMessage;
 
     public Context progressDialogContext;
     public ProgressDialog pd;
@@ -57,15 +57,15 @@ public class UploadToServer extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_to_server);
-        post=getIntent().getStringExtra("POST");
-        mMessage= (EditText) findViewById(R.id.message);
-        mTitle= (EditText) findViewById(R.id.title);
-        progressDialogContext=this;
+        post = getIntent().getStringExtra("POST");
+        mMessage = (EditText) findViewById(R.id.message);
+        mTitle = (EditText) findViewById(R.id.title);
+        progressDialogContext = this;
 
         uploadButton = (Button) findViewById(R.id.uploadButton);
         messageText = (TextView) findViewById(R.id.messageText);
 
-        messageText.setText("Uploading file path :- "+post + "'");
+        messageText.setText("Uploading file path :- " + post + "'");
 
         /************* Php script path ****************/
         upLoadServerUri = "http://revacounselling.16mb.com/u2s.php";
@@ -146,7 +146,7 @@ public class UploadToServer extends Activity {
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\"" + fileName + "\"" + lineEnd);
 
-                        dos.writeBytes(lineEnd);
+                dos.writeBytes(lineEnd);
 
                 // create a buffer of  maximum size
                 bytesAvailable = fileInputStream.available();
@@ -183,12 +183,10 @@ public class UploadToServer extends Activity {
                         public void run() {
 
                             String msg = "File Upload Completed.\n\n See uploaded file here : \n\n"
-                                    + " http://revacounselling.16mb.com/uploads"
-                                    ;
+                                    + " http://revacounselling.16mb.com/uploads";
 
                             messageText.setText(msg);
-                            Toast.makeText(UploadToServer.this, "File Upload Complete.",
-                                    Toast.LENGTH_SHORT).show();
+
                             afterFinishUploading(fileName);
                         }
                     });
@@ -233,13 +231,13 @@ public class UploadToServer extends Activity {
         } // End else block
     }
 
-    public void afterFinishUploading(String filename){
+    public void afterFinishUploading(String filename) {
 
-        title=mTitle.getText().toString();
-        message=mMessage.getText().toString();
-        fn=filename;
+        title = mTitle.getText().toString();
+        message = mMessage.getText().toString();
+        fn = filename;
 
-        UploadNotes uploadNotes=new UploadNotes();
+        UploadNotes uploadNotes = new UploadNotes();
         uploadNotes.execute();
 
     }
@@ -247,9 +245,8 @@ public class UploadToServer extends Activity {
     private class UploadNotes extends AsyncTask<Void, Void, Integer> {
 
 
-
         protected void onPreExecute() {
-            pd =new ProgressDialog(progressDialogContext);
+            pd = new ProgressDialog(progressDialogContext);
             pd.setTitle("Logging...");
             pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pd.setMessage("Please wait.");
@@ -260,16 +257,16 @@ public class UploadToServer extends Activity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                int random = (int )(Math.random() * 5000 + 1);
-                String notesid= String.valueOf(random);
-                URL url = new URL(Constants.URLs.LOGIN);
+                int random = (int) (Math.random() * 5000 + 1);
+                String notesid = String.valueOf(random);
+                URL url = new URL(Constants.URLs.NOTES);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("id",notesid ).appendQueryParameter("title",title ).appendQueryParameter("message",message).appendQueryParameter("filename",fn);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("id", notesid).appendQueryParameter("title", title).appendQueryParameter("message", message).appendQueryParameter("filename", fn);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -286,9 +283,9 @@ public class UploadToServer extends Activity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server",jsonResults.toString());
+                Log.d("return from server", jsonResults.toString());
 
-                responcess=jsonResults.toString();
+                responcess = jsonResults.toString();
 
 
                 return 1;
@@ -299,11 +296,18 @@ public class UploadToServer extends Activity {
 
             return 1;
         }
+
         protected void onPostExecute(Integer result) {
-            if (pd!=null) {
+            if (pd != null) {
                 pd.dismiss();
             }
-            Toast.makeText(getApplicationContext(),responcess,Toast.LENGTH_SHORT).show();
+            responcess = responcess.trim();
+            responcess = responcess.replace("\\t", "");
+            if (responcess.equals("success")) {
+                Toast.makeText(getApplicationContext(), responcess, Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(),"File Uploaded but Not Entered in Database",Toast.LENGTH_SHORT).show();
+            }
             finish();
 
         }

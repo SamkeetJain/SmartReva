@@ -60,7 +60,10 @@
         <activity android:name=".Fees.FeesMainActivity" />
         <activity android:name=".AlumniCell.AlumniCellActivity" />
         <activity android:name=".SplashActivity" />
-        <activity android:name=".Events.EventManager"></activity>
+        <activity android:name=".Events.EventManager" />
+        <activity android:name=".Events.MemberListActivity"
+            android:label=""
+            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
     </application>
 
 </manifest>

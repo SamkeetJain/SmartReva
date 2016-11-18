@@ -30,6 +30,8 @@ public class Constants {
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
         public static String EVENTMANAGER = "http://revacounselling.16mb.com/EventManager.php";
         public static String FEE = "http://revacounselling.16mb.com/Fee.php";
+        public static String NOTES = "http://revacounselling.16mb.com/uploadNotes.php";
+        public static String GETNOTES = "http://revacounselling.16mb.com/viewNotes.php";
 
 
 
