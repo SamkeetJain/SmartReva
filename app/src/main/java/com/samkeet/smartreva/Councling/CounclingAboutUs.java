@@ -1,18 +1,24 @@
 package com.samkeet.smartreva.Councling;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.samkeet.smartreva.AlumniCell.UploadActivity;
 import com.samkeet.smartreva.Constants;
 
 public class CounclingAboutUs extends AppCompatActivity {
+
+    public Button uploadDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,5 +44,10 @@ public class CounclingAboutUs extends AppCompatActivity {
         });
 
         webview.loadUrl(Constants.URLs.ABOUTUS);
+    }
+
+    public void UploadDetails(View v){
+        Intent intent=new Intent(getApplicationContext(), UploadActivity.class);
+        startActivity(intent);
     }
 }

@@ -5,15 +5,10 @@
     android:id="@+id/activity_alumini_cell"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lavender"
     tools:context="com.samkeet.smartreva.AlumniCell.AlumniCellActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/apppppp"
-        android:background="@color/lavender"
-        >
-    </LinearLayout>
+
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/apppppp"
@@ -72,4 +67,26 @@
 
 
     </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:layout_below="@id/apppppp">
+
+        <WebView
+            android:layout_width="match_parent"
+            android:id="@+id/webview"
+            android:layout_height="wrap_content">
+
+        </WebView>
+
+        <Button
+            android:layout_width="match_parent"
+            android:padding="15dp"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="Upload Details"
+            android:onClick="UploadDetails"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </RelativeLayout>
