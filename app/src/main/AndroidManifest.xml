@@ -61,9 +61,7 @@
         <activity android:name=".AlumniCell.AlumniCellActivity" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".Events.EventManager" />
-        <activity android:name=".Events.MemberListActivity"
-            android:label=""
-            android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+        <activity android:name=".AlumniCell.UploadActivity"></activity>
     </application>
 
 </manifest>
