@@ -28,7 +28,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
     public final static int GET_SUBJECT_LIST = 101;
     public final static int GET_CLASS_LIST = 102;
 
-    public Button TakeAttendence, ViewAttendence, GenerateAttendenceReport;
+    public Button TakeAttendence, ViewAttendence, AbsentDetails, GenerateAttendenceReport;
 
     private ProgressDialog pd;
     private Context progressDialogContext;
@@ -37,6 +37,9 @@ public class AttendenceMainActivity extends AppCompatActivity {
     String results;
     String subject_value;
     String class_value;
+
+    public boolean authenticationError;
+    public String errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,13 @@ public class AttendenceMainActivity extends AppCompatActivity {
         TakeAttendence = (Button) findViewById(R.id.take_attendence_button);
         ViewAttendence = (Button) findViewById(R.id.view_attendence_button);
         GenerateAttendenceReport = (Button) findViewById(R.id.generate_attendence_report_button);
+        AbsentDetails = (Button) findViewById(R.id.absent_details);
 
+    }
+
+    public void AbsentDetails(View v){
+        GetStudentAuthentication2 getStudentAuthentication = new GetStudentAuthentication2();
+        getStudentAuthentication.execute();
     }
 
     public void TakeAttendence(View v) {
@@ -91,7 +100,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.AUTHENTICATION);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.AUTHENTICATION);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -116,9 +125,22 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
-                JSONObject jsonObject = new JSONObject(jsonResults.toString());
-                results = jsonObject.getString("status");
 
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
+                    // Create a JSON object hierarchy from the results
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if(status.equals("success")){
+
+                    }else {
+                        authenticationError = true;
+                        errorMessage = status;
+                    }
+                }
 
                 return 1;
 
@@ -133,12 +155,12 @@ public class AttendenceMainActivity extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if (results.equals("true")) {
+            if(authenticationError){
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
+            }else{
                 GetGeneralList getGeneralList = new GetGeneralList();
-                type = "subject_list";
+                type = "subject_code";
                 getGeneralList.execute();
-            } else {
-                Toast.makeText(getApplicationContext(), "You are not Autherised for this task!!!", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -159,7 +181,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.AUTHENTICATION);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.AUTHENTICATION);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -184,8 +206,22 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
-                JSONObject jsonObject = new JSONObject(jsonResults.toString());
-                results = jsonObject.getString("status");
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
+                    // Create a JSON object hierarchy from the results
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if(status.equals("success")){
+
+                    }else {
+                        authenticationError = true;
+                        errorMessage = status;
+                    }
+                }
 
 
                 return 1;
@@ -201,12 +237,92 @@ public class AttendenceMainActivity extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if (results.equals("true")) {
+            if(authenticationError){
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
+            }else{
                 Intent intent =new Intent(getApplicationContext(),ViewAttendence.class);
                 startActivity(intent);
+            }
 
-            } else {
-                Toast.makeText(getApplicationContext(), "You are not Autherised for this task!!!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private class GetStudentAuthentication2 extends AsyncTask<Void, Void, Integer> {
+
+
+        protected void onPreExecute() {
+            pd = new ProgressDialog(progressDialogContext);
+            pd.setTitle("Loading...");
+            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pd.setMessage("Please wait.");
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.AUTHENTICATION);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Log.d("POST", "DATA ready to sent");
+
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("type", "student");
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+                Log.d("POST", _data.toString());
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                Log.d("return from server", jsonResults.toString());
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
+                    // Create a JSON object hierarchy from the results
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if(status.equals("success")){
+
+                    }else {
+                        authenticationError = true;
+                        errorMessage = status;
+                    }
+                }
+
+
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if(authenticationError){
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
+            }else{
+                Intent intent =new Intent(getApplicationContext(),AbsentDetails.class);
+                startActivity(intent);
             }
 
         }
@@ -227,7 +343,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.GENERALLIST);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.GENERALLIST);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -253,7 +369,13 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                results = jsonResults.toString();
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
+                    results = jsonResults.toString();
+                }
 
                 return 1;
 
@@ -269,16 +391,17 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            if (results.length() > 0) {
+            if(authenticationError){
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
+            }else{
                 Intent intent = new Intent(getApplicationContext(), GeneralListActivity.class);
                 intent.putExtra("RESULTS", results);
-                if (type.equals("subject_list")) {
+                intent.putExtra("TYPE",type);
+                if (type.equals("subject_code")) {
                     startActivityForResult(intent, GET_SUBJECT_LIST);
-                }else if(type.equals(("class_list"))){
+                }else if(type.equals(("class_code"))){
                     startActivityForResult(intent,GET_CLASS_LIST);
                 }
-            } else {
-                Toast.makeText(getApplicationContext(), "No Data Found", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -291,7 +414,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 subject_value = data.getStringExtra("returnValue");
                 subject_value=subject_value.trim();
                 subject_value=subject_value.replaceAll("\\t","");
-                type = "class_list";
+                type = "class_code";
                 GetGeneralList getGeneralList = new GetGeneralList();
                 getGeneralList.execute();
             }
@@ -301,6 +424,8 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 class_value=class_value.trim();
                 class_value=class_value.replaceAll("\\t","");
                 Intent intent = new Intent(getApplicationContext(), TakeAttendence.class);
+                intent.putExtra("CLASSCODE",class_value);
+                intent.putExtra("SUBJECTCODE",subject_value);
                 intent.putExtra("TABLE", class_value+"_"+subject_value);
                 startActivity(intent);
             }

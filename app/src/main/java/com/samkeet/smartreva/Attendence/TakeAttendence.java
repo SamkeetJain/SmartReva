@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,15 +18,19 @@ import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class TakeAttendence extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class TakeAttendence extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -34,13 +39,17 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
     private Context progressDialogContext;
     public ProgressDialog pd;
 
-    public String table;
+    public String class_code, subject_code;
     public String studentsList[];
 
     public String datetext;
     public TextView dateView;
-    public String finalValues,finalFields;
+    public EditText period;
+    public String finalValues, finalFields;
 
+    public boolean authenticationError;
+    public String errorMessage;
+    public String periodNo;
     String res;
 
     @Override
@@ -53,11 +62,13 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         progressDialogContext = this;
-        dateView= (TextView) findViewById(R.id.date);
+        dateView = (TextView) findViewById(R.id.date);
+        period = (EditText) findViewById((R.id.period));
 
-        table = getIntent().getStringExtra("TABLE");
+        class_code = getIntent().getStringExtra("CLASSCODE");
+        subject_code = getIntent().getStringExtra("SUBJECTCODE");
 
-        GetStudentsList getStudentsList=new GetStudentsList();
+        GetStudentsList getStudentsList = new GetStudentsList();
         getStudentsList.execute();
 
     }
@@ -69,12 +80,12 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String temp;
-        if(dayOfMonth<10){
-            temp="0"+dayOfMonth;
-        }else {
-            temp=""+dayOfMonth;
+        if (dayOfMonth < 10) {
+            temp = "0" + dayOfMonth;
+        } else {
+            temp = "" + dayOfMonth;
         }
-        String date=""+temp+"/"+(++monthOfYear)+"/"+year;
+        String date = "" + temp + "-" + (++monthOfYear) + "-" + year;
         dateView.setText(date);
     }
 
@@ -93,14 +104,14 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.GETSTUDENTLIST);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.GET_STUDENTLIST);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("table", table);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("classCode", class_code).appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -119,8 +130,18 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                String temp=jsonResults.toString();
-                studentsList=temp.split("\\|");
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                    studentsList = new String[jsonArray.length()];
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        studentsList[i] = jsonObject.getString("UserID");
+                    }
+                }
                 return 1;
 
             } catch (Exception ex) {
@@ -134,52 +155,49 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
             if (pd != null) {
                 pd.dismiss();
             }
-            ArrayList<String> arrayList=new ArrayList<String>();
-            for(int i=0;i<studentsList.length;i++){
-                arrayList.add(studentsList[i]);
+
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+
+                mAdapter = new TakeAttendenceAdapter(studentsList);
+                mRecyclerView.setAdapter(mAdapter);
             }
-
-            arrayList.remove(arrayList.size()-1);
-            arrayList.remove(0);
-
-            String[] newList=arrayList.toArray(new String[arrayList.size()]);
-
-            mAdapter = new TakeAttendenceAdapter(newList);
-            mRecyclerView.setAdapter(mAdapter);
 
 
         }
     }
 
-    public void Submit(View v){
-        datetext=dateView.getText().toString();
-        boolean check[]=((TakeAttendenceAdapter) mAdapter).getCheckBoxes();
-        String values[]=new String[check.length];
-        for(int i=0;i<check.length;i++){
-            if(check[i]==true){
-                values[i]="p";
-            }else if(check[i]==false){
-                values[i]="a";
+    public void Submit(View v) {
+        periodNo = period.getText().toString();
+        datetext = dateView.getText().toString();
+        boolean check[] = ((TakeAttendenceAdapter) mAdapter).getCheckBoxes();
+        String values[] = new String[check.length];
+        for (int i = 0; i < check.length; i++) {
+            if (check[i] == true) {
+                values[i] = "P";
+            } else if (check[i] == false) {
+                values[i] = "A";
             }
         }
-        String []fields= ((TakeAttendenceAdapter)mAdapter).getTitles();
-        String temp=fields[0];
-        for(int i=1;i<fields.length;i++){
-            temp=temp.concat("|"+fields[i]);
+        String[] fields = ((TakeAttendenceAdapter) mAdapter).getTitles();
+        String temp = fields[0];
+        for (int i = 1; i < fields.length; i++) {
+            temp = temp.concat("|" + fields[i]);
         }
-        finalFields=temp;
-        temp=values[0];
-        for(int i=1;i<values.length;i++){
-            temp=temp.concat("|"+values[i]);
+        finalFields = temp;
+        temp = values[0];
+        for (int i = 1; i < values.length; i++) {
+            temp = temp.concat("|" + values[i]);
         }
-        finalValues=temp;
+        finalValues = temp;
 
-        InsertAttendence insertAttendence=new InsertAttendence();
+        InsertAttendence insertAttendence = new InsertAttendence();
         insertAttendence.execute();
 
     }
 
-    public void Date(View v){
+    public void Date(View v) {
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 TakeAttendence.this,
@@ -208,14 +226,14 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.INSERTINTOATTENDENCE);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.PUT_ATTENDANCE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("table", table).appendQueryParameter("date",datetext).appendQueryParameter("value",finalValues).appendQueryParameter("field",finalFields);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("period", periodNo).appendQueryParameter("subjectCode", subject_code).appendQueryParameter("ddate", datetext).appendQueryParameter("classCode",class_code).appendQueryParameter("statusList", finalValues).appendQueryParameter("userIDList", finalFields);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -233,7 +251,19 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
-                res=jsonResults.toString();
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObject=new JSONObject(jsonResults.toString());
+                    res=jsonObject.getString("status");
+                    if(!res.equals("success")) {
+                        authenticationError=true;
+                        errorMessage=res;
+                    }
+                }
 
 
             } catch (Exception ex) {
@@ -247,13 +277,14 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
             if (pd != null) {
                 pd.dismiss();
             }
-            res=res.replaceAll("\\t","");
-            if(res.equals("")){
-                Toast.makeText(getApplicationContext(),"Attendence Uploaded",Toast.LENGTH_SHORT).show();
-                finish();
-            }
 
-        }
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                    Toast.makeText(getApplicationContext(), "Attendence Uploaded", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
     }
 
 

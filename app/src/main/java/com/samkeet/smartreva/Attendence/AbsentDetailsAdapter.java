@@ -6,38 +6,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
 
-import java.text.DecimalFormat;
-
 /**
- * Created by Sam on 15-Nov-16.
+ * Created by Sam on 03-Dec-16.
  */
 
-public class ViewAttendenceAdapter extends RecyclerView.Adapter<ViewAttendenceAdapter.ViewHolder> {
+public class AbsentDetailsAdapter extends RecyclerView.Adapter<AbsentDetailsAdapter.ViewHolder> {
 
     private String[] mTitle;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mSubView,mFracView,mPerView;
+        public TextView mSubView,mDateView,mPeriodView,mStatView;
         public ViewHolder(View v) {
             super(v);
             mSubView = (TextView) v.findViewById(R.id.sub);
-            mFracView=(TextView) v.findViewById(R.id.frac);
-            mPerView=(TextView) v.findViewById(R.id.per);
+            mDateView = (TextView) v.findViewById(R.id.date);
+            mPeriodView = (TextView) v.findViewById(R.id.period);
+            mStatView = (TextView) v.findViewById(R.id.stat);
         }
     }
-    public ViewAttendenceAdapter(String[] mTitle) {
+    public AbsentDetailsAdapter(String[] mTitle) {
         this.mTitle = mTitle;
-
     }
 
     @Override
-    public ViewAttendenceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AbsentDetailsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_view_attendence, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_absent_details, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -46,17 +43,17 @@ public class ViewAttendenceAdapter extends RecyclerView.Adapter<ViewAttendenceAd
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String sub,frac,per;
+
         String list[]=mTitle[position].split("\\|");
-        sub=list[0];
-        frac=list[2]+"/"+list[3];
-        double d=(Double.parseDouble(list[2]))/(Double.parseDouble(list[3]));
-        DecimalFormat df = new DecimalFormat("#.##");
-        per = String.valueOf(Double.valueOf(df.format(d)));
+        String sub= list[0];
+        String date= list[1];
+        String per= list[2];
+        String stat= list[3];
 
         holder.mSubView.setText(sub);
-        holder.mFracView.setText(frac);
-        holder.mPerView.setText(per);
+        holder.mDateView.setText(date);
+        holder.mPeriodView.setText(per);
+        holder.mStatView.setText(stat);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

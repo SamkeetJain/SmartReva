@@ -19,12 +19,14 @@ import static android.content.Context.MODE_PRIVATE;
 public class Constants {
 
     public static class URLs {
-        public static String LOGIN = "http://revacounselling.16mb.com/reva_login.php";
-        public static String AUTHENTICATION = "http://revacounselling.16mb.com/getAuthentication.php";
-        public static String GENERALLIST = "http://revacounselling.16mb.com/getGeneralList.php";
-        public static String GETSTUDENTLIST = "http://revacounselling.16mb.com/getStudentsList.php";
-        public static String INSERTINTOATTENDENCE = "http://revacounselling.16mb.com/insertIntoAttendence.php";
-        public static String GETATTENDENCE = "http://revacounselling.16mb.com/getMyAttendence.php";
+        public static String BASE = "http://revacounselling.16mb.com/";
+        public static String LOGIN = "login.php";
+        public static String AUTHENTICATION = "authenticaton.php";
+        public static String GENERALLIST = "get_generalList.php";
+        public static String GET_STUDENTLIST = "get_studentList.php";
+        public static String PUT_ATTENDANCE = "put_attendance.php";
+        public static String GET_ATTENDANCE = "get_attendance_percent.php";
+        public static String GET_ATTENDANCE_DETAILS = "get_attendance_details.php";
         public static String GETALLEVENTS = "http://revacounselling.16mb.com/getAllEvents.php";
         public static String NEWEVENT = "http://revacounselling.16mb.com/newEvent.php";
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
@@ -144,7 +146,5 @@ public class Constants {
             AVALIBILITY.clear();
         }
     }
-
-    public static String[] subjectlist={"btcs14f5100","btcs14f5200","btcs14f5300","btcs14f5400","btcs14f5500","btcs14f5650","btcs14f5660","btcs14f5700","btcs14f5800"};
 
 }

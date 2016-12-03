@@ -32,6 +32,8 @@ public class LoginActivity extends AppCompatActivity {
     public Context progressDialogContext;
 
     public String token;
+    public boolean authenticationError;
+    public String errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,14 +72,14 @@ public class LoginActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                URL url = new URL(Constants.URLs.LOGIN);
+                URL url = new URL(Constants.URLs.BASE+Constants.URLs.LOGIN);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("user_ID",susn ).appendQueryParameter("password",spassword );
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("UserID",susn ).appendQueryParameter("Password",spassword );
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -96,9 +98,21 @@ public class LoginActivity extends AppCompatActivity {
                 connection.disconnect();
                 Log.d("return from server",jsonResults.toString());
 
-                // Create a JSON object hierarchy from the results
-                JSONObject jsonObj = new JSONObject(jsonResults.toString());
-                token=jsonObj.getString("token");
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
+                    // Create a JSON object hierarchy from the results
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if(status.equals("success")){
+                        token = jsonObj.getString("token");
+                    }else {
+                        authenticationError = true;
+                        errorMessage = status;
+                    }
+                }
 
                 return 1;
 
@@ -112,16 +126,14 @@ public class LoginActivity extends AppCompatActivity {
             if (pd!=null) {
                 pd.dismiss();
             }
-            if(token.equals("false")){
-                Toast.makeText(getApplicationContext(),"Authentication FAILED!!!",Toast.LENGTH_SHORT).show();
-                finish();
-            }else {
+            if(authenticationError){
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
+            }else{
+
                 Constants.SharedPreferenceData.setIsLoggedIn(token);
                 Constants.SharedPreferenceData.setTOKEN(token);
                 Constants.SharedPreferenceData.setUserId(susn);
 
-                Constants.UserData.setUserId(susn);
-                Constants.UserData.setTOKEN(token);
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();

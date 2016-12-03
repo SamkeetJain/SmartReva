@@ -2,7 +2,6 @@ package com.samkeet.smartreva.Attendence;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.samkeet.smartreva.Constants;
@@ -24,19 +22,19 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
-public class ViewAttendence extends AppCompatActivity {
-
-    public String token;
-    private ProgressDialog pd;
-    private Context progressDialogContext;
+public class AbsentDetails extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ArrayList<String> list = new ArrayList<String>();
+    private Context progressDialogContext;
+    public ProgressDialog pd;
+
+    public String results;
+    public String type;
+    public String titles[];
 
     public boolean authenticationError;
     public String errorMessage;
@@ -44,25 +42,19 @@ public class ViewAttendence extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_attendence);
-        progressDialogContext = this;
+        setContentView(R.layout.activity_absent_details);
 
+        progressDialogContext = this;
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        GetMyAttendence getMyAttendence = new GetMyAttendence();
-        getMyAttendence.execute();
-
-
+        GetAbsentDetails getAbsentDetails=new GetAbsentDetails();
+        getAbsentDetails.execute();
     }
 
-    public void BackButton(View v) {
-        finish();
-    }
-
-    private class GetMyAttendence extends AsyncTask<Void, Void, Integer> {
+    private class GetAbsentDetails extends AsyncTask<Void, Void, Integer> {
 
         protected void onPreExecute() {
             pd = new ProgressDialog(progressDialogContext);
@@ -76,7 +68,7 @@ public class ViewAttendence extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.GET_ATTENDANCE);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.GET_ATTENDANCE_DETAILS);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -108,13 +100,16 @@ public class ViewAttendence extends AppCompatActivity {
                     errorMessage = jsonResults.toString();
                 } else {
                     JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                    titles = new String[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String date = jsonObject.getString("ddate");
+                        String stat = jsonObject.getString("status");
                         String sub = jsonObject.getString("subject_code");
-                        String ab = jsonObject.getString("abesnt");
-                        String pr = jsonObject.getString("present");
-                        String tot = jsonObject.getString("total");
-                        list.add(sub + "|" + ab + "|" + pr + "|" + tot);
+                        String per = jsonObject.getString("period_no");
+                        if(stat.equals("A") || (stat.equals("a"))) stat = "ABSENT";
+                        if(stat.equals("P") || (stat.equals("p"))) stat = "PRESENT";
+                        titles[i] = (sub + "|" + date + "|" + per + "|" + stat);
                     }
                 }
 
@@ -132,11 +127,10 @@ public class ViewAttendence extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else{
-                String lists[] = list.toArray(new String[list.size()]);
-                mAdapter = new ViewAttendenceAdapter(lists);
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                mAdapter = new AbsentDetailsAdapter(titles);
                 mRecyclerView.setAdapter(mAdapter);
             }
 

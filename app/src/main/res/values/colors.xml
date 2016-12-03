@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary1">#5f6374</color>
+    <color name="colorPrimaryDark1">#ed9d3a</color>
+    <color name="colorAccent1">#ffa332</color>
     <color name="colorPrimary">#5f6374</color>
     <color name="colorPrimaryDark">#ed9d3a</color>
-    <color name="colorAccent">#ffa332</color>
+    <color name="colorAccent">#FF9800</color>
     <color name="colorPrimaryLight">#f1c07c</color>
-    <color name="lavender">#f7f7fd</color>
+    <color name="lavender">#FAFAFA</color>
 
 </resources>

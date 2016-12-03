@@ -14,6 +14,10 @@ import android.view.View;
 
 import com.samkeet.smartreva.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class GeneralListActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -24,6 +28,8 @@ public class GeneralListActivity extends AppCompatActivity {
     public ProgressDialog pd;
 
     public String results;
+    public String type;
+    public String titles[]=null;
     public String returnValue;
 
     @Override
@@ -39,10 +45,20 @@ public class GeneralListActivity extends AppCompatActivity {
 
 
         results=getIntent().getStringExtra("RESULTS");
-        results.replaceAll("\\t", "");
-        final String titles[]=results.split("\\|");
+        type=getIntent().getStringExtra("TYPE");
 
 
+        try {
+            JSONArray jsonArray = new JSONArray(results);
+            titles = new String[jsonArray.length()];
+            for(int i=0;i<jsonArray.length();i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String value = jsonObject.getString(type);
+                titles[i]=value;
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         final GestureDetector mGestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
