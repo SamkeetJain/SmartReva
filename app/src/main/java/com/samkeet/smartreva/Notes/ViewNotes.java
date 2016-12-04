@@ -36,6 +36,9 @@ public class ViewNotes extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    public boolean authenticationError;
+    public String errorMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,16 +74,20 @@ public class ViewNotes extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                int random = (int) (Math.random() * 5000 + 1);
-                String notesid = String.valueOf(random);
-                URL url = new URL(Constants.URLs.GETNOTES);
+                String original = "http://revacounselling.16mb.com/notes.php";
+                String derived = Constants.URLs.BASE + Constants.URLs.NOTESS;
+                URL url = new URL(Constants.URLs.BASE + Constants.URLs.NOTESS);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("id", notesid);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type","get")
+                        .appendQueryParameter("title","NAN")
+                        .appendQueryParameter("message","NAN")
+                        .appendQueryParameter("filename","NAN");
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -99,21 +106,25 @@ public class ViewNotes extends AppCompatActivity {
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                JSONArray jsonArray = new JSONArray(jsonResults.toString());
-                mNotesID = new String[jsonArray.length()];
-                mMessage = new String[jsonArray.length()];
-                mFilename = new String[jsonArray.length()];
-                mTitle = new String[jsonArray.length()];
-                notesObjects=new JSONObject[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    notesObjects[i]=jsonArray.getJSONObject(i);
-                    mNotesID[i] = jsonObject.getString("notes_id");
-                    mMessage[i] = jsonObject.getString("message");
-                    mTitle[i] = jsonObject.getString("title");
-                    mFilename[i] = jsonObject.getString("filename");
-                }
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
 
+                    JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                    mNotesID = new String[jsonArray.length()];
+                    mMessage = new String[jsonArray.length()];
+                    mFilename = new String[jsonArray.length()];
+                    mTitle = new String[jsonArray.length()];
+                    notesObjects = new JSONObject[jsonArray.length()];
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        notesObjects[i] = jsonArray.getJSONObject(i);
+                        mNotesID[i] = jsonObject.getString("Id");
+                        mMessage[i] = jsonObject.getString("message");
+                        mTitle[i] = jsonObject.getString("title");
+                        mFilename[i] = jsonObject.getString("filename");
+                    }
+                }
 
                 return 1;
 

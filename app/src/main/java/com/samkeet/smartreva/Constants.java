@@ -32,21 +32,11 @@ public class Constants {
         public static String COUNC_RESERVATIONS="counc_reservations.php";
         public static String EVENTS = "events.php";
         public static String EVENTMANAGER = "eventManager.php";
-        public static String NOTES = "notes.php";
+        public static String NOTESS = "notes.php";
+        public static String ALUMNI = "alumni.php";
 
-        public static String NEWEVENT = "http://revacounselling.16mb.com/newEvent.php";
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
-        public static String ALUMNI = "http://revacounselling.16mb.com/alumini.html";
         public static String FEE = "http://revacounselling.16mb.com/Fee.php";
-        public static String GETNOTES = "http://revacounselling.16mb.com/viewNotes.php";
-
-
-
-        public static String GET_WALL_POSTS="http://revacounselling.16mb.com/getWallPosts.php";
-        public static String GET_RESERVATION_DETAILS="http://revacounselling.16mb.com/getReservationDetails.php";
-        public static String MAKE_APPOINTMENTS="http://revacounselling.16mb.com//makeAppoint.php";
-        public static String SEND_NEW_POST="http://revacounselling.16mb.com//newWallPost.php";
-
     }
 
     public static class UserData {

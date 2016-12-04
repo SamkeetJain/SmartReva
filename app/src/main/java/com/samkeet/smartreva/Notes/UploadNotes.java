@@ -44,7 +44,7 @@ public class UploadNotes extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), UploadToServer.class);
                 intent.putExtra("POST",loc);
                 startActivity(intent);
-//            }
-        }
+           }
+//        }
     }
 }

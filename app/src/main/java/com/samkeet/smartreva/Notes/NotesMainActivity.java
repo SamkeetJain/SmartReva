@@ -76,7 +76,7 @@ public class NotesMainActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.AUTHENTICATION);
+                java.net.URL url = new URL("http://revacounselling.16mb.com/authenticaton.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);

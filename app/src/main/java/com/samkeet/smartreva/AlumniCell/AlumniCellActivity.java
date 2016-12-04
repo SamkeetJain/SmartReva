@@ -40,7 +40,7 @@ public class AlumniCellActivity extends AppCompatActivity {
             }
         });
 
-        webview.loadUrl(Constants.URLs.ALUMNI);
+        webview.loadUrl(Constants.URLs.ABOUTUS);
     }
     public void BackButton(View v){
         finish();

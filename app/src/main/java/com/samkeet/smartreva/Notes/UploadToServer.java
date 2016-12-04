@@ -261,7 +261,7 @@ public class UploadToServer extends Activity {
         protected Integer doInBackground(Void... params) {
             try {
 
-                URL url = new URL(Constants.URLs.BASE + Constants.URLs.NOTES);
+                URL url = new URL("http://revacounselling.16mb.com/notes.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -269,7 +269,7 @@ public class UploadToServer extends Activity {
                 Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
-                        .appendQueryParameter("type","put")
+                        .appendQueryParameter("type", "put")
                         .appendQueryParameter("title", title)
                         .appendQueryParameter("message", message)
                         .appendQueryParameter("filename", fn);
@@ -291,10 +291,21 @@ public class UploadToServer extends Activity {
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
+                authenticationError = jsonResults.toString().contains("Authentication Error");
 
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
 
-                responcess = jsonResults.toString();
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    responcess = jsonObj.getString("status");
+                    if(responcess.equals("success")){
 
+                    }else {
+                        authenticationError = true;
+                        errorMessage = responcess;
+                    }
+                }
 
                 return 1;
 
@@ -309,12 +320,10 @@ public class UploadToServer extends Activity {
             if (pd != null) {
                 pd.dismiss();
             }
-            responcess = responcess.trim();
-            responcess = responcess.replace("\\t", "");
-            if (responcess.equals("success")) {
-                Toast.makeText(getApplicationContext(), responcess, Toast.LENGTH_SHORT).show();
-            }else {
-                Toast.makeText(getApplicationContext(),"File Uploaded but Not Entered in Database",Toast.LENGTH_SHORT).show();
+            if(authenticationError){
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
             }
             finish();
 
