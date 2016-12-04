@@ -174,11 +174,16 @@ public class CounclingMainActivity extends AppCompatActivity implements SwipeRef
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         swipeRefreshLayout.setOnRefreshListener(this);
+        if (validation1()) {
+            GetWallPosts getWallPosts = new GetWallPosts();
+            getWallPosts.execute();
+        }
 
-        GetWallPosts getWallPosts = new GetWallPosts();
-        getWallPosts.execute();
 
+    }
 
+    public boolean validation1() {
+        return true;
     }
 
     @Override
@@ -188,8 +193,10 @@ public class CounclingMainActivity extends AppCompatActivity implements SwipeRef
     }
 
     public void refreshData() {
-        GetWallPosts getWallPosts = new GetWallPosts();
-        getWallPosts.execute();
+        if (validation1()) {
+            GetWallPosts getWallPosts = new GetWallPosts();
+            getWallPosts.execute();
+        }
     }
 
     public class GetWallPosts extends AsyncTask<Void, Void, Integer> {

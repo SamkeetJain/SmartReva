@@ -54,9 +54,14 @@ public class CounclingMyAppointment extends AppCompatActivity {
 
         progressDialogContext=this;
 
-        GetMyAppoitnments getMyAppoitnments=new GetMyAppoitnments();
-        getMyAppoitnments.execute();
+        if(validation()){
+            GetMyAppoitnments getMyAppoitnments=new GetMyAppoitnments();
+            getMyAppoitnments.execute();
+        }
 
+    }
+    public boolean validation() {
+        return true;
     }
 
     public void GoBack(View v) {

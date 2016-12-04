@@ -59,10 +59,27 @@ public class CounclingNewPost extends AppCompatActivity {
         title=mTitle.getText().toString();
         datetext = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 
-        SendNewPost sendNewPost=new SendNewPost();
-        sendNewPost.execute();
+        if(validation()){
+            SendNewPost sendNewPost=new SendNewPost();
+            sendNewPost.execute();
+        }
     }
 
+    public boolean validation(){
+        if (!(datetext.length() <= 20) && (datetext.length()>= 1)) {
+            Toast.makeText(getApplicationContext(), "Title should be less than 20 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!(desc.length() <= 1000) && (desc.length()>= 1)) {
+            Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!(title.length() <= 60) && (title.length()>= 1)) {
+            Toast.makeText(getApplicationContext(), "Message should be less than 60 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
     public class SendNewPost extends AsyncTask<Void, Void, Integer> {
 
 
