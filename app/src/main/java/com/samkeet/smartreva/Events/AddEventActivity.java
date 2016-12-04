@@ -60,11 +60,31 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         dates = mDates.getText().toString();
         desc = mDesc.getText().toString();
 
-        NewEvent newEvent = new NewEvent();
-        newEvent.execute();
-
+        if(validation()) {
+            NewEvent newEvent = new NewEvent();
+            newEvent.execute();
+        }
     }
 
+    public boolean validation(){
+        if (!(name.length() <= 60) && (name.length()>= 1)) {
+            Toast.makeText(getApplicationContext(), "Title should be less than 60 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!(dates.length() <= 20) && (dates.length()>= 1)) {
+            Toast.makeText(getApplicationContext(), "Title should be less than 20 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!(type.length() <= 60) && (type.length()>= 1)) {
+            Toast.makeText(getApplicationContext(), "Title should be less than 60 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!(desc.length() <= 5000) && (desc.length()>= 1)) {
+            Toast.makeText(getApplicationContext(), "Title should be less than 5000 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
     public void DateButton(View v) {
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -114,7 +134,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
-                        .appendQueryParameter("requestType","add")
+                        .appendQueryParameter("requestType", "add")
                         .appendQueryParameter("name", name)
                         .appendQueryParameter("date", dates)
                         .appendQueryParameter("type", type)
