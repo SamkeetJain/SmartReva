@@ -18,6 +18,8 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import org.json.JSONObject;
+
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -38,6 +40,8 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
 
     public String response;
 
+    public boolean authenticationError;
+    public String errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,13 +82,14 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String fullDate;
         if (dayOfMonth < 10)
-            fullDate = "0" + dayOfMonth + " / " + (++monthOfYear) + " / " + year;
+            fullDate = "0" + dayOfMonth + "-" + (++monthOfYear) + "-" + year;
         else
-            fullDate = dayOfMonth + " / " + (++monthOfYear) + " / " + year;
+            fullDate = dayOfMonth + "-" + (++monthOfYear) + "-" + year;
 
         date.setText(fullDate);
 
         Intent intent=new Intent(getApplicationContext(),CounclingTimePickActivity.class);
+        intent.putExtra("DATE",fullDate);
         startActivityForResult(intent,101);
 
     }
@@ -95,7 +100,7 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
 
             if(resultCode==RESULT_OK){
                 result=data.getStringExtra("result");
-                time.setText(""+result.charAt(9)+result.charAt(10)+":00");
+                time.setText(""+result.charAt(11)+result.charAt(12)+":00");
             }
             if(requestCode==RESULT_CANCELED){
                 Toast.makeText(getApplicationContext(),"Please Select a Slot", Toast.LENGTH_SHORT).show();
@@ -107,6 +112,7 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
         mtitle=title.getText().toString();
         mSummary=summary.getText().toString();
         mTime=result;
+//        mTime=""+result.charAt(11)+result.charAt(12)+":00";
         usn= Constants.SharedPreferenceData.getUserId();
         MakeAppointment makeAppointment=new MakeAppointment();
         makeAppointment.execute();
@@ -129,16 +135,18 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
         protected Integer doInBackground(Void... params) {
             try {
 
-                int random = (int )(Math.random() * 5000 + 1);
-                String appID= String.valueOf(random);
-                URL url = new URL(Constants.URLs.MAKE_APPOINTMENTS);
+                URL url = new URL(Constants.URLs.BASE + Constants.URLs.COUNC_APPOINTMENTS);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("usn",usn).appendQueryParameter("title",mtitle).appendQueryParameter("message",mSummary).appendQueryParameter("resID",mTime).appendQueryParameter("appID",appID);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type","make")
+                        .appendQueryParameter("title",mtitle)
+                        .appendQueryParameter("message",mSummary)
+                        .appendQueryParameter("reserID",mTime);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -157,8 +165,16 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                response=jsonResults.toString();
-
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
+                    JSONObject jsonObject=new JSONObject(jsonResults.toString());
+                    response = jsonObject.getString("status");
+                    if(!response.equals("success")){
+                        authenticationError =true;
+                        errorMessage=response;
+                    }
+                }
 
                 return 1;
 
@@ -173,8 +189,11 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
             if (pd != null) {
                 pd.dismiss();
             }
-
-            Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
+            if(authenticationError){
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
+            }else {
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

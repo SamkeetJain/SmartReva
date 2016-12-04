@@ -40,6 +40,9 @@ public class CounclingMyAppointment extends AppCompatActivity {
 
     String results;
 
+    public boolean authenticationError;
+    public String errorMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,16 +79,19 @@ public class CounclingMyAppointment extends AppCompatActivity {
         protected Integer doInBackground(Void... params) {
             try {
 
-                int random = (int )(Math.random() * 5000 + 1);
-                String appID= String.valueOf(random);
-                URL url = new URL(Constants.URLs.GET_APPOINMENTS);
+                URL url = new URL(Constants.URLs.BASE + Constants.URLs.COUNC_APPOINTMENTS);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("usn",Constants.SharedPreferenceData.getUserId());
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type","get")
+                        .appendQueryParameter("reserID","NAN")
+                        .appendQueryParameter("title","NAN")
+                        .appendQueryParameter("message","NAN");
+
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -95,7 +101,6 @@ public class CounclingMyAppointment extends AppCompatActivity {
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
                 StringBuilder jsonResults = new StringBuilder();
-                // Load the results into a StringBuilder
                 int read;
                 char[] buff = new char[1024];
                 while ((read = in.read(buff)) != -1) {
@@ -104,19 +109,22 @@ public class CounclingMyAppointment extends AppCompatActivity {
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                JSONArray jsonArray=new JSONArray(jsonResults.toString());
-                mTitles=new String[jsonArray.length()];
-                mDesc=new String[jsonArray.length()];
-                mDates=new String[jsonArray.length()];
-                for(int i=0;i<jsonArray.length();i++){
-                    JSONObject jsonObject=jsonArray.getJSONObject(i);
-                    mTitles[i]=jsonObject.getString("title");
-                    mDesc[i]=jsonObject.getString("message");
-                    mDates[i]=jsonObject.getString("resID");
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
+                    JSONArray jsonArray=new JSONArray(jsonResults.toString());
+                    mTitles=new String[jsonArray.length()];
+                    mDesc=new String[jsonArray.length()];
+                    mDates=new String[jsonArray.length()];
+                    for(int i=0;i<jsonArray.length();i++){
+                        JSONObject jsonObject=jsonArray.getJSONObject(i);
+                        mTitles[i]=jsonObject.getString("title");
+                        mDesc[i]=jsonObject.getString("message");
+                        mDates[i]=jsonObject.getString("reserID");
+                    }
                 }
-
-
-
 
                 return 1;
 
@@ -132,9 +140,12 @@ public class CounclingMyAppointment extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            mAdapter = new CounclingMyAppointmentAdapter(mTitles,mDesc,mDates);
-            mRecyclerView.setAdapter(mAdapter);
+            if(authenticationError){
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
+            }else {
+                mAdapter = new CounclingMyAppointmentAdapter(mTitles, mDesc, mDates);
+                mRecyclerView.setAdapter(mAdapter);
+            }
         }
     }
-
 }

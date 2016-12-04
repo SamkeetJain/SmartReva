@@ -40,6 +40,11 @@ public class CounclingTimePickActivity extends AppCompatActivity {
 
     public JSONArray jsonArray;
 
+    public boolean authenticationError;
+    public String errorMessage;
+
+    public String fulldate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +52,7 @@ public class CounclingTimePickActivity extends AppCompatActivity {
         setContentView(R.layout.activity_councling_time_pick);
 
         progressDialogContext = this;
+        fulldate = getIntent().getStringExtra("DATE");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -121,14 +127,17 @@ public class CounclingTimePickActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                URL url = new URL(Constants.URLs.GET_RESERVATION_DETAILS);
+                URL url = new URL(Constants.URLs.BASE + Constants.URLs.COUNC_RESERVATIONS);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("usn", "R14cs171");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type","get")
+                        .appendQueryParameter("date",fulldate)
+                        .appendQueryParameter("set","NAN");
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -147,8 +156,11 @@ public class CounclingTimePickActivity extends AppCompatActivity {
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                // Create a JSON object hierarchy from the results
-                jsonArray = new JSONArray(jsonResults.toString());
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
+                    jsonArray = new JSONArray(jsonResults.toString());
+                }
 
                 return 1;
 
@@ -164,20 +176,23 @@ public class CounclingTimePickActivity extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            try {
-                Constants.TimeSlots.clearData();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String slot = jsonObject.getString("resID");
-                    String avalibility = jsonObject.getString("avalibility");
-//                    Constant.TimeSlots.SLOTS.add("" + slot.charAt(9) + slot.charAt(10) + ":00");
-                    Constants.TimeSlots.SLOTS.add(slot);
-                    Constants.TimeSlots.AVALIBILITY.add(avalibility);
+            if(authenticationError){
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
+            }else {
+                try {
+                    Constants.TimeSlots.clearData();
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String slot = jsonObject.getString("reserID");
+                        String avalibility = jsonObject.getString("availability");
+                        Constants.TimeSlots.SLOTS.add(slot);
+                        Constants.TimeSlots.AVALIBILITY.add(avalibility);
+                    }
+                    mAdapter = new CounclingTimePickAdapter(Constants.TimeSlots.SLOTS.toArray(new String[Constants.TimeSlots.SLOTS.size()]), Constants.TimeSlots.AVALIBILITY.toArray(new String[Constants.TimeSlots.AVALIBILITY.size()]));
+                    mRecyclerView.setAdapter(mAdapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                mAdapter = new CounclingTimePickAdapter(Constants.TimeSlots.SLOTS.toArray(new String[Constants.TimeSlots.SLOTS.size()]), Constants.TimeSlots.AVALIBILITY.toArray(new String[Constants.TimeSlots.AVALIBILITY.size()]));
-                mRecyclerView.setAdapter(mAdapter);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }

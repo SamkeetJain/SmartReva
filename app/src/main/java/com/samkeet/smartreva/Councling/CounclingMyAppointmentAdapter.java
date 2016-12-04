@@ -54,7 +54,8 @@ public class CounclingMyAppointmentAdapter extends RecyclerView.Adapter<Counclin
         // - replace the contents of the view with that element
         holder.mTitleView.setText(mTitle[position]);
         holder.mDescView.setText(mDesc[position]);
-        String datetime=""+mDates[position].substring(0,8)+"  @  " +mDates[position].substring(9,11)+":00";
+        String datetime = mDates[position];
+//        String datetime=""+mDates[position].substring(0,8)+"  @  " +mDates[position].substring(9,11)+":00";
         holder.mDateView.setText(datetime);
     }
 

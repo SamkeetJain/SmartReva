@@ -27,12 +27,15 @@ import java.util.Date;
 
 public class CounclingNewPost extends AppCompatActivity {
 
-    public EditText mTitle,mName,mDesc;
+    public EditText mTitle,mDesc;
     public ProgressDialog pd;
     public Context progressDialogContext;
 
-    public String title,name,desc,datetext;
+    public String title,desc,datetext;
     public String responce;
+
+    public boolean authenticationError;
+    public String errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,6 @@ public class CounclingNewPost extends AppCompatActivity {
         progressDialogContext=this;
 
         mTitle= (EditText) findViewById(R.id.title);
-        mName= (EditText) findViewById(R.id.name);
         mDesc= (EditText) findViewById(R.id.message);
 
 
@@ -53,7 +55,6 @@ public class CounclingNewPost extends AppCompatActivity {
     }
 
     public void Send(View v) {
-        name=mName.getText().toString();
         desc=mDesc.getText().toString();
         title=mTitle.getText().toString();
         datetext = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
@@ -78,16 +79,18 @@ public class CounclingNewPost extends AppCompatActivity {
         protected Integer doInBackground(Void... params) {
             try {
 
-                int random = (int )(Math.random() * 5000 + 1);
-                String postID= String.valueOf(random);
-                URL url = new URL(Constants.URLs.SEND_NEW_POST);
+                URL url = new URL(Constants.URLs.BASE + Constants.URLs.COUNC_WALL);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("postID",postID).appendQueryParameter("name",name).appendQueryParameter("date",datetext).appendQueryParameter("message",desc).appendQueryParameter("title",title);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type","add")
+                        .appendQueryParameter("postTime",datetext)
+                        .appendQueryParameter("title",title)
+                        .appendQueryParameter("message",desc);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -105,7 +108,20 @@ public class CounclingNewPost extends AppCompatActivity {
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
-                responce=jsonResults.toString();
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
+                    JSONObject jsonObject= new JSONObject(jsonResults.toString());
+                    responce=jsonObject.getString("status");
+                    if(!responce.equals("success")){
+                        authenticationError=true;
+                        errorMessage=responce;
+                    }
+
+                }
 
                 return 1;
 
@@ -120,13 +136,13 @@ public class CounclingNewPost extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            responce=responce.replaceAll("\\t","");
-            if(!responce.equals("Posted Succesfully")){
-                Toast.makeText(getApplicationContext(),"Error: Post Unsuccessful !!!",Toast.LENGTH_SHORT).show();
+            if(authenticationError){
+                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(getApplicationContext(),responce ,Toast.LENGTH_SHORT).show();
+                finish();
             }
-            finish();
+
         }
     }
 }

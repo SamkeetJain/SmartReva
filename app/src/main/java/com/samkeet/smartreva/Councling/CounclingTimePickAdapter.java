@@ -44,7 +44,7 @@ public class CounclingTimePickAdapter extends RecyclerView.Adapter<CounclingTime
     @Override
     public void onBindViewHolder(CounclingTimePickAdapter.ViewHolder holder, int position) {
 
-        String slot="" + mResId[position].charAt(9) + mResId[position].charAt(10) + ":00";
+        String slot="" + mResId[position].charAt(11) + mResId[position].charAt(12) + ":00";
         holder.ResId.setText(slot);
 
         if (mAvalibility[position].equals("0")){

@@ -27,6 +27,10 @@ public class Constants {
         public static String PUT_ATTENDANCE = "put_attendance.php";
         public static String GET_ATTENDANCE = "get_attendance_percent.php";
         public static String GET_ATTENDANCE_DETAILS = "get_attendance_details.php";
+        public static String COUNC_WALL = "counc_wall.php";
+        public static String COUNC_APPOINTMENTS="counc_appointments.php";
+        public static String COUNC_RESERVATIONS="counc_reservations.php";
+
         public static String GETALLEVENTS = "http://revacounselling.16mb.com/getAllEvents.php";
         public static String NEWEVENT = "http://revacounselling.16mb.com/newEvent.php";
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
@@ -41,7 +45,6 @@ public class Constants {
         public static String GET_WALL_POSTS="http://revacounselling.16mb.com/getWallPosts.php";
         public static String GET_RESERVATION_DETAILS="http://revacounselling.16mb.com/getReservationDetails.php";
         public static String MAKE_APPOINTMENTS="http://revacounselling.16mb.com//makeAppoint.php";
-        public static String GET_APPOINMENTS="http://revacounselling.16mb.com//getMyAppoinments.php";
         public static String SEND_NEW_POST="http://revacounselling.16mb.com//newWallPost.php";
 
     }

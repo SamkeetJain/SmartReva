@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mikepenz.crossfadedrawerlayout.view.CrossfadeDrawerLayout;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -64,6 +65,8 @@ public class CounclingMainActivity extends AppCompatActivity implements SwipeRef
 
     public SwipeRefreshLayout swipeRefreshLayout;
 
+    public boolean authenticationError;
+    public String errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,16 +208,14 @@ public class CounclingMainActivity extends AppCompatActivity implements SwipeRef
         protected Integer doInBackground(Void... params) {
             try {
 
-                int random = (int) (Math.random() * 5000 + 1);
-                String postID = String.valueOf(random);
-                URL url = new URL(Constants.URLs.GET_WALL_POSTS);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COUNC_WALL);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("postID", postID);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("type", "get").appendQueryParameter("postTime", "NAN").appendQueryParameter("title", "NAN").appendQueryParameter("message", "NAN");
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -233,23 +234,32 @@ public class CounclingMainActivity extends AppCompatActivity implements SwipeRef
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                JSONArray jsonArray = new JSONArray(jsonResults.toString());
-                mTitles = new String[jsonArray.length()];
-                mDesc = new String[jsonArray.length()];
-                mDates = new String[jsonArray.length()];
-                mNames = new String[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    mTitles[i] = jsonObject.getString("title");
-                    mDesc[i] = jsonObject.getString("message");
-                    mDates[i] = jsonObject.getString("timeStamp");
-                    mNames[i] = jsonObject.getString("name");
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                    mTitles = new String[jsonArray.length()];
+                    mDesc = new String[jsonArray.length()];
+                    mDates = new String[jsonArray.length()];
+                    mNames = new String[jsonArray.length()];
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        mTitles[i] = jsonObject.getString("Title");
+                        mDesc[i] = jsonObject.getString("Message");
+                        mDates[i] = jsonObject.getString("postTime");
+                        mNames[i] = jsonObject.getString("UserID");
+                    }
                 }
+
+
                 return 1;
 
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
 
             return 1;
         }
@@ -259,9 +269,12 @@ public class CounclingMainActivity extends AppCompatActivity implements SwipeRef
                 pd.dismiss();
             }
             swipeRefreshLayout.setRefreshing(false);
-            mAdapter = new CounclingMainActiviryAdapter(mTitles, mDesc, mDates, mNames);
-            mRecyclerView.setAdapter(mAdapter);
-
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                mAdapter = new CounclingMainActiviryAdapter(mTitles, mDesc, mDates, mNames);
+                mRecyclerView.setAdapter(mAdapter);
+            }
         }
     }
 

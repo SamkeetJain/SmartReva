@@ -20,27 +20,12 @@ import com.samkeet.smartreva.Timetable.TimetableMainActivity;
 
 public class LauncherActivity extends AppCompatActivity {
 
-
-    public ImageView Attendence, Results, Notes, Notification, Events, Councling, Library, Profile, Settings, Timetable;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launcher);
 
         Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES, MODE_PRIVATE));
-
-        Attendence = (ImageView) findViewById(R.id.attendence_button);
-        Results = (ImageView) findViewById(R.id.result_button);
-        Notes = (ImageView) findViewById(R.id.notes_button);
-        Notification = (ImageView) findViewById(R.id.notification_button);
-        Events = (ImageView) findViewById(R.id.events_button);
-        Councling = (ImageView) findViewById(R.id.councling_button);
-        Library = (ImageView) findViewById(R.id.library_button);
-        Profile = (ImageView) findViewById(R.id.Profile_button);
-        Settings = (ImageView) findViewById(R.id.Settings_button);
-        Timetable = (ImageView) findViewById(R.id.Timetable_button);
-
 
         if (!Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -77,6 +62,10 @@ public class LauncherActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void Placements(View v) {
+//        Intent intent = new Intent(getApplicationContext(), NotificationMainActivity.class);
+//        startActivity(intent);
+    }
     public void Notification(View v) {
         Intent intent = new Intent(getApplicationContext(), NotificationMainActivity.class);
         startActivity(intent);
@@ -101,11 +90,6 @@ public class LauncherActivity extends AppCompatActivity {
 
     public void Profile(View v) {
         Intent intent = new Intent(getApplicationContext(), ProfileStudentActivity.class);
-        startActivity(intent);
-    }
-
-    public void Settings(View v) {
-        Intent intent = new Intent(getApplicationContext(), SettingsMainActivity.class);
         startActivity(intent);
     }
 
