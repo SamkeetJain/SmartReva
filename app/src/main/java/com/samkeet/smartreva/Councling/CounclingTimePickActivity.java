@@ -105,7 +105,7 @@ public class CounclingTimePickActivity extends AppCompatActivity {
         }
     }
     public boolean validation(){
-        if (!(fulldate.length() <= 16) && (fulldate.length()>= 1)) {
+        if (!((fulldate.length() <= 16) && (fulldate.length()>= 1))) {
             Toast.makeText(getApplicationContext(), "Title should be less than 16 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }

@@ -66,15 +66,15 @@ public class CounclingNewPost extends AppCompatActivity {
     }
 
     public boolean validation(){
-        if (!(datetext.length() <= 20) && (datetext.length()>= 1)) {
+        if (!((datetext.length() <= 20) && (datetext.length()>= 1))) {
             Toast.makeText(getApplicationContext(), "Title should be less than 20 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!(desc.length() <= 1000) && (desc.length()>= 1)) {
+        if (!((desc.length() <= 1000) && (desc.length()>= 1))) {
             Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!(title.length() <= 60) && (title.length()>= 1)) {
+        if (!((title.length() <= 60) && (title.length()>= 1))) {
             Toast.makeText(getApplicationContext(), "Message should be less than 60 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }

@@ -122,15 +122,15 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
     }
 
     public boolean validation() {
-        if (!(mtitle.length() <= 40) && (mtitle.length()>= 1)) {
+        if (!((mtitle.length() <= 40) && (mtitle.length()>= 1))) {
             Toast.makeText(getApplicationContext(), "Title should be less than 40 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!(mSummary.length() <= 1000) && (mSummary.length()>= 1)) {
+        if (!((mSummary.length() <= 1000) && (mSummary.length()>= 1))) {
             Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!(mTime.length() <= 20) && (mTime.length()>= 1)) {
+        if (!((mTime.length() <= 20) && (mTime.length()>= 1))) {
             Toast.makeText(getApplicationContext(), "Message should be less than 20 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }

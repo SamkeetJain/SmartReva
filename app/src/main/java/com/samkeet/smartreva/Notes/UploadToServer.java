@@ -239,10 +239,27 @@ public class UploadToServer extends Activity {
         title = mTitle.getText().toString();
         message = mMessage.getText().toString();
         fn = filename;
+        if(validation()) {
+            UploadNotes uploadNotes = new UploadNotes();
+            uploadNotes.execute();
+        }
+    }
 
-        UploadNotes uploadNotes = new UploadNotes();
-        uploadNotes.execute();
+    public boolean validation() {
+        if (!((title.length() <= 40) && (title.length()>= 1))) {
+            Toast.makeText(getApplicationContext(), "Title should be less than 40 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!((message.length() <= 1000) && (message.length()>= 1))) {
+            Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (!((fn.length() <= 20) && (fn.length()>= 1))) {
+            Toast.makeText(getApplicationContext(), "Message should be less than 20 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
 
+        return true;
     }
 
     private class UploadNotes extends AsyncTask<Void, Void, Integer> {
