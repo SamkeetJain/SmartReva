@@ -30,14 +30,14 @@ public class Constants {
         public static String COUNC_WALL = "counc_wall.php";
         public static String COUNC_APPOINTMENTS="counc_appointments.php";
         public static String COUNC_RESERVATIONS="counc_reservations.php";
+        public static String EVENTS = "events.php";
+        public static String EVENTMANAGER = "eventManager.php";
+        public static String NOTES = "notes.php";
 
-        public static String GETALLEVENTS = "http://revacounselling.16mb.com/getAllEvents.php";
         public static String NEWEVENT = "http://revacounselling.16mb.com/newEvent.php";
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
         public static String ALUMNI = "http://revacounselling.16mb.com/alumini.html";
-        public static String EVENTMANAGER = "http://revacounselling.16mb.com/EventManager.php";
         public static String FEE = "http://revacounselling.16mb.com/Fee.php";
-        public static String NOTES = "http://revacounselling.16mb.com/uploadNotes.php";
         public static String GETNOTES = "http://revacounselling.16mb.com/viewNotes.php";
 
 

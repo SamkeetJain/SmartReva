@@ -61,6 +61,7 @@
         <activity android:name=".AlumniCell.AlumniCellActivity" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".Events.EventManager" />
+        <activity android:name=".Events.MemberListActivity"/>
         <activity android:name=".AlumniCell.UploadActivity" />
         <activity android:name=".Attendence.AbsentDetails"></activity>
     </application>

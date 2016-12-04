@@ -26,12 +26,15 @@ import java.net.URL;
 
 public class NotesMainActivity extends AppCompatActivity {
 
-    public Button UploadNotes,ViewNotes;
+    public Button UploadNotes, ViewNotes;
 
     private ProgressDialog pd;
     private Context progressDialogContext;
 
     String results;
+
+    public boolean authenticationError;
+    public String errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +53,11 @@ public class NotesMainActivity extends AppCompatActivity {
     }
 
     public void ViewNotes(View v) {
-        Intent intent =new Intent(getApplicationContext(),ViewNotes.class);
+        Intent intent = new Intent(getApplicationContext(), ViewNotes.class);
         startActivity(intent);
     }
-    public void BackButton(View v){
+
+    public void BackButton(View v) {
         finish();
     }
 
@@ -72,7 +76,7 @@ public class NotesMainActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.AUTHENTICATION);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.AUTHENTICATION);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -97,8 +101,16 @@ public class NotesMainActivity extends AppCompatActivity {
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
-                JSONObject jsonObject = new JSONObject(jsonResults.toString());
-                results = jsonObject.getString("status");
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObject = new JSONObject(jsonResults.toString());
+                    results = jsonObject.getString("status");
+                    if(!results.equals("success")){
+                        authenticationError = true;
+                        errorMessage = results;
+                    }
+                }
 
 
                 return 1;
@@ -114,11 +126,11 @@ public class NotesMainActivity extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if(results.equals("true")){
-                Intent intent =new Intent(getApplicationContext(),UploadNotes.class);
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), UploadNotes.class);
                 startActivity(intent);
-            }else {
-                Toast.makeText(getApplicationContext(),"You are not Autherised for this task!!!",Toast.LENGTH_SHORT).show();
             }
 
         }

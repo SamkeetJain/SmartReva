@@ -26,7 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 
-public class AddEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class AddEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     EditText mName, mType, mDates, mDesc;
     String name, type, dates, desc;
@@ -36,6 +36,9 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
     String responce;
 
+    public boolean authenticationError;
+    public String errorMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         mType = (EditText) findViewById(R.id.type);
         mDates = (EditText) findViewById(R.id.date);
         mDesc = (EditText) findViewById(R.id.desc);
-        progressDialogContext=this;
+        progressDialogContext = this;
     }
 
     public void BackButton(View v) {
@@ -62,7 +65,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
     }
 
-    public void DateButton(View v){
+    public void DateButton(View v) {
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
                 AddEventActivity.this,
@@ -80,7 +83,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String fullDate;
         if (dayOfMonth < 10)
-            fullDate = "0" + dayOfMonth + " / " + (++monthOfYear) + " / " + year;
+            fullDate = "0" + dayOfMonth + "-" + (++monthOfYear) + "-" + year;
         else
             fullDate = dayOfMonth + " / " + (++monthOfYear) + " / " + year;
 
@@ -103,16 +106,19 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         protected Integer doInBackground(Void... params) {
             try {
 
-                int random = (int) (Math.random() * 5000 + 1);
-                String postID = String.valueOf(random);
-                URL url = new URL(Constants.URLs.NEWEVENT);
+                URL url = new URL(Constants.URLs.BASE + Constants.URLs.EVENTS);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("event_ID", postID).appendQueryParameter("name", name).appendQueryParameter("edate", dates).appendQueryParameter("type", type).appendQueryParameter("description", desc);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType","add")
+                        .appendQueryParameter("name", name)
+                        .appendQueryParameter("date", dates)
+                        .appendQueryParameter("type", type)
+                        .appendQueryParameter("desc", desc);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -130,8 +136,19 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
-                responce = jsonResults.toString();
 
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObject = new JSONObject(jsonResults.toString());
+                    responce = jsonObject.getString("status");
+                    if (!responce.equals("success")) {
+                        authenticationError = true;
+                        errorMessage = responce;
+                    }
+
+                }
 
                 return 1;
 
@@ -147,9 +164,8 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 pd.dismiss();
             }
 
-            responce = responce.replaceAll("\\t", "");
-            if (!responce.equals("Event Added")) {
-                Toast.makeText(getApplicationContext(), "Error: Event Not Added!!!", Toast.LENGTH_SHORT).show();
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), responce, Toast.LENGTH_SHORT).show();
             }

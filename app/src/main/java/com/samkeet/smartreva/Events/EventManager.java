@@ -22,15 +22,16 @@ import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class EventManager extends AppCompatActivity {
 
-    public String event_ID,name,type,desc,datetext;
+    public String event_ID, name, type, desc, datetext;
     public String data;
     public JSONObject jsonObject;
-    public TextView mName,mType,mDesc,mDate;
+    public TextView mName, mType, mDesc, mDate;
 
     public ProgressDialog pd;
     public Context progressDialogContext;
@@ -38,26 +39,29 @@ public class EventManager extends AppCompatActivity {
     public String results;
     public String request;
 
+    public boolean authenticationError;
+    public String errorMessage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_manager);
-        progressDialogContext=this;
-        data=getIntent().getStringExtra("DATA");
+        progressDialogContext = this;
+        data = getIntent().getStringExtra("DATA");
         try {
-            jsonObject=new JSONObject(data);
-            event_ID=jsonObject.getString("event_ID");
-            name=jsonObject.getString("name");
-            type=jsonObject.getString("type");
-            desc=jsonObject.getString("description");
-            datetext=jsonObject.getString("edate");
+            jsonObject = new JSONObject(data);
+            event_ID = jsonObject.getString("Id");
+            name = jsonObject.getString("name");
+            type = jsonObject.getString("type");
+            desc = jsonObject.getString("description");
+            datetext = jsonObject.getString("edate");
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mName= (TextView) findViewById(R.id.name);
-        mType= (TextView) findViewById(R.id.type);
-        mDate= (TextView) findViewById(R.id.date);
-        mDesc= (TextView) findViewById(R.id.desc);
+        mName = (TextView) findViewById(R.id.name);
+        mType = (TextView) findViewById(R.id.type);
+        mDate = (TextView) findViewById(R.id.date);
+        mDesc = (TextView) findViewById(R.id.desc);
 
         mName.setText(name);
         mType.setText(type);
@@ -66,13 +70,13 @@ public class EventManager extends AppCompatActivity {
 
     }
 
-    public void Register(View v){
-        GetStudentAuthentication getStudentAuthentication=new GetStudentAuthentication();
+    public void Register(View v) {
+        GetStudentAuthentication getStudentAuthentication = new GetStudentAuthentication();
         getStudentAuthentication.execute();
     }
 
-    public void GetList(View v){
-        GetFacultyAuthentication getFacultyAuthentication=new GetFacultyAuthentication();
+    public void GetList(View v) {
+        GetFacultyAuthentication getFacultyAuthentication = new GetFacultyAuthentication();
         getFacultyAuthentication.execute();
     }
 
@@ -91,7 +95,7 @@ public class EventManager extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.AUTHENTICATION);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.AUTHENTICATION);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -116,8 +120,17 @@ public class EventManager extends AppCompatActivity {
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
-                JSONObject jsonObject = new JSONObject(jsonResults.toString());
-                results = jsonObject.getString("status");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObject = new JSONObject(jsonResults.toString());
+                    results = jsonObject.getString("status");
+                    if(!results.equals("success")){
+                        authenticationError = true;
+                        errorMessage = results;
+                    }
+                }
 
 
                 return 1;
@@ -133,14 +146,13 @@ public class EventManager extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if (results.equals("true")) {
-                request="fetch";
-                EManager eManager=new EManager();
-                eManager.execute();
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getApplicationContext(), "You are not Autherised for this task!!!", Toast.LENGTH_SHORT).show();
+                request = "get";
+                EManager eManager = new EManager();
+                eManager.execute();
             }
-
         }
     }
 
@@ -159,7 +171,7 @@ public class EventManager extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.AUTHENTICATION);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.AUTHENTICATION);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -171,7 +183,7 @@ public class EventManager extends AppCompatActivity {
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", _data.toString());
+                Log.d("POST", "Data Sent");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -184,10 +196,22 @@ public class EventManager extends AppCompatActivity {
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
-                JSONObject jsonObject = new JSONObject(jsonResults.toString());
-                results = jsonObject.getString("status");
 
+                authenticationError = jsonResults.toString().contains("Authentication Error");
 
+                if(authenticationError) {
+                    errorMessage = jsonResults.toString();
+                }else {
+                    // Create a JSON object hierarchy from the results
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if(status.equals("success")){
+
+                    }else {
+                        authenticationError = true;
+                        errorMessage = status;
+                    }
+                }
                 return 1;
 
             } catch (Exception ex) {
@@ -201,13 +225,13 @@ public class EventManager extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if (results.equals("true")) {
-                request="add";
-                EManager eManager=new EManager();
-                eManager.execute();
-
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getApplicationContext(), "You are not Autherised for this task!!!", Toast.LENGTH_SHORT).show();
+
+                request = "add";
+                EManager eManager = new EManager();
+                eManager.execute();
             }
 
         }
@@ -228,19 +252,19 @@ public class EventManager extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.EVENTMANAGER);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.EVENTMANAGER);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
+                Log.d("POST", "DATA ready to sents");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("request", request).appendQueryParameter("id",event_ID).appendQueryParameter("member",Constants.SharedPreferenceData.getUserId());
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("type", request).appendQueryParameter("id", event_ID).appendQueryParameter("member", Constants.SharedPreferenceData.getUserId());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", _data.toString());
+                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -254,7 +278,11 @@ public class EventManager extends AppCompatActivity {
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                results = jsonResults.toString();
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    results = jsonResults.toString();
+                }
 
 
                 return 1;
@@ -271,10 +299,18 @@ public class EventManager extends AppCompatActivity {
                 pd.dismiss();
             }
             if (request.equals("add")) {
-                Toast.makeText(getApplicationContext(),results,Toast.LENGTH_SHORT).show();
-            } else if(request.equals("fetch")) {
-                Intent intent=new Intent(getApplicationContext(),MemberListActivity.class);
-                intent.putExtra("DATA",results);
+                String msg = "";
+                try {
+                    JSONObject jsonObject = new JSONObject(results);
+                    msg = jsonObject.getString("status");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+            } else if (request.equals("get")) {
+
+                Intent intent = new Intent(getApplicationContext(), MemberListActivity.class);
+                intent.putExtra("DATA", results);
                 startActivity(intent);
             }
 

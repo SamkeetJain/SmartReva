@@ -52,6 +52,9 @@ public class UploadToServer extends Activity {
     String responcess;
     String fn;
 
+    public boolean authenticationError;
+    public String errorMessage;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -257,16 +260,19 @@ public class UploadToServer extends Activity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                int random = (int) (Math.random() * 5000 + 1);
-                String notesid = String.valueOf(random);
-                URL url = new URL(Constants.URLs.NOTES);
+
+                URL url = new URL(Constants.URLs.BASE + Constants.URLs.NOTES);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("id", notesid).appendQueryParameter("title", title).appendQueryParameter("message", message).appendQueryParameter("filename", fn);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type","put")
+                        .appendQueryParameter("title", title)
+                        .appendQueryParameter("message", message)
+                        .appendQueryParameter("filename", fn);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -284,6 +290,8 @@ public class UploadToServer extends Activity {
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
+
+
 
                 responcess = jsonResults.toString();
 

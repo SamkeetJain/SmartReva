@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
@@ -28,7 +29,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class EventsMainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
+public class EventsMainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -39,9 +40,11 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
 
     public SwipeRefreshLayout swipeRefreshLayout;
 
-    public String[] mTypes,mNames,mDesc,mDates,mIDs;
+    public String[] mTypes, mNames, mDesc, mDates, mIDs;
     public JSONObject[] eventsObjects;
 
+    public boolean authenticationError;
+    public String errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +75,8 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
                 View child = mRecyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
                 if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
                     int temp = mRecyclerView.getChildPosition(child);
-                    Intent intent=new Intent(getApplicationContext(),EventManager.class);
-                    intent.putExtra("DATA",eventsObjects[temp].toString());
+                    Intent intent = new Intent(getApplicationContext(), EventManager.class);
+                    intent.putExtra("DATA", eventsObjects[temp].toString());
                     startActivity(intent);
 
                 }
@@ -91,23 +94,23 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
             }
         });
 
-        GetEvents getEvents=new GetEvents();
+        GetEvents getEvents = new GetEvents();
         getEvents.execute();
     }
 
-    public void BackButton(View v){
+    public void BackButton(View v) {
         finish();
     }
 
-    public void AddEvent(View v){
-        Intent intent =new Intent(getApplicationContext(),AddEventActivity.class);
+    public void AddEvent(View v) {
+        Intent intent = new Intent(getApplicationContext(), AddEventActivity.class);
         startActivity(intent);
     }
 
 
     @Override
     public void onRefresh() {
-        GetEvents getEvents=new GetEvents();
+        GetEvents getEvents = new GetEvents();
         getEvents.execute();
     }
 
@@ -127,16 +130,20 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
         protected Integer doInBackground(Void... params) {
             try {
 
-                int random = (int) (Math.random() * 5000 + 1);
-                String postID = String.valueOf(random);
-                URL url = new URL(Constants.URLs.GETALLEVENTS);
+
+                URL url = new URL(Constants.URLs.BASE + Constants.URLs.EVENTS);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("postID", postID);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "get")
+                        .appendQueryParameter("type", "NAN")
+                        .appendQueryParameter("date", "NAN")
+                        .appendQueryParameter("name", "NAN")
+                        .appendQueryParameter("desc", "NAN");
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -155,21 +162,26 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                JSONArray jsonArray = new JSONArray(jsonResults.toString());
-                eventsObjects=new JSONObject[jsonArray.length()];
-                mTypes = new String[jsonArray.length()];
-                mDesc = new String[jsonArray.length()];
-                mDates = new String[jsonArray.length()];
-                mNames = new String[jsonArray.length()];
-                mIDs = new String[jsonArray.length()];
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    eventsObjects[i]=jsonObject;
-                    mTypes[i] = jsonObject.getString("type");
-                    mDesc[i] = jsonObject.getString("description");
-                    mDates[i] = jsonObject.getString("edate");
-                    mNames[i] = jsonObject.getString("name");
-                    mIDs[i] = jsonObject.getString("event_ID");
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+
+                    JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                    eventsObjects = new JSONObject[jsonArray.length()];
+                    mTypes = new String[jsonArray.length()];
+                    mDesc = new String[jsonArray.length()];
+                    mDates = new String[jsonArray.length()];
+                    mNames = new String[jsonArray.length()];
+                    mIDs = new String[jsonArray.length()];
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        eventsObjects[i] = jsonObject;
+                        mTypes[i] = jsonObject.getString("type");
+                        mDesc[i] = jsonObject.getString("description");
+                        mDates[i] = jsonObject.getString("edate");
+                        mNames[i] = jsonObject.getString("name");
+                        mIDs[i] = jsonObject.getString("Id");
+                    }
                 }
                 return 1;
 
@@ -185,10 +197,13 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
                 pd.dismiss();
             }
             swipeRefreshLayout.setRefreshing(false);
-            mAdapter = new EventsMainActivityAdapter(mTypes, mDesc, mDates, mNames);
-            mRecyclerView.setAdapter(mAdapter);
-
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                mAdapter = new EventsMainActivityAdapter(mTypes, mDesc, mDates, mNames);
+                mRecyclerView.setAdapter(mAdapter);
+            }
         }
-    }
 
+    }
 }

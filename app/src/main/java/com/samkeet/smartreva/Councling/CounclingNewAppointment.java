@@ -72,7 +72,6 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
         dpd.show(getFragmentManager(), "Datepickerdialog");
     }
 
-
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
 
