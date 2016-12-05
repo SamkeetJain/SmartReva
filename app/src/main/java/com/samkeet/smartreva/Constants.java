@@ -34,9 +34,10 @@ public class Constants {
         public static String EVENTMANAGER = "eventManager.php";
         public static String NOTESS = "notes.php";
         public static String ALUMNI = "alumni.php";
+        public static String FEE = "fee.php";
+        public static String GET_RESULTS="get_results.php";
 
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
-        public static String FEE = "http://revacounselling.16mb.com/Fee.php";
     }
 
     public static class UserData {
@@ -139,5 +140,6 @@ public class Constants {
             AVALIBILITY.clear();
         }
     }
+
 
 }

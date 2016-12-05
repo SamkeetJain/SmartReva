@@ -264,7 +264,6 @@ public class UploadToServer extends Activity {
 
     private class UploadNotes extends AsyncTask<Void, Void, Integer> {
 
-
         protected void onPreExecute() {
             pd = new ProgressDialog(progressDialogContext);
             pd.setTitle("Logging...");
