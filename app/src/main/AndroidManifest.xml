@@ -61,9 +61,13 @@
         <activity android:name=".AlumniCell.AlumniCellActivity" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".Events.EventManager" />
-        <activity android:name=".Events.MemberListActivity"/>
+        <activity android:name=".Events.MemberListActivity" />
         <activity android:name=".AlumniCell.UploadActivity" />
-        <activity android:name=".Attendence.AbsentDetails"></activity>
+        <activity android:name=".Attendence.AbsentDetails" />
+        <activity android:name=".Placement.PlacementMainActivity" />
+        <activity android:name=".Placement.Profile" />
+        <activity android:name=".Placement.DriveManager" />
+        <activity android:name=".Placement.DriveManagement"></activity>
     </application>
 
 </manifest>

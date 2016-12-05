@@ -20,6 +20,7 @@ import com.samkeet.smartreva.Fees.FeesMainActivity;
 import com.samkeet.smartreva.Library.LibraryMainActivity;
 import com.samkeet.smartreva.Notes.NotesMainActivity;
 import com.samkeet.smartreva.Notification.NotificationMainActivity;
+import com.samkeet.smartreva.Placement.PlacementMainActivity;
 import com.samkeet.smartreva.Results.ResultsMainActivity;
 import com.samkeet.smartreva.Setings.SettingsMainActivity;
 import com.samkeet.smartreva.Timetable.TimetableMainActivity;
@@ -86,9 +87,9 @@ public class LauncherActivity extends AppCompatActivity {
 
     public void Placements(View v) {
 
-        Constants.SharedPreferenceData.clearData();
-//        Intent intent = new Intent(getApplicationContext(), NotificationMainActivity.class);
-//        startActivity(intent);
+
+        Intent intent = new Intent(getApplicationContext(), PlacementMainActivity.class);
+        startActivity(intent);
     }
     public void Notification(View v) {
         Intent intent = new Intent(getApplicationContext(), NotificationMainActivity.class);
@@ -123,8 +124,9 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Alumini(View v) {
-        Intent intent = new Intent(getApplicationContext(), AlumniCellActivity.class);
-        startActivity(intent);
+        Constants.SharedPreferenceData.clearData();
+//        Intent intent = new Intent(getApplicationContext(), AlumniCellActivity.class);
+//        startActivity(intent);
     }
 
     public void Fees(View v) {
