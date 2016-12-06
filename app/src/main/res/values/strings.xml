@@ -23,4 +23,5 @@
         <item>C3</item>
     </string-array>
     <string name="title_activity_events_main">EventsMainActivity</string>
+
 </resources>

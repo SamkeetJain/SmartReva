@@ -67,7 +67,8 @@
         <activity android:name=".Placement.PlacementMainActivity" />
         <activity android:name=".Placement.Profile" />
         <activity android:name=".Placement.DriveManager" />
-        <activity android:name=".Placement.DriveManagement"></activity>
+        <activity android:name=".Placement.DriveManagement" />
+        <activity android:name=".Placement.Grades"></activity>
     </application>
 
 </manifest>

@@ -146,4 +146,11 @@ public class PlacementMainActivity extends AppCompatActivity {
 
     }
 
+    public void Item3(View c){
+        Intent intent = new Intent(this,Grades.class);
+        intent.putExtra("TYPE","THREE");
+        startActivity(intent);
+    }
+
+
 }
