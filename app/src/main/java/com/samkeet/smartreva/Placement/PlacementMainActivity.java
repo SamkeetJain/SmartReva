@@ -69,6 +69,8 @@ public class PlacementMainActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem.getIdentifier() == 2) {
+                            Intent intent = new Intent(getApplicationContext(),Grades.class);
+                            startActivity(intent);
 
                         }
                         if (drawerItem.getIdentifier() == 3) {
