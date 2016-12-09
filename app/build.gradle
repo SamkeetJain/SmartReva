@@ -54,4 +54,6 @@ dependencies {
     compile 'com.wdullaer:materialdatetimepicker:2.5.0'
     compile 'com.ms-square:expandableTextView:0.1.4'
 
+    compile 'com.github.d-max:spots-dialog:0.7@aar'
+
 }

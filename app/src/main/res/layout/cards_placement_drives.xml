@@ -22,16 +22,11 @@
             android:padding="15dp">
 
             <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/title"
+                android:id="@+id/company_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
+                android:gravity="center"
                 android:textSize="22dp" />
 
             <View
@@ -40,26 +35,38 @@
                 android:background="#E0E0E0"
                 android:paddingTop="5dp" />
 
-            <TextView
-                android:id="@+id/datetext"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:textSize="16dp" />
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/datetext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="5dp"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:textSize="14dp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#E0E0E0"
-                android:paddingTop="5dp" />
-
+                <TextView
+                    android:id="@+id/dept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:gravity="right"
+                    android:paddingRight="5dp"
+                    android:layout_weight="1"
+                    android:textSize="14dp" />
+            </LinearLayout>
             <TextView
-                android:id="@+id/desc"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
                 android:paddingTop="5dp"
-                android:textSize="16dp" />
+                android:id="@+id/role"
+                android:paddingLeft="5dp"
+                android:layout_height="wrap_content" />
+
+
 
 
         </LinearLayout>
