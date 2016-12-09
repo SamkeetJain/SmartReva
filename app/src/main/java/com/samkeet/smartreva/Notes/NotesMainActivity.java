@@ -3,6 +3,7 @@ package com.samkeet.smartreva.Notes;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -24,11 +25,13 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class NotesMainActivity extends AppCompatActivity {
 
     public Button UploadNotes, ViewNotes;
 
-    private ProgressDialog pd;
+    private SpotsDialog pd;
     private Context progressDialogContext;
 
     String results;
@@ -47,9 +50,10 @@ public class NotesMainActivity extends AppCompatActivity {
     }
 
     public void UploadNotes(View v) {
-
-        GetFacultyAuthentication getFacultyAuthentication = new GetFacultyAuthentication();
-        getFacultyAuthentication.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetFacultyAuthentication getFacultyAuthentication = new GetFacultyAuthentication();
+            getFacultyAuthentication.execute();
+        }
     }
 
     public void ViewNotes(View v) {
@@ -65,12 +69,9 @@ public class NotesMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -106,7 +107,7 @@ public class NotesMainActivity extends AppCompatActivity {
                 } else {
                     JSONObject jsonObject = new JSONObject(jsonResults.toString());
                     results = jsonObject.getString("status");
-                    if(!results.equals("success")){
+                    if (!results.equals("success")) {
                         authenticationError = true;
                         errorMessage = results;
                     }

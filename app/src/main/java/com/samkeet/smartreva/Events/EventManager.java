@@ -3,6 +3,7 @@ package com.samkeet.smartreva.Events;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,8 @@ import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class EventManager extends AppCompatActivity {
 
     public String event_ID, name, type, desc, datetext;
@@ -33,7 +36,7 @@ public class EventManager extends AppCompatActivity {
     public JSONObject jsonObject;
     public TextView mName, mType, mDesc, mDate;
 
-    public ProgressDialog pd;
+    public SpotsDialog pd;
     public Context progressDialogContext;
 
     public String results;
@@ -71,25 +74,26 @@ public class EventManager extends AppCompatActivity {
     }
 
     public void Register(View v) {
-        GetStudentAuthentication getStudentAuthentication = new GetStudentAuthentication();
-        getStudentAuthentication.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetStudentAuthentication getStudentAuthentication = new GetStudentAuthentication();
+            getStudentAuthentication.execute();
+        }
     }
 
     public void GetList(View v) {
-        GetFacultyAuthentication getFacultyAuthentication = new GetFacultyAuthentication();
-        getFacultyAuthentication.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetFacultyAuthentication getFacultyAuthentication = new GetFacultyAuthentication();
+            getFacultyAuthentication.execute();
+        }
     }
 
     private class GetFacultyAuthentication extends AsyncTask<Void, Void, Integer> {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -126,7 +130,7 @@ public class EventManager extends AppCompatActivity {
                 } else {
                     JSONObject jsonObject = new JSONObject(jsonResults.toString());
                     results = jsonObject.getString("status");
-                    if(!results.equals("success")){
+                    if (!results.equals("success")) {
                         authenticationError = true;
                         errorMessage = results;
                     }
@@ -150,8 +154,10 @@ public class EventManager extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
                 request = "get";
-                EManager eManager = new EManager();
-                eManager.execute();
+                if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                    EManager eManager = new EManager();
+                    eManager.execute();
+                }
             }
         }
     }
@@ -160,12 +166,9 @@ public class EventManager extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -199,15 +202,15 @@ public class EventManager extends AppCompatActivity {
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
+                } else {
                     // Create a JSON object hierarchy from the results
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     String status = jsonObj.getString("status");
-                    if(status.equals("success")){
+                    if (status.equals("success")) {
 
-                    }else {
+                    } else {
                         authenticationError = true;
                         errorMessage = status;
                     }
@@ -241,12 +244,9 @@ public class EventManager extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 

@@ -17,6 +17,7 @@ import java.net.URL;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ import com.samkeet.smartreva.R;
 
 import org.json.JSONObject;
 
+import dmax.dialog.SpotsDialog;
+
 public class UploadToServer extends Activity {
 
     TextView messageText;
@@ -46,7 +49,7 @@ public class UploadToServer extends Activity {
     public EditText mTitle, mMessage;
 
     public Context progressDialogContext;
-    public ProgressDialog pd;
+    public SpotsDialog pd;
 
     String post;
     String responcess;
@@ -240,22 +243,33 @@ public class UploadToServer extends Activity {
         message = mMessage.getText().toString();
         fn = filename;
         if(validation()) {
-            UploadNotes uploadNotes = new UploadNotes();
-            uploadNotes.execute();
+            if(Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                UploadNotes uploadNotes = new UploadNotes();
+                uploadNotes.execute();
+            }
         }
     }
 
     public boolean validation() {
+        if (Constants.Methods.checkForSpecial(title)){
+            Toast.makeText(getApplicationContext(),"Title should not include special charecters", Toast.LENGTH_SHORT).show();
+        }
         if (!((title.length() <= 40) && (title.length()>= 1))) {
             Toast.makeText(getApplicationContext(), "Title should be less than 40 charecters", Toast.LENGTH_SHORT).show();
             return false;
+        }
+        if (Constants.Methods.checkForSpecial(message)){
+            Toast.makeText(getApplicationContext(),"Message should not include special charecters", Toast.LENGTH_SHORT).show();
         }
         if (!((message.length() <= 1000) && (message.length()>= 1))) {
             Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (Constants.Methods.checkForSpecial(fn)){
+            Toast.makeText(getApplicationContext(),"File Name should not include special charecters", Toast.LENGTH_SHORT).show();
+        }
         if (!((fn.length() <= 20) && (fn.length()>= 1))) {
-            Toast.makeText(getApplicationContext(), "Message should be less than 20 charecters", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "File Name should be less than 20 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -265,12 +279,9 @@ public class UploadToServer extends Activity {
     private class UploadNotes extends AsyncTask<Void, Void, Integer> {
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Logging...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 

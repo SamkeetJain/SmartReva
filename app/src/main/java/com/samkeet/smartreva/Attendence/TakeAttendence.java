@@ -71,7 +71,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
         class_code = getIntent().getStringExtra("CLASSCODE");
         subject_code = getIntent().getStringExtra("SUBJECTCODE");
 
-        if(Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
             GetStudentsList getStudentsList = new GetStudentsList();
             getStudentsList.execute();
         }
@@ -98,7 +98,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -113,7 +113,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("classCode", class_code).appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN());
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("classCode", class_code).appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -194,10 +194,10 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
         }
         finalValues = temp;
 
-
-        InsertAttendence insertAttendence = new InsertAttendence();
-        insertAttendence.execute();
-
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            InsertAttendence insertAttendence = new InsertAttendence();
+            insertAttendence.execute();
+        }
     }
 
     public void Date(View v) {
@@ -218,7 +218,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -233,7 +233,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("period", periodNo).appendQueryParameter("subjectCode", subject_code).appendQueryParameter("ddate", datetext).appendQueryParameter("classCode",class_code).appendQueryParameter("statusList", finalValues).appendQueryParameter("userIDList", finalFields);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("period", periodNo).appendQueryParameter("subjectCode", subject_code).appendQueryParameter("ddate", datetext).appendQueryParameter("classCode", class_code).appendQueryParameter("statusList", finalValues).appendQueryParameter("userIDList", finalFields);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -257,11 +257,11 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
                 if (authenticationError) {
                     errorMessage = jsonResults.toString();
                 } else {
-                    JSONObject jsonObject=new JSONObject(jsonResults.toString());
-                    res=jsonObject.getString("status");
-                    if(!res.equals("success")) {
-                        authenticationError=true;
-                        errorMessage=res;
+                    JSONObject jsonObject = new JSONObject(jsonResults.toString());
+                    res = jsonObject.getString("status");
+                    if (!res.equals("success")) {
+                        authenticationError = true;
+                        errorMessage = res;
                     }
                 }
 
@@ -281,10 +281,10 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                    Toast.makeText(getApplicationContext(), "Attendence Uploaded", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+                Toast.makeText(getApplicationContext(), "Attendence Uploaded", Toast.LENGTH_SHORT).show();
+                finish();
             }
+        }
     }
 
 

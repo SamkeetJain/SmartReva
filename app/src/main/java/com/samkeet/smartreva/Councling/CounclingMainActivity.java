@@ -3,6 +3,7 @@ package com.samkeet.smartreva.Councling;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class CounclingMainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private AccountHeader headerResult = null;
@@ -55,7 +58,7 @@ public class CounclingMainActivity extends AppCompatActivity implements SwipeRef
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public ProgressDialog pd;
+    public SpotsDialog pd;
     public Context progressDialogContext;
 
     public String mTitles[];
@@ -193,9 +196,13 @@ public class CounclingMainActivity extends AppCompatActivity implements SwipeRef
     }
 
     public void refreshData() {
+
+
         if (validation1()) {
-            GetWallPosts getWallPosts = new GetWallPosts();
-            getWallPosts.execute();
+            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                GetWallPosts getWallPosts = new GetWallPosts();
+                getWallPosts.execute();
+            }
         }
     }
 
@@ -203,12 +210,9 @@ public class CounclingMainActivity extends AppCompatActivity implements SwipeRef
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 

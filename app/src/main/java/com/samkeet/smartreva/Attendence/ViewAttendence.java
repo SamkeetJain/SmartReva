@@ -3,6 +3,7 @@ package com.samkeet.smartreva.Attendence;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -26,10 +27,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import dmax.dialog.SpotsDialog;
+
 public class ViewAttendence extends AppCompatActivity {
 
     public String token;
-    private ProgressDialog pd;
+    private SpotsDialog pd;
     private Context progressDialogContext;
 
     private RecyclerView mRecyclerView;
@@ -52,9 +55,10 @@ public class ViewAttendence extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        GetMyAttendence getMyAttendence = new GetMyAttendence();
-        getMyAttendence.execute();
-
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetMyAttendence getMyAttendence = new GetMyAttendence();
+            getMyAttendence.execute();
+        }
 
     }
 
@@ -65,12 +69,10 @@ public class ViewAttendence extends AppCompatActivity {
     private class GetMyAttendence extends AsyncTask<Void, Void, Integer> {
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -132,9 +134,9 @@ public class ViewAttendence extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else{
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
                 String lists[] = list.toArray(new String[list.size()]);
                 mAdapter = new ViewAttendenceAdapter(lists);
                 mRecyclerView.setAdapter(mAdapter);

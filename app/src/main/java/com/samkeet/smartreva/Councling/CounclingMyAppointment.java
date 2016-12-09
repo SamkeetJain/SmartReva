@@ -3,6 +3,7 @@ package com.samkeet.smartreva.Councling;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,13 +26,15 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class CounclingMyAppointment extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public ProgressDialog pd;
+    public SpotsDialog pd;
     public Context progressDialogContext;
 
     public String mTitles[];
@@ -52,14 +55,17 @@ public class CounclingMyAppointment extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        progressDialogContext=this;
+        progressDialogContext = this;
 
-        if(validation()){
-            GetMyAppoitnments getMyAppoitnments=new GetMyAppoitnments();
-            getMyAppoitnments.execute();
+        if (validation()) {
+            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                GetMyAppoitnments getMyAppoitnments = new GetMyAppoitnments();
+                getMyAppoitnments.execute();
+            }
         }
 
     }
+
     public boolean validation() {
         return true;
     }
@@ -72,12 +78,9 @@ public class CounclingMyAppointment extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -91,11 +94,11 @@ public class CounclingMyAppointment extends AppCompatActivity {
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN())
-                        .appendQueryParameter("type","get")
-                        .appendQueryParameter("reserID","NAN")
-                        .appendQueryParameter("title","NAN")
-                        .appendQueryParameter("message","NAN");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type", "get")
+                        .appendQueryParameter("reserID", "NAN")
+                        .appendQueryParameter("title", "NAN")
+                        .appendQueryParameter("message", "NAN");
 
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
@@ -116,18 +119,18 @@ public class CounclingMyAppointment extends AppCompatActivity {
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
-                    JSONArray jsonArray=new JSONArray(jsonResults.toString());
-                    mTitles=new String[jsonArray.length()];
-                    mDesc=new String[jsonArray.length()];
-                    mDates=new String[jsonArray.length()];
-                    for(int i=0;i<jsonArray.length();i++){
-                        JSONObject jsonObject=jsonArray.getJSONObject(i);
-                        mTitles[i]=jsonObject.getString("title");
-                        mDesc[i]=jsonObject.getString("message");
-                        mDates[i]=jsonObject.getString("reserID");
+                } else {
+                    JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                    mTitles = new String[jsonArray.length()];
+                    mDesc = new String[jsonArray.length()];
+                    mDates = new String[jsonArray.length()];
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        mTitles[i] = jsonObject.getString("title");
+                        mDesc[i] = jsonObject.getString("message");
+                        mDates[i] = jsonObject.getString("reserID");
                     }
                 }
 
@@ -145,9 +148,9 @@ public class CounclingMyAppointment extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else {
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
                 mAdapter = new CounclingMyAppointmentAdapter(mTitles, mDesc, mDates);
                 mRecyclerView.setAdapter(mAdapter);
             }

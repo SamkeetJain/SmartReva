@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -35,13 +36,15 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class ResultsMainActivity extends AppCompatActivity {
 
     public Spinner semesterDrop, componetDrop;
     final String semesterItems[] = new String[]{"First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eigth"};
     final String componetsItems[] = new String[]{"C1", "C2", "C3"};
 
-    private ProgressDialog pd;
+    private SpotsDialog pd;
     private Context progressDialogContext;
 
     public TextView mUsn;
@@ -86,7 +89,7 @@ public class ResultsMainActivity extends AppCompatActivity {
         componetDrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                comp=componetsItems[position];
+                comp = componetsItems[position];
             }
 
             @Override
@@ -99,8 +102,10 @@ public class ResultsMainActivity extends AppCompatActivity {
     public void Send(View v) {
         mResultsLayout.removeAllViews();
         usn = mUsn.getText().toString();
-        GetResults getResults = new GetResults();
-        getResults.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetResults getResults = new GetResults();
+            getResults.execute();
+        }
     }
 
     public void BackButton(View v) {
@@ -111,12 +116,9 @@ public class ResultsMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -188,7 +190,7 @@ public class ResultsMainActivity extends AppCompatActivity {
                         LinearLayout L1 = new LinearLayout(getApplicationContext());
                         LinearLayout.LayoutParams L1Params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                         L1.setLayoutParams(L1Params);
-                        L1.setPadding(15,15,15,15);
+                        L1.setPadding(15, 15, 15, 15);
                         L1.setOrientation(LinearLayout.HORIZONTAL);
 
                         TextView subView = new TextView(getApplicationContext());

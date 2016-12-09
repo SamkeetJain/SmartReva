@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,13 +30,15 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class CounclingTimePickActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public ProgressDialog pd;
+    public SpotsDialog pd;
     public Context progressDialogContext;
 
     public JSONArray jsonArray;
@@ -99,18 +102,25 @@ public class CounclingTimePickActivity extends AppCompatActivity {
 
             }
         });
-        if(validation()) {
-            GetResIDs getResIDs = new GetResIDs();
-            getResIDs.execute();
+        if (validation()) {
+            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                GetResIDs getResIDs = new GetResIDs();
+                getResIDs.execute();
+            }
         }
     }
-    public boolean validation(){
-        if (!((fulldate.length() <= 16) && (fulldate.length()>= 1))) {
+
+    public boolean validation() {
+        if (Constants.Methods.checkForSpecial(fulldate)){
+            Toast.makeText(getApplicationContext(),"Date should not include special charecters", Toast.LENGTH_SHORT).show();
+        }
+        if (!((fulldate.length() <= 16) && (fulldate.length() >= 1))) {
             Toast.makeText(getApplicationContext(), "Title should be less than 16 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -123,12 +133,9 @@ public class CounclingTimePickActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -141,10 +148,10 @@ public class CounclingTimePickActivity extends AppCompatActivity {
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN())
-                        .appendQueryParameter("type","get")
-                        .appendQueryParameter("date",fulldate)
-                        .appendQueryParameter("set","NAN");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type", "get")
+                        .appendQueryParameter("date", fulldate)
+                        .appendQueryParameter("set", "NAN");
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -163,9 +170,9 @@ public class CounclingTimePickActivity extends AppCompatActivity {
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
+                } else {
                     jsonArray = new JSONArray(jsonResults.toString());
                 }
 
@@ -183,9 +190,9 @@ public class CounclingTimePickActivity extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else {
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
                 try {
                     Constants.TimeSlots.clearData();
                     for (int i = 0; i < jsonArray.length(); i++) {

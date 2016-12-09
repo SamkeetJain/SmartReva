@@ -2,6 +2,7 @@ package com.samkeet.smartreva.Councling;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -25,13 +26,15 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import dmax.dialog.SpotsDialog;
+
 public class CounclingNewPost extends AppCompatActivity {
 
-    public EditText mTitle,mDesc;
-    public ProgressDialog pd;
+    public EditText mTitle, mDesc;
+    public SpotsDialog pd;
     public Context progressDialogContext;
 
-    public String title,desc,datetext;
+    public String title, desc, datetext;
     public String responce;
 
     public boolean authenticationError;
@@ -42,10 +45,10 @@ public class CounclingNewPost extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_councling_new_post);
 
-        progressDialogContext=this;
+        progressDialogContext = this;
 
-        mTitle= (EditText) findViewById(R.id.title);
-        mDesc= (EditText) findViewById(R.id.message);
+        mTitle = (EditText) findViewById(R.id.title);
+        mDesc = (EditText) findViewById(R.id.message);
 
 
     }
@@ -55,57 +58,56 @@ public class CounclingNewPost extends AppCompatActivity {
     }
 
     public void Send(View v) {
-        desc=mDesc.getText().toString();
-        title=mTitle.getText().toString();
+        desc = mDesc.getText().toString();
+        title = mTitle.getText().toString();
         datetext = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
 
-        if(validation()){
-            SendNewPost sendNewPost=new SendNewPost();
-            sendNewPost.execute();
+        if (validation()) {
+            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                SendNewPost sendNewPost = new SendNewPost();
+                sendNewPost.execute();
+            }
         }
     }
 
-    public boolean validation(){
-        datetext=datetext.trim();
-        desc=desc.trim();
-        title=title.trim();
+    public boolean validation() {
+        datetext = datetext.trim();
+        desc = desc.trim();
+        title = title.trim();
 
-        if( Constants.Methods.checkForSpecial(datetext)){
+        if (Constants.Methods.checkForSpecial(datetext)) {
             Toast.makeText(getApplicationContext(), "Please remove special charecters in date field", Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if(Constants.Methods.checkForSpecial(desc)){
+        if (Constants.Methods.checkForSpecial(desc)) {
             Toast.makeText(getApplicationContext(), "Please remove special charecters in description field", Toast.LENGTH_SHORT).show();
             return false;
         }
 
 
-
-        if (!((datetext.length() <= 20) && (datetext.length()>= 1))) {
+        if (!((datetext.length() <= 20) && (datetext.length() >= 1))) {
             Toast.makeText(getApplicationContext(), "Title should be less than 20 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!((desc.length() <= 1000) && (desc.length()>= 1))) {
+        if (!((desc.length() <= 1000) && (desc.length() >= 1))) {
             Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!((title.length() <= 60) && (title.length()>= 1))) {
+        if (!((title.length() <= 60) && (title.length() >= 1))) {
             Toast.makeText(getApplicationContext(), "Message should be less than 60 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
+
     public class SendNewPost extends AsyncTask<Void, Void, Integer> {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -119,11 +121,11 @@ public class CounclingNewPost extends AppCompatActivity {
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN())
-                        .appendQueryParameter("type","add")
-                        .appendQueryParameter("postTime",datetext)
-                        .appendQueryParameter("title",title)
-                        .appendQueryParameter("message",desc);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type", "add")
+                        .appendQueryParameter("postTime", datetext)
+                        .appendQueryParameter("title", title)
+                        .appendQueryParameter("message", desc);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -144,14 +146,14 @@ public class CounclingNewPost extends AppCompatActivity {
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
-                    JSONObject jsonObject= new JSONObject(jsonResults.toString());
-                    responce=jsonObject.getString("status");
-                    if(!responce.equals("success")){
-                        authenticationError=true;
-                        errorMessage=responce;
+                } else {
+                    JSONObject jsonObject = new JSONObject(jsonResults.toString());
+                    responce = jsonObject.getString("status");
+                    if (!responce.equals("success")) {
+                        authenticationError = true;
+                        errorMessage = responce;
                     }
 
                 }
@@ -169,10 +171,10 @@ public class CounclingNewPost extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else {
-                Toast.makeText(getApplicationContext(),responce ,Toast.LENGTH_SHORT).show();
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), responce, Toast.LENGTH_SHORT).show();
                 finish();
             }
 

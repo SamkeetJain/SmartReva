@@ -23,6 +23,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class AbsentDetails extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -30,7 +32,7 @@ public class AbsentDetails extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private Context progressDialogContext;
-    public ProgressDialog pd;
+    public SpotsDialog pd;
 
     public String results;
     public String type;
@@ -57,12 +59,9 @@ public class AbsentDetails extends AppCompatActivity {
     private class GetAbsentDetails extends AsyncTask<Void, Void, Integer> {
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 

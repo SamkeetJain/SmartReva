@@ -3,6 +3,7 @@ package com.samkeet.smartreva;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -33,12 +34,14 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class LauncherActivity extends AppCompatActivity {
 
     public boolean authenticationError;
     public String errorMessage;
 
-    private ProgressDialog pd;
+    private SpotsDialog pd;
     private Context progressDialogContext;
 
     @Override
@@ -130,20 +133,19 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Fees(View v) {
-        GetStudentAuthentication getStudentAuthentication=new GetStudentAuthentication();
-        getStudentAuthentication.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetStudentAuthentication getStudentAuthentication = new GetStudentAuthentication();
+            getStudentAuthentication.execute();
+        }
     }
 
     private class GetStudentAuthentication extends AsyncTask<Void, Void, Integer> {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 

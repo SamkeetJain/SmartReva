@@ -3,6 +3,7 @@ package com.samkeet.smartreva.Councling;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,6 +28,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 
+import dmax.dialog.SpotsDialog;
+
 public class CounclingNewAppointment extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
 
     TextView title, date, time, summary;
@@ -35,7 +38,7 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
     String result;
     String usn;
 
-    public ProgressDialog pd;
+    public SpotsDialog pd;
     public Context progressDialogContext;
 
     public String response;
@@ -115,105 +118,113 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
         usn = Constants.SharedPreferenceData.getUserId();
 
         if (validation()) {
-            MakeAppointment makeAppointment = new MakeAppointment();
-            makeAppointment.execute();
+            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                MakeAppointment makeAppointment = new MakeAppointment();
+                makeAppointment.execute();
+            }
         }
 
     }
 
     public boolean validation() {
-        if (!((mtitle.length() <= 40) && (mtitle.length()>= 1))) {
+        if (Constants.Methods.checkForSpecial(mtitle)){
+            Toast.makeText(getApplicationContext(),"Title should not include special charecters", Toast.LENGTH_SHORT).show();
+        }
+        if (!((mtitle.length() <= 40) && (mtitle.length() >= 1))) {
             Toast.makeText(getApplicationContext(), "Title should be less than 40 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!((mSummary.length() <= 1000) && (mSummary.length()>= 1))) {
+        if (Constants.Methods.checkForSpecial(mSummary)){
+            Toast.makeText(getApplicationContext(),"Message should not include special charecters", Toast.LENGTH_SHORT).show();
+        }
+        if (!((mSummary.length() <= 1000) && (mSummary.length() >= 1))) {
             Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!((mTime.length() <= 20) && (mTime.length()>= 1))) {
-            Toast.makeText(getApplicationContext(), "Message should be less than 20 charecters", Toast.LENGTH_SHORT).show();
+        if (Constants.Methods.checkForSpecial(mTime)){
+            Toast.makeText(getApplicationContext(),"Time should not include special charecters", Toast.LENGTH_SHORT).show();
+        }
+        if (!((mTime.length() <= 20) && (mTime.length() >= 1))) {
+            Toast.makeText(getApplicationContext(), "Time should be less than 20 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         return true;
     }
 
-public class MakeAppointment extends AsyncTask<Void, Void, Integer> {
+    public class MakeAppointment extends AsyncTask<Void, Void, Integer> {
 
 
-    protected void onPreExecute() {
-        pd = new ProgressDialog(progressDialogContext);
-        pd.setTitle("Loading...");
-        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        pd.setMessage("Please wait.");
-        pd.setCancelable(false);
-        pd.setIndeterminate(true);
-        pd.show();
-    }
+        protected void onPreExecute() {
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
+            pd.setTitle("Loading...");
+            pd.setCancelable(false);
+            pd.show();
+        }
 
-    protected Integer doInBackground(Void... params) {
-        try {
+        protected Integer doInBackground(Void... params) {
+            try {
 
-            URL url = new URL(Constants.URLs.BASE + Constants.URLs.COUNC_APPOINTMENTS);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-            Log.d("POST", "DATA ready to sent");
+                URL url = new URL(Constants.URLs.BASE + Constants.URLs.COUNC_APPOINTMENTS);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Log.d("POST", "DATA ready to sent");
 
-            Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
-                    .appendQueryParameter("type", "make")
-                    .appendQueryParameter("title", mtitle)
-                    .appendQueryParameter("message", mSummary)
-                    .appendQueryParameter("reserID", mTime);
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-            writer.write(_data.build().getEncodedQuery());
-            writer.flush();
-            writer.close();
-            Log.d("POST", "DATA SENT");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type", "make")
+                        .appendQueryParameter("title", mtitle)
+                        .appendQueryParameter("message", mSummary)
+                        .appendQueryParameter("reserID", mTime);
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+                Log.d("POST", "DATA SENT");
 
-            InputStreamReader in = new InputStreamReader(connection.getInputStream());
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
-            StringBuilder jsonResults = new StringBuilder();
-            // Load the results into a StringBuilder
-            int read;
-            char[] buff = new char[1024];
-            while ((read = in.read(buff)) != -1) {
-                jsonResults.append(buff, 0, read);
-            }
-            connection.disconnect();
-            Log.d("return from server", jsonResults.toString());
-
-            if (authenticationError) {
-                errorMessage = jsonResults.toString();
-            } else {
-                JSONObject jsonObject = new JSONObject(jsonResults.toString());
-                response = jsonObject.getString("status");
-                if (!response.equals("success")) {
-                    authenticationError = true;
-                    errorMessage = response;
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
                 }
+                connection.disconnect();
+                Log.d("return from server", jsonResults.toString());
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObject = new JSONObject(jsonResults.toString());
+                    response = jsonObject.getString("status");
+                    if (!response.equals("success")) {
+                        authenticationError = true;
+                        errorMessage = response;
+                    }
+                }
+
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
 
             return 1;
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
 
-        return 1;
-    }
-
-    protected void onPostExecute(Integer result) {
-        if (pd != null) {
-            pd.dismiss();
-        }
-        if (authenticationError) {
-            Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_SHORT).show();
+            }
         }
     }
-}
 
 }

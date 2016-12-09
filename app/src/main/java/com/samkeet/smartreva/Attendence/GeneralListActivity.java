@@ -18,6 +18,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import dmax.dialog.SpotsDialog;
+
 public class GeneralListActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
@@ -25,7 +27,7 @@ public class GeneralListActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
 
     private Context progressDialogContext;
-    public ProgressDialog pd;
+    public SpotsDialog pd;
 
     public String results;
     public String type;

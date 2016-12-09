@@ -2,6 +2,7 @@ package com.samkeet.smartreva.Events;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -26,12 +27,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Calendar;
 
+import dmax.dialog.SpotsDialog;
+
 public class AddEventActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     EditText mName, mType, mDates, mDesc;
     String name, type, dates, desc;
 
-    public ProgressDialog pd;
+    public SpotsDialog pd;
     public Context progressDialogContext;
 
     String responce;
@@ -61,26 +64,42 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
         desc = mDesc.getText().toString();
 
         if(validation()) {
-            NewEvent newEvent = new NewEvent();
-            newEvent.execute();
+            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                NewEvent newEvent = new NewEvent();
+                newEvent.execute();
+            }
         }
     }
 
     public boolean validation(){
+        if(Constants.Methods.checkForSpecial(name)) {
+            Toast.makeText(getApplicationContext(),"Name should not include special charecters",Toast.LENGTH_SHORT).show();
+        }
+
         if (!(name.length() <= 60) && (name.length()>= 1)) {
-            Toast.makeText(getApplicationContext(), "Title should be less than 60 charecters", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Name should be less than 60 charecters", Toast.LENGTH_SHORT).show();
             return false;
+        }
+        if(Constants.Methods.checkForSpecial(dates)) {
+        Toast.makeText(getApplicationContext(),"Dates should not include special charecters", Toast.LENGTH_SHORT).show();
+
         }
         if (!(dates.length() <= 20) && (dates.length()>= 1)) {
-            Toast.makeText(getApplicationContext(), "Title should be less than 20 charecters", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Dates should be less than 20 charecters", Toast.LENGTH_SHORT).show();
             return false;
+        }
+        if (Constants.Methods.checkForSpecial(type)){
+            Toast.makeText(getApplicationContext(),"Type should not include special charecters", Toast.LENGTH_SHORT).show();
         }
         if (!(type.length() <= 60) && (type.length()>= 1)) {
-            Toast.makeText(getApplicationContext(), "Title should be less than 60 charecters", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Type should be less than 60 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (Constants.Methods.checkForSpecial(desc)){
+            Toast.makeText(getApplicationContext(),"Description should not include special charecters", Toast.LENGTH_SHORT).show();
+        }
         if (!(desc.length() <= 5000) && (desc.length()>= 1)) {
-            Toast.makeText(getApplicationContext(), "Title should be less than 5000 charecters", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Description should be less than 5000 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -114,12 +133,9 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 

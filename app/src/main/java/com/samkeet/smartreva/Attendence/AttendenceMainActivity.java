@@ -59,24 +59,25 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
     }
 
-    public void AbsentDetails(View v){
-        if(Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE)))
-        {
+    public void AbsentDetails(View v) {
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
             GetStudentAuthentication2 getStudentAuthentication = new GetStudentAuthentication2();
             getStudentAuthentication.execute();
         }
     }
 
     public void TakeAttendence(View v) {
-
-        GetFacultyAuthentication getFacultyAuthentication = new GetFacultyAuthentication();
-        getFacultyAuthentication.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetFacultyAuthentication getFacultyAuthentication = new GetFacultyAuthentication();
+            getFacultyAuthentication.execute();
+        }
     }
 
     public void ViewAttendence(View v) {
-
-        GetStudentAuthentication getStudentAuthentication = new GetStudentAuthentication();
-        getStudentAuthentication.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetStudentAuthentication getStudentAuthentication = new GetStudentAuthentication();
+            getStudentAuthentication.execute();
+        }
     }
 
     public void GenerateAttendenceReport(View v) {
@@ -95,7 +96,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
     private class GetFacultyAuthentication extends AsyncTask<Void, Void, Integer> {
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -131,15 +132,15 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
+                } else {
                     // Create a JSON object hierarchy from the results
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     String status = jsonObj.getString("status");
-                    if(status.equals("success")){
+                    if (status.equals("success")) {
 
-                    }else {
+                    } else {
                         authenticationError = true;
                         errorMessage = status;
                     }
@@ -158,9 +159,9 @@ public class AttendenceMainActivity extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else{
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
                 GetGeneralList getGeneralList = new GetGeneralList();
                 type = "subject_code";
                 getGeneralList.execute();
@@ -173,7 +174,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -209,15 +210,15 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
+                } else {
                     // Create a JSON object hierarchy from the results
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     String status = jsonObj.getString("status");
-                    if(status.equals("success")){
+                    if (status.equals("success")) {
 
-                    }else {
+                    } else {
                         authenticationError = true;
                         errorMessage = status;
                     }
@@ -237,10 +238,10 @@ public class AttendenceMainActivity extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else{
-                Intent intent =new Intent(getApplicationContext(),ViewAttendence.class);
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), ViewAttendence.class);
                 startActivity(intent);
             }
 
@@ -251,7 +252,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -287,15 +288,15 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
+                } else {
                     // Create a JSON object hierarchy from the results
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     String status = jsonObj.getString("status");
-                    if(status.equals("success")){
+                    if (status.equals("success")) {
 
-                    }else {
+                    } else {
                         authenticationError = true;
                         errorMessage = status;
                     }
@@ -315,10 +316,10 @@ public class AttendenceMainActivity extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else{
-                Intent intent =new Intent(getApplicationContext(),AbsentDetails.class);
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                Intent intent = new Intent(getApplicationContext(), AbsentDetails.class);
                 startActivity(intent);
             }
 
@@ -329,7 +330,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -365,9 +366,9 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
+                } else {
                     results = jsonResults.toString();
                 }
 
@@ -385,16 +386,16 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else{
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
                 Intent intent = new Intent(getApplicationContext(), GeneralListActivity.class);
                 intent.putExtra("RESULTS", results);
-                intent.putExtra("TYPE",type);
+                intent.putExtra("TYPE", type);
                 if (type.equals("subject_code")) {
                     startActivityForResult(intent, GET_SUBJECT_LIST);
-                }else if(type.equals(("class_code"))){
-                    startActivityForResult(intent,GET_CLASS_LIST);
+                } else if (type.equals(("class_code"))) {
+                    startActivityForResult(intent, GET_CLASS_LIST);
                 }
             }
         }
@@ -406,8 +407,8 @@ public class AttendenceMainActivity extends AppCompatActivity {
         if (requestCode == GET_SUBJECT_LIST) {
             if (resultCode == RESULT_OK) {
                 subject_value = data.getStringExtra("returnValue");
-                subject_value=subject_value.trim();
-                subject_value=subject_value.replaceAll("\\t","");
+                subject_value = subject_value.trim();
+                subject_value = subject_value.replaceAll("\\t", "");
                 type = "class_code";
                 GetGeneralList getGeneralList = new GetGeneralList();
                 getGeneralList.execute();
@@ -415,12 +416,12 @@ public class AttendenceMainActivity extends AppCompatActivity {
         } else if (requestCode == GET_CLASS_LIST) {
             if (resultCode == RESULT_OK) {
                 class_value = data.getStringExtra("returnValue");
-                class_value=class_value.trim();
-                class_value=class_value.replaceAll("\\t","");
+                class_value = class_value.trim();
+                class_value = class_value.replaceAll("\\t", "");
                 Intent intent = new Intent(getApplicationContext(), TakeAttendence.class);
-                intent.putExtra("CLASSCODE",class_value);
-                intent.putExtra("SUBJECTCODE",subject_value);
-                intent.putExtra("TABLE", class_value+"_"+subject_value);
+                intent.putExtra("CLASSCODE", class_value);
+                intent.putExtra("SUBJECTCODE", subject_value);
+                intent.putExtra("TABLE", class_value + "_" + subject_value);
                 startActivity(intent);
             }
         }

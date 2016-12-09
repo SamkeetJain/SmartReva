@@ -2,6 +2,7 @@ package com.samkeet.smartreva.Fees;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -23,10 +24,12 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class FeesMainActivity extends AppCompatActivity {
 
     public TextView mTotal, mDue, mPaid;
-    public ProgressDialog pd;
+    public SpotsDialog pd;
     public Context progressDialogContext;
 
     public boolean authenticationError;
@@ -45,9 +48,10 @@ public class FeesMainActivity extends AppCompatActivity {
         mDue = (TextView) findViewById(R.id.due);
         mPaid = (TextView) findViewById(R.id.paid);
 
-        GetFees getFees=new GetFees();
-        getFees.execute();
-
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetFees getFees = new GetFees();
+            getFees.execute();
+        }
     }
 
     public void BackButton(View v) {
@@ -58,12 +62,9 @@ public class FeesMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -114,9 +115,11 @@ public class FeesMainActivity extends AppCompatActivity {
                         } else {
                             due = "No due";
                         }
-                    }else {
-                        if(jsonArray.length()==0) errorMessage="No Data for corresponding UserID ";
-                        if(jsonArray.length()>1) errorMessage="Corrupted or invalid Data\nContact Developer about this bug";
+                    } else {
+                        if (jsonArray.length() == 0)
+                            errorMessage = "No Data for corresponding UserID ";
+                        if (jsonArray.length() > 1)
+                            errorMessage = "Corrupted or invalid Data\nContact Developer about this bug";
                     }
                 }
 

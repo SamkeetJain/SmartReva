@@ -2,6 +2,7 @@ package com.samkeet.smartreva.Notes;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -24,12 +25,14 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class ViewNotes extends AppCompatActivity {
 
-    public ProgressDialog pd;
+    public SpotsDialog pd;
     public Context progressDialogContext;
 
-    public String[] mNotesID,mTitle,mMessage,mFilename;
+    public String[] mNotesID, mTitle, mMessage, mFilename;
     public JSONObject notesObjects[];
 
     private RecyclerView mRecyclerView;
@@ -43,19 +46,20 @@ public class ViewNotes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_notes);
-        progressDialogContext=this;
+        progressDialogContext = this;
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        GetNotes getNotes=new GetNotes();
-        getNotes.execute();
-
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetNotes getNotes = new GetNotes();
+            getNotes.execute();
+        }
     }
 
-    public void BackButton(View v){
+    public void BackButton(View v) {
         finish();
     }
 
@@ -63,12 +67,9 @@ public class ViewNotes extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Logging...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -84,10 +85,10 @@ public class ViewNotes extends AppCompatActivity {
                 Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
-                        .appendQueryParameter("type","get")
-                        .appendQueryParameter("title","NAN")
-                        .appendQueryParameter("message","NAN")
-                        .appendQueryParameter("filename","NAN");
+                        .appendQueryParameter("type", "get")
+                        .appendQueryParameter("title", "NAN")
+                        .appendQueryParameter("message", "NAN")
+                        .appendQueryParameter("filename", "NAN");
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -106,9 +107,9 @@ public class ViewNotes extends AppCompatActivity {
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
+                } else {
 
                     JSONArray jsonArray = new JSONArray(jsonResults.toString());
                     mNotesID = new String[jsonArray.length()];
@@ -140,9 +141,8 @@ public class ViewNotes extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            mAdapter = new ViewNotesAdapter(mNotesID,mMessage,mTitle,mFilename);
+            mAdapter = new ViewNotesAdapter(mNotesID, mMessage, mTitle, mFilename);
             mRecyclerView.setAdapter(mAdapter);
-
 
 
         }
