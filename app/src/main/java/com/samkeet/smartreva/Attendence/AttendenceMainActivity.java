@@ -3,6 +3,7 @@ package com.samkeet.smartreva.Attendence;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import dmax.dialog.SpotsDialog;
+
 public class AttendenceMainActivity extends AppCompatActivity {
 
     public final static int GET_SUBJECT_LIST = 101;
@@ -30,7 +33,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
     public Button TakeAttendence, ViewAttendence, AbsentDetails, GenerateAttendenceReport;
 
-    private ProgressDialog pd;
+    private SpotsDialog pd;
     private Context progressDialogContext;
 
     String type;
@@ -56,8 +59,11 @@ public class AttendenceMainActivity extends AppCompatActivity {
     }
 
     public void AbsentDetails(View v){
-        GetStudentAuthentication2 getStudentAuthentication = new GetStudentAuthentication2();
-        getStudentAuthentication.execute();
+        if(Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE)))
+        {
+            GetStudentAuthentication2 getStudentAuthentication = new GetStudentAuthentication2();
+            getStudentAuthentication.execute();
+        }
     }
 
     public void TakeAttendence(View v) {
@@ -89,12 +95,12 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
+//            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -170,12 +176,12 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
+//            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -251,12 +257,12 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
+//            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -332,12 +338,12 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+//            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
+//            pd.setIndeterminate(true);
             pd.show();
         }
 

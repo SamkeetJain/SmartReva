@@ -9,4 +9,6 @@
     <color name="colorPrimaryLight">#f1c07c</color>
     <color name="lavender">#FAFAFA</color>
 
+    <color name="spots_dialog_color">@color/colorAccent</color>
+
 </resources>

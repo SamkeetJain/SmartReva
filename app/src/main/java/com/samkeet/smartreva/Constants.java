@@ -116,14 +116,13 @@ public class Constants {
     public static class Methods {
 
         public static boolean networkState(Context context, ConnectivityManager comman) {
-
             boolean wifi = comman.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
             boolean data = comman.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnected();
 
             if (wifi || data) {
                 return true;
             } else {
-                Toast toast = Toast.makeText(context, "No Internet Connnection found!! Try Again", Toast.LENGTH_LONG);
+                Toast toast = Toast.makeText(context, "No Internet Connnection!!! Try Again", Toast.LENGTH_LONG);
                 toast.show();
                 return false;
             }
