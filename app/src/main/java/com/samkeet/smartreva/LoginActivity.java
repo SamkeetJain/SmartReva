@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     public Context progressDialogContext;
 
     public String token;
-    public boolean authenticationError;
+    public boolean authenticationError=true;
     public String errorMessage;
 
     @Override
@@ -108,6 +108,7 @@ public class LoginActivity extends AppCompatActivity {
                     String status = jsonObj.getString("status");
                     if(status.equals("success")){
                         token = jsonObj.getString("token");
+                        authenticationError=false;
                     }else {
                         authenticationError = true;
                         errorMessage = status;

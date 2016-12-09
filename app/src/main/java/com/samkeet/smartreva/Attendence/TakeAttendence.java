@@ -2,6 +2,7 @@ package com.samkeet.smartreva.Attendence;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import dmax.dialog.SpotsDialog;
+
 public class TakeAttendence extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     private RecyclerView mRecyclerView;
@@ -37,7 +40,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
     private RecyclerView.LayoutManager mLayoutManager;
 
     private Context progressDialogContext;
-    public ProgressDialog pd;
+    public SpotsDialog pd;
 
     public String class_code, subject_code;
     public String studentsList[];
@@ -68,8 +71,10 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
         class_code = getIntent().getStringExtra("CLASSCODE");
         subject_code = getIntent().getStringExtra("SUBJECTCODE");
 
-        GetStudentsList getStudentsList = new GetStudentsList();
-        getStudentsList.execute();
+        if(Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetStudentsList getStudentsList = new GetStudentsList();
+            getStudentsList.execute();
+        }
 
     }
 
@@ -93,12 +98,9 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -192,6 +194,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
         }
         finalValues = temp;
 
+
         InsertAttendence insertAttendence = new InsertAttendence();
         insertAttendence.execute();
 
@@ -215,12 +218,9 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
 
 
         protected void onPreExecute() {
-            pd = new ProgressDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext);
             pd.setTitle("Loading...");
-            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-            pd.setIndeterminate(true);
             pd.show();
         }
 

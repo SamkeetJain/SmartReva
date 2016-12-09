@@ -66,6 +66,22 @@ public class CounclingNewPost extends AppCompatActivity {
     }
 
     public boolean validation(){
+        datetext=datetext.trim();
+        desc=desc.trim();
+        title=title.trim();
+
+        if( Constants.Methods.checkForSpecial(datetext)){
+            Toast.makeText(getApplicationContext(), "Please remove special charecters in date field", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if(Constants.Methods.checkForSpecial(desc)){
+            Toast.makeText(getApplicationContext(), "Please remove special charecters in description field", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+
+
         if (!((datetext.length() <= 20) && (datetext.length()>= 1))) {
             Toast.makeText(getApplicationContext(), "Title should be less than 20 charecters", Toast.LENGTH_SHORT).show();
             return false;

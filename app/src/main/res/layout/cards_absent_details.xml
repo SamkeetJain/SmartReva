@@ -44,6 +44,11 @@
                     android:textSize="18sp" />
 
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"
+                android:paddingTop="5dp" />
 
             <LinearLayout
                 android:id="@+id/line"

@@ -26,6 +26,7 @@ import java.net.URL;
 
 import dmax.dialog.SpotsDialog;
 
+
 public class AttendenceMainActivity extends AppCompatActivity {
 
     public final static int GET_SUBJECT_LIST = 101;
@@ -93,14 +94,10 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
     private class GetFacultyAuthentication extends AsyncTask<Void, Void, Integer> {
 
-
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-//            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-//            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -176,12 +173,9 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-//            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-//            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -257,12 +251,9 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-//            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-//            pd.setIndeterminate(true);
             pd.show();
         }
 
@@ -338,12 +329,9 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
-//            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
-//            pd.setIndeterminate(true);
             pd.show();
         }
 
