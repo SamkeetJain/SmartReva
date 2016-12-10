@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public String token;
     public boolean authenticationError = true;
-    public String errorMessage;
+    public String errorMessage = "Data Corrupted";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

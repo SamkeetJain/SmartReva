@@ -14,29 +14,32 @@ import com.samkeet.smartreva.R;
 
 public class PlacementMainAdapter extends RecyclerView.Adapter<PlacementMainAdapter.ViewHolder> {
 
-    private String[] mTitle;
+    private String[] mTitle,mDate,mDept,mRole;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mSubView, mDateView, mPeriodView, mStatView;
+        public TextView mTitleView, mDateView, mDeptView, mRoleView;
 
         public ViewHolder(View v) {
             super(v);
-            mSubView = (TextView) v.findViewById(R.id.sub);
-            mDateView = (TextView) v.findViewById(R.id.date);
-            mPeriodView = (TextView) v.findViewById(R.id.period);
-            mStatView = (TextView) v.findViewById(R.id.stat);
+            mTitleView = (TextView) v.findViewById(R.id.company_title);
+            mDateView = (TextView) v.findViewById(R.id.datetext);
+            mDeptView = (TextView) v.findViewById(R.id.dept);
+            mRoleView = (TextView) v.findViewById(R.id.role);
         }
     }
 
-    public PlacementMainAdapter(String[] mTitle) {
+    public PlacementMainAdapter(String[] mTitle,String[] mDate,String[] mDept,String[] mRole) {
         this.mTitle = mTitle;
+        this.mDate = mDate;
+        this.mDept = mDept;
+        this.mRole = mRole;
     }
 
     @Override
     public PlacementMainAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_absent_details, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_placement_drives, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -46,16 +49,10 @@ public class PlacementMainAdapter extends RecyclerView.Adapter<PlacementMainAdap
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        String list[] = mTitle[position].split("\\|");
-        String sub = list[0];
-        String date = list[1];
-        String per = list[2];
-        String stat = list[3];
-
-        holder.mSubView.setText(sub);
-        holder.mDateView.setText(date);
-        holder.mPeriodView.setText(per);
-        holder.mStatView.setText(stat);
+        holder.mTitleView.setText(mTitle[position]);
+        holder.mDateView.setText(mDate[position]);
+        holder.mDeptView.setText(mDept[position]);
+        holder.mRoleView.setText(mRole[position]);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -38,6 +38,7 @@ public class Constants {
         public static String ALUMNI = "alumni.php";
         public static String FEE = "fee.php";
         public static String GET_RESULTS = "get_results.php";
+        public static String PLACEMENT_DRVE = "placement_drives.php";
 
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
     }

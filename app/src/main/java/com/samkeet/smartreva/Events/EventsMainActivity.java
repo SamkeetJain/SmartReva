@@ -114,8 +114,10 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
 
     @Override
     public void onRefresh() {
-        GetEvents getEvents = new GetEvents();
-        getEvents.execute();
+        if(Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetEvents getEvents = new GetEvents();
+            getEvents.execute();
+        }
     }
 
     public class GetEvents extends AsyncTask<Void, Void, Integer> {
@@ -162,6 +164,8 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
 
                 if (authenticationError) {
                     errorMessage = jsonResults.toString();

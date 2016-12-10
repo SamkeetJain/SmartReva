@@ -173,6 +173,7 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
 
+                authenticationError = jsonResults.toString().contains("Authentication Error");
 
                 if (authenticationError) {
                     errorMessage = jsonResults.toString();
