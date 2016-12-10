@@ -19,7 +19,6 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class Constants {
-
     public static class URLs {
         public static String BASE = "http://revacounselling.16mb.com/";
         public static String LOGIN = "login.php";
@@ -136,7 +135,6 @@ public class Constants {
             Matcher m = p.matcher(s);
             boolean b = m.find();
            return  b;
-
         }
     }
 

@@ -71,7 +71,6 @@ public class ViewAttendence extends AppCompatActivity {
         protected void onPreExecute() {
             pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
-            pd.setMessage("Please wait.");
             pd.setCancelable(false);
             pd.show();
         }

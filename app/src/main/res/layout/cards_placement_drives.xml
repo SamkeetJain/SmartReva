@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -25,8 +25,9 @@
                 android:id="@+id/company_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="left"
                 android:paddingTop="5dp"
-                android:gravity="center"
+                android:paddingLeft="10dp"
                 android:textSize="22dp" />
 
             <View
@@ -35,41 +36,43 @@
                 android:background="#E0E0E0"
                 android:paddingTop="5dp" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/datetext"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingLeft="5dp"
-                    android:gravity="left"
                     android:layout_weight="1"
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
                     android:textSize="14dp" />
 
                 <TextView
                     android:id="@+id/dept"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
+                    android:layout_weight="1"
                     android:gravity="right"
                     android:paddingRight="5dp"
-                    android:layout_weight="1"
+                    android:paddingTop="5dp"
                     android:textSize="14dp" />
             </LinearLayout>
+
             <TextView
-                android:layout_width="match_parent"
-                android:paddingTop="5dp"
                 android:id="@+id/role"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:layout_height="wrap_content" />
-
-
+                android:paddingTop="5dp" />
 
 
         </LinearLayout>
+
     </android.support.v7.widget.CardView>
 
 

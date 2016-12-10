@@ -1,6 +1,5 @@
 package com.samkeet.smartreva.Placement;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -33,7 +32,6 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
 import com.mikepenz.materialize.util.UIUtils;
 import com.samkeet.smartreva.Constants;
-import com.samkeet.smartreva.Events.EventsMainActivity;
 import com.samkeet.smartreva.R;
 
 import org.json.JSONArray;
@@ -64,7 +62,7 @@ public class PlacementMainActivity extends AppCompatActivity implements SwipeRef
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
-    public static final String[] navItems={"Upcoming Drives","Grades","Profile","About Us"};
+    public static final String[] navItems={"Upcoming Drives","Academic Details","Training & Certifications","Profile","About Us"};
     private AccountHeader headerResult = null;
     private Drawer result = null;
     private MiniDrawer miniResult = null;
@@ -104,25 +102,26 @@ public class PlacementMainActivity extends AppCompatActivity implements SwipeRef
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(navItems[0]).withIcon(FontAwesome.Icon.faw_inbox).withIdentifier(1),
                         new PrimaryDrawerItem().withName(navItems[1]).withIcon(MaterialDesignIconic.Icon.gmi_open_in_new).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(navItems[2]).withIcon(FontAwesome.Icon.faw_user).withIdentifier(3),
+                        new PrimaryDrawerItem().withName(navItems[2]).withIcon(MaterialDesignIconic.Icon.gmi_open_in_new).withIdentifier(3),
+                        new PrimaryDrawerItem().withName(navItems[3]).withIcon(FontAwesome.Icon.faw_user).withIdentifier(4),
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_fourth).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(4),
                         new DividerDrawerItem(),
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_fifth).withIcon(FontAwesome.Icon.faw_android).withIdentifier(5),
-                        new PrimaryDrawerItem().withName(navItems[3]).withIcon(FontAwesome.Icon.faw_wikipedia_w).withIdentifier(4)
+                        new PrimaryDrawerItem().withName(navItems[3]).withIcon(FontAwesome.Icon.faw_wikipedia_w).withIdentifier(5)
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem.getIdentifier() == 2) {
-                            Intent intent = new Intent(getApplicationContext(),Grades.class);
+                            Intent intent = new Intent(getApplicationContext(),AcademicDetails.class);
                             startActivity(intent);
 
                         }
-                        if (drawerItem.getIdentifier() == 3) {
+                        if (drawerItem.getIdentifier() == 4) {
                             Intent intent = new Intent(getApplicationContext(), Profile.class);
                             startActivity(intent);
                         }
-                        if (drawerItem.getIdentifier() == 4) {
+                        if (drawerItem.getIdentifier() == 5) {
 
                         }
                         return false;

@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.samkeet.smartreva.R;
 
-public class Grades extends AppCompatActivity {
+public class AcademicDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
