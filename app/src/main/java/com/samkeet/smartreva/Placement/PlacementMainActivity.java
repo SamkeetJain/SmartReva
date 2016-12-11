@@ -47,7 +47,6 @@ import dmax.dialog.SpotsDialog;
 
 public class PlacementMainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -62,7 +61,7 @@ public class PlacementMainActivity extends AppCompatActivity implements SwipeRef
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
-    public static final String[] navItems={"Upcoming Drives","Academic Details","Training & Certifications","Profile","About Us"};
+    public static final String[] navItems={"Upcoming Drives","Academic Details","Training & Certifications","Registration Form","About Us"};
     private AccountHeader headerResult = null;
     private Drawer result = null;
     private MiniDrawer miniResult = null;
@@ -101,13 +100,13 @@ public class PlacementMainActivity extends AppCompatActivity implements SwipeRef
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(navItems[0]).withIcon(FontAwesome.Icon.faw_inbox).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(navItems[1]).withIcon(MaterialDesignIconic.Icon.gmi_open_in_new).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(navItems[2]).withIcon(MaterialDesignIconic.Icon.gmi_open_in_new).withIdentifier(3),
+                        new PrimaryDrawerItem().withName(navItems[1]).withIcon(MaterialDesignIconic.Icon.gmi_collection_folder_image).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(navItems[2]).withIcon(MaterialDesignIconic.Icon.gmi_book_image).withIdentifier(3),
                         new PrimaryDrawerItem().withName(navItems[3]).withIcon(FontAwesome.Icon.faw_user).withIdentifier(4),
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_fourth).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(4),
                         new DividerDrawerItem(),
 //                        new PrimaryDrawerItem().withName(R.string.drawer_item_fifth).withIcon(FontAwesome.Icon.faw_android).withIdentifier(5),
-                        new PrimaryDrawerItem().withName(navItems[3]).withIcon(FontAwesome.Icon.faw_wikipedia_w).withIdentifier(5)
+                        new PrimaryDrawerItem().withName(navItems[4]).withIcon(FontAwesome.Icon.faw_wikipedia_w).withIdentifier(5)
                 ) // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -116,6 +115,10 @@ public class PlacementMainActivity extends AppCompatActivity implements SwipeRef
                             Intent intent = new Intent(getApplicationContext(),AcademicDetails.class);
                             startActivity(intent);
 
+                        }
+                        if (drawerItem.getIdentifier() == 3) {
+                            Intent intent = new Intent(getApplicationContext(), TrainingCertification.class);
+                            startActivity(intent);
                         }
                         if (drawerItem.getIdentifier() == 4) {
                             Intent intent = new Intent(getApplicationContext(), Profile.class);

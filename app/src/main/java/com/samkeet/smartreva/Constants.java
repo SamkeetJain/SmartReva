@@ -38,6 +38,10 @@ public class Constants {
         public static String FEE = "fee.php";
         public static String GET_RESULTS = "get_results.php";
         public static String PLACEMENT_DRVE = "placement_drives.php";
+        public static String PLACEMENT_ACADEMIC_DETAILS = "placement_academic_profile.php";
+        public static String PLACEMENT_ENGG_DETAILS = "placement_engg_academics.php";
+        public static String PLACEMENT_BACK_DETAILS = "placement_backlogs.php";
+        public static String PLACEMENT_TANDC = "placement_tandc.php";
 
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
     }
