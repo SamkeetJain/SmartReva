@@ -82,6 +82,7 @@
             </intent-filter>
         </service>
 
+
         <activity android:name=".Firebase.NotificationActivity"></activity>
         <activity android:name=".Placement.TrainingCertification"></activity>
     </application>
