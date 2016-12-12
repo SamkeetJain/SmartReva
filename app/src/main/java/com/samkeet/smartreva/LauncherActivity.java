@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.samkeet.smartreva.AlumniCell.AlumniCellActivity;
 import com.samkeet.smartreva.Attendence.AttendenceMainActivity;
 import com.samkeet.smartreva.Councling.CounclingMainActivity;
@@ -58,7 +59,6 @@ public class LauncherActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivityForResult(intent, 201);
         }
-
     }
 
     @Override
