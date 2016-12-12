@@ -68,9 +68,21 @@
         <activity android:name=".Attendence.AbsentDetails" />
         <activity android:name=".Placement.PlacementMainActivity" />
         <activity android:name=".Placement.Profile" />
-        <activity android:name=".Placement.DriveManager" />
         <activity android:name=".Placement.DriveManagement" />
         <activity android:name=".Placement.AcademicDetails" />
+        <!-- Firebase Notifications -->
+        <service android:name=".Firebase.MyFirebaseMessangingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".Firebase.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".Firebase.NotificationActivity"></activity>
         <activity android:name=".Placement.TrainingCertification"></activity>
     </application>
 

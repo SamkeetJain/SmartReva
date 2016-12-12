@@ -18,6 +18,7 @@ import com.samkeet.smartreva.Attendence.AttendenceMainActivity;
 import com.samkeet.smartreva.Councling.CounclingMainActivity;
 import com.samkeet.smartreva.Events.EventsMainActivity;
 import com.samkeet.smartreva.Fees.FeesMainActivity;
+import com.samkeet.smartreva.Firebase.NotificationActivity;
 import com.samkeet.smartreva.Library.LibraryMainActivity;
 import com.samkeet.smartreva.Notes.NotesMainActivity;
 import com.samkeet.smartreva.Notification.NotificationMainActivity;
@@ -105,7 +106,7 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Councling(View v) {
-        Intent intent = new Intent(getApplicationContext(), CounclingMainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), NotificationActivity.class);
         startActivity(intent);
 
     }
