@@ -99,6 +99,7 @@ public class LauncherActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void Notes(View v) {
         Intent intent = new Intent(getApplicationContext(), NotesMainActivity.class);
         startActivity(intent);
