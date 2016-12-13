@@ -71,7 +71,8 @@ public class LauncherActivity extends AppCompatActivity {
         }
 
         if(Constants.FireBase.token != null){
-
+            UpdateToken updateToken= new UpdateToken();
+            updateToken.execute();
         }
     }
 
