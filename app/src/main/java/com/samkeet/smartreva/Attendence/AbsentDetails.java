@@ -59,7 +59,7 @@ public class AbsentDetails extends AppCompatActivity {
     private class GetAbsentDetails extends AsyncTask<Void, Void, Integer> {
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext);
+            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
