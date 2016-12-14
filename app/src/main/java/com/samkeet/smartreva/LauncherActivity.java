@@ -56,36 +56,18 @@ public class LauncherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_launcher);
+        setContentView(R.layout.screen);
 
         FirebaseMessaging.getInstance().subscribeToTopic("global");
         FirebaseInstanceId.getInstance().getToken();
 
-        progressDialogContext=this;
+        progressDialogContext = this;
 
-        Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES, MODE_PRIVATE));
 
-        if (!Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
-            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivityForResult(intent, 201);
-        }
 
-        if(Constants.FireBase.token != null){
-            UpdateToken updateToken= new UpdateToken();
+        if (Constants.FireBase.token != null) {
+            UpdateToken updateToken = new UpdateToken();
             updateToken.execute();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if (requestCode == 201) {
-            if (resultCode == RESULT_OK) {
-                if (!Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivityForResult(intent, 201);
-                }
-            }
         }
     }
 
@@ -106,11 +88,10 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Placements(View v) {
-
-
         Intent intent = new Intent(getApplicationContext(), PlacementMainActivity.class);
         startActivity(intent);
     }
+
     public void Notification(View v) {
         Intent intent = new Intent(getApplicationContext(), NotificationMainActivity.class);
         startActivity(intent);
@@ -122,7 +103,7 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Councling(View v) {
-        Intent intent = new Intent(getApplicationContext(), NotificationMainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CounclingMainActivity.class);
         startActivity(intent);
 
     }
@@ -144,9 +125,8 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Alumini(View v) {
-        Constants.SharedPreferenceData.clearData();
-//        Intent intent = new Intent(getApplicationContext(), AlumniCellActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(), AlumniCellActivity.class);
+        startActivity(intent);
     }
 
     public void Fees(View v) {
@@ -156,11 +136,15 @@ public class LauncherActivity extends AppCompatActivity {
         }
     }
 
+    public void Revamp(View v) {
+        Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
+    }
+
     private class GetStudentAuthentication extends AsyncTask<Void, Void, Integer> {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -196,15 +180,15 @@ public class LauncherActivity extends AppCompatActivity {
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
+                } else {
                     // Create a JSON object hierarchy from the results
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     String status = jsonObj.getString("status");
-                    if(status.equals("success")){
+                    if (status.equals("success")) {
 
-                    }else {
+                    } else {
                         authenticationError = true;
                         errorMessage = status;
                     }
@@ -224,9 +208,9 @@ public class LauncherActivity extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else{
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
                 Intent intent = new Intent(getApplicationContext(), FeesMainActivity.class);
                 startActivity(intent);
             }
@@ -238,7 +222,7 @@ public class LauncherActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -274,15 +258,15 @@ public class LauncherActivity extends AppCompatActivity {
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
+                } else {
                     // Create a JSON object hierarchy from the results
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     String status = jsonObj.getString("status");
-                    if(status.equals("success")){
+                    if (status.equals("success")) {
 
-                    }else {
+                    } else {
                         authenticationError = true;
                         errorMessage = status;
                     }
@@ -302,9 +286,9 @@ public class LauncherActivity extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else{
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
                 Intent returnIntent = new Intent();
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();

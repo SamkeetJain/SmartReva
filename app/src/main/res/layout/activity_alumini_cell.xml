@@ -139,6 +139,7 @@
             android:background="@drawable/border"
             android:textColor="#ffa332"
             android:id="@+id/register"
+            android:onClick="register"
 
             />
         </LinearLayout>

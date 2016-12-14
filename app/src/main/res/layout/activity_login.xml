@@ -11,9 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="26dp"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/input_layout_usn"
@@ -24,7 +22,7 @@
                 android:id="@+id/usn"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:hint="USN"
+                android:hint="User ID"
                 android:text=""
                 android:textColor="#ffa332"
                 android:textColorHint="#808080"
@@ -52,23 +50,30 @@
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border"
-            android:text="Login"
-            android:textColor="#ffa332" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content"
-            android:text="Forget Password ?"
-            android:textColor="@color/colorAccent"
-            android:gravity="center"
-
-            />
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="Login" />
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="Forgot Password ?" />
 
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="Proceed as Alumni ?" />
+    </LinearLayout>
 
 </RelativeLayout>

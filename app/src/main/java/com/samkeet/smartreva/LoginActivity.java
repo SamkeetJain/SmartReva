@@ -43,14 +43,31 @@ public class LoginActivity extends AppCompatActivity {
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
+    public boolean returnType = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES, MODE_PRIVATE));
+
+        if (getIntent().getStringExtra("TYPE") != null) {
+            if (getIntent().getStringExtra("TYPE").equals("RETURN")) {
+                returnType = true;
+            }
+        }
+
         progressDialogContext = this;
         usn = (EditText) findViewById(R.id.usn);
         password = (EditText) findViewById(R.id.password);
         login_button = (Button) findViewById(R.id.login_button);
+
+        if (Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
+            Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
+            startActivity(intent);
+            finish();
+        }
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -141,8 +158,9 @@ public class LoginActivity extends AppCompatActivity {
                 Constants.SharedPreferenceData.setTOKEN(token);
                 Constants.SharedPreferenceData.setUserId(susn);
 
-                UpdateToken updateToken=new UpdateToken();
+                UpdateToken updateToken = new UpdateToken();
                 updateToken.execute();
+
             }
 
         }
@@ -152,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -188,15 +206,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
-                if(authenticationError) {
+                if (authenticationError) {
                     errorMessage = jsonResults.toString();
-                }else {
+                } else {
                     // Create a JSON object hierarchy from the results
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     String status = jsonObj.getString("status");
-                    if(status.equals("success")){
+                    if (status.equals("success")) {
 
-                    }else {
+                    } else {
                         authenticationError = true;
                         errorMessage = status;
                     }
@@ -216,17 +234,18 @@ public class LoginActivity extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else{
-                Intent returnIntent = new Intent();
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                if (returnType) {
+                    finish();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
 
         }
     }
-
-
-
 }
