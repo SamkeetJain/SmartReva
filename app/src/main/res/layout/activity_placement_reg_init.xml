@@ -74,7 +74,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="You will have only one chance to submit the registration form. Make sure you submit complete form with accurate details"
+                android:text="You will have only one chance to submit the following registration form(s). Make sure you submit complete form with accurate details"
                 android:textAlignment="center"
                 android:textAllCaps="true"
                 android:textStyle="bold" />
@@ -238,8 +238,9 @@
                 android:layout_marginTop="15dp"
                 android:text="Under Graduate Form" />
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:id="@+id/pgbutton"
+                android:gravity="center"
                 android:layout_height="wrap_content">
 
                 <Button
@@ -248,7 +249,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/button3"
                     android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:text="Post Graduate Form" />
 
             </LinearLayout>

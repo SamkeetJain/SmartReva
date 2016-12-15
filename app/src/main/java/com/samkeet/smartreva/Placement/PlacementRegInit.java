@@ -80,7 +80,6 @@ public class PlacementRegInit extends AppCompatActivity {
         AcademicDetailsForm = (Button) findViewById(R.id.button1);
         UnderGraduateForm = (Button) findViewById(R.id.button2);
         PostGraduateForm = (Button) findViewById(R.id.button3);
-        PostGraduateForm.setVisibility(View.INVISIBLE);
 
         GetCourseDetails getCourseDetails = new GetCourseDetails();
         getCourseDetails.execute();
@@ -102,10 +101,11 @@ public class PlacementRegInit extends AppCompatActivity {
                 if (isChecked) {
                     isPGStudent = true;
                     PGComponent.setVisibility(View.VISIBLE);
-                    PostGraduateForm.setVisibility(View.VISIBLE);
+                    PGButton.setVisibility(View.VISIBLE);
                 } else {
                     isPGStudent = false;
                     PGComponent.setVisibility(View.INVISIBLE);
+                    PGButton.setVisibility(View.INVISIBLE);
                 }
             }
         });
