@@ -86,7 +86,8 @@
         <activity android:name=".AlumniCell.AlunmiRegistration" />
         <activity android:name=".AlumniCell.Events" />
         <activity android:name=".Placement.PlacementRegInit" />
-        <activity android:name=".Placement.PlacementRegForm2"></activity>
+        <activity android:name=".Placement.PlacementRegForm2" />
+        <activity android:name=".Placement.PlacementRegForm3"></activity>
     </application>
 
 </manifest>

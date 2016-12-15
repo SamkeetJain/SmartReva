@@ -50,15 +50,15 @@ public class PlacementRegInit extends AppCompatActivity {
     public Switch PGStudent;
     public Switch DiplomaStudent;
     public CheckBox TermCheck;
-    public Button AcademicDetailsForm,UnderGraduateForm,PostGraduateForm;
+    public Button AcademicDetailsForm, UnderGraduateForm, PostGraduateForm;
 
     public String UGCourse;
     public String PGCourse;
-    public boolean isPGStudent=false;
-    public boolean isDiplomaStudent=false;
-    public boolean termsAgreed=false;
+    public boolean isPGStudent = false;
+    public boolean isDiplomaStudent = false;
+    public boolean termsAgreed = false;
 
-    public LinearLayout PGComponent;
+    public LinearLayout PGComponent,PGButton;
 
 
     @Override
@@ -70,12 +70,17 @@ public class PlacementRegInit extends AppCompatActivity {
 
         UGSpinner = (Spinner) findViewById(R.id.UGSpinner);
         PGSpinner = (Spinner) findViewById(R.id.PGSpinner);
-        PGStudent= (Switch) findViewById(R.id.PGCheck);
-        DiplomaStudent= (Switch) findViewById(R.id.DiplomaCheck);
-        PGComponent= (LinearLayout) findViewById(R.id.pgcomponent);
+        PGStudent = (Switch) findViewById(R.id.PGCheck);
+        DiplomaStudent = (Switch) findViewById(R.id.DiplomaCheck);
+        PGComponent = (LinearLayout) findViewById(R.id.pgcomponent);
         PGComponent.setVisibility(View.INVISIBLE);
-        TermCheck= (CheckBox) findViewById(R.id.termcheck);
-        AcademicDetailsForm = (Button) findViewById(R.id.button);
+        PGButton= (LinearLayout) findViewById(R.id.pgbutton);
+        PGButton.setVisibility(View.INVISIBLE);
+        TermCheck = (CheckBox) findViewById(R.id.termcheck);
+        AcademicDetailsForm = (Button) findViewById(R.id.button1);
+        UnderGraduateForm = (Button) findViewById(R.id.button2);
+        PostGraduateForm = (Button) findViewById(R.id.button3);
+        PostGraduateForm.setVisibility(View.INVISIBLE);
 
         GetCourseDetails getCourseDetails = new GetCourseDetails();
         getCourseDetails.execute();
@@ -84,9 +89,9 @@ public class PlacementRegInit extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    termsAgreed=true;
+                    termsAgreed = true;
                 } else {
-                    termsAgreed=false;
+                    termsAgreed = false;
                 }
             }
         });
@@ -95,10 +100,11 @@ public class PlacementRegInit extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    isPGStudent=true;
+                    isPGStudent = true;
                     PGComponent.setVisibility(View.VISIBLE);
+                    PostGraduateForm.setVisibility(View.VISIBLE);
                 } else {
-                    isPGStudent=true;
+                    isPGStudent = false;
                     PGComponent.setVisibility(View.INVISIBLE);
                 }
             }
@@ -108,9 +114,9 @@ public class PlacementRegInit extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    isDiplomaStudent=true;
+                    isDiplomaStudent = true;
                 } else {
-                    isDiplomaStudent=true;
+                    isDiplomaStudent = true;
                 }
             }
         });
@@ -118,33 +124,55 @@ public class PlacementRegInit extends AppCompatActivity {
         AcademicDetailsForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(termsAgreed){
-                    Intent intent = new Intent(getApplicationContext(),PlacementRegForm1.class);
-                    if(isDiplomaStudent){
-                        intent.putExtra("DIP","yes");
-                    } else{
-                        intent.putExtra("DIP","no");
+                if (termsAgreed) {
+                    Intent intent = new Intent(getApplicationContext(), PlacementRegForm1.class);
+                    if (isDiplomaStudent) {
+                        intent.putExtra("DIP", "yes");
+                    } else {
+                        intent.putExtra("DIP", "no");
                     }
-                    if(isPGStudent){
-                        intent.putExtra("PGS","yes");
-                        intent.putExtra("PG",PGCourse);
-                    } else{
-                        intent.putExtra("PGS","no");
-                        intent.putExtra("PG","no");
+                    if (isPGStudent) {
+                        intent.putExtra("PGS", "yes");
+                        intent.putExtra("PG", PGCourse);
+                    } else {
+                        intent.putExtra("PGS", "no");
+                        intent.putExtra("PG", "no");
                     }
-                    intent.putExtra("UG",UGCourse);
+                    intent.putExtra("UG", UGCourse);
                     startActivity(intent);
                     finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You must agree Terms and Conditions!!!", Toast.LENGTH_SHORT).show();
                 }
-                else {
-                    Toast.makeText(getApplicationContext(),"You must agree Terms and Conditions!!!",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        UnderGraduateForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (termsAgreed) {
+                    Intent intent=new Intent(getApplicationContext(),PlacementRegForm2.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "You must agree Terms and Conditions!!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        PostGraduateForm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (termsAgreed) {
+                    Intent intent=new Intent(getApplicationContext(),PlacementRegForm3.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "You must agree Terms and Conditions!!!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
     }
 
-    public  void BackButton(View v){
+    public void BackButton(View v) {
         finish();
     }
 
