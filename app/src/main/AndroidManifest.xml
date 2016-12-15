@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LauncherActivity"></activity>
+        <activity android:name=".LauncherActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,7 +67,7 @@
         <activity android:name=".AlumniCell.UploadActivity" />
         <activity android:name=".Attendence.AbsentDetails" />
         <activity android:name=".Placement.PlacementMainActivity" />
-        <activity android:name=".Placement.PlacementRegForm" />
+        <activity android:name=".Placement.PlacementRegForm1" />
         <activity android:name=".Placement.PlacementDriveManager" />
         <activity android:name=".Placement.AcademicDetails" />
         <activity android:name=".Placement.TrainingCertification" />
@@ -85,7 +85,8 @@
 
         <activity android:name=".AlumniCell.AlunmiRegistration" />
         <activity android:name=".AlumniCell.Events" />
-        <activity android:name=".Placement.PlacementRegInit"></activity>
+        <activity android:name=".Placement.PlacementRegInit" />
+        <activity android:name=".Placement.PlacementRegForm2"></activity>
     </application>
 
 </manifest>

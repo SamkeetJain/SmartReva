@@ -225,10 +225,26 @@
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button"
+                android:id="@+id/button1"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
-                android:text="Registration Form" />
+                android:text="Academic Details Form" />
+            <Button
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button2"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text="Under Graduate Form" />
+            <Button
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button3"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text="Post Graduate Form" />
         </LinearLayout>
 
     </ScrollView>

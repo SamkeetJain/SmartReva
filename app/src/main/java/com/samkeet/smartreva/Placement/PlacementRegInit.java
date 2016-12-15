@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.ContentFrameLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -120,8 +119,21 @@ public class PlacementRegInit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(termsAgreed){
-                    Intent internt = new Intent(getApplicationContext(),PlacementRegForm.class);
-                    startActivity(internt);
+                    Intent intent = new Intent(getApplicationContext(),PlacementRegForm1.class);
+                    if(isDiplomaStudent){
+                        intent.putExtra("DIP","yes");
+                    } else{
+                        intent.putExtra("DIP","no");
+                    }
+                    if(isPGStudent){
+                        intent.putExtra("PGS","yes");
+                        intent.putExtra("PG",PGCourse);
+                    } else{
+                        intent.putExtra("PGS","no");
+                        intent.putExtra("PG","no");
+                    }
+                    intent.putExtra("UG",UGCourse);
+                    startActivity(intent);
                     finish();
                 }
                 else {
@@ -130,6 +142,10 @@ public class PlacementRegInit extends AppCompatActivity {
             }
         });
 
+    }
+
+    public  void BackButton(View v){
+        finish();
     }
 
     public void spinnerInit() {

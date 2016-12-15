@@ -353,7 +353,7 @@ public class AcademicDetails extends AppCompatActivity {
             try {
                 authenticationError = true;
                 errorMessage = "DATA COURPTED";
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.PLACEMENT_ENGG_DETAILS);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.PLACEMENT_UG_DETAILS);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -497,5 +497,4 @@ public class AcademicDetails extends AppCompatActivity {
 
         }
     }
-
 }

@@ -34,7 +34,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerHorizontal="true"
-                    android:onClick="BackButton"
                     android:paddingLeft="5dp"
                     android:src="@drawable/ic_launcher_white" />
 

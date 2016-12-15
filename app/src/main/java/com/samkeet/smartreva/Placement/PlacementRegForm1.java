@@ -2,12 +2,14 @@ package com.samkeet.smartreva.Placement;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.samkeet.smartreva.R;
 
-public class PlacementRegForm extends AppCompatActivity {
+public class PlacementRegForm1 extends AppCompatActivity {
 
     public EditText mName, mDob, mGender, mNationality, mPaddress, mCaddress, mPhone, mMobile, mEmail;
     public EditText mFname, mFmobile, mFoccupation, mFemail;
@@ -23,17 +25,69 @@ public class PlacementRegForm extends AppCompatActivity {
     public String tws, twpy, twb, twn, twm;
     public String ds, dpy, db, dn, dm;
 
-    public boolean editable;
+    public CardView DiplomaCard;
+
+    public String isDiploma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_placement_profile);
+        setContentView(R.layout.activity_placement_regform1);
+
         setFindViewById();
+
+        isDiploma = getIntent().getStringExtra("DIP");
+
+        if (isDiploma.equals("no")) {
+            DiplomaCard.setVisibility(View.GONE);
+        }
+    }
+
+    public void sendData() {
+        name = mName.getText().toString();
+        dob = mDob.getText().toString();
+        gender = mGender.getText().toString();
+        nationality = mNationality.getText().toString();
+        paddress = mPaddress.getText().toString();
+        caddress = mCaddress.getText().toString();
+        phone = mPhone.getText().toString();
+        mobile = mMobile.getText().toString();
+        email = mEmail.getText().toString();
+
+        fname = mFname.getText().toString();
+        fmobile = mFmobile.getText().toString();
+        foccupation = mFoccupation.getText().toString();
+        femail = mFemail.getText().toString();
+
+        mname = mMname.getText().toString();
+        mmobile = mMmobile.getText().toString();
+        moccupation = mMoccupation.getText().toString();
+        memail = mMemail.getText().toString();
+
+        ts = mTs.getText().toString();
+        tpy = mTpy.getText().toString();
+        tb = mTb.getText().toString();
+        tn = mTn.getText().toString();
+        tm = mTm.getText().toString();
+
+        tws = mTWs.getText().toString();
+        twpy = mTWpy.getText().toString();
+        twb = mTWb.getText().toString();
+        twn = mTWn.getText().toString();
+        twm = mTWm.getText().toString();
+
+        if (isDiploma.equals("yes")) {
+            ds = mDs.getText().toString();
+            dpy = mDpy.getText().toString();
+            db = mDb.getText().toString();
+            dn = mDn.getText().toString();
+            dm = mDm.getText().toString();
+        }
 
     }
 
     public void setFindViewById() {
+
         mName = (EditText) findViewById(R.id.full_name);
         mDob = (EditText) findViewById(R.id.DOB);
         mGender = (EditText) findViewById(R.id.gender);
@@ -59,6 +113,8 @@ public class PlacementRegForm extends AppCompatActivity {
         mMmobile = (EditText) findViewById(R.id.m_mobile);
         mMemail = (EditText) findViewById(R.id.m_email);
 
+        DiplomaCard = (CardView) findViewById(R.id.diplomaCard);
+
         mTs = (EditText) findViewById(R.id.t_s);
         mTpy = (EditText) findViewById(R.id.t_py);
         mTb = (EditText) findViewById(R.id.t_b);
@@ -77,49 +133,6 @@ public class PlacementRegForm extends AppCompatActivity {
         mDn = (EditText) findViewById(R.id.d_n);
         mDm = (EditText) findViewById(R.id.d_m);
 
-    }
-
-    public void setEnable(boolean enabled) {
-
-        editable=enabled;
-
-        mName.setEnabled(enabled);
-        mDob.setEnabled(enabled);
-        mGender.setEnabled(enabled);
-        mNationality.setEnabled(enabled);
-        mPaddress.setEnabled(enabled);
-        mCaddress.setEnabled(enabled);
-        mPhone.setEnabled(enabled);
-        mMobile.setEnabled(enabled);
-        mEmail.setEnabled(enabled);
-
-        mFname.setEnabled(enabled);
-        mFoccupation.setEnabled(enabled);
-        mFmobile.setEnabled(enabled);
-        mFemail.setEnabled(enabled);
-
-        mMname.setEnabled(enabled);
-        mMoccupation.setEnabled(enabled);
-        mMmobile.setEnabled(enabled);
-        mMemail.setEnabled(enabled);
-
-        mTs.setEnabled(enabled);
-        mTpy.setEnabled(enabled);
-        mTb.setEnabled(enabled);
-        mTn.setEnabled(enabled);
-        mTm.setEnabled(enabled);
-
-        mTWs.setEnabled(enabled);
-        mTWpy.setEnabled(enabled);
-        mTWb.setEnabled(enabled);
-        mTWn.setEnabled(enabled);
-        mTWm.setEnabled(enabled);
-
-        mDs.setEnabled(enabled);
-        mDpy.setEnabled(enabled);
-        mDb.setEnabled(enabled);
-        mDn.setEnabled(enabled);
-        mDm.setEnabled(enabled);
     }
 
     public void BackButton(View v) {
