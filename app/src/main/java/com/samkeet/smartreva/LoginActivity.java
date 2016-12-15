@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.samkeet.smartreva.AlumniCell.AlumniLoginActivity;
+
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -80,6 +82,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void AluminiLogin(View v) {
+        Intent intent = new Intent(getApplicationContext(), AlumniLoginActivity.class);
+        startActivity(intent);
     }
 
     private class Login extends AsyncTask<Void, Void, Integer> {

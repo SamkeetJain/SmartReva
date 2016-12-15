@@ -6,12 +6,12 @@ import android.view.View;
 
 import com.samkeet.smartreva.R;
 
-public class Events extends AppCompatActivity {
+public class AlumniEvents extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_events);
+        setContentView(R.layout.activity_alumni_events);
     }
     public void BackButton (View v){
         finish();

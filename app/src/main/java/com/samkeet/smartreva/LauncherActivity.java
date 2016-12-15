@@ -1,7 +1,5 @@
 package com.samkeet.smartreva;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -11,13 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.samkeet.smartreva.AlumniCell.AlumniCellActivity;
+import com.samkeet.smartreva.AlumniCell.AlumniLoginActivity;
 import com.samkeet.smartreva.Attendence.AttendenceMainActivity;
 import com.samkeet.smartreva.Councling.CounclingMainActivity;
 import com.samkeet.smartreva.Events.EventsMainActivity;
@@ -27,23 +24,17 @@ import com.samkeet.smartreva.Notes.NotesMainActivity;
 import com.samkeet.smartreva.Notification.NotificationMainActivity;
 import com.samkeet.smartreva.Placement.PlacementMainActivity;
 import com.samkeet.smartreva.Results.ResultsMainActivity;
-import com.samkeet.smartreva.Setings.SettingsMainActivity;
 import com.samkeet.smartreva.Timetable.TimetableMainActivity;
 
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import dmax.dialog.SpotsDialog;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 
 public class LauncherActivity extends AppCompatActivity {
 
@@ -125,7 +116,7 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Alumini(View v) {
-        Intent intent = new Intent(getApplicationContext(), AlumniCellActivity.class);
+        Intent intent = new Intent(getApplicationContext(), AlumniLoginActivity.class);
         startActivity(intent);
     }
 

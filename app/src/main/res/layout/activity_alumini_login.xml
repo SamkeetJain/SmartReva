@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lavender"
-    tools:context="com.samkeet.smartreva.AlumniCell.AlumniCellActivity">
+    tools:context="com.samkeet.smartreva.AlumniCell.AlumniLoginActivity">
 
 
 
@@ -114,9 +114,9 @@
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border"
             android:text="Login"
-            android:textColor="#ffa332" />
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:onClick="Login" />
 
         <TextView
             android:layout_width="match_parent"
@@ -136,8 +136,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register"
-            android:background="@drawable/border"
-            android:textColor="#ffa332"
+            style="@style/Widget.AppCompat.Button.Colored"
             android:id="@+id/register"
             android:onClick="register"
 

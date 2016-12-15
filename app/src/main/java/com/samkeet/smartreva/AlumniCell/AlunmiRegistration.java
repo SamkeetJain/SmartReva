@@ -21,4 +21,8 @@ public class AlunmiRegistration extends AppCompatActivity {
         finish();
     }
 
+    public void Send (View v){
+
+    }
+
 }

@@ -60,11 +60,11 @@
         <activity android:name=".Councling.CounclingNewPost" />
         <activity android:name=".Notes.UploadToServer" />
         <activity android:name=".Fees.FeesMainActivity" />
-        <activity android:name=".AlumniCell.AlumniCellActivity" />
+        <activity android:name=".AlumniCell.AlumniLoginActivity" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".Events.EventManager" />
         <activity android:name=".Events.MemberListActivity" />
-        <activity android:name=".AlumniCell.UploadActivity" />
+        <activity android:name=".AlumniCell.PersonalDetails" />
         <activity android:name=".Attendence.AbsentDetails" />
         <activity android:name=".Placement.PlacementMainActivity" />
         <activity android:name=".Placement.PlacementRegForm1" />
@@ -84,7 +84,7 @@
         </service>
 
         <activity android:name=".AlumniCell.AlunmiRegistration" />
-        <activity android:name=".AlumniCell.Events" />
+        <activity android:name=".AlumniCell.AlumniEvents" />
         <activity android:name=".Placement.PlacementRegInit" />
         <activity android:name=".Placement.PlacementRegForm2" />
         <activity android:name=".Placement.PlacementRegForm3"></activity>
