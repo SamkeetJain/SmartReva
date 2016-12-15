@@ -199,6 +199,7 @@ public class LauncherActivity extends AppCompatActivity {
 
             } catch (Exception ex) {
                 ex.printStackTrace();
+                FirebaseCrash.report(new Exception(ex));
             }
 
             return 1;

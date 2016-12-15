@@ -50,7 +50,7 @@ public class PlacementRegInit extends AppCompatActivity {
     public Switch PGStudent;
     public Switch DiplomaStudent;
     public CheckBox TermCheck;
-    public Button RegistrationForm;
+    public Button AcademicDetailsForm,UnderGraduateForm,PostGraduateForm;
 
     public String UGCourse;
     public String PGCourse;
@@ -75,7 +75,7 @@ public class PlacementRegInit extends AppCompatActivity {
         PGComponent= (LinearLayout) findViewById(R.id.pgcomponent);
         PGComponent.setVisibility(View.INVISIBLE);
         TermCheck= (CheckBox) findViewById(R.id.termcheck);
-        RegistrationForm= (Button) findViewById(R.id.button);
+        AcademicDetailsForm = (Button) findViewById(R.id.button);
 
         GetCourseDetails getCourseDetails = new GetCourseDetails();
         getCourseDetails.execute();
@@ -115,7 +115,7 @@ public class PlacementRegInit extends AppCompatActivity {
             }
         });
 
-        RegistrationForm.setOnClickListener(new View.OnClickListener() {
+        AcademicDetailsForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(termsAgreed){
