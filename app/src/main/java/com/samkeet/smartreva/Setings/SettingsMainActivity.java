@@ -13,6 +13,7 @@ public class SettingsMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_main);
     }
+
     public void BackButton(View v){
         finish();
     }
