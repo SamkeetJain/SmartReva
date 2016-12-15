@@ -121,7 +121,7 @@ public class PlacementMainActivity extends AppCompatActivity implements SwipeRef
                             startActivity(intent);
                         }
                         if (drawerItem.getIdentifier() == 4) {
-                            Intent intent = new Intent(getApplicationContext(), Profile.class);
+                            Intent intent = new Intent(getApplicationContext(), PlacementRegInit.class);
                             startActivity(intent);
                         }
                         if (drawerItem.getIdentifier() == 5) {

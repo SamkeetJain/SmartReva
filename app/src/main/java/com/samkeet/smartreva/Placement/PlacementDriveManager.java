@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.samkeet.smartreva.R;
 
-public class DriveManagement extends AppCompatActivity {
+public class PlacementDriveManager extends AppCompatActivity {
 
     public String TYPE;
     public TextView mTitle;

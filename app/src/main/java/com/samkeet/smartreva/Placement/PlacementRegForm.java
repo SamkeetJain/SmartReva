@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.samkeet.smartreva.R;
 
-public class Profile extends AppCompatActivity {
+public class PlacementRegForm extends AppCompatActivity {
 
     public EditText mName, mDob, mGender, mNationality, mPaddress, mCaddress, mPhone, mMobile, mEmail;
     public EditText mFname, mFmobile, mFoccupation, mFemail;
@@ -28,8 +28,7 @@ public class Profile extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-
+        setContentView(R.layout.activity_placement_profile);
         setFindViewById();
 
     }

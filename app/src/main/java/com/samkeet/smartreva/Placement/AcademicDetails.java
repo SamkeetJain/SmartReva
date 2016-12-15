@@ -40,6 +40,7 @@ public class AcademicDetails extends AppCompatActivity {
     public TextView mDiplomaB, mDiplomaSN, mDiplomaC, mDiplomaM, mDiplomaPY;
     public TextView mEngB, mEng1, mEng2, mEng3, mEng4, mEng5, mEng6, mEng7, mEng8;
 
+
     public String tenthB, tenthSN, tenthC, tenthM, tenthPY;
     public String twelB, twelSN, twelC, twelM, twelPY;
     public String diplomaB, diplomaSN, diplomaC, diplomaM, diplomaPY;
@@ -330,15 +331,15 @@ public class AcademicDetails extends AppCompatActivity {
             } else {
 
                 if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-                    GetEnggDetails getEnggDetails = new GetEnggDetails();
-                    getEnggDetails.execute();
+                    GetUgDetails getUgDetails = new GetUgDetails();
+                    getUgDetails.execute();
                 }
             }
 
         }
     }
 
-    private class GetEnggDetails extends AsyncTask<Void, Void, Integer> {
+    private class GetUgDetails extends AsyncTask<Void, Void, Integer> {
 
 
         protected void onPreExecute() {

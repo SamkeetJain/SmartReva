@@ -540,7 +540,7 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/placement_1" />
+                                android:src="@drawable/profile" />
 
                             <TextView
                                 android:layout_width="80dp"
@@ -578,7 +578,7 @@
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/alumni_1" />
+                                android:src="@drawable/revamp" />
 
                             <TextView
                                 android:layout_width="80sp"
@@ -628,6 +628,5 @@
         </LinearLayout>
 
     </ScrollView>
-
 
 </RelativeLayout>

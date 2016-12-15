@@ -42,7 +42,7 @@ public class Constants {
         public static String PLACEMENT_ENGG_DETAILS = "placement_engg_academics.php";
         public static String PLACEMENT_BACK_DETAILS = "placement_backlogs.php";
         public static String PLACEMENT_TANDC = "placement_tandc.php";
-
+        public static String COURSE_SEM = "course_sem.php";
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
     }
 
