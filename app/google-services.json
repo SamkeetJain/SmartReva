@@ -36,6 +36,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962986941305:android:6248a7e9128d774f",
+        "android_client_info": {
+          "package_name": "com.samkeet.smartrevaadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962986941305-hqvjhj9aa7b77nj23vpri92j8c6cg00j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwTDWV2UvAOz5rMKIAJ3ycE0vK0WOure0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

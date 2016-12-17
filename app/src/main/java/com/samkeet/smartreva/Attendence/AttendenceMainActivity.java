@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
 
@@ -150,6 +151,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 return 1;
 
             } catch (Exception ex) {
+                FirebaseCrash.report(new Exception(ex));
                 ex.printStackTrace();
             }
 
@@ -229,6 +231,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 return 1;
 
             } catch (Exception ex) {
+                FirebaseCrash.report(new Exception(ex));
                 ex.printStackTrace();
             }
 
