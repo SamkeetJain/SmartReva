@@ -45,6 +45,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
     public boolean authenticationError;
     public String errorMessage;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
