@@ -88,6 +88,7 @@ public class LauncherActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public void Events(View v) {
         Intent intent = new Intent(getApplicationContext(), EventsMainActivity.class);
         startActivity(intent);
