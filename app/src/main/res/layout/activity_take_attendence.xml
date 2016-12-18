@@ -64,9 +64,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/apppppp"
-        android:orientation="vertical"
         android:background="@color/lavender"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/lin"
@@ -76,9 +75,9 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp">
@@ -89,24 +88,25 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Date:"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
+                    android:editable="false"
                     android:onClick="Date"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp">
@@ -117,7 +117,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Period:"
-                    android:textSize="20sp" />
+                    android:textSize="16sp" />
 
                 <EditText
                     android:id="@+id/period"
@@ -125,7 +125,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:textSize="20sp" />
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textSize="16sp" />
 
 
             </LinearLayout>
@@ -133,9 +135,9 @@
         </LinearLayout>
 
         <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colorAccent" />
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorAccent" />
 
 
         <android.support.v7.widget.RecyclerView

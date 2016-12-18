@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     public Context progressDialogContext;
 
     public String token;
+    public String auth;
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
@@ -137,7 +138,13 @@ public class LoginActivity extends AppCompatActivity {
                     String status = jsonObj.getString("status");
                     if (status.equals("success")) {
                         token = jsonObj.getString("token");
-                        authenticationError = false;
+                        auth = jsonObj.getString("auth");
+                        if(auth.equals("alumni")){
+                            authenticationError=true;
+                            errorMessage = "Alumni can't login from here\nPlease login through Alumni portal";
+                        }else {
+                            authenticationError = false;
+                        }
                     } else {
                         authenticationError = true;
                         errorMessage = status;

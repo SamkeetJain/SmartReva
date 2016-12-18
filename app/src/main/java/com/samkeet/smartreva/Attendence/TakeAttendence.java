@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -44,14 +45,15 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
 
     public String class_code, subject_code;
     public String studentsList[];
+    public String studentsName[];
 
     public String datetext;
-    public TextView dateView;
+    public EditText dateView;
     public EditText period;
     public String finalValues, finalFields;
 
-    public boolean authenticationError;
-    public String errorMessage;
+    public boolean authenticationError=true;
+    public String errorMessage="Data Corupted";
     public String periodNo;
     String res;
 
@@ -65,7 +67,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         progressDialogContext = this;
-        dateView = (TextView) findViewById(R.id.date);
+        dateView = (EditText) findViewById(R.id.date);
         period = (EditText) findViewById((R.id.period));
 
         class_code = getIntent().getStringExtra("CLASSCODE");
@@ -90,8 +92,9 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
         } else {
             temp = "" + dayOfMonth;
         }
-        String date = "" + temp + "-" + (++monthOfYear) + "-" + year;
-        dateView.setText(date);
+        String modifieddate = "" + year + "-" + (++monthOfYear) + "-" + temp;
+        //String date = "" + temp + "-" + (++monthOfYear) + "-" + year;
+        dateView.setText(modifieddate);
     }
 
     private class GetStudentsList extends AsyncTask<Void, Void, Integer> {
@@ -139,14 +142,17 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
                 } else {
                     JSONArray jsonArray = new JSONArray(jsonResults.toString());
                     studentsList = new String[jsonArray.length()];
+                    studentsName = new String[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         studentsList[i] = jsonObject.getString("UserID");
+                        studentsName[i] = jsonObject.getString("name");
                     }
                 }
                 return 1;
 
             } catch (Exception ex) {
+                FirebaseCrash.report(new Exception( ex));
                 ex.printStackTrace();
             }
 
@@ -162,7 +168,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
 
-                mAdapter = new TakeAttendenceAdapter(studentsList);
+                mAdapter = new TakeAttendenceAdapter(studentsList,studentsName);
                 mRecyclerView.setAdapter(mAdapter);
             }
 
@@ -267,6 +273,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
 
 
             } catch (Exception ex) {
+                FirebaseCrash.report(new Exception(ex));
                 ex.printStackTrace();
             }
 

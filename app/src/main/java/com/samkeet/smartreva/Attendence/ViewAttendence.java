@@ -41,8 +41,8 @@ public class ViewAttendence extends AppCompatActivity {
 
     ArrayList<String> list = new ArrayList<String>();
 
-    public boolean authenticationError;
-    public String errorMessage;
+    public boolean authenticationError=true;
+    public String errorMessage="Data Corupted";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
