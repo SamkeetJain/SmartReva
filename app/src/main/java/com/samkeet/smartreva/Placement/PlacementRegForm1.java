@@ -138,4 +138,8 @@ public class PlacementRegForm1 extends AppCompatActivity {
     public void BackButton(View v) {
         finish();
     }
+
+    public void submit(View v) {
+
+    }
 }

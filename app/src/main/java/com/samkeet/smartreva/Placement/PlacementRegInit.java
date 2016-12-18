@@ -41,8 +41,8 @@ public class PlacementRegInit extends AppCompatActivity {
     public String errorMessage = "Data Courpted";
 
     public ArrayList<String> UGPrograms = new ArrayList<String>();
-    public ArrayList<String> UGSem = new ArrayList<String>();
-    public ArrayList<String> PGSem = new ArrayList<String>();
+    public ArrayList<String> UGSemester = new ArrayList<String>();
+    public ArrayList<String> PGSemester = new ArrayList<String>();
     public ArrayList<String> PGPrograms = new ArrayList<String>();
 
     public Spinner UGSpinner;
@@ -52,8 +52,8 @@ public class PlacementRegInit extends AppCompatActivity {
     public CheckBox TermCheck;
     public Button AcademicDetailsForm, UnderGraduateForm, PostGraduateForm;
 
-    public String UGCourse;
-    public String PGCourse;
+    public String UGCourse,UGSem;
+    public String PGCourse,PGSem;
     public boolean isPGStudent = false;
     public boolean isDiplomaStudent = false;
     public boolean termsAgreed = false;
@@ -152,6 +152,8 @@ public class PlacementRegInit extends AppCompatActivity {
             public void onClick(View view) {
                 if (termsAgreed) {
                     Intent intent=new Intent(getApplicationContext(),PlacementRegForm2.class);
+                    intent.putExtra("COURSE",UGCourse);
+                    intent.putExtra("SEMESTER",UGSem);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "You must agree Terms and Conditions!!!", Toast.LENGTH_SHORT).show();
@@ -163,6 +165,8 @@ public class PlacementRegInit extends AppCompatActivity {
             public void onClick(View view) {
                 if (termsAgreed) {
                     Intent intent=new Intent(getApplicationContext(),PlacementRegForm3.class);
+                    intent.putExtra("COURSE",PGCourse);
+                    intent.putExtra("SEMESTER",PGSem);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "You must agree Terms and Conditions!!!", Toast.LENGTH_SHORT).show();
@@ -184,6 +188,7 @@ public class PlacementRegInit extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
                 UGCourse = UGPrograms.get(position);
+                UGSem = UGSemester.get(position);
             }
 
             @Override
@@ -199,6 +204,7 @@ public class PlacementRegInit extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
                 PGCourse = PGPrograms.get(position);
+                PGSem = PGSemester.get(position);
             }
 
             @Override
@@ -261,10 +267,10 @@ public class PlacementRegInit extends AppCompatActivity {
                         courseType = courseType.trim();
                         if (courseType.equals("UG")) {
                             UGPrograms.add(course);
-                            UGSem.add(semester);
+                            UGSemester.add(semester);
                         } else if (courseType.equals("PG")) {
                             PGPrograms.add(course);
-                            PGSem.add(semester);
+                            PGSemester.add(semester);
                         }
 
                     }

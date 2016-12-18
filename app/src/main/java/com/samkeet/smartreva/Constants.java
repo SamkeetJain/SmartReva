@@ -19,6 +19,27 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class Constants {
+
+    public static final String passingYears[]={"dec/jan 2010/11",
+            "june/july 2011",
+            "dec/jan 2011/12",
+            "june/july 2012",
+            "dec/jan 2012/13",
+            "june/july 2013",
+            "dec/jan 2013/14",
+            "june/july 2014",
+            "dec/jan 2014/15",
+            "june/july 2015",
+            "dec/jan 2015/16",
+            "june/july 2016",
+            "dec/jan 2016/17",
+            "june/july 2017",
+            "dec/jan 2017/18",
+            "june/july 2018",
+            "dec/jan 2018/19",
+            "june/july 2019",
+            "dec/jan 2019/20"};
+
     public static class URLs {
         public static String BASE = "http://revacounselling.16mb.com/";
         public static String LOGIN = "login.php";
@@ -162,6 +183,8 @@ public class Constants {
     public static class FireBase{
         public static String token;
     }
+
+
 
 
 }

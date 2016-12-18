@@ -869,7 +869,17 @@
 
             </android.support.v7.widget.CardView>
 
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:text="submit"
+                android:onClick="submit"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
+
+
 
     </ScrollView>
 

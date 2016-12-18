@@ -46,28 +46,48 @@
         <activity android:name=".Attendence.TakeAttendence" />
         <activity android:name=".Attendence.ViewAttendence" />
         <activity android:name=".Attendence.GenerateAttendenceReport" />
-        <activity android:name=".Notes.UploadNotes" />
+        <activity
+            android:name=".Notes.UploadNotes"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Notes.ViewNotes" />
         <activity
             android:name=".Attendence.GeneralListActivity"
             android:label=""
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name=".ProfileStudentActivity" />
-        <activity android:name=".ProfileFacultyActivity" />
+        <activity
+            android:name=".ProfileStudentActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".ProfileFacultyActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Setings.SettingsMainActivity" />
-        <activity android:name=".Timetable.TimetableMainActivity" />
-        <activity android:name=".Events.AddEventActivity" />
-        <activity android:name=".Councling.CounclingNewPost" />
-        <activity android:name=".Notes.UploadToServer" />
+        <activity
+            android:name=".Timetable.TimetableMainActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Events.AddEventActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Councling.CounclingNewPost"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Notes.UploadToServer"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Fees.FeesMainActivity" />
-        <activity android:name=".AlumniCell.AlumniLoginActivity" />
+        <activity
+            android:name=".AlumniCell.AlumniLoginActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".Events.EventManager" />
         <activity android:name=".Events.MemberListActivity" />
-        <activity android:name=".AlumniCell.PersonalDetails" />
+        <activity
+            android:name=".AlumniCell.PersonalDetails"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Attendence.AbsentDetails" />
         <activity android:name=".Placement.PlacementMainActivity" />
-        <activity android:name=".Placement.PlacementRegForm1" />
+        <activity
+            android:name=".Placement.PlacementRegForm1"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Placement.PlacementDriveManager" />
         <activity android:name=".Placement.AcademicDetails" />
         <activity android:name=".Placement.TrainingCertification" />
@@ -83,11 +103,16 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".AlumniCell.AlunmiRegistration" />
+        <activity android:name=".AlumniCell.AlunmiRegistration"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity android:name=".AlumniCell.AlumniEvents" />
         <activity android:name=".Placement.PlacementRegInit" />
-        <activity android:name=".Placement.PlacementRegForm2" />
-        <activity android:name=".Placement.PlacementRegForm3"></activity>
+        <activity
+            android:name=".Placement.PlacementRegForm2"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity
+            android:name=".Placement.PlacementRegForm3"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>
