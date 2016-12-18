@@ -38,8 +38,8 @@ public class AbsentDetails extends AppCompatActivity {
     public String type;
     public String titles[];
 
-    public boolean authenticationError;
-    public String errorMessage;
+    public boolean authenticationError=true;
+    public String errorMessage="Data Corupted";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

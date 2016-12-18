@@ -38,8 +38,8 @@ import dmax.dialog.SpotsDialog;
 
 public class LauncherActivity extends AppCompatActivity {
 
-    public boolean authenticationError;
-    public String errorMessage;
+    public boolean authenticationError=true;
+    public String errorMessage="Data Corupted";
 
     private SpotsDialog pd;
     private Context progressDialogContext;
@@ -49,12 +49,14 @@ public class LauncherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen);
 
+        if (Constants.SharedPreferenceData.isSharedPreferenceInited()) {
+            Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES, MODE_PRIVATE));
+        }
+
         FirebaseMessaging.getInstance().subscribeToTopic("global");
         FirebaseInstanceId.getInstance().getToken();
 
         progressDialogContext = this;
-
-
 
         if (Constants.FireBase.token != null) {
             UpdateToken updateToken = new UpdateToken();
@@ -97,7 +99,6 @@ public class LauncherActivity extends AppCompatActivity {
     public void Councling(View v) {
         Intent intent = new Intent(getApplicationContext(), CounclingMainActivity.class);
         startActivity(intent);
-
     }
 
     public void Library(View v) {

@@ -43,8 +43,8 @@ public class AttendenceMainActivity extends AppCompatActivity {
     String subject_value;
     String class_value;
 
-    public boolean authenticationError;
-    public String errorMessage;
+    public boolean authenticationError=true;
+    public String errorMessage="Data Corupted";
 
 
     @Override
@@ -153,6 +153,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
             } catch (Exception ex) {
                 FirebaseCrash.report(new Exception(ex));
                 ex.printStackTrace();
+                finish();
             }
 
             return 1;
@@ -310,6 +311,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 return 1;
 
             } catch (Exception ex) {
+                FirebaseCrash.report(new Exception(ex));
                 ex.printStackTrace();
             }
 
@@ -379,6 +381,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 return 1;
 
             } catch (Exception ex) {
+                FirebaseCrash.report(new Exception(ex));
                 ex.printStackTrace();
             }
 

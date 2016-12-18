@@ -67,22 +67,6 @@ public class ResultsMainActivity extends AppCompatActivity {
         mUsn = (TextView) findViewById(R.id.usnText);
         mResultsLayout = (LinearLayout) findViewById(R.id.resultLayout);
 
-        semesterDrop = (Spinner) findViewById(R.id.spinner1);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, semesterItems);
-        semesterDrop.setAdapter(adapter1);
-        semesterDrop.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-
-//                Toast.makeText(getApplicationContext(),semesterItems[position],Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
         componetDrop = (Spinner) findViewById(R.id.spinner2);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, componetsItems);
         componetDrop.setAdapter(adapter2);

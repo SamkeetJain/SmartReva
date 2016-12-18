@@ -122,9 +122,9 @@ public class AddEventActivity extends AppCompatActivity implements DatePickerDia
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String fullDate;
         if (dayOfMonth < 10)
-            fullDate = "0" + dayOfMonth + "-" + (++monthOfYear) + "-" + year;
+            fullDate = year + "-" + (++monthOfYear) + "-" + "0" + dayOfMonth;
         else
-            fullDate = dayOfMonth + " / " + (++monthOfYear) + " / " + year;
+            fullDate = year + "-" + (++monthOfYear) + "-" + dayOfMonth;
 
         mDates.setText(fullDate);
     }

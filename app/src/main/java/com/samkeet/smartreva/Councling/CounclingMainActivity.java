@@ -258,7 +258,7 @@ public class CounclingMainActivity extends AppCompatActivity implements SwipeRef
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         mTitles[i] = jsonObject.getString("Title");
                         mDesc[i] = jsonObject.getString("Message");
-                        mDates[i] = jsonObject.getString("postTime");
+                        mDates[i] = jsonObject.getString("postDate");
                         mNames[i] = jsonObject.getString("UserID");
                     }
                 }

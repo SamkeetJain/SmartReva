@@ -72,8 +72,8 @@ public class Constants {
 
     public static class SharedPreferenceData {
 
-        public static SharedPreferences sharedPreferences;
-        public static SharedPreferences.Editor editor;
+        public static SharedPreferences sharedPreferences=null;
+        public static SharedPreferences.Editor editor=null;
 
         public static String SHAREDPREFERENCES = "SmartReva";
         public static String IS_LOGGED_IN = "isloggedin";
@@ -83,6 +83,12 @@ public class Constants {
         public static void initSharedPreferenceData(SharedPreferences sharedPreferences1) {
             sharedPreferences = sharedPreferences1;
             editor = sharedPreferences.edit();
+        }
+
+        public static boolean isSharedPreferenceInited(){
+            if(sharedPreferences!=null)
+                return true;
+            return false;
         }
 
         public static String getIsLoggedIn() {

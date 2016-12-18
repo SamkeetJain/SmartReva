@@ -20,19 +20,22 @@ public class TakeAttendenceAdapter extends RecyclerView.Adapter<TakeAttendenceAd
 
     private String[] mTitle;
     private boolean[] checks;
+    private String[] mName;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mTitleView;
+        public TextView mTitleView,mNameView;
         public CheckBox mCheckBox;
         public ViewHolder(View v) {
             super(v);
             mTitleView = (TextView) v.findViewById(R.id.textview);
+            mNameView = (TextView) v.findViewById(R.id.text);
             mCheckBox= (CheckBox) v.findViewById(R.id.checkbox);
         }
     }
-    public TakeAttendenceAdapter(String[] mTitle) {
+    public TakeAttendenceAdapter(String[] mTitle,String[] mName) {
         this.mTitle = mTitle;
+        this.mName = mName;
         checks=new boolean[this.mTitle.length];
         for(int i=0;i<checks.length;i++){
             checks[i]=true;
@@ -56,6 +59,7 @@ public class TakeAttendenceAdapter extends RecyclerView.Adapter<TakeAttendenceAd
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTitleView.setText(mTitle[pos]);
+        holder.mNameView.setText(mName[pos]);
         holder.mCheckBox.setChecked(checks[pos]);
         holder.mCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
