@@ -96,6 +96,7 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
 
             }
         });
+
         if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
             GetEvents getEvents = new GetEvents();
             getEvents.execute();

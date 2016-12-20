@@ -12,7 +12,8 @@ import com.samkeet.smartreva.R;
  * Created by Sam on 03-Dec-16.
  */
 
-public class AbsentDetailsAdapter extends RecyclerView.Adapter<AbsentDetailsAdapter.ViewHolder> {
+public class
+AbsentDetailsAdapter extends RecyclerView.Adapter<AbsentDetailsAdapter.ViewHolder> {
 
     private String[] mTitle;
 

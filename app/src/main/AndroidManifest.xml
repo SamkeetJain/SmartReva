@@ -114,7 +114,8 @@
         <activity
             android:name=".Placement.PlacementRegForm3"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".Placement.NewTraningCertification"></activity>
+        <activity android:name=".Placement.NewTraningCertification" />
+        <activity android:name=".Notes.NotesManager"></activity>
     </application>
 
 </manifest>

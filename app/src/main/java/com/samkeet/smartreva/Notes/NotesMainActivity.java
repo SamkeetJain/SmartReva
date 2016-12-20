@@ -25,8 +25,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import dmax.dialog.SpotsDialog;
+import droidninja.filepicker.FilePickerBuilder;
+import droidninja.filepicker.FilePickerConst;
 
 public class NotesMainActivity extends AppCompatActivity {
 
@@ -67,10 +70,15 @@ public class NotesMainActivity extends AppCompatActivity {
     }
 
     public void NotesUploadSelectFile() {
-        Intent intent = new Intent();
-        intent.setType("*/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select a File"), 101);
+
+        FilePickerBuilder.getInstance().setMaxCount(1)
+                .setActivityTheme(R.style.FilePickerTheme)
+                .pickDocument(this);
+
+//        Intent intent = new Intent();
+//        intent.setType("*/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//        startActivityForResult(Intent.createChooser(intent, "Select a File"), 101);
     }
 
     @Override
@@ -84,6 +92,16 @@ public class NotesMainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), UploadToServer.class);
             intent.putExtra("POST",loc);
             startActivity(intent);
+        }
+        if(requestCode == FilePickerConst.REQUEST_CODE){
+            if(resultCode==RESULT_OK && data!=null)
+            {
+                ArrayList<String> filePaths = data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_PHOTOS);
+                String filepath = filePaths.get(0);
+                Intent intent = new Intent(getApplicationContext(), UploadToServer.class);
+                intent.putExtra("POST",filepath);
+                startActivity(intent);
+            }
         }
 //        }
     }
