@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.samkeet.smartreva.R;
 
+import java.io.File;
+
 public class UploadNotes extends AppCompatActivity {
 
     private static final int PICK_FILE_REQUEST = 101;
@@ -26,25 +28,5 @@ public class UploadNotes extends AppCompatActivity {
         finish();
     }
 
-    public void NotesUploadSelectFile(View v) {
-        Intent intent = new Intent();
-        intent.setType("*/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select a File"), PICK_FILE_REQUEST);
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_FILE_REQUEST) {
-//            if (requestCode == RESULT_OK) {
-                Uri post = data.getData();
-                String loc=post.toString();
-                loc=loc.replaceAll("file://","");
-                Log.d("File location",post.toString());
-                Intent intent = new Intent(getApplicationContext(), UploadToServer.class);
-                intent.putExtra("POST",loc);
-                startActivity(intent);
-           }
-//        }
-    }
 }

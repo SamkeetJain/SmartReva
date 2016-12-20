@@ -103,8 +103,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".AlumniCell.AlunmiRegistration"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name=".AlumniCell.AlunmiRegistration"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".AlumniCell.AlumniEvents" />
         <activity android:name=".Placement.PlacementRegInit" />
         <activity
@@ -113,6 +114,7 @@
         <activity
             android:name=".Placement.PlacementRegForm3"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name=".Placement.NewTraningCertification"></activity>
     </application>
 
 </manifest>

@@ -140,7 +140,6 @@ public class PlacementRegInit extends AppCompatActivity {
                     }
                     intent.putExtra("UG", UGCourse);
                     startActivity(intent);
-                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "You must agree Terms and Conditions!!!", Toast.LENGTH_SHORT).show();
                 }

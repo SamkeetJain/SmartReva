@@ -20,6 +20,7 @@ import com.samkeet.smartreva.R;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -65,6 +66,27 @@ public class NotesMainActivity extends AppCompatActivity {
         finish();
     }
 
+    public void NotesUploadSelectFile() {
+        Intent intent = new Intent();
+        intent.setType("*/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select a File"), 101);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 101) {
+//            if (requestCode == RESULT_OK) {
+            Uri post = data.getData();
+            File postFile = new File(post.getPath());
+            String loc=postFile.getAbsolutePath();
+            Log.d("File location",loc);
+            Intent intent = new Intent(getApplicationContext(), UploadToServer.class);
+            intent.putExtra("POST",loc);
+            startActivity(intent);
+        }
+//        }
+    }
     private class GetFacultyAuthentication extends AsyncTask<Void, Void, Integer> {
 
 
@@ -133,8 +155,7 @@ public class NotesMainActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent = new Intent(getApplicationContext(), UploadNotes.class);
-                startActivity(intent);
+                NotesUploadSelectFile();
             }
 
         }

@@ -50,7 +50,7 @@ public class ViewAttendenceAdapter extends RecyclerView.Adapter<ViewAttendenceAd
         String list[]=mTitle[position].split("\\|");
         sub=list[0];
         frac=list[2]+"/"+list[3];
-        double d=(Double.parseDouble(list[2]))/(Double.parseDouble(list[3]));
+        double d=((Double.parseDouble(list[2]))/(Double.parseDouble(list[3])))*100;
         DecimalFormat df = new DecimalFormat("#.##");
         per = String.valueOf(Double.valueOf(df.format(d)));
 

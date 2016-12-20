@@ -242,44 +242,16 @@ public class UploadToServer extends Activity {
         title = mTitle.getText().toString();
         message = mMessage.getText().toString();
         fn = filename;
-        if(validation()) {
-            if(Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-                UploadNotes uploadNotes = new UploadNotes();
-                uploadNotes.execute();
-            }
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            UploadNotes uploadNotes = new UploadNotes();
+            uploadNotes.execute();
         }
-    }
-
-    public boolean validation() {
-        if (Constants.Methods.checkForSpecial(title)){
-            Toast.makeText(getApplicationContext(),"Title should not include special charecters", Toast.LENGTH_SHORT).show();
-        }
-        if (!((title.length() <= 40) && (title.length()>= 1))) {
-            Toast.makeText(getApplicationContext(), "Title should be less than 40 charecters", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(message)){
-            Toast.makeText(getApplicationContext(),"Message should not include special charecters", Toast.LENGTH_SHORT).show();
-        }
-        if (!((message.length() <= 1000) && (message.length()>= 1))) {
-            Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(fn)){
-            Toast.makeText(getApplicationContext(),"File Name should not include special charecters", Toast.LENGTH_SHORT).show();
-        }
-        if (!((fn.length() <= 20) && (fn.length()>= 1))) {
-            Toast.makeText(getApplicationContext(), "File Name should be less than 20 charecters", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        return true;
     }
 
     private class UploadNotes extends AsyncTask<Void, Void, Integer> {
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Logging...");
             pd.setCancelable(false);
             pd.show();
@@ -326,9 +298,9 @@ public class UploadToServer extends Activity {
 
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     responcess = jsonObj.getString("status");
-                    if(responcess.equals("success")){
+                    if (responcess.equals("success")) {
 
-                    }else {
+                    } else {
                         authenticationError = true;
                         errorMessage = responcess;
                     }
@@ -347,10 +319,10 @@ public class UploadToServer extends Activity {
             if (pd != null) {
                 pd.dismiss();
             }
-            if(authenticationError){
-                Toast.makeText(getApplicationContext(),errorMessage,Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
             }
             finish();
 

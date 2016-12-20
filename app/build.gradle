@@ -46,7 +46,7 @@ dependencies {
     compile('com.mikepenz:crossfadedrawerlayout:0.3.0@aar') {
         transitive = true
     }
-    // used to generate the Open Source section
+    // used to generate the Open Source sections
     // https://github.com/mikepenz/AboutLibraries
     compile('com.mikepenz:aboutlibraries:5.5.0@aar') {
         transitive = true

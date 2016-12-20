@@ -1,6 +1,7 @@
 package com.samkeet.smartreva.Placement;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -60,6 +61,11 @@ public class TrainingCertification extends AppCompatActivity {
 
     public void BackButton(View v) {
         finish();
+    }
+
+    public void AddTandC(View v){
+        Intent intent=new Intent(getApplicationContext(),NewTraningCertification.class);
+        startActivity(intent);
     }
 
     public class GetTandC extends AsyncTask<Void, Void, Integer> {
