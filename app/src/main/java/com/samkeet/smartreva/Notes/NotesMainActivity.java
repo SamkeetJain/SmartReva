@@ -105,6 +105,7 @@ public class NotesMainActivity extends AppCompatActivity {
         }
 //        }
     }
+
     private class GetFacultyAuthentication extends AsyncTask<Void, Void, Integer> {
 
 

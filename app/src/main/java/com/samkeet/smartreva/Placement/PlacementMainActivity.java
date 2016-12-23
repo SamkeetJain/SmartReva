@@ -13,6 +13,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -81,6 +83,41 @@ public class PlacementMainActivity extends AppCompatActivity implements SwipeRef
         progressDialogContext = this;
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
+
+        final GestureDetector mGestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
+
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+
+        });
+
+        mRecyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent motionEvent) {
+
+                View child = mRecyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+                if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
+                    int temp = mRecyclerView.getChildPosition(child);
+                    Intent intent = new Intent(getApplicationContext(), PlacementDriveManager.class);
+                    intent.putExtra("DATA", driveObjects[temp].toString());
+                    startActivity(intent);
+
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
 
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -238,6 +275,7 @@ public class PlacementMainActivity extends AppCompatActivity implements SwipeRef
                     mRole = new String[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        driveObjects[i]=jsonObject;
                         mTitle[i] = jsonObject.getString("comp_name");
                         mDept[i] = jsonObject.getString("dept");
                         mDate[i] = jsonObject.getString("ddate");

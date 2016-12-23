@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.samkeet.smartreva.Constants;
@@ -54,6 +55,10 @@ public class AbsentDetails extends AppCompatActivity {
 
         GetAbsentDetails getAbsentDetails=new GetAbsentDetails();
         getAbsentDetails.execute();
+    }
+
+    public void BackButton(View v){
+        finish();
     }
 
     private class GetAbsentDetails extends AsyncTask<Void, Void, Integer> {

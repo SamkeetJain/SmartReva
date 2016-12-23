@@ -30,8 +30,9 @@ public class FirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private void registerToken(String token) {
 
-       // Toast.makeText(getApplicationContext(),"Token: "+token,Toast.LENGTH_SHORT).show();
         Log.d("Firebase",token);
         Constants.FireBase.token=token;
     }
+
+
 }

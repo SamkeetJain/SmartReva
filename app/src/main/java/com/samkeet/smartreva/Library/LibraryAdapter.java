@@ -15,25 +15,22 @@ import com.samkeet.smartreva.R;
 
 public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHolder> {
 
-    private String[] mNotesID, mTitle, mMessage, mFilename;
+    private String[] mTitle, mMessage;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mTitleView, mNotesView, mMessageView, mFileView;
+        public TextView mTitleView, mMessageView;
 
         public ViewHolder(View v) {
             super(v);
             mTitleView = (TextView) v.findViewById(R.id.title);
             mMessageView = (TextView) v.findViewById(R.id.message);
-            mFileView = (TextView) v.findViewById(R.id.filename);
         }
     }
 
     public LibraryAdapter(String[] mNotesID,String[] mTitle,String[] mMessage,String[] mFilename) {
         this.mTitle = mTitle;
-        this.mFilename= mFilename;
         this.mMessage = mMessage;
-        this.mNotesID = mNotesID;
     }
 
     @Override
@@ -51,8 +48,6 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
         final int pos = position;
         holder.mTitleView.setText(mTitle[pos]);
         holder.mMessageView.setText(mMessage[pos]);
-        holder.mFileView.setText(mFilename[pos]);
-
     }
 
     // Return the size of your dataset (invoked by the layout manager)

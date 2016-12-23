@@ -1,7 +1,5 @@
 package com.samkeet.smartreva;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -15,22 +13,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.samkeet.smartreva.AlumniCell.AlumniLoginActivity;
 
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import dmax.dialog.SpotsDialog;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -52,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("global");
+        FirebaseInstanceId.getInstance().getToken();
 
         Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES, MODE_PRIVATE));
 
@@ -77,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 susn = usn.getText().toString();
                 spassword = password.getText().toString();
+
                 if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
                     Login login = new Login();
                     login.execute();
@@ -172,8 +171,10 @@ public class LoginActivity extends AppCompatActivity {
                 Constants.SharedPreferenceData.setTOKEN(token);
                 Constants.SharedPreferenceData.setUserId(susn);
 
-                UpdateToken updateToken = new UpdateToken();
-                updateToken.execute();
+                if (Constants.FireBase.token != null) {
+                    UpdateToken updateToken = new UpdateToken();
+                    updateToken.execute();
+                }
 
             }
 

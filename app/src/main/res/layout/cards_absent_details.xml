@@ -33,15 +33,15 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Subject Code:  "
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/sub"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="#E0E0E0"
-                    android:textSize="18sp" />
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
 
             </LinearLayout>
             <View
@@ -70,7 +70,7 @@
                         android:layout_weight="1"
                         android:gravity="left"
                         android:text="Date: "
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/date"
@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -94,7 +94,7 @@
                         android:layout_weight="1"
                         android:gravity="left"
                         android:text="Period No: "
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/period"
@@ -102,7 +102,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="left"
-                        android:textSize="18sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -118,14 +118,15 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Status:    "
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/stat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="18sp" />
+                    android:textColor="#000000"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 

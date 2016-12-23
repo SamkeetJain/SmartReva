@@ -15,25 +15,22 @@ import com.samkeet.smartreva.R;
 
 public class ViewNotesAdapter extends RecyclerView.Adapter<ViewNotesAdapter.ViewHolder> {
 
-    private String[] mNotesID, mTitle, mMessage, mFilename;
+    private String[] mTitle, mMessage;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mTitleView, mNotesView, mMessageView, mFileView;
+        public TextView mTitleView, mMessageView;
 
         public ViewHolder(View v) {
             super(v);
             mTitleView = (TextView) v.findViewById(R.id.title);
             mMessageView = (TextView) v.findViewById(R.id.message);
-            mFileView = (TextView) v.findViewById(R.id.filename);
         }
     }
 
-    public ViewNotesAdapter(String[] mNotesID,String[] mTitle,String[] mMessage,String[] mFilename) {
+    public ViewNotesAdapter(String[] mTitle,String[] mMessage) {
         this.mTitle = mTitle;
-        this.mFilename= mFilename;
         this.mMessage = mMessage;
-        this.mNotesID = mNotesID;
     }
 
     @Override
@@ -50,11 +47,8 @@ public class ViewNotesAdapter extends RecyclerView.Adapter<ViewNotesAdapter.View
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final int pos = position;
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
         holder.mTitleView.setText(mTitle[pos]);
         holder.mMessageView.setText(mMessage[pos]);
-        holder.mFileView.setText(mFilename[pos]);
 
     }
 

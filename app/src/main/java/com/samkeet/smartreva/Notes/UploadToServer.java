@@ -13,6 +13,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -24,14 +25,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import dmax.dialog.SpotsDialog;
@@ -58,6 +65,13 @@ public class UploadToServer extends Activity {
     public boolean authenticationError;
     public String errorMessage;
 
+    public String[] courseList = {"course"};
+    public String[] semList = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+    public String[] deptList = {"deptCode"};
+    public Spinner courseSpin, deptSpin, semSpin;
+    public String course, deptCode, sem;
+    public JSONObject[] objects;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -71,6 +85,17 @@ public class UploadToServer extends Activity {
         uploadButton = (Button) findViewById(R.id.uploadButton);
         messageText = (TextView) findViewById(R.id.messageText);
 
+        courseSpin = (Spinner) findViewById(R.id.courseSpin);
+        deptSpin = (Spinner) findViewById(R.id.deptSpin);
+        semSpin = (Spinner) findViewById(R.id.SemSpin);
+
+        initSpinner();
+
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetCourseAndDeptDetails getCourseAndDeptDetails = new GetCourseAndDeptDetails();
+            getCourseAndDeptDetails.execute();
+        }
+
         messageText.setText("Uploading file path :- " + post + "'");
 
         /************* Php script path ****************/
@@ -80,22 +105,209 @@ public class UploadToServer extends Activity {
             @Override
             public void onClick(View v) {
 
-                dialog = ProgressDialog.show(UploadToServer.this, "", "Uploading file...", true);
+                if (course == null || course.equals("course")) {
+                    Toast.makeText(getApplicationContext(), "Please select valid Course...", Toast.LENGTH_SHORT).show();
+                    return;
+                } else if (deptCode == null || deptCode.equals("deptCode")) {
+                    Toast.makeText(getApplicationContext(), "Please select valid Department Code...", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
 
-                new Thread(new Runnable() {
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            public void run() {
-                                messageText.setText("uploading started.....");
-                            }
-                        });
+                    dialog = ProgressDialog.show(UploadToServer.this, "", "Uploading file...", true);
 
-                        uploadFile(post);
+                    new Thread(new Runnable() {
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    messageText.setText("uploading started.....");
+                                }
+                            });
 
-                    }
-                }).start();
+                            uploadFile(post);
+
+                        }
+                    }).start();
+                }
             }
         });
+    }
+
+    public void BackButton(View v){
+        finish();
+    }
+
+    public void initSpinner() {
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courseList);
+        courseSpin.setAdapter(adapter1);
+        courseSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                course = courseList[position];
+                if (!course.equals("course")) {
+                    generateDeptList(course);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, deptList);
+        deptSpin.setAdapter(adapter2);
+        deptSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                deptCode = deptList[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, semList);
+        semSpin.setAdapter(adapter3);
+        semSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                sem = semList[position];
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    public void generateDeptList(String courseTemp) {
+        ArrayList<String> temp = new ArrayList<String>();
+        for (int i = 0; i < objects.length; i++) {
+            String c = null, d = null;
+            try {
+                c = objects[i].getString("course");
+                d = objects[i].getString("department");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                FirebaseCrash.report(new Exception(e));
+            }
+            if (c.equals(courseTemp)) {
+                temp.add(d);
+            }
+        }
+        deptList = null;
+        deptList = temp.toArray(new String[temp.size()]);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, deptList);
+        deptSpin.setAdapter(adapter2);
+
+    }
+
+    public void generateCourseList() {
+
+        ArrayList<String> temp = new ArrayList<String>();
+        for (int i = 0; i < objects.length; i++) {
+            boolean exist = false;
+            String coursetemp = null;
+            try {
+                coursetemp = objects[i].getString("course");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                FirebaseCrash.report(new Exception(e));
+            }
+            for (int j = 0; j < temp.size(); j++) {
+                if (temp.get(j).equals(coursetemp)) {
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist) {
+                temp.add(coursetemp);
+            }
+        }
+        courseList = null;
+        courseList = temp.toArray(new String[temp.size()]);
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courseList);
+        courseSpin.setAdapter(adapter1);
+
+    }
+
+    private class GetCourseAndDeptDetails extends AsyncTask<Void, Void, Integer> {
+
+        protected void onPreExecute() {
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
+            pd.setTitle("Loading...");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COURSE_DEPT);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Log.d("POST", "DATA ready to sent");
+
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN());
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+                Log.d("POST", "DATA SENT");
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                Log.d("return from server", jsonResults.toString());
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+
+                    JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                    objects = new JSONObject[jsonArray.length()];
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        objects[i] = jsonArray.getJSONObject(i);
+                    }
+                    authenticationError = false;
+
+                }
+
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                generateCourseList();
+            }
+
+        }
     }
 
     public int uploadFile(String sourceFileUri) {
@@ -271,7 +483,10 @@ public class UploadToServer extends Activity {
                         .appendQueryParameter("type", "put")
                         .appendQueryParameter("title", title)
                         .appendQueryParameter("message", message)
-                        .appendQueryParameter("filename", fn);
+                        .appendQueryParameter("filename", fn)
+                        .appendQueryParameter("course",course)
+                        .appendQueryParameter("deptCode",deptCode)
+                        .appendQueryParameter("sem",sem);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -323,9 +538,8 @@ public class UploadToServer extends Activity {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                finish();
             }
-            finish();
-
         }
     }
 

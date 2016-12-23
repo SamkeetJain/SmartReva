@@ -64,6 +64,8 @@ public class Constants {
         public static String PLACEMENT_BACK_DETAILS = "placement_backlogs.php";
         public static String PLACEMENT_TANDC = "placement_tandc.php";
         public static String COURSE_SEM = "course_sem.php";
+        public static String COURSE_DEPT = "course_dept.php";
+        public static String GET_TIMETABLE= "get_timetable.php";
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
     }
 

@@ -21,6 +21,7 @@ import com.samkeet.smartreva.Events.EventsMainActivity;
 import com.samkeet.smartreva.Fees.FeesMainActivity;
 import com.samkeet.smartreva.Library.LibraryMainActivity;
 import com.samkeet.smartreva.Notes.NotesMainActivity;
+import com.samkeet.smartreva.Notes.ViewNotes;
 import com.samkeet.smartreva.Notification.NotificationMainActivity;
 import com.samkeet.smartreva.Placement.PlacementMainActivity;
 import com.samkeet.smartreva.Results.ResultsMainActivity;
@@ -52,9 +53,6 @@ public class LauncherActivity extends AppCompatActivity {
         if (Constants.SharedPreferenceData.isSharedPreferenceInited()) {
             Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES, MODE_PRIVATE));
         }
-
-        FirebaseMessaging.getInstance().subscribeToTopic("global");
-        FirebaseInstanceId.getInstance().getToken();
 
         progressDialogContext = this;
 
@@ -102,7 +100,11 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Library(View v) {
-        Intent intent = new Intent(getApplicationContext(), LibraryMainActivity.class);
+        //TODO Change to LibraryMainActivity
+//        Intent intent = new Intent(getApplicationContext(), LibraryMainActivity.class);
+//        startActivity(intent);
+
+        Intent intent= new Intent(getApplicationContext(), ViewNotes.class);
         startActivity(intent);
 
     }

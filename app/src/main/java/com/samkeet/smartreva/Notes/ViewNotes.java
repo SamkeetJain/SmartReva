@@ -19,11 +19,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.Events.EventManager;
 import com.samkeet.smartreva.R;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -31,6 +33,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 import dmax.dialog.SpotsDialog;
 
@@ -39,20 +42,21 @@ public class ViewNotes extends AppCompatActivity {
     public SpotsDialog pd;
     public Context progressDialogContext;
 
-    public String[] mNotesID, mTitle, mMessage, mFilename;
+    public String[] mTitle, mMessage;
     public JSONObject notesObjects[];
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public boolean authenticationError;
-    public String errorMessage;
-    public String[] courseList;
-    public String[] semList= {"One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"};
-    public String[] deptList;
-    public Spinner courseSpin,deptSpin,semSpin;
-    public String course,deptCode,sem;
+    public boolean authenticationError=true;
+    public String errorMessage="Data Corrupted";
+    public String[] courseList = {"course"};
+    public String[] semList = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+    public String[] deptList = {"deptCode"};
+    public Spinner courseSpin, deptSpin, semSpin;
+    public String course, deptCode, sem;
+    public JSONObject[] objects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +69,9 @@ public class ViewNotes extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        courseSpin= (Spinner) findViewById(R.id.courseSpin);
-        deptSpin= (Spinner) findViewById(R.id.deptSpin);
-        semSpin= (Spinner) findViewById(R.id.SemSpin);
+        courseSpin = (Spinner) findViewById(R.id.courseSpin);
+        deptSpin = (Spinner) findViewById(R.id.deptSpin);
+        semSpin = (Spinner) findViewById(R.id.SemSpin);
 
         final GestureDetector mGestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
 
@@ -104,12 +108,25 @@ public class ViewNotes extends AppCompatActivity {
             }
         });
 
+        initSpinner();
+
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetCourseAndDeptDetails getCourseAndDeptDetails = new GetCourseAndDeptDetails();
+            getCourseAndDeptDetails.execute();
+        }
+    }
+
+    public void initSpinner() {
+
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courseList);
         courseSpin.setAdapter(adapter1);
         courseSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 course = courseList[position];
+                if(!course.equals("course")){
+                    generateDeptList(course);
+                }
             }
 
             @Override
@@ -145,11 +162,58 @@ public class ViewNotes extends AppCompatActivity {
 
             }
         });
+    }
 
-        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-            GetCourseAndDeptDetails getCourseAndDeptDetails = new GetCourseAndDeptDetails();
-            getCourseAndDeptDetails.execute();
+    public void generateDeptList(String courseTemp){
+        ArrayList<String> temp=new ArrayList<String>();
+        for(int i=0;i<objects.length;i++){
+            String c=null,d=null;
+            try {
+                c=objects[i].getString("course");
+                d=objects[i].getString("department");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                FirebaseCrash.report(new Exception(e));
+            }
+            if (c.equals(courseTemp)){
+                temp.add(d);
+            }
         }
+        deptList=null;
+        deptList=temp.toArray(new String[temp.size()]);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, deptList);
+        deptSpin.setAdapter(adapter2);
+
+    }
+
+    public void generateCourseList() {
+
+        ArrayList<String> temp = new ArrayList<String>();
+        for(int i=0;i<objects.length;i++){
+            boolean exist=false;
+            String coursetemp= null;
+            try {
+                coursetemp = objects[i].getString("course");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                FirebaseCrash.report(new Exception(e));
+            }
+            for(int j=0;j<temp.size();j++){
+                if(temp.get(j).equals(coursetemp)){
+                    exist=true;
+                    break;
+                }
+            }
+            if (!exist){
+                temp.add(coursetemp);
+            }
+        }
+        courseList=null;
+        courseList=temp.toArray(new String[temp.size()]);
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, courseList);
+        courseSpin.setAdapter(adapter1);
+
     }
 
     public void BackButton(View v) {
@@ -180,8 +244,9 @@ public class ViewNotes extends AppCompatActivity {
                         .appendQueryParameter("title", "NAN")
                         .appendQueryParameter("message", "NAN")
                         .appendQueryParameter("filename", "NAN")
-                        .appendQueryParameter("course",course)
-                        .appendQueryParameter("deptCode",deptCode);
+                        .appendQueryParameter("course", course)
+                        .appendQueryParameter("sem",sem)
+                        .appendQueryParameter("deptCode", deptCode);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -207,19 +272,16 @@ public class ViewNotes extends AppCompatActivity {
                 } else {
 
                     JSONArray jsonArray = new JSONArray(jsonResults.toString());
-                    mNotesID = new String[jsonArray.length()];
                     mMessage = new String[jsonArray.length()];
-                    mFilename = new String[jsonArray.length()];
                     mTitle = new String[jsonArray.length()];
                     notesObjects = new JSONObject[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         notesObjects[i] = jsonArray.getJSONObject(i);
-                        mNotesID[i] = jsonObject.getString("Id");
                         mMessage[i] = jsonObject.getString("message");
                         mTitle[i] = jsonObject.getString("title");
-                        mFilename[i] = jsonObject.getString("filename");
                     }
+                    authenticationError=false;
                 }
 
                 return 1;
@@ -236,10 +298,12 @@ public class ViewNotes extends AppCompatActivity {
                 pd.dismiss();
             }
 
-            mAdapter = new ViewNotesAdapter(mNotesID, mMessage, mTitle, mFilename);
-            mRecyclerView.setAdapter(mAdapter);
-
-
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                mAdapter = new ViewNotesAdapter(mTitle, mMessage);
+                mRecyclerView.setAdapter(mAdapter);
+            }
         }
     }
 
@@ -254,7 +318,7 @@ public class ViewNotes extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COURSE_SEM);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COURSE_DEPT);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -287,13 +351,9 @@ public class ViewNotes extends AppCompatActivity {
                 } else {
 
                     JSONArray jsonArray = new JSONArray(jsonResults.toString());
-                    courseList=new String[jsonArray.length()];
+                    objects = new JSONObject[jsonArray.length()];
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String course = jsonObject.getString("course");
-
-
-
+                        objects[i] = jsonArray.getJSONObject(i);
                     }
                     authenticationError = false;
 
@@ -315,19 +375,26 @@ public class ViewNotes extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-
+                generateCourseList();
             }
 
         }
     }
 
-    public void submit(View v){
-        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-            GetNotes getNotes=new GetNotes();
+    public void submit(View v) {
+        if (course==null || course.equals("course")){
+            Toast.makeText(getApplicationContext(), "Please select valid Course...",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if (deptCode==null || deptCode.equals("deptCode")){
+            Toast.makeText(getApplicationContext(), "Please select valid Department Code...",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        else if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetNotes getNotes = new GetNotes();
             getNotes.execute();
         }
     }
-
 
 
 }
