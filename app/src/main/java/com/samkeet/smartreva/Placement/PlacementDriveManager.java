@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
@@ -51,7 +52,7 @@ public class PlacementDriveManager extends AppCompatActivity {
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
             }
         });
     }

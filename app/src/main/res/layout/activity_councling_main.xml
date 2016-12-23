@@ -81,8 +81,7 @@
         android:onClick="NewPost"
         android:src="@drawable/ic_add_black_24dp"
         app:elevation="4dp"
-        app:fabSize="normal"
-        app:srcCompat="@drawable/eventfab" />
+        app:fabSize="normal"/>
 
 
 </RelativeLayout>

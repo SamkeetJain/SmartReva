@@ -12,14 +12,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.samkeet.smartreva.AlumniCell.AlumniLoginActivity;
 import com.samkeet.smartreva.Attendence.AttendenceMainActivity;
 import com.samkeet.smartreva.Councling.CounclingMainActivity;
 import com.samkeet.smartreva.Events.EventsMainActivity;
 import com.samkeet.smartreva.Fees.FeesMainActivity;
-import com.samkeet.smartreva.Library.LibraryMainActivity;
 import com.samkeet.smartreva.Notes.NotesMainActivity;
 import com.samkeet.smartreva.Notes.ViewNotes;
 import com.samkeet.smartreva.Notification.NotificationMainActivity;
@@ -48,7 +45,7 @@ public class LauncherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.screen);
+        setContentView(R.layout.activity_launcher);
 
         if (Constants.SharedPreferenceData.isSharedPreferenceInited()) {
             Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES, MODE_PRIVATE));
