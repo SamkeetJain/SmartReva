@@ -1,22 +1,16 @@
-package com.samkeet.smartreva.Councling;
+package com.samkeet.smartreva.AlumniCell;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mikepenz.crossfadedrawerlayout.view.CrossfadeDrawerLayout;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -32,21 +26,14 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
 import com.mikepenz.materialize.util.UIUtils;
-import com.samkeet.smartreva.Constants;
+import com.samkeet.smartreva.Councling.CounclingAboutUs;
+import com.samkeet.smartreva.Councling.CounclingMyAppointment;
+import com.samkeet.smartreva.Councling.CounclingNewAppointment;
 import com.samkeet.smartreva.R;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import dmax.dialog.SpotsDialog;
 
-public class CounclingMainActivity extends AppCompatActivity{
+public class AlumniMainActivity extends AppCompatActivity {
 
     private AccountHeader headerResult = null;
     private Drawer result = null;
@@ -61,11 +48,6 @@ public class CounclingMainActivity extends AppCompatActivity{
     public SpotsDialog pd;
     public Context progressDialogContext;
 
-    public String mTitles[];
-    public String mDesc[];
-    public String mDates[];
-    public String mNames[];
-
     public SwipeRefreshLayout swipeRefreshLayout;
 
     public boolean authenticationError;
@@ -74,10 +56,9 @@ public class CounclingMainActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_councling_main);
+        setContentView(R.layout.activity_alumni_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
@@ -96,24 +77,39 @@ public class CounclingMainActivity extends AppCompatActivity{
 //                .withGenerateMiniDrawer(false)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("New Appointment").withIcon(R.drawable.ic_new_appointment_24dp).withIdentifier(2),
-                        new PrimaryDrawerItem().withName("My Appointments").withIcon(R.drawable.ic_my_appointments_24dp).withIdentifier(3),
+                        new PrimaryDrawerItem().withName("Discussions Form").withIcon(R.drawable.ic_disscussion_24dp).withIdentifier(1),
+                        new PrimaryDrawerItem().withName("Events").withIcon(R.drawable.ic_event_black_24dp).withIdentifier(2),
+                        new PrimaryDrawerItem().withName("Job Referral").withIcon(R.drawable.ic_job_24dp).withIdentifier(3),
+                        new PrimaryDrawerItem().withName("Giving Back").withIcon(R.drawable.ic_giving_back_24dp).withIdentifier(4),
                         new DividerDrawerItem(),
+                        new PrimaryDrawerItem().withName("Contact Us").withIcon(R.drawable.ic_contact_us_24dp).withIdentifier(5),
                         new PrimaryDrawerItem().withName("About Us").withIcon(R.drawable.ic_about_24dp).withIdentifier(6)
-                ) // add the items we want to use with our Drawer
+                        )
+                // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem.getIdentifier() == 1) {
+
+                        }
                         if (drawerItem.getIdentifier() == 2) {
-                            Intent intent = new Intent(getApplicationContext(), CounclingNewAppointment.class);
+                            Intent intent=new Intent(getApplicationContext(),AlumniEvents.class);
                             startActivity(intent);
                         }
                         if (drawerItem.getIdentifier() == 3) {
-                            Intent intent = new Intent(getApplicationContext(), CounclingMyAppointment.class);
+                            Intent intent=new Intent(getApplicationContext(),AlumniReferJobs.class);
+                            startActivity(intent);
+                        }
+                        if (drawerItem.getIdentifier() == 4) {
+                            Intent intent=new Intent(getApplicationContext(),AlumniGivingBack.class);
+                            startActivity(intent);
+                        }
+                        if (drawerItem.getIdentifier() == 5) {
+                            Intent intent=new Intent(getApplicationContext(),AlumniContactUs.class);
                             startActivity(intent);
                         }
                         if (drawerItem.getIdentifier() == 6) {
-                            Intent intent = new Intent(getApplicationContext(), CounclingAboutUs.class);
+                            Intent intent=new Intent(getApplicationContext(),AlumniAboutUs.class);
                             startActivity(intent);
                         }
                         return false;
@@ -127,10 +123,11 @@ public class CounclingMainActivity extends AppCompatActivity{
         //define maxDrawerWidth
         crossfadeDrawerLayout.setMaxWidthPx(DrawerUIUtils.getOptimalDrawerWidth(this));
         //add second view (which is the miniDrawer)
-        MiniDrawer miniResult = result.getMiniDrawer();
+       MiniDrawer miniResult = result.getMiniDrawer();
         //build the view for the MiniDrawer
         View view = miniResult.build(this);
         //set the background of the MiniDrawer as this would be transparent
+//        view.setBackgroundColor(Color.BLACK);
         view.setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(this, com.mikepenz.materialdrawer.R.attr.material_drawer_background, com.mikepenz.materialdrawer.R.color.material_drawer_background));
         //we do not have the MiniDrawer view during CrossfadeDrawerLayout creation so we will add it here
         crossfadeDrawerLayout.getSmallView().addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -169,123 +166,16 @@ public class CounclingMainActivity extends AppCompatActivity{
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         progressDialogContext = this;
-
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshData();
+
             }
         });
-        if (validation1()) {
-            GetWallPosts getWallPosts = new GetWallPosts();
-            getWallPosts.execute();
-        }
 
 
-    }
-
-    public boolean validation1() {
-        return true;
-    }
-
-    public void refreshData() {
-
-
-        if (validation1()) {
-            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-                GetWallPosts getWallPosts = new GetWallPosts();
-                getWallPosts.execute();
-            }
-        }
-    }
-
-    public class GetWallPosts extends AsyncTask<Void, Void, Integer> {
-
-
-        protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
-            pd.setTitle("Loading...");
-            pd.setCancelable(false);
-            pd.show();
-        }
-
-        protected Integer doInBackground(Void... params) {
-            try {
-
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COUNC_WALL);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
-
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("type", "get").appendQueryParameter("postTime", "NAN").appendQueryParameter("title", "NAN").appendQueryParameter("message", "NAN");
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
-                writer.write(_data.build().getEncodedQuery());
-                writer.flush();
-                writer.close();
-                Log.d("POST", "DATA SENT");
-
-                InputStreamReader in = new InputStreamReader(connection.getInputStream());
-
-                StringBuilder jsonResults = new StringBuilder();
-                // Load the results into a StringBuilder
-                int read;
-                char[] buff = new char[1024];
-                while ((read = in.read(buff)) != -1) {
-                    jsonResults.append(buff, 0, read);
-                }
-                connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
-
-                authenticationError = jsonResults.toString().contains("Authentication Error");
-
-                if (authenticationError) {
-                    errorMessage = jsonResults.toString();
-                } else {
-                    JSONArray jsonArray = new JSONArray(jsonResults.toString());
-                    mTitles = new String[jsonArray.length()];
-                    mDesc = new String[jsonArray.length()];
-                    mDates = new String[jsonArray.length()];
-                    mNames = new String[jsonArray.length()];
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        mTitles[i] = jsonObject.getString("Title");
-                        mDesc[i] = jsonObject.getString("Message");
-                        mDates[i] = jsonObject.getString("postDate");
-                        mNames[i] = jsonObject.getString("UserID");
-                    }
-                }
-
-
-                return 1;
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-
-            return 1;
-        }
-
-        protected void onPostExecute(Integer result) {
-            if (pd != null) {
-                pd.dismiss();
-            }
-            swipeRefreshLayout.setRefreshing(false);
-            if (authenticationError) {
-                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
-            } else {
-                mAdapter = new CounclingMainActiviryAdapter(mTitles, mDesc, mDates, mNames);
-                mRecyclerView.setAdapter(mAdapter);
-            }
-        }
-    }
-
-    public void NewPost(View v) {
-        Intent intent = new Intent(getApplicationContext(), CounclingNewPost.class);
-        startActivity(intent);
     }
 }

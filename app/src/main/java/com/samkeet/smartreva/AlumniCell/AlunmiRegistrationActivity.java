@@ -36,7 +36,7 @@ import java.util.ArrayList;
 
 import dmax.dialog.SpotsDialog;
 
-public class AlunmiRegistration extends AppCompatActivity {
+public class AlunmiRegistrationActivity extends AppCompatActivity {
 
     public SpotsDialog pd;
     public Context progressDialogContext;

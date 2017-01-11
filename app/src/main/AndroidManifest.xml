@@ -101,7 +101,7 @@
         </service>
 
         <activity
-            android:name=".AlumniCell.AlunmiRegistration"
+            android:name=".AlumniCell.AlunmiRegistrationActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".AlumniCell.AlumniEvents" />
         <activity android:name=".Placement.PlacementRegInit" />
@@ -113,7 +113,12 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Placement.NewTraningCertification" />
         <activity android:name=".Notes.NotesManager" />
-        <activity android:name=".Placement.TermAndConditionActivity"></activity>
+        <activity android:name=".Placement.TermAndConditionActivity" />
+        <activity android:name=".AlumniCell.AlumniMainActivity" />
+        <activity android:name=".AlumniCell.AlumniAboutUs" />
+        <activity android:name=".AlumniCell.AlumniReferJobs" />
+        <activity android:name=".AlumniCell.AlumniGivingBack" />
+        <activity android:name=".AlumniCell.AlumniContactUs"></activity>
     </application>
 
 </manifest>

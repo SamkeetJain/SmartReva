@@ -19,13 +19,13 @@ public class AlumniLoginActivity extends AppCompatActivity {
     }
 
     public void Login(View v) {
-        Intent intent =new Intent(getApplicationContext(),AlumniEvents.class);
+        Intent intent =new Intent(getApplicationContext(),AlumniMainActivity.class);
         startActivity(intent);
         finish();
     }
 
     public void register(View v) {
-        Intent intent = new Intent(getApplicationContext(), AlunmiRegistration.class);
+        Intent intent = new Intent(getApplicationContext(), AlunmiRegistrationActivity.class);
         startActivity(intent);
     }
 
