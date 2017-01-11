@@ -115,8 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:onClick="Login" />
+            style="@style/Widget.AppCompat.Button.Colored" />
 
         <TextView
             android:layout_width="match_parent"

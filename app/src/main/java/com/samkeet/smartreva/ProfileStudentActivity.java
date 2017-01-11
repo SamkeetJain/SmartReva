@@ -52,9 +52,6 @@ public class ProfileStudentActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (isLogedIn) {
-                    Constants.UserData.USER_ID = null;
-                    Constants.UserData.TOKEN = null;
-                    Constants.SharedPreferenceData.clearData();
                     Toast.makeText(getApplicationContext(), "Loged Out", Toast.LENGTH_SHORT).show();
                     deleteToken deleteToken=new deleteToken();
                     deleteToken.execute();

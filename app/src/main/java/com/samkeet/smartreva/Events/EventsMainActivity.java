@@ -46,8 +46,8 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
     public String[] mTypes, mNames, mDesc, mDates, mIDs;
     public JSONObject[] eventsObjects;
 
-    public boolean authenticationError;
-    public String errorMessage;
+    public boolean authenticationError=true;
+    public String errorMessage="Data Corupted";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

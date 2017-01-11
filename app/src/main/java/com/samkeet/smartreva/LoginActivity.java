@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.samkeet.smartreva.AlumniCell.AlumniLoginActivity;
+import com.samkeet.smartreva.AlumniCell.AlumniMainActivity;
 
 import org.json.JSONObject;
 
@@ -65,9 +66,15 @@ public class LoginActivity extends AppCompatActivity {
         login_button = (Button) findViewById(R.id.login_button);
 
         if (Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
-            Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
-            startActivity(intent);
-            finish();
+            if(Constants.SharedPreferenceData.getIsAlumni().equals("yes")){
+                Intent intent = new Intent(getApplicationContext(), AlumniMainActivity.class);
+                startActivity(intent);
+                finish();
+            }else {
+                Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
         login_button.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +94,7 @@ public class LoginActivity extends AppCompatActivity {
     public void AluminiLogin(View v) {
         Intent intent = new Intent(getApplicationContext(), AlumniLoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private class Login extends AsyncTask<Void, Void, Integer> {
@@ -138,12 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (status.equals("success")) {
                         token = jsonObj.getString("token");
                         auth = jsonObj.getString("auth");
-                        if(auth.equals("alumni")){
-                            authenticationError=true;
-                            errorMessage = "Alumni can't login from here\nPlease login through Alumni portal";
-                        }else {
-                            authenticationError = false;
-                        }
+                        authenticationError = false;
                     } else {
                         authenticationError = true;
                         errorMessage = status;

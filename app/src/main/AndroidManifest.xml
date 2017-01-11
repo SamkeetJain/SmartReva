@@ -118,7 +118,8 @@
         <activity android:name=".AlumniCell.AlumniAboutUs" />
         <activity android:name=".AlumniCell.AlumniReferJobs" />
         <activity android:name=".AlumniCell.AlumniGivingBack" />
-        <activity android:name=".AlumniCell.AlumniContactUs"></activity>
+        <activity android:name=".AlumniCell.AlumniContactUs" />
+        <activity android:name=".AlumniCell.AlumniEventManager"></activity>
     </application>
 
 </manifest>

@@ -43,6 +43,7 @@ public class Constants {
     public static class URLs {
         public static String BASE = "http://revacounselling.16mb.com/";
         public static String LOGIN = "login.php";
+        public static String ALUMNI_LOGIN = "login_alumni.php";
         public static String AUTHENTICATION = "authenticaton.php";
         public static String GENERALLIST = "get_generalList.php";
         public static String GET_STUDENTLIST = "get_studentList.php";
@@ -55,7 +56,6 @@ public class Constants {
         public static String EVENTS = "events.php";
         public static String EVENTMANAGER = "eventManager.php";
         public static String NOTESS = "notes.php";
-        public static String ALUMNI = "alumni.php";
         public static String FEE = "fee.php";
         public static String GET_RESULTS = "get_results.php";
         public static String PLACEMENT_DRVE = "placement_drives.php";
@@ -70,30 +70,6 @@ public class Constants {
         public static String ABOUTUS = "http://revacounselling.16mb.com/about.html";
     }
 
-    public static class UserData {
-        public static String USER_ID;
-        public static String TOKEN;
-
-        public static String getUserId() {
-            return USER_ID;
-        }
-
-        public static String getTOKEN() {
-            return TOKEN;
-        }
-
-        public static void setUserId(String userId) {
-            USER_ID = userId;
-        }
-
-        public static void setTOKEN(String TOKEN) {
-            UserData.TOKEN = TOKEN;
-        }
-
-        public static void clearData() {
-        }
-    }
-
     public static class SharedPreferenceData {
 
         public static SharedPreferences sharedPreferences=null;
@@ -103,6 +79,7 @@ public class Constants {
         public static String IS_LOGGED_IN = "isloggedin";
         public static String USER_ID = "user_ID";
         public static String TOKEN = "token";
+        public static String IS_ALUMNI = "alumni";
 
         public static void initSharedPreferenceData(SharedPreferences sharedPreferences1) {
             sharedPreferences = sharedPreferences1;
@@ -125,6 +102,15 @@ public class Constants {
 
         public static String getTOKEN() {
             return sharedPreferences.getString(TOKEN, "NOT_AVALIBLE");
+        }
+
+        public static String getIsAlumni(){
+            return sharedPreferences.getString(IS_ALUMNI, "NOT_AVALIBLE");
+        }
+
+        public static void setIsAlumni(String isAlumni){
+            editor.putString(IS_ALUMNI, "yes");
+            editor.apply();
         }
 
         public static void setIsLoggedIn(String isLoggedIn) {
