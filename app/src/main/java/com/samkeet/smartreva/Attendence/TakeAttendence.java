@@ -116,7 +116,7 @@ public class TakeAttendence extends AppCompatActivity implements DatePickerDialo
                 connection.setRequestMethod("POST");
                 Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("classCode", class_code).appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN());
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("classCode", class_code).appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("subjectCode",subject_code);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();

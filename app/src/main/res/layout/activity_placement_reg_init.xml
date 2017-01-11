@@ -211,6 +211,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="TermsAndConditions"
+                    android:id="@+id/tnc"
                     android:text="I Agree Terms and Conditions"
                     android:textColor="#000000" />
             </LinearLayout>

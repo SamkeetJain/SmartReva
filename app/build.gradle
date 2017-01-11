@@ -64,7 +64,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     compile 'com.droidninja:filepicker:1.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-//    compile 'com.google.android.gms:play-services-location:9.6.0'
+    compile 'com.satsuware.lib:usefulviews:2.3.6'
+//    compile 'com.google.android.gms:play-services-location:9.0.0'
 //    compile 'com.google.android.gms:play-services-auth:9.6.0'
 
 }

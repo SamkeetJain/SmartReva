@@ -2,6 +2,7 @@ package com.samkeet.smartreva.Events;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.samkeet.smartreva.R;
@@ -39,4 +40,9 @@ public class MemberListActivity extends AppCompatActivity {
         textView.setText(temp);
 
     }
+
+    public void BackButton(View v) {
+        finish();
+    }
+
 }

@@ -73,6 +73,10 @@ public class EventManager extends AppCompatActivity {
 
     }
 
+    public void BackButton(View V){
+        finish();
+    }
+
     public void Register(View v) {
         if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
             GetStudentAuthentication getStudentAuthentication = new GetStudentAuthentication();

@@ -2,6 +2,7 @@ package com.samkeet.smartreva.Placement;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.samkeet.smartreva.Constants;
@@ -60,6 +62,8 @@ public class PlacementRegInit extends AppCompatActivity {
 
     public LinearLayout PGComponent,PGButton;
 
+    public TextView mTnC;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +84,7 @@ public class PlacementRegInit extends AppCompatActivity {
         AcademicDetailsForm = (Button) findViewById(R.id.button1);
         UnderGraduateForm = (Button) findViewById(R.id.button2);
         PostGraduateForm = (Button) findViewById(R.id.button3);
+        mTnC= (TextView) findViewById(R.id.tnc);
 
         GetCourseDetails getCourseDetails = new GetCourseDetails();
         getCourseDetails.execute();
@@ -173,6 +178,14 @@ public class PlacementRegInit extends AppCompatActivity {
             }
         });
 
+        mTnC.setPaintFlags(mTnC.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        mTnC.setText("I Agree Terms and Conditions");
+
+    }
+
+    public void TermsAndConditions(View v){
+        Intent intent=new Intent(getApplicationContext(),TermAndConditionActivity.class);
+        startActivity(intent);
     }
 
     public void BackButton(View v) {

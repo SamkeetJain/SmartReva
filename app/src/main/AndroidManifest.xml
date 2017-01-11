@@ -41,6 +41,7 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity android:name=".Notification.NotificationMainActivity" />
         <activity android:name=".Attendence.TakeAttendence" />
         <activity android:name=".Attendence.ViewAttendence" />
@@ -79,9 +80,6 @@
         <activity android:name=".SplashActivity" />
         <activity android:name=".Events.EventManager" />
         <activity android:name=".Events.MemberListActivity" />
-        <activity
-            android:name=".AlumniCell.PersonalDetails"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Attendence.AbsentDetails" />
         <activity android:name=".Placement.PlacementMainActivity" />
         <activity
@@ -90,6 +88,7 @@
         <activity android:name=".Placement.PlacementDriveManager" />
         <activity android:name=".Placement.AcademicDetails" />
         <activity android:name=".Placement.TrainingCertification" />
+
         <service android:name=".Firebase.FirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -100,6 +99,7 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
         <activity
             android:name=".AlumniCell.AlunmiRegistration"
             android:windowSoftInputMode="stateHidden|adjustResize" />
@@ -112,7 +112,8 @@
             android:name=".Placement.PlacementRegForm3"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Placement.NewTraningCertification" />
-        <activity android:name=".Notes.NotesManager"></activity>
+        <activity android:name=".Notes.NotesManager" />
+        <activity android:name=".Placement.TermAndConditionActivity"></activity>
     </application>
 
 </manifest>
