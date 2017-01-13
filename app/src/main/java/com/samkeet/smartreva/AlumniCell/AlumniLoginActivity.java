@@ -166,7 +166,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
                 pd.dismiss();
             }
             if (authenticationError) {
-                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
             } else {
 
                 Constants.SharedPreferenceData.setIsLoggedIn(token);
@@ -177,6 +177,11 @@ public class AlumniLoginActivity extends AppCompatActivity {
                 if (Constants.FireBase.token != null) {
                     UpdateToken updateToken = new UpdateToken();
                     updateToken.execute();
+                }else {
+                    FirebaseInstanceId.getInstance().getToken();
+                    Intent intent = new Intent(getApplicationContext(),AlumniMainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         }

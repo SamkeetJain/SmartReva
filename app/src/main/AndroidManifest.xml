@@ -119,7 +119,9 @@
         <activity android:name=".AlumniCell.AlumniReferJobs" />
         <activity android:name=".AlumniCell.AlumniGivingBack" />
         <activity android:name=".AlumniCell.AlumniContactUs" />
-        <activity android:name=".AlumniCell.AlumniEventManager"></activity>
+        <activity android:name=".AlumniCell.AlumniEventManager" />
+        <activity android:name=".AlumniCell.AlumniPostJobReferal" />
+        <activity android:name=".AlumniCell.AlumniReferJobManager"></activity>
     </application>
 
 </manifest>

@@ -44,6 +44,8 @@ public class Constants {
         public static String BASE = "http://revacounselling.16mb.com/";
         public static String LOGIN = "login.php";
         public static String ALUMNI_LOGIN = "login_alumni.php";
+        public static String ALUMNI_REG = "alumni_reg.php";
+        public static String ALUMNI_REFER_JOB = "alumni_refer_job.php";
         public static String AUTHENTICATION = "authenticaton.php";
         public static String GENERALLIST = "get_generalList.php";
         public static String GET_STUDENTLIST = "get_studentList.php";
@@ -54,7 +56,9 @@ public class Constants {
         public static String COUNC_APPOINTMENTS = "counc_appointments.php";
         public static String COUNC_RESERVATIONS = "counc_reservations.php";
         public static String EVENTS = "events.php";
+        public static String ALUMNI_EVENTS = "alumni_events.php";
         public static String EVENTMANAGER = "eventManager.php";
+        public static String ALUMNI_EVENTMANAGER = "alumni_eventsManager.php";
         public static String NOTESS = "notes.php";
         public static String FEE = "fee.php";
         public static String GET_RESULTS = "get_results.php";

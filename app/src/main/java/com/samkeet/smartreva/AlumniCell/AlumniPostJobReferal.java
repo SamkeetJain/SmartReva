@@ -1,21 +1,20 @@
 package com.samkeet.smartreva.AlumniCell;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
+import com.satsuware.usefulviews.LabelledSpinner;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedWriter;
@@ -26,64 +25,59 @@ import java.net.URL;
 
 import dmax.dialog.SpotsDialog;
 
-public class AlumniEventManager extends AppCompatActivity {
+public class AlumniPostJobReferal extends AppCompatActivity {
 
-    public String event_ID, name, type, desc, datetext;
-    public String data;
-    public JSONObject jsonObject;
-    public TextView mName, mType, mDesc, mDate;
+    public LabelledSpinner mJobType;
+    public TextView mCompany,mRole,mDesc;
+    public String company,role,desc,jobType;
+    public String[] types= {"Internship","Full-Time Job"};
 
     public SpotsDialog pd;
     public Context progressDialogContext;
 
-    public String results;
-    public String request;
-
     public boolean authenticationError = true;
-    public String errorMessage = "Data Corupted";
-
+    public String errorMessage = "Data Corrupted";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alumni_event_manager);
+        setContentView(R.layout.activity_alumni_post_job_referal);
 
-        progressDialogContext = this;
-        data = getIntent().getStringExtra("DATA");
-        try {
-            jsonObject = new JSONObject(data);
-            event_ID = jsonObject.getString("Id");
-            name = jsonObject.getString("name");
-            type = jsonObject.getString("type");
-            desc = jsonObject.getString("description");
-            datetext = jsonObject.getString("edate");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        mName = (TextView) findViewById(R.id.name);
-        mType = (TextView) findViewById(R.id.type);
-        mDate = (TextView) findViewById(R.id.date);
+        progressDialogContext=this;
+
+        mJobType= (LabelledSpinner) findViewById(R.id.type);
+        mCompany = (TextView) findViewById(R.id.company);
+        mRole = (TextView) findViewById(R.id.role);
         mDesc = (TextView) findViewById(R.id.desc);
 
-        mName.setText(name);
-        mType.setText(type);
-        mDate.setText(datetext);
-        mDesc.setText(desc);
+        mJobType.setItemsArray(types);
+        mJobType.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
+            @Override
+            public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
+                jobType=types[position];
+            }
+
+            @Override
+            public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
+                jobType=types[1];
+            }
+        });
+
     }
 
-    public void BackButton(View v) {
+    public void BackButton(View v){
         finish();
     }
+    public void Submit(View v){
+        company=mCompany.getText().toString();
+        role=mRole.getText().toString();
+        desc=mDesc.getText().toString();
 
-    public void Register(View v) {
-        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-            EManager eManager=new EManager();
-            eManager.execute();
-        }
+        NewPost newPost=new NewPost();
+        newPost.execute();
     }
 
-    private class EManager extends AsyncTask<Void, Void, Integer> {
-
+    private class NewPost extends AsyncTask<Void, Void, Integer> {
 
         protected void onPreExecute() {
             pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
@@ -94,14 +88,21 @@ public class AlumniEventManager extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.ALUMNI_EVENTMANAGER);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.ALUMNI_REFER_JOB);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sents");
+                Log.d("POST", "DATA ready to sent");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("type", "add").appendQueryParameter("id", event_ID).appendQueryParameter("member", Constants.SharedPreferenceData.getUserId());
+                Uri.Builder _data = new Uri.Builder()
+                        .appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type","new")
+                        .appendQueryParameter("company",company)
+                        .appendQueryParameter("role",role)
+                        .appendQueryParameter("jobType",jobType)
+                        .appendQueryParameter("desc",desc);
+
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -125,9 +126,16 @@ public class AlumniEventManager extends AppCompatActivity {
                 if (authenticationError) {
                     errorMessage = jsonResults.toString();
                 } else {
-                    results = jsonResults.toString();
-                }
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if (status.equals("success")) {
+                        authenticationError = false;
+                    }else {
+                        authenticationError=true;
+                        errorMessage=status;
+                    }
 
+                }
 
                 return 1;
 
@@ -142,18 +150,14 @@ public class AlumniEventManager extends AppCompatActivity {
             if (pd != null) {
                 pd.dismiss();
             }
-            String msg = "";
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                finish();
             } else {
-                try {
-                    JSONObject jsonObject = new JSONObject(results);
-                    msg = jsonObject.getString("status");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Toast.makeText(getApplicationContext(),"Your Referal Request is Recieved",Toast.LENGTH_SHORT).show();
+                finish();
             }
-            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
         }
     }
 

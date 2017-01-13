@@ -42,8 +42,8 @@ public class EventManager extends AppCompatActivity {
     public String results;
     public String request;
 
-    public boolean authenticationError;
-    public String errorMessage;
+    public boolean authenticationError = true;
+    public String errorMessage = "Data Corupted";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class EventManager extends AppCompatActivity {
 
     }
 
-    public void BackButton(View V){
+    public void BackButton(View V) {
         finish();
     }
 
@@ -250,7 +250,7 @@ public class EventManager extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -283,6 +283,8 @@ public class EventManager extends AppCompatActivity {
                 }
                 connection.disconnect();
                 Log.d("return from server", jsonResults.toString());
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
 
                 if (authenticationError) {
                     errorMessage = jsonResults.toString();

@@ -55,6 +55,7 @@ public class ProfileStudentActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Loged Out", Toast.LENGTH_SHORT).show();
                     deleteToken deleteToken=new deleteToken();
                     deleteToken.execute();
+                    Constants.SharedPreferenceData.clearData();
                     isLogedIn = false;
                     LogoutStudent.setText("Login");
                 } else {

@@ -125,6 +125,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Password"
+                            android:inputType="textPassword"
                             android:text=""
                             android:textColor="#ffa332"
                             android:textColorHint="#808080"

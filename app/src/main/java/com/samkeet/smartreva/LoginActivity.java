@@ -177,6 +177,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (Constants.FireBase.token != null) {
                     UpdateToken updateToken = new UpdateToken();
                     updateToken.execute();
+                }else {
+                    FirebaseInstanceId.getInstance().getToken();
+                    Intent intent = new Intent(getApplicationContext(),AlumniMainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
 
             }

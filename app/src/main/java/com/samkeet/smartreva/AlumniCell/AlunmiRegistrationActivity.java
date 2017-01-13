@@ -2,6 +2,7 @@ package com.samkeet.smartreva.AlumniCell;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,13 +54,23 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
     public String[] years = {"1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000","2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"};
     public String[] deptList = {"deptCode"};
 
+    public EditText mMobileNo,mPassword,mFullname,mEmail,mSRN,mCompany,mDesg,mLoc;
+    public String mobileNo,password,fullname,email,srn,company,desg,loc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alunmi_registration);
         progressDialogContext = this;
 
-
+        mMobileNo = (EditText) findViewById(R.id.mobileno);
+        mPassword = (EditText) findViewById(R.id.password);
+        mFullname = (EditText) findViewById(R.id.name);
+        mEmail = (EditText) findViewById(R.id.email);
+        mSRN = (EditText) findViewById(R.id.srn);
+        mCompany= (EditText) findViewById(R.id.company);
+        mDesg= (EditText) findViewById(R.id.designation);
+        mLoc= (EditText) findViewById(R.id.loc);
 
         Gcourse = (LabelledSpinner) findViewById(R.id.Gcourse);
         Gdept = (LabelledSpinner) findViewById(R.id.Gdept);
@@ -123,7 +135,17 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
     }
 
     public void Send(View v) {
+        mobileNo = mMobileNo.getText().toString();
+        password = mPassword.getText().toString();
+        fullname = mFullname.getText().toString();
+        email = mEmail.getText().toString();
+        srn = mSRN.getText().toString();
+        company=mCompany.getText().toString();
+        desg=mDesg.getText().toString();
+        loc=mLoc.getText().toString();
 
+        Registration registration = new Registration();
+        registration.execute();
     }
 
     private class GetCourseAndDeptDetails extends AsyncTask<Void, Void, Integer> {
@@ -247,6 +269,94 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         deptList = temp.toArray(new String[temp.size()]);
         Gdept.setItemsArray(deptList);
     }
+
+    private class Registration extends AsyncTask<Void, Void, Integer> {
+
+        protected void onPreExecute() {
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
+            pd.setTitle("Loading...");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.ALUMNI_REG);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Log.d("POST", "DATA ready to sent");
+
+                Uri.Builder _data = new Uri.Builder()
+                        .appendQueryParameter("mobileNo",mobileNo)
+                        .appendQueryParameter("password",password)
+                        .appendQueryParameter("name",fullname)
+                        .appendQueryParameter("email",email)
+                        .appendQueryParameter("srn",srn)
+                        .appendQueryParameter("course",course)
+                        .appendQueryParameter("dept",dept)
+                        .appendQueryParameter("yog",year)
+                        .appendQueryParameter("company",company)
+                        .appendQueryParameter("desg",desg)
+                        .appendQueryParameter("loc",loc);
+
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+                Log.d("POST", "DATA SENT");
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                Log.d("return from server", jsonResults.toString());
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if (status.equals("success")) {
+                        authenticationError = false;
+                    }else {
+                        authenticationError=true;
+                        errorMessage=status;
+                    }
+
+                }
+
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(),"Your Registration Request is Recieved",Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+
 
 
 }
