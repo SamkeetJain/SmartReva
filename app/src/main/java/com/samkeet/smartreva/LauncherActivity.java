@@ -23,6 +23,7 @@ import com.samkeet.smartreva.Notification.NotificationMainActivity;
 import com.samkeet.smartreva.Placement.PlacementMainActivity;
 import com.samkeet.smartreva.Results.ResultsMainActivity;
 import com.samkeet.smartreva.Timetable.TimetableMainActivity;
+import com.samkeet.smartreva.mentor.MentorMainActivity;
 
 import org.json.JSONObject;
 
@@ -36,8 +37,8 @@ import dmax.dialog.SpotsDialog;
 
 public class LauncherActivity extends AppCompatActivity {
 
-    public boolean authenticationError=true;
-    public String errorMessage="Data Corupted";
+    public boolean authenticationError = true;
+    public String errorMessage = "Data Corupted";
 
     private SpotsDialog pd;
     private Context progressDialogContext;
@@ -64,6 +65,15 @@ public class LauncherActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void Developers(View v) {
+        Intent intent = new Intent(getApplicationContext(), DevelopersActivity.class);
+        startActivity(intent);
+    }
+
+    public void Mentor (View v){
+        Intent intent = new Intent(getApplicationContext(), MentorMainActivity.class);
+        startActivity(intent);
+    }
     public void Result(View v) {
         Intent intent = new Intent(getApplicationContext(), ResultsMainActivity.class);
         startActivity(intent);
@@ -101,7 +111,7 @@ public class LauncherActivity extends AppCompatActivity {
 //        Intent intent = new Intent(getApplicationContext(), LibraryMainActivity.class);
 //        startActivity(intent);
 
-        Intent intent= new Intent(getApplicationContext(), ViewNotes.class);
+        Intent intent = new Intent(getApplicationContext(), ViewNotes.class);
         startActivity(intent);
 
     }
