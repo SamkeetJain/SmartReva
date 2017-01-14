@@ -1,6 +1,5 @@
 package com.samkeet.smartreva.Events;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -10,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.textservice.TextInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +21,6 @@ import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -317,7 +314,7 @@ public class EventManager extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             } else if (request.equals("get")) {
 
-                Intent intent = new Intent(getApplicationContext(), MemberListActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EventsMemberListActivity.class);
                 intent.putExtra("DATA", results);
                 startActivity(intent);
             }

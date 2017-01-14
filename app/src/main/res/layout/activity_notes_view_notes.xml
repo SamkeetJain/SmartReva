@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_add_event"
+    android:id="@+id/activity_view_notes"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.Events.EventsAddEventActivity">
+    tools:context="com.samkeet.smartreva.Notes.NotesViewNotes">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/apppppp"
@@ -42,17 +42,17 @@
                     android:layout_centerHorizontal="true"
                     android:layout_toRightOf="@+id/back_button"
                     android:paddingLeft="15dp"
-                    android:text="New Post"
+                    android:text="View Notes"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:onClick="Send"
-                    android:paddingRight="25dp"
-                    android:src="@drawable/ic_send_black_24dp" />
+                    android:paddingRight="20dp"
+                    android:onClick="submit"
+                    android:src="@drawable/ic_send_black_24dp"
+                    android:layout_height="wrap_content" />
 
             </RelativeLayout>
 
@@ -68,55 +68,85 @@
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
+        android:id="@+id/filter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/apppppp"
-        android:background="@color/lavender"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="3dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title:"
-                android:textColor="#000000"
-                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Course" />
 
-                />
-
-            <EditText
-                android:id="@+id/title"
+            <Spinner
+                android:id="@+id/courseSpin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Title"
-                android:paddingLeft="15dp"
-                android:textColor="@color/colorAccent"
-                android:textSize="18sp" />
+                android:layout_weight="1">
+
+            </Spinner>
         </LinearLayout>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="3dp">
 
-            <EditText
-                android:id="@+id/message"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="top"
-                android:hint="Write Something..."
-                android:inputType="textMultiLine"
-                android:textColor="@color/colorAccent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Dept Code" />
 
-                />
+            <Spinner
+                android:id="@+id/deptSpin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+            </Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Sem" />
+
+            <Spinner
+                android:id="@+id/SemSpin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+            </Spinner>
         </LinearLayout>
 
     </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/filter"
+        android:scrollbars="vertical" />
+
 </RelativeLayout>

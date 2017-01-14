@@ -184,7 +184,7 @@ public class PlacementRegInit extends AppCompatActivity {
     }
 
     public void TermsAndConditions(View v){
-        Intent intent=new Intent(getApplicationContext(),TermAndConditionActivity.class);
+        Intent intent=new Intent(getApplicationContext(),PlacementTermAndConditionActivity.class);
         startActivity(intent);
     }
 

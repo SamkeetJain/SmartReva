@@ -1,4 +1,4 @@
-package com.samkeet.smartreva.Library;
+package com.samkeet.smartreva.Notes;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,10 +9,10 @@ import android.widget.TextView;
 import com.samkeet.smartreva.R;
 
 /**
- * Created by FROST on 12/15/2016.
+ * Created by FROST on 11/17/2016.
  */
 
-public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHolder> {
+public class NotesViewNotesAdapter extends RecyclerView.Adapter<NotesViewNotesAdapter.ViewHolder> {
 
     private String[] mTitle, mMessage;
 
@@ -27,13 +27,13 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
         }
     }
 
-    public LibraryAdapter(String[] mNotesID,String[] mTitle,String[] mMessage,String[] mFilename) {
+    public NotesViewNotesAdapter(String[] mTitle, String[] mMessage) {
         this.mTitle = mTitle;
         this.mMessage = mMessage;
     }
 
     @Override
-    public LibraryAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NotesViewNotesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cards_view_notes, parent, false);
         // set the view's size, margins, paddings and layout parameters
@@ -41,12 +41,14 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
         return vh;
     }
 
+    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         final int pos = position;
         holder.mTitleView.setText(mTitle[pos]);
         holder.mMessageView.setText(mMessage[pos]);
+
     }
 
     // Return the size of your dataset (invoked by the layout manager)

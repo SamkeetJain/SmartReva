@@ -1,7 +1,5 @@
 package com.samkeet.smartreva.Events;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -108,7 +106,7 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
     }
 
     public void AddEvent(View v) {
-        Intent intent = new Intent(getApplicationContext(), AddEventActivity.class);
+        Intent intent = new Intent(getApplicationContext(), EventsAddEventActivity.class);
         startActivity(intent);
     }
 

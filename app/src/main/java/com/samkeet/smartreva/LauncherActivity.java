@@ -18,7 +18,7 @@ import com.samkeet.smartreva.Councling.CounclingMainActivity;
 import com.samkeet.smartreva.Events.EventsMainActivity;
 import com.samkeet.smartreva.Fees.FeesMainActivity;
 import com.samkeet.smartreva.Notes.NotesMainActivity;
-import com.samkeet.smartreva.Notes.ViewNotes;
+import com.samkeet.smartreva.Notes.NotesViewNotes;
 import com.samkeet.smartreva.Notification.NotificationMainActivity;
 import com.samkeet.smartreva.Placement.PlacementMainActivity;
 import com.samkeet.smartreva.Results.ResultsMainActivity;
@@ -111,7 +111,7 @@ public class LauncherActivity extends AppCompatActivity {
 //        Intent intent = new Intent(getApplicationContext(), LibraryMainActivity.class);
 //        startActivity(intent);
 
-        Intent intent = new Intent(getApplicationContext(), ViewNotes.class);
+        Intent intent = new Intent(getApplicationContext(), NotesViewNotes.class);
         startActivity(intent);
 
     }

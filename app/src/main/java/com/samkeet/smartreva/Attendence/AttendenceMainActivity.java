@@ -1,6 +1,5 @@
 package com.samkeet.smartreva.Attendence;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -86,7 +85,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
 
         //TODO Connect to server for Authentication and then proceed.
 
-        Intent intent = new Intent(getApplicationContext(), GenerateAttendenceReport.class);
+        Intent intent = new Intent(getApplicationContext(), AttendenceGenerateAttendenceReport.class);
         startActivity(intent);
 
     }
@@ -246,7 +245,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent = new Intent(getApplicationContext(), ViewAttendence.class);
+                Intent intent = new Intent(getApplicationContext(), AttendenceViewAttendence.class);
                 startActivity(intent);
             }
 
@@ -325,7 +324,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent = new Intent(getApplicationContext(), AbsentDetails.class);
+                Intent intent = new Intent(getApplicationContext(), AttendenceAbsentDetailsActivity.class);
                 startActivity(intent);
             }
 
@@ -396,7 +395,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                Intent intent = new Intent(getApplicationContext(), GeneralListActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AttendenceGenerateListActivity.class);
                 intent.putExtra("RESULTS", results);
                 intent.putExtra("TYPE", type);
                 if (type.equals("subject_code")) {
@@ -425,7 +424,7 @@ public class AttendenceMainActivity extends AppCompatActivity {
                 class_value = data.getStringExtra("returnValue");
                 class_value = class_value.trim();
                 class_value = class_value.replaceAll("\\t", "");
-                Intent intent = new Intent(getApplicationContext(), TakeAttendence.class);
+                Intent intent = new Intent(getApplicationContext(), AttendenceTakeAttendence.class);
                 intent.putExtra("CLASSCODE", class_value);
                 intent.putExtra("SUBJECTCODE", subject_value);
                 intent.putExtra("TABLE", class_value + "_" + subject_value);

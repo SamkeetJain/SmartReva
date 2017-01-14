@@ -43,15 +43,15 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".Notification.NotificationMainActivity" />
-        <activity android:name=".Attendence.TakeAttendence" />
-        <activity android:name=".Attendence.ViewAttendence" />
-        <activity android:name=".Attendence.GenerateAttendenceReport" />
+        <activity android:name=".Attendence.AttendenceTakeAttendence" />
+        <activity android:name=".Attendence.AttendenceViewAttendence" />
+        <activity android:name=".Attendence.AttendenceGenerateAttendenceReport" />
         <activity
-            android:name=".Notes.UploadNotes"
+            android:name=".Notes.NotesUploadNotes"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".Notes.ViewNotes" />
+        <activity android:name=".Notes.NotesViewNotes" />
         <activity
-            android:name=".Attendence.GeneralListActivity"
+            android:name=".Attendence.AttendenceGenerateListActivity"
             android:label=""
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <activity
@@ -65,13 +65,13 @@
             android:name=".Timetable.TimetableMainActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".Events.AddEventActivity"
+            android:name=".Events.EventsAddEventActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".Councling.CounclingNewPost"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
-            android:name=".Notes.UploadToServer"
+            android:name=".Notes.NotesUploadToServer"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Fees.FeesMainActivity" />
         <activity
@@ -79,15 +79,15 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".Events.EventManager" />
-        <activity android:name=".Events.MemberListActivity" />
-        <activity android:name=".Attendence.AbsentDetails" />
+        <activity android:name=".Events.EventsMemberListActivity" />
+        <activity android:name=".Attendence.AttendenceAbsentDetailsActivity" />
         <activity android:name=".Placement.PlacementMainActivity" />
         <activity
             android:name=".Placement.PlacementRegForm1"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Placement.PlacementDriveManager" />
-        <activity android:name=".Placement.AcademicDetails" />
-        <activity android:name=".Placement.TrainingCertification" />
+        <activity android:name=".Placement.PlacementAcademicDetails" />
+        <activity android:name=".Placement.PlacementTrainingCertification" />
 
         <service android:name=".Firebase.FirebaseMessagingService">
             <intent-filter>
@@ -111,9 +111,9 @@
         <activity
             android:name=".Placement.PlacementRegForm3"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".Placement.NewTraningCertification" />
+        <activity android:name=".Placement.PlacementNewTraningCertification" />
         <activity android:name=".Notes.NotesManager" />
-        <activity android:name=".Placement.TermAndConditionActivity" />
+        <activity android:name=".Placement.PlacementTermAndConditionActivity" />
         <activity android:name=".AlumniCell.AlumniMainActivity" />
         <activity android:name=".AlumniCell.AlumniAboutUs" />
         <activity android:name=".AlumniCell.AlumniReferJobs" />

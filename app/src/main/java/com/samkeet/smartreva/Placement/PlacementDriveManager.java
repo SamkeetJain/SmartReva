@@ -1,12 +1,8 @@
 package com.samkeet.smartreva.Placement;
 
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Html;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,7 +25,7 @@ public class PlacementDriveManager extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drive_management);
+        setContentView(R.layout.activity_placement_drive_management);
 
         mImage= (ImageView) findViewById(R.id.logo);
         mTitle = (TextView) findViewById(R.id.title);

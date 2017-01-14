@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_add_event"
+    android:id="@+id/activity_upload_notes"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.Events.EventsAddEventActivity">
+    tools:context="com.samkeet.smartreva.Notes.NotesUploadNotes">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/apppppp"
@@ -42,7 +42,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_toRightOf="@+id/back_button"
                     android:paddingLeft="15dp"
-                    android:text="New Post"
+                    android:text="Upload Notes"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
 
@@ -50,7 +50,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:onClick="Send"
                     android:paddingRight="25dp"
                     android:src="@drawable/ic_send_black_24dp" />
 
@@ -70,53 +69,56 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/apppppp"
+        android:layout_below="@id/apppppp"
         android:background="@color/lavender"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="50dp">
 
-            <TextView
+            <android.support.v7.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Title:"
-                android:textColor="#000000"
-                android:textSize="18sp"
+                android:layout_margin="5dp"
+                app:cardCornerRadius="2dp"
+                android:elevation="4dp"
+                >
 
-                />
-
-            <EditText
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Title"
-                android:paddingLeft="15dp"
-                android:textColor="@color/colorAccent"
-                android:textSize="18sp" />
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@color/accent"
+                    android:elevation="4dp"
+                    android:onClick="NotesUploadSelectFile"
+                    android:text="Select File"
+                    android:textColor="#ffffff" />
+            </android.support.v7.widget.CardView>
         </LinearLayout>
-
-
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="15dp">
 
             <EditText
-                android:id="@+id/message"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
                 android:gravity="top"
-                android:hint="Write Something..."
+                android:hint="Description..."
                 android:inputType="textMultiLine"
-                android:textColor="@color/colorAccent"
 
                 />
+
         </LinearLayout>
+
 
     </LinearLayout>
 </RelativeLayout>

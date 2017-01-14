@@ -1,8 +1,6 @@
 package com.samkeet.smartreva.AlumniCell;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -11,17 +9,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.firebase.crash.FirebaseCrash;
 import com.samkeet.smartreva.Constants;
-import com.samkeet.smartreva.Notes.ViewNotes;
 import com.samkeet.smartreva.R;
 import com.satsuware.usefulviews.LabelledSpinner;
 

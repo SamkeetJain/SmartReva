@@ -1,6 +1,5 @@
 package com.samkeet.smartreva.Notes;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.samkeet.smartreva.Attendence.ViewAttendence;
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
 
@@ -61,7 +59,7 @@ public class NotesMainActivity extends AppCompatActivity {
     }
 
     public void ViewNotes(View v) {
-        Intent intent = new Intent(getApplicationContext(), ViewNotes.class);
+        Intent intent = new Intent(getApplicationContext(), NotesViewNotes.class);
         startActivity(intent);
     }
 
@@ -89,7 +87,7 @@ public class NotesMainActivity extends AppCompatActivity {
             File postFile = new File(post.getPath());
             String loc=postFile.getAbsolutePath();
             Log.d("File location",loc);
-            Intent intent = new Intent(getApplicationContext(), UploadToServer.class);
+            Intent intent = new Intent(getApplicationContext(), NotesUploadToServer.class);
             intent.putExtra("POST",loc);
             startActivity(intent);
         }
@@ -98,7 +96,7 @@ public class NotesMainActivity extends AppCompatActivity {
             {
                 ArrayList<String> filePaths = data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_PHOTOS);
                 String filepath = filePaths.get(0);
-                Intent intent = new Intent(getApplicationContext(), UploadToServer.class);
+                Intent intent = new Intent(getApplicationContext(), NotesUploadToServer.class);
                 intent.putExtra("POST",filepath);
                 startActivity(intent);
             }

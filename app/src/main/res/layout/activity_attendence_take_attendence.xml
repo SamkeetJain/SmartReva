@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_add_event"
+    android:id="@+id/activity_take_attendence"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.Events.EventsAddEventActivity">
+    tools:context="com.samkeet.smartreva.Attendence.AttendenceTakeAttendence">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/apppppp"
@@ -42,7 +42,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_toRightOf="@+id/back_button"
                     android:paddingLeft="15dp"
-                    android:text="New Post"
+                    android:text="Take Attendance"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
 
@@ -50,14 +50,89 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:onClick="Send"
-                    android:paddingRight="25dp"
+                    android:onClick="Submit"
+                    android:paddingRight="20dp"
                     android:src="@drawable/ic_send_black_24dp" />
-
             </RelativeLayout>
 
 
         </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/apppppp"
+        android:background="@color/lavender"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/lin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/apppppp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Date:"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:editable="false"
+                    android:onClick="Date"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Period:"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/period"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -65,58 +140,11 @@
             android:background="@color/colorAccent" />
 
 
-    </android.support.design.widget.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/apppppp"
-        android:background="@color/lavender"
-        android:orientation="vertical"
-        android:padding="15dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title:"
-                android:textColor="#000000"
-                android:textSize="18sp"
-
-                />
-
-            <EditText
-                android:id="@+id/title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Title"
-                android:paddingLeft="15dp"
-                android:textColor="@color/colorAccent"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-
-
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/message"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top"
-                android:hint="Write Something..."
-                android:inputType="textMultiLine"
-                android:textColor="@color/colorAccent"
-
-                />
-        </LinearLayout>
+            android:scrollbars="vertical" />
 
     </LinearLayout>
 </RelativeLayout>
