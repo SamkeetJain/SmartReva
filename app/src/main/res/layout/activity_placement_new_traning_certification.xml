@@ -45,13 +45,7 @@
                     android:text="New Traning \u0026 Certifications"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:paddingRight="20dp"
-                    android:onClick="submit"
-                    android:src="@drawable/ic_send_black_24dp"
-                    android:layout_height="wrap_content" />
+
 
             </RelativeLayout>
 
@@ -63,7 +57,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/apppppp">
+        android:layout_below="@+id/apppppp"
+        android:orientation="vertical">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -74,8 +69,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:padding="10dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -87,6 +82,7 @@
                         android:layout_height="wrap_content">
 
                         <EditText
+                            android:id="@+id/title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Title" />
@@ -97,6 +93,7 @@
                         android:layout_height="wrap_content">
 
                         <EditText
+                            android:id="@+id/org"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Organisation" />
@@ -107,6 +104,7 @@
                         android:layout_height="wrap_content">
 
                         <EditText
+                            android:id="@+id/sub"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Subject Area" />
@@ -117,6 +115,7 @@
                         android:layout_height="wrap_content">
 
                         <EditText
+                            android:id="@+id/dur"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Duration" />
@@ -133,6 +132,7 @@
                             android:layout_weight="1">
 
                             <EditText
+                                android:id="@+id/fp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="From Period" />
@@ -144,6 +144,7 @@
                             android:layout_weight="1">
 
                             <EditText
+                                android:id="@+id/tp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="To Period" />
@@ -156,6 +157,16 @@
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:onClick="submit"
+            android:paddingRight="20dp"
+            android:text="Submit" />
     </LinearLayout>
 
 </RelativeLayout>

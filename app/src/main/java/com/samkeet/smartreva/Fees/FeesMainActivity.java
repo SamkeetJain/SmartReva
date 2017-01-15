@@ -105,16 +105,18 @@ public class FeesMainActivity extends AppCompatActivity {
                     if (jsonArray.length() == 1) {
 
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
-                        total = jsonObject.getString("totalFee");
+                        total =jsonObject.getString("totalFee");
                         paid = jsonObject.getString("paidFee");
                         int t = Integer.parseInt(total);
                         int p = Integer.parseInt(paid);
                         if (t - p > 0) {
                             int d = t - p;
-                            due = String.valueOf(d);
+                            due = getString(R.string.Rs) + " " +String.valueOf(d);
                         } else {
                             due = "No due";
                         }
+                        total = getString(R.string.Rs) + " " +jsonObject.getString("totalFee");
+                        paid = getString(R.string.Rs) + " " +jsonObject.getString("paidFee");
                     } else {
                         if (jsonArray.length() == 0)
                             errorMessage = "No Data for corresponding UserID ";

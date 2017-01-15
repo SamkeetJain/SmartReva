@@ -56,8 +56,8 @@ public class AttendenceTakeAttendenceAdapter extends RecyclerView.Adapter<Attend
         final int pos=position;
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mTitleView.setText(mTitle[pos]);
-        holder.mNameView.setText(mName[pos]);
+        holder.mTitleView.setText(mTitle[pos].toUpperCase());
+        holder.mNameView.setText(mName[pos].toUpperCase());
         holder.mCheckBox.setChecked(checks[pos]);
         holder.mCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override

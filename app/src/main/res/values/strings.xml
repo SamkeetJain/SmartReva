@@ -17,6 +17,8 @@
         <item>C2</item>
         <item>C3</item>
     </string-array>
+
+    <string name="Rs">\u20B9</string>
     <string name="title_activity_events_main">EventsMainActivity</string>
 
 

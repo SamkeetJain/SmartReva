@@ -83,10 +83,22 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String fullDate;
+        String day, month;
         if (dayOfMonth < 10)
-            fullDate = "0" + dayOfMonth + "-" + (++monthOfYear) + "-" + year;
+            day = "0" + dayOfMonth;
         else
-            fullDate = dayOfMonth + "-" + (++monthOfYear) + "-" + year;
+            day = "" + dayOfMonth;
+
+        ++monthOfYear;
+
+        if (monthOfYear < 10)
+            month = "0" + monthOfYear;
+        else
+            month = "" + monthOfYear;
+
+        fullDate = "" + day + "-" + (month) + "-" + year;
+        Log.d("datedate",fullDate);
+
 
         date.setText(fullDate);
 
@@ -127,22 +139,22 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
     }
 
     public boolean validation() {
-        if (Constants.Methods.checkForSpecial(mtitle)){
-            Toast.makeText(getApplicationContext(),"Title should not include special charecters", Toast.LENGTH_SHORT).show();
+        if (Constants.Methods.checkForSpecial(mtitle)) {
+            Toast.makeText(getApplicationContext(), "Title should not include special charecters", Toast.LENGTH_SHORT).show();
         }
         if (!((mtitle.length() <= 40) && (mtitle.length() >= 1))) {
             Toast.makeText(getApplicationContext(), "Title should be less than 40 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (Constants.Methods.checkForSpecial(mSummary)){
-            Toast.makeText(getApplicationContext(),"Message should not include special charecters", Toast.LENGTH_SHORT).show();
+        if (Constants.Methods.checkForSpecial(mSummary)) {
+            Toast.makeText(getApplicationContext(), "Message should not include special charecters", Toast.LENGTH_SHORT).show();
         }
         if (!((mSummary.length() <= 1000) && (mSummary.length() >= 1))) {
             Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (Constants.Methods.checkForSpecial(mTime)){
-            Toast.makeText(getApplicationContext(),"Time should not include special charecters", Toast.LENGTH_SHORT).show();
+        if (Constants.Methods.checkForSpecial(mTime)) {
+            Toast.makeText(getApplicationContext(), "Time should not include special charecters", Toast.LENGTH_SHORT).show();
         }
         if (!((mTime.length() <= 20) && (mTime.length() >= 1))) {
             Toast.makeText(getApplicationContext(), "Time should be less than 20 charecters", Toast.LENGTH_SHORT).show();
