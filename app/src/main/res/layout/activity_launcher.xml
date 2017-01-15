@@ -53,8 +53,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:onClick="Notification"
                     android:layout_alignParentTop="true"
+                    android:onClick="Notification"
                     android:padding="14dp"
                     android:src="@drawable/notificatation1" />
 
@@ -75,9 +75,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/apppppp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/apppppp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,10 +99,10 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        app:cardUseCompatPadding="true"
                         android:onClick="Attendence"
-                        app:cardElevation="4dp">
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -138,10 +138,10 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        app:cardUseCompatPadding="true"
                         android:onClick="Councling"
-                        app:cardElevation="4dp">
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -184,10 +184,10 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:onClick="Notes"
+                        android:onClick="Placements"
                         app:cardCornerRadius="8dp"
-                        app:cardUseCompatPadding="true"
-                        app:cardElevation="4dp">
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -199,14 +199,14 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:scaleType="fitXY"
-                                android:src="@drawable/notes_1" />
+                                android:src="@drawable/placement_1" />
 
                             <TextView
                                 android:layout_width="80dp"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:paddingTop="5dp"
-                                android:text="Notes"
+                                android:text="Placements"
                                 android:textSize="14sp" />
                         </LinearLayout>
 
@@ -223,10 +223,10 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardUseCompatPadding="true"
+                        android:onClick="Mentor"
                         app:cardCornerRadius="8dp"
-                        android:onClick="Timetable"
-                        app:cardElevation="4dp">
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -237,14 +237,15 @@
                             <ImageView
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:src="@drawable/timetablenew" />
+                                android:scaleType="fitXY"
+                                android:src="@drawable/mentor" />
 
                             <TextView
-                                android:layout_width="80sp"
+                                android:layout_width="80dp"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:paddingTop="5dp"
-                                android:text="Time Table"
+                                android:text="Mentor"
                                 android:textSize="14sp" />
                         </LinearLayout>
 
@@ -270,9 +271,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="Events"
-                        app:cardUseCompatPadding="true"
                         app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -309,9 +310,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="Result"
-                        app:cardUseCompatPadding="true"
                         app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -353,11 +354,97 @@
 
                     <android.support.v7.widget.CardView
                         android:layout_width="wrap_content"
-                        android:onClick="Library"
-                        app:cardUseCompatPadding="true"
                         android:layout_height="wrap_content"
+                        android:onClick="Notes"
                         app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/notes_1" />
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:paddingTop="5dp"
+                                android:text="Notes"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="Timetable"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="5dp">
+
+                            <ImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/timetablenew" />
+
+                            <TextView
+                                android:layout_width="80sp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:paddingTop="5dp"
+                                android:text="Time Table"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="Library"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -394,9 +481,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="Fees"
-                        app:cardUseCompatPadding="true"
                         app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -424,90 +511,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="15dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        app:cardUseCompatPadding="true"
-                        android:onClick="Placements"
-                        app:cardElevation="4dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:scaleType="fitXY"
-                                android:src="@drawable/placement_1" />
-
-                            <TextView
-                                android:layout_width="80dp"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:paddingTop="5dp"
-                                android:text="Placements"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
-                        app:cardUseCompatPadding="true"
-                        android:onClick="Alumini"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/alumni_1" />
-
-                            <TextView
-                                android:layout_width="80sp"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:paddingTop="5dp"
-                                android:text="Alumni"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -524,94 +527,10 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:cardUseCompatPadding="true"
-                        android:onClick="Mentor"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:scaleType="fitXY"
-                                android:src="@drawable/mentor" />
-
-                            <TextView
-                                android:layout_width="80dp"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:paddingTop="5dp"
-                                android:text="Mentor"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="Revamp"
-                        app:cardUseCompatPadding="true"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="5dp">
-
-                            <ImageView
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:src="@drawable/revamp" />
-
-                            <TextView
-                                android:layout_width="80sp"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:paddingTop="5dp"
-                                android:text="Revamp '17"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                    </android.support.v7.widget.CardView>
-
-                </LinearLayout>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="15dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <android.support.v7.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:cardUseCompatPadding="true"
                         android:onClick="Profile"
                         app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -648,9 +567,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:onClick="Revamp"
-                        app:cardUseCompatPadding="true"
                         app:cardCornerRadius="8dp"
-                        app:cardElevation="4dp">
+                        app:cardElevation="4dp"
+                        app:cardUseCompatPadding="true">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -681,17 +600,17 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_marginTop="15dp"
+                android:layout_height="0.75dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="#2d2828"
-                android:layout_height="0.75dp"/>
+                android:layout_marginTop="15dp"
+                android:background="#2d2828" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="match_parent"

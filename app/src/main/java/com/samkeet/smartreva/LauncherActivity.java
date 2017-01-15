@@ -70,10 +70,11 @@ public class LauncherActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void Mentor (View v){
+    public void Mentor(View v) {
         Intent intent = new Intent(getApplicationContext(), MentorMainActivity.class);
         startActivity(intent);
     }
+
     public void Result(View v) {
         Intent intent = new Intent(getApplicationContext(), ResultsMainActivity.class);
         startActivity(intent);
@@ -123,11 +124,6 @@ public class LauncherActivity extends AppCompatActivity {
 
     public void Timetable(View v) {
         Intent intent = new Intent(getApplicationContext(), TimetableMainActivity.class);
-        startActivity(intent);
-    }
-
-    public void Alumini(View v) {
-        Intent intent = new Intent(getApplicationContext(), AlumniLoginActivity.class);
         startActivity(intent);
     }
 
