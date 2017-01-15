@@ -83,14 +83,55 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/coursetitle"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="15dp"
-                        android:paddingTop="5dp"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Course"
+                            android:textColor="#000000"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/coursetitle"
+                            android:paddingLeft="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:textColor="#000000"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Dept"
+                            android:textColor="#000000"
+                            android:textSize="16sp" />
+
+                        <Spinner
+                            android:id="@+id/depttitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -149,6 +190,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
+                                android:id="@+id/s1"
                                 android:hint="1st Sem CGPA"
                                 android:textSize="12sp" />
 
@@ -178,6 +220,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
+                                android:id="@+id/s2"
                                 android:hint="2nd Sem CGPA"
                                 android:textSize="12sp" />
 
@@ -206,6 +249,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
+                                android:id="@+id/s3"
                                 android:hint="3rd Sem CGPA"
                                 android:textSize="12sp" />
 
@@ -234,6 +278,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center"
+                                android:id="@+id/s4"
                                 android:hint="4th Sem CGPA"
                                 android:textSize="12sp" />
 
@@ -264,6 +309,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:hint="5th Sem CGPA"
+                                android:id="@+id/s5"
                                 android:textSize="12sp" />
 
                             <Spinner
@@ -293,6 +339,7 @@
                                 android:layout_weight="1"
                                 android:gravity="center"
                                 android:hint="6th Sem CGPA"
+                                android:id="@+id/s6"
                                 android:textSize="12sp" />
 
                             <Spinner

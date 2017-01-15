@@ -121,7 +121,7 @@ public class PlacementRegInit extends AppCompatActivity {
                 if (isChecked) {
                     isDiplomaStudent = true;
                 } else {
-                    isDiplomaStudent = true;
+                    isDiplomaStudent = false;
                 }
             }
         });

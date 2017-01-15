@@ -64,7 +64,9 @@ public class Constants {
         public static String GET_RESULTS = "get_results.php";
         public static String PLACEMENT_DRVE = "placement_drives.php";
         public static String PLACEMENT_ACADEMIC_DETAILS = "placement_academic_profile.php";
+        public static String PLACEMENT_PERSONAL_DETAILS = "placement_registration.php";
         public static String PLACEMENT_UG_DETAILS = "placement_ug.php";
+        public static String PLACEMENT_PG_DETAILS = "placement_pg.php";
         public static String PLACEMENT_BACK_DETAILS = "placement_backlogs.php";
         public static String PLACEMENT_TANDC = "placement_tandc.php";
         public static String COURSE_SEM = "course_sem.php";

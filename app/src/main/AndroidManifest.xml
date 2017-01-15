@@ -124,12 +124,12 @@
         <activity android:name=".AlumniCell.AlumniReferJobManager" />
         <activity android:name=".DevelopersActivity" />
         <activity android:name=".ContactUsActivity" />
-        <activity android:name=".mentor.MentorMainActivity" />
-        <activity android:name=".mentor.MentorStudentListActivity" />
-        <activity android:name=".mentor.MentorStudentDetailsActivity" />
-        <activity android:name=".mentor.MentorStudentAcademicDetailsActivity" />
-        <activity android:name=".mentor.MentorSendNotificationActivity" />
-        <activity android:name=".mentor.MentorStudentAcademicDetailsManager"></activity>
+        <activity android:name=".Mentor.MentorMainActivity" />
+        <activity android:name=".Mentor.MentorStudentListActivity" />
+        <activity android:name=".Mentor.MentorStudentDetailsActivity" />
+        <activity android:name=".Mentor.MentorStudentAcademicDetailsActivity" />
+        <activity android:name=".Mentor.MentorSendNotificationActivity" />
+        <activity android:name=".Mentor.MentorStudentAcademicDetailsManager"></activity>
     </application>
 
 </manifest>

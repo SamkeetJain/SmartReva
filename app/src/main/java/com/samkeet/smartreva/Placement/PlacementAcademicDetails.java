@@ -37,13 +37,15 @@ public class PlacementAcademicDetails extends AppCompatActivity {
     public TextView mTenthB, mTenthSN, mTenthC, mTenthM, mTenthPY;
     public TextView mTwelB, mTwelSN, mTwelC, mTwelM, mTwelPY;
     public TextView mDiplomaB, mDiplomaSN, mDiplomaC, mDiplomaM, mDiplomaPY;
-    public TextView mEngB, mEng1, mEng2, mEng3, mEng4, mEng5, mEng6, mEng7, mEng8;
+    public TextView mUgB, mUgC, mUg1, mUg2, mUg3, mUg4, mUg5, mUg6, mUg7, mUg8, mUg9, mUg10;
+    public TextView mPgB, mPgC, mPg1, mPg2, mPg3, mPg4, mPg5, mPg6, mPg7, mPg8, mPgp, mPg10;
 
 
     public String tenthB, tenthSN, tenthC, tenthM, tenthPY;
     public String twelB, twelSN, twelC, twelM, twelPY;
     public String diplomaB, diplomaSN, diplomaC, diplomaM, diplomaPY;
-    public String engB, eng1, eng2, eng3, eng4, eng5, eng6, eng7, eng8;
+    public String ugB, ugC, ug1, ug2, ug3, ug4, ug5, ug6, ug7, ug8, ug9, ug10;
+    public String pgB, pgC, pg1, pg2, pg3, pg4, pg5, pg6, pg7, pg8, pg9, pg10;
 
     public LinearLayout backlogDetails;
     public JSONArray backLogArray;
@@ -62,6 +64,15 @@ public class PlacementAcademicDetails extends AppCompatActivity {
 
         backlogDetails = (LinearLayout) findViewById(R.id.backlogs);
 
+        findViewById();
+
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetAcademicDetails getAcademicDetails = new GetAcademicDetails();
+            getAcademicDetails.execute();
+        }
+    }
+
+    public void findViewById() {
         mTenthB = (TextView) findViewById(R.id.tenthB);
         mTenthSN = (TextView) findViewById(R.id.tenthN);
         mTenthC = (TextView) findViewById(R.id.tenthC);
@@ -77,20 +88,27 @@ public class PlacementAcademicDetails extends AppCompatActivity {
         mDiplomaC = (TextView) findViewById(R.id.dipC);
         mDiplomaM = (TextView) findViewById(R.id.dipS);
 
-        mEngB = (TextView) findViewById(R.id.engB);
-        mEng1 = (TextView) findViewById(R.id.eng1);
-        mEng2 = (TextView) findViewById(R.id.eng2);
-        mEng3 = (TextView) findViewById(R.id.eng3);
-        mEng4 = (TextView) findViewById(R.id.eng4);
-        mEng5 = (TextView) findViewById(R.id.eng5);
-        mEng6 = (TextView) findViewById(R.id.eng6);
-        mEng7 = (TextView) findViewById(R.id.eng7);
-        mEng8 = (TextView) findViewById(R.id.eng8);
+        mUgB = (TextView) findViewById(R.id.ugB);
+        mUgC = (TextView) findViewById(R.id.ugC);
+        mUg1 = (TextView) findViewById(R.id.ug1);
+        mUg2 = (TextView) findViewById(R.id.ug2);
+        mUg3 = (TextView) findViewById(R.id.ug3);
+        mUg4 = (TextView) findViewById(R.id.ug4);
+        mUg5 = (TextView) findViewById(R.id.ug5);
+        mUg6 = (TextView) findViewById(R.id.ug6);
+        mUg7 = (TextView) findViewById(R.id.ug7);
+        mUg8 = (TextView) findViewById(R.id.ug8);
+        mUg9 = (TextView) findViewById(R.id.ug9);
+        mUg10 = (TextView) findViewById(R.id.ug10);
 
-        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-            GetAcademicDetails getAcademicDetails = new GetAcademicDetails();
-            getAcademicDetails.execute();
-        }
+        mPgB = (TextView) findViewById(R.id.pgB);
+        mPgC = (TextView) findViewById(R.id.pgC);
+        mPg1 = (TextView) findViewById(R.id.pg1);
+        mPg2 = (TextView) findViewById(R.id.pg2);
+        mPg3 = (TextView) findViewById(R.id.pg3);
+        mPg4 = (TextView) findViewById(R.id.pg4);
+        mPg5 = (TextView) findViewById(R.id.pg5);
+        mPg6 = (TextView) findViewById(R.id.pg6);
     }
 
     public void setTextView() {
@@ -109,16 +127,27 @@ public class PlacementAcademicDetails extends AppCompatActivity {
         mDiplomaC.setText(diplomaC);
         mDiplomaM.setText(diplomaM);
 
-        mEngB.setText(engB);
-        mEng1.setText(eng1);
-        mEng2.setText(eng2);
-        mEng3.setText(eng3);
-        mEng4.setText(eng4);
-        mEng5.setText(eng5);
-        mEng6.setText(eng6);
-        mEng7.setText(eng7);
-        mEng8.setText(eng8);
+        mUgB.setText(ugB);
+        mUgC.setText(ugC);
+        mUg1.setText(ug1);
+        mUg2.setText(ug2);
+        mUg3.setText(ug3);
+        mUg4.setText(ug4);
+        mUg5.setText(ug5);
+        mUg6.setText(ug6);
+        mUg7.setText(ug7);
+        mUg8.setText(ug8);
+        mUg9.setText(ug9);
+        mUg10.setText(ug10);
 
+        mPgB.setText(pgB);
+        mPgC.setText(pgC);
+        mPg1.setText(pg1);
+        mPg2.setText(pg2);
+        mPg3.setText(pg3);
+        mPg4.setText(pg4);
+        mPg5.setText(pg5);
+        mPg6.setText(pg6);
 
     }
 
@@ -132,7 +161,7 @@ public class PlacementAcademicDetails extends AppCompatActivity {
 
                 LinearLayout one = new LinearLayout(getApplicationContext());
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0,0,0,marginInDp);
+                params.setMargins(0, 0, 0, marginInDp);
                 one.setLayoutParams(params);
                 one.setOrientation(LinearLayout.VERTICAL);
 
@@ -387,15 +416,117 @@ public class PlacementAcademicDetails extends AppCompatActivity {
                     JSONArray jsonArray = new JSONArray(jsonResults.toString());
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                    engB = jsonObject.getString("branch");
-                    eng1 = jsonObject.getString("first") + " - " + jsonObject.getString("first_py");
-                    eng2 = jsonObject.getString("second") + " - " + jsonObject.getString("second_py");
-                    eng3 = jsonObject.getString("third") + " - " + jsonObject.getString("third_py");
-                    eng4 = jsonObject.getString("forth") + " - " + jsonObject.getString("forth_py");
-                    eng5 = jsonObject.getString("fifth") + " - " + jsonObject.getString("fifth_py");
-                    eng6 = jsonObject.getString("sixth") + " - " + jsonObject.getString("sixth_py");
-                    eng7 = jsonObject.getString("seventh") + " - " + jsonObject.getString("seventh_py");
-                    eng8 = jsonObject.getString("eighth") + " - " + jsonObject.getString("eighth_py");
+                    ugB = jsonObject.getString("branch");
+                    ugC = jsonObject.getString("course");
+                    ug1 = jsonObject.getString("first") + " - " + jsonObject.getString("first_py");
+                    ug2 = jsonObject.getString("second") + " - " + jsonObject.getString("second_py");
+                    ug3 = jsonObject.getString("third") + " - " + jsonObject.getString("third_py");
+                    ug4 = jsonObject.getString("forth") + " - " + jsonObject.getString("forth_py");
+                    ug5 = jsonObject.getString("fifth") + " - " + jsonObject.getString("fifth_py");
+                    ug6 = jsonObject.getString("sixth") + " - " + jsonObject.getString("sixth_py");
+                    ug7 = jsonObject.getString("seventh") + " - " + jsonObject.getString("seventh_py");
+                    ug8 = jsonObject.getString("eighth") + " - " + jsonObject.getString("eighth_py");
+                    ug9 = jsonObject.getString("ninth") + " - " + jsonObject.getString("ninth_py");
+                    ug10 = jsonObject.getString("tenth") + " - " + jsonObject.getString("tenth_py");
+                    authenticationError = false;
+
+                }
+
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+
+                if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                    GetPgDetails getPgDetails = new GetPgDetails();
+                    getPgDetails.execute();
+                }
+
+            }
+        }
+    }
+
+    private class GetPgDetails extends AsyncTask<Void, Void, Integer> {
+
+
+        protected void onPreExecute() {
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
+            pd.setTitle("Loading...");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                authenticationError = true;
+                errorMessage = "DATA COURPTED";
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.PLACEMENT_PG_DETAILS);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Log.d("POST", "DATA ready to sent");
+
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("type", "get");
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+                Log.d("POST", "DATA SENT");
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                Log.d("return from server", jsonResults.toString());
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+
+                    JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                    if(jsonArray.length()==0){
+                        pgB = "NA";
+                        pgC = "NA";
+                        pg1 = "NA";
+                        pg2 = "NA";
+                        pg3 = "NA";
+                        pg4 = "NA";
+                        pg5 = "NA";
+                        pg6 = "NA";
+                    }
+                    if (jsonArray.length() > 0) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                        pgB = jsonObject.getString("branch");
+                        pgC = jsonObject.getString("course");
+                        pg1 = jsonObject.getString("first") + " - " + jsonObject.getString("first_py");
+                        pg2 = jsonObject.getString("second") + " - " + jsonObject.getString("second_py");
+                        pg3 = jsonObject.getString("third") + " - " + jsonObject.getString("third_py");
+                        pg4 = jsonObject.getString("forth") + " - " + jsonObject.getString("forth_py");
+                        pg5 = jsonObject.getString("fifth") + " - " + jsonObject.getString("fifth_py");
+                        pg6 = jsonObject.getString("sixth") + " - " + jsonObject.getString("sixth_py");
+                    }
                     authenticationError = false;
 
                 }
@@ -426,6 +557,7 @@ public class PlacementAcademicDetails extends AppCompatActivity {
             }
         }
     }
+
 
     private class GetBacklogDetails extends AsyncTask<Void, Void, Integer> {
 
