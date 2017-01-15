@@ -625,7 +625,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Contact Us" />
+                    android:text="Contact Us"
+                    android:onClick="ContactUs"/>
 
             </LinearLayout>
 

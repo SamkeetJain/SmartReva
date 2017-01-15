@@ -82,7 +82,7 @@ public class CounclingMainActivity extends AppCompatActivity{
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withTranslucentStatusBar(true)
-//                .withHeaderBackground(R.drawable.header)
+                .withHeaderBackground(R.drawable.reva_header)
                 /// TODO: 19-Oct-16
                 .withSavedInstance(savedInstanceState)
                 .build();

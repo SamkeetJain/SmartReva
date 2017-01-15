@@ -129,7 +129,8 @@
         <activity android:name=".Mentor.MentorStudentDetailsActivity" />
         <activity android:name=".Mentor.MentorStudentAcademicDetailsActivity" />
         <activity android:name=".Mentor.MentorSendNotificationActivity" />
-        <activity android:name=".Mentor.MentorStudentAcademicDetailsManager"></activity>
+        <activity android:name=".Mentor.MentorStudentAcademicDetailsManager" />
+        <activity android:name=".ProfileActivity"></activity>
     </application>
 
 </manifest>

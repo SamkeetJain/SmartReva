@@ -5,7 +5,7 @@
     android:id="@+id/activity_mentor_send_notification"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.mentor.MentorSendNotificationActivity">
+    tools:context="com.samkeet.smartreva.Mentor.MentorSendNotificationActivity">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/apppppp"
         android:layout_width="match_parent"

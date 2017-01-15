@@ -66,7 +66,11 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Developers(View v) {
-        Intent intent = new Intent(getApplicationContext(), DevelopersActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        startActivity(intent);
+    }
+    public void ContactUs (View v){
+        Intent intent =new Intent(getApplicationContext(),ProfileActivity.class);
         startActivity(intent);
     }
 

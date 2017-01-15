@@ -5,7 +5,7 @@
     android:id="@+id/activity_mentor_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.mentor.MentorMainActivity">
+    tools:context="com.samkeet.smartreva.Mentor.MentorMainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/apppppp"
