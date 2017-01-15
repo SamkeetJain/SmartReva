@@ -1,8 +1,7 @@
-package com.samkeet.smartreva.mentor;
+package com.samkeet.smartreva.Mentor;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.samkeet.smartreva.R;

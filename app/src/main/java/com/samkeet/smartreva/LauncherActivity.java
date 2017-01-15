@@ -23,7 +23,7 @@ import com.samkeet.smartreva.Notification.NotificationMainActivity;
 import com.samkeet.smartreva.Placement.PlacementMainActivity;
 import com.samkeet.smartreva.Results.ResultsMainActivity;
 import com.samkeet.smartreva.Timetable.TimetableMainActivity;
-import com.samkeet.smartreva.mentor.MentorMainActivity;
+import com.samkeet.smartreva.Mentor.MentorMainActivity;
 
 import org.json.JSONObject;
 
