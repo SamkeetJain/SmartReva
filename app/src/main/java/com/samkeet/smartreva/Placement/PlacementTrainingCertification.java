@@ -35,9 +35,6 @@ public class PlacementTrainingCertification extends AppCompatActivity {
 
     public SpotsDialog pd;
     public Context progressDialogContext;
-    /**
-     * to check weather dgfladfgjdflk
-     */
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 

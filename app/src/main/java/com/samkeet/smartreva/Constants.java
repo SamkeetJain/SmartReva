@@ -69,6 +69,7 @@ public class Constants {
         public static String PLACEMENT_PG_DETAILS = "placement_pg.php";
         public static String PLACEMENT_BACK_DETAILS = "placement_backlogs.php";
         public static String PLACEMENT_TANDC = "placement_tandc.php";
+        public static String PLACEMENT_DRIVE_REGISTRATION = "placement_drive_registration.php";
         public static String COURSE_SEM = "course_sem.php";
         public static String COURSE_DEPT = "course_dept.php";
         public static String GET_TIMETABLE= "get_timetable.php";
