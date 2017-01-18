@@ -47,7 +47,7 @@ import java.net.URL;
 
 import dmax.dialog.SpotsDialog;
 
-public class PlacementMainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
+public class PlacementMainActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -82,7 +82,15 @@ public class PlacementMainActivity extends AppCompatActivity implements SwipeRef
         mRecyclerView.setLayoutManager(mLayoutManager);
         progressDialogContext = this;
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
-        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                    GetDrives getEvents = new GetDrives();
+                    getEvents.execute();
+                }
+            }
+        });
 
         final GestureDetector mGestureDetector = new GestureDetector(getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
 
@@ -305,13 +313,5 @@ public class PlacementMainActivity extends AppCompatActivity implements SwipeRef
             }
         }
 
-    }
-
-    @Override
-    public void onRefresh() {
-        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-            GetDrives getEvents = new GetDrives();
-            getEvents.execute();
-        }
     }
 }
