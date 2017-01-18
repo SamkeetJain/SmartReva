@@ -21,6 +21,7 @@ import com.samkeet.smartreva.Notes.NotesMainActivity;
 import com.samkeet.smartreva.Notes.NotesViewNotes;
 import com.samkeet.smartreva.Notification.NotificationMainActivity;
 import com.samkeet.smartreva.Placement.PlacementMainActivity;
+import com.samkeet.smartreva.Placement2.Placement2MainActivity;
 import com.samkeet.smartreva.Results.ResultsMainActivity;
 import com.samkeet.smartreva.Timetable.TimetableMainActivity;
 import com.samkeet.smartreva.Mentor.MentorMainActivity;
@@ -91,7 +92,7 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Placements(View v) {
-        Intent intent = new Intent(getApplicationContext(), PlacementMainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), Placement2MainActivity.class);
         startActivity(intent);
     }
 
