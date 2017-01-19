@@ -214,7 +214,7 @@ public class AlumniMainActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL("http://revacounselling.16mb.com/alumni_firebase.php");
+                java.net.URL url = new URL(Constants.URLs.ALUMNI_BASE+Constants.URLs.ALUMNI_FIREBASE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);

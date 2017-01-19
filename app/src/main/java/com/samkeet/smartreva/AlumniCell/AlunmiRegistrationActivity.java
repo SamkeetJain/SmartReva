@@ -273,7 +273,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.ALUMNI_REG);
+                java.net.URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.ALUMNI_REG);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);

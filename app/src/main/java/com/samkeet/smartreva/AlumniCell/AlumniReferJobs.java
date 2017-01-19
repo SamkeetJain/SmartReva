@@ -129,7 +129,7 @@ public class AlumniReferJobs extends AppCompatActivity {
             try {
 
 
-                URL url = new URL(Constants.URLs.BASE + Constants.URLs.ALUMNI_REFER_JOB);
+                URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.ALUMNI_REFER_JOB);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);

@@ -42,8 +42,10 @@ public class Constants {
 
     public static class URLs {
         public static String BASE = "http://revacounselling.16mb.com/";
+        public static String ALUMNI_BASE = "http://revacounselling.16mb.com/alumni/";
         public static String LOGIN = "login.php";
         public static String ALUMNI_LOGIN = "login_alumni.php";
+        public static String ALUMNI_FIREBASE = "alumni_firebase.php";
         public static String ALUMNI_REG = "alumni_reg.php";
         public static String ALUMNI_REFER_JOB = "alumni_refer_job.php";
         public static String AUTHENTICATION = "authenticaton.php";

@@ -94,7 +94,7 @@ public class AlumniEventManager extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.ALUMNI_EVENTMANAGER);
+                java.net.URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.ALUMNI_EVENTMANAGER);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);

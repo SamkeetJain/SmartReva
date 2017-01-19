@@ -125,7 +125,7 @@ public class AlumniEvents extends AppCompatActivity {
             try {
 
 
-                URL url = new URL(Constants.URLs.BASE + Constants.URLs.ALUMNI_EVENTS);
+                URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.ALUMNI_EVENTS);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
