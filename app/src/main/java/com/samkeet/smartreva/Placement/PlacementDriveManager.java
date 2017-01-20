@@ -32,7 +32,6 @@ public class PlacementDriveManager extends AppCompatActivity {
 
     public String data;
     public TextView mTitle,mDetails,mEligibility;
-    public ImageView mImage;
     public Button mRegister;
     public JSONObject object;
 
@@ -50,7 +49,6 @@ public class PlacementDriveManager extends AppCompatActivity {
         setContentView(R.layout.activity_placement_drive_management);
         progressDialogContext=this;
 
-        mImage= (ImageView) findViewById(R.id.logo);
         mTitle = (TextView) findViewById(R.id.title);
         mDetails = (TextView) findViewById(R.id.details);
         mRegister = (Button) findViewById(R.id.register);
@@ -70,7 +68,6 @@ public class PlacementDriveManager extends AppCompatActivity {
             mTitle.setText(title);
             mDetails.setText(details);
             mEligibility.setText("Eligibility Criteria\nMin Tenth Score = "+el_tenth+"\nMin Twelfth Score = "+el_twelth+"\nMin UG Score = "+el_ug+"\nBacklog history = "+el_nb.substring(0,3)+"\nCurrent Backlog = "+el_cb.substring(0,3));
-            Picasso.with(getApplicationContext()).load(Constants.URLs.BASE+"uploads/"+object.getString("logoFileName")).into(mImage);
 
         } catch (JSONException e) {
             e.printStackTrace();

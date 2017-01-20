@@ -28,7 +28,7 @@
                 android:gravity="left"
                 android:paddingTop="5dp"
                 android:paddingLeft="10dp"
-                android:textSize="22dp" />
+                android:textSize="14dp" />
 
             <View
                 android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:gravity="left"
                     android:paddingLeft="5dp"
                     android:paddingTop="5dp"
-                    android:textSize="14dp" />
+                    android:textSize="10dp" />
 
                 <TextView
                     android:id="@+id/dept"
@@ -60,7 +60,7 @@
                     android:gravity="right"
                     android:paddingRight="5dp"
                     android:paddingTop="5dp"
-                    android:textSize="14dp" />
+                    android:textSize="10dp" />
             </LinearLayout>
 
             <TextView
@@ -68,7 +68,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:paddingTop="5dp" />
+                android:paddingTop="5dp"
+                android:textSize="12sp"/>
 
 
         </LinearLayout>

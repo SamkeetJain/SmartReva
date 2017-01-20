@@ -73,11 +73,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-            <ImageView
-                android:layout_width="match_parent"
-                android:id="@+id/logo"
-                android:scaleType="fitXY"
-                android:layout_height="150dp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_margin="5dp"
