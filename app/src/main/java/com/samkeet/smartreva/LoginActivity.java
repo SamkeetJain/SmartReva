@@ -17,6 +17,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.samkeet.smartreva.AlumniCell.AlumniLoginActivity;
 import com.samkeet.smartreva.AlumniCell.AlumniMainActivity;
+import com.samkeet.smartreva.Placement2.Placement2LoginActivity;
 
 import org.json.JSONObject;
 
@@ -97,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
     public void Placement(View v) {
-        Intent intent = new Intent(getApplicationContext(), AlumniLoginActivity.class);
+        Intent intent = new Intent(getApplicationContext(), Placement2LoginActivity.class);
         startActivity(intent);
         finish();
     }
