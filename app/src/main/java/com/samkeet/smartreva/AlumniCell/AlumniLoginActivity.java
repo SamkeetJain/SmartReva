@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,10 +72,13 @@ public class AlumniLoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 smobileno = mobileno.getText().toString();
                 spassword = password.getText().toString();
-
-                if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-                    Login login = new Login();
-                    login.execute();
+                if (smobileno.length() == 0 || spassword.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Username or Password cannot be null", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                        Login login = new Login();
+                        login.execute();
+                    }
                 }
             }
         });
@@ -84,8 +86,10 @@ public class AlumniLoginActivity extends AppCompatActivity {
     }
 
     public void register(View v) {
-        Intent intent = new Intent(getApplicationContext(), AlunmiRegistrationActivity.class);
-        startActivity(intent);
+        //TODO Release Changes
+        Toast.makeText(getApplicationContext(), "Registration is currently disabled, Please stay tuned to updates", Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(getApplicationContext(), AlunmiRegistrationActivity.class);
+//        startActivity(intent);
     }
 
     public void BackButton(View v) {
@@ -109,14 +113,12 @@ public class AlumniLoginActivity extends AppCompatActivity {
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("UserID", smobileno).appendQueryParameter("Password", spassword);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -128,7 +130,6 @@ public class AlumniLoginActivity extends AppCompatActivity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
@@ -200,14 +201,12 @@ public class AlumniLoginActivity extends AppCompatActivity {
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("firebasetoken", Constants.FireBase.token);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -219,7 +218,6 @@ public class AlumniLoginActivity extends AppCompatActivity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 

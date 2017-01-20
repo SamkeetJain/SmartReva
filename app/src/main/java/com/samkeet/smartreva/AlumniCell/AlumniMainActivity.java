@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -191,7 +190,6 @@ public class AlumniMainActivity extends AppCompatActivity {
         crossfadeDrawerLayout.withCrossfadeListener(new CrossfadeDrawerLayout.CrossfadeListener() {
             @Override
             public void onCrossfade(View containerView, float currentSlidePercentage, int slideOffset) {
-                //Log.e("CrossfadeDrawerLayout", "crossfade: " + currentSlidePercentage + " - " + slideOffset);
             }
         });*/
 
@@ -231,14 +229,12 @@ public class AlumniMainActivity extends AppCompatActivity {
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("firebasetoken", Constants.FireBase.token);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -250,7 +246,6 @@ public class AlumniMainActivity extends AppCompatActivity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
@@ -314,10 +309,7 @@ public class AlumniMainActivity extends AppCompatActivity {
         deleteToken deleteToken=new deleteToken();
         deleteToken.execute();
         Constants.SharedPreferenceData.clearData();
-        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+
     }
 
     private class deleteToken extends AsyncTask<Void, Void, Integer> {

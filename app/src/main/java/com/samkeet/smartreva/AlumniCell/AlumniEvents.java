@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -130,7 +129,6 @@ public class AlumniEvents extends AppCompatActivity {
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
                         .appendQueryParameter("requestType", "get")
@@ -142,7 +140,6 @@ public class AlumniEvents extends AppCompatActivity {
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -154,7 +151,6 @@ public class AlumniEvents extends AppCompatActivity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 

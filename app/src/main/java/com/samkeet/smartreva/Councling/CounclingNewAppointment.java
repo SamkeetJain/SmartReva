@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,7 +96,6 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
             month = "" + monthOfYear;
 
         fullDate = "" + day + "-" + (month) + "-" + year;
-        Log.d("datedate",fullDate);
 
 
         date.setText(fullDate);
@@ -182,8 +180,6 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
-
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
                         .appendQueryParameter("type", "make")
                         .appendQueryParameter("title", mtitle)
@@ -193,7 +189,6 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -205,7 +200,6 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 

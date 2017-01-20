@@ -52,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Toast.makeText(getApplicationContext(),"This app is currently under Beta testing, Stable version will be coming soon",Toast.LENGTH_LONG).show();
+
         FirebaseMessaging.getInstance().subscribeToTopic("global");
         FirebaseInstanceId.getInstance().getToken();
 
@@ -84,9 +86,13 @@ public class LoginActivity extends AppCompatActivity {
                 susn = usn.getText().toString();
                 spassword = password.getText().toString();
 
-                if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-                    Login login = new Login();
-                    login.execute();
+                if (susn.length() == 0 || spassword.length() == 0) {
+                    Toast.makeText(getApplicationContext(),"Username or Password cannot be null",Toast.LENGTH_SHORT).show();
+                } else {
+                    if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                        Login login = new Login();
+                        login.execute();
+                    }
                 }
             }
         });
@@ -119,14 +125,12 @@ public class LoginActivity extends AppCompatActivity {
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("UserID", susn).appendQueryParameter("Password", spassword);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -138,7 +142,6 @@ public class LoginActivity extends AppCompatActivity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
@@ -198,9 +201,11 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), DevelopersActivity.class);
         startActivity(intent);
     }
-    public void ContactUs (View v){
-        Intent intent =new Intent(getApplicationContext(),ContactUsActivity.class);
-        startActivity(intent);
+
+    public void ContactUs(View v) {
+        //TODO Release changes
+//        Intent intent = new Intent(getApplicationContext(), ContactUsActivity.class);
+//        startActivity(intent);
     }
 
     private class UpdateToken extends AsyncTask<Void, Void, Integer> {
@@ -215,19 +220,17 @@ public class LoginActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE+Constants.URLs.FIREBASE);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.FIREBASE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("firebasetoken", Constants.FireBase.token);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -239,7 +242,6 @@ public class LoginActivity extends AppCompatActivity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
@@ -301,8 +303,8 @@ public class LoginActivity extends AppCompatActivity {
         }, 2000);
     }
 
-    public void ForgetPassword(View v){
-        Toast.makeText(getApplicationContext(),"To Reset your Password, Please Contact Administrator",Toast.LENGTH_SHORT).show();
+    public void ForgetPassword(View v) {
+        Toast.makeText(getApplicationContext(), "To Reset your Password, Please Contact Administrator", Toast.LENGTH_SHORT).show();
     }
 
 }

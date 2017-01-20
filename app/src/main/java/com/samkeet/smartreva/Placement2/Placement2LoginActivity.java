@@ -2,12 +2,12 @@ package com.samkeet.smartreva.Placement2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,7 +47,7 @@ public class Placement2LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_placement2_main);
-        progressDialogContext=this;
+        progressDialogContext = this;
 
         FirebaseMessaging.getInstance().subscribeToTopic("global");
         FirebaseInstanceId.getInstance().getToken();
@@ -69,19 +69,29 @@ public class Placement2LoginActivity extends AppCompatActivity {
 
 
     }
-    public void BackButton (View v){finish();}
 
-    public void register(View v){
-        Intent intent=new Intent(getApplicationContext(),PlacementRegistration1.class);
-        startActivity(intent);
+    public void BackButton(View v) {
+        finish();
     }
 
-    public  void placementlogin (View v){
-        ssrn=srn.getText().toString();
-        spassword=password.getText().toString();
+    public void register(View v) {
+        //TODO Release Changes
+        Toast.makeText(getApplicationContext(), "Registration is currently disabled, Please stay tuned to updates", Toast.LENGTH_SHORT).show();
+//        Intent intent=new Intent(getApplicationContext(),PlacementRegistration1.class);
+//        startActivity(intent);
+    }
 
-        Login login=new Login();
-        login.execute();
+    public void placementlogin(View v) {
+        ssrn = srn.getText().toString();
+        spassword = password.getText().toString();
+        if (ssrn.length() == 0 || spassword.length() == 0) {
+            Toast.makeText(getApplicationContext(), "Username or Password cannot be null", Toast.LENGTH_SHORT).show();
+        } else {
+            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                Login login = new Login();
+                login.execute();
+            }
+        }
 
     }
 
@@ -102,14 +112,12 @@ public class Placement2LoginActivity extends AppCompatActivity {
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("UserID", ssrn).appendQueryParameter("Password", spassword);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -121,7 +129,6 @@ public class Placement2LoginActivity extends AppCompatActivity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
@@ -188,19 +195,17 @@ public class Placement2LoginActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE+Constants.URLs.FIREBASE);
+                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.FIREBASE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("firebasetoken", Constants.FireBase.token);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -212,7 +217,6 @@ public class Placement2LoginActivity extends AppCompatActivity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
@@ -249,16 +253,13 @@ public class Placement2LoginActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Placement2MainActivity.class);
                 startActivity(intent);
                 finish();
-
             }
-
         }
     }
 
-    public void ForgetPassword(View v){
-        Toast.makeText(getApplicationContext(),"To Reset your Password, Please Contact Administrator",Toast.LENGTH_SHORT).show();
+    public void ForgetPassword(View v) {
+        Toast.makeText(getApplicationContext(), "To Reset your Password, Please Contact Administrator", Toast.LENGTH_SHORT).show();
     }
-
 
 
 }

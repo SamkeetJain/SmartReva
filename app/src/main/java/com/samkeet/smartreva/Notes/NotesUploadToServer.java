@@ -252,14 +252,12 @@ public class NotesUploadToServer extends Activity {
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -271,7 +269,6 @@ public class NotesUploadToServer extends Activity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
@@ -464,7 +461,7 @@ public class NotesUploadToServer extends Activity {
 
         protected void onPreExecute() {
             pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
-            pd.setTitle("Logging...");
+            pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
         }
@@ -477,7 +474,6 @@ public class NotesUploadToServer extends Activity {
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Log.d("POST", "DATA ready to sent");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
                         .appendQueryParameter("type", "put")
@@ -491,7 +487,6 @@ public class NotesUploadToServer extends Activity {
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
                 writer.close();
-                Log.d("POST", "DATA SENT");
 
                 InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
@@ -503,7 +498,6 @@ public class NotesUploadToServer extends Activity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 

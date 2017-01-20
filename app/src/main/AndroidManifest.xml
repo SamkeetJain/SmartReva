@@ -62,7 +62,6 @@
         <activity
             android:name=".ProfileFacultyActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".Setings.SettingsMainActivity" />
         <activity
             android:name=".Timetable.TimetableMainActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
