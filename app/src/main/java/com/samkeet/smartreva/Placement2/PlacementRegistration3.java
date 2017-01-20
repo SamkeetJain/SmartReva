@@ -14,9 +14,19 @@ public class PlacementRegistration3 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (5 > 8) {
             setContentView(R.layout.activity_placement_reg_btech);
-        }else{
-            setContentView(R.layout.activity_placement_reg_mca);
         }
+//        else {
+//            setContentView(R.layout.activity_placement_reg_mca);
+//        }
+        else{
+            setContentView(R.layout.activity_placement_reg_mtech);
+        }
+//        else{
+//            setContentView(R.layout.activity_placement_reg_deg);
+//        }
+//        else{
+//            setContentView(R.layout.activity_placement_reg_mba_mcom);
+//        }
     }
 
 
