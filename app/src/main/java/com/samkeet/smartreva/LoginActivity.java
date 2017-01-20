@@ -247,8 +247,6 @@ public class LoginActivity extends AppCompatActivity {
                         errorMessage = status;
                     }
                 }
-
-
                 return 1;
 
             } catch (Exception ex) {
