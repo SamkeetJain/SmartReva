@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.samkeet.smartreva.Placement.PlacementMainActivity;
 import com.samkeet.smartreva.R;
@@ -23,10 +22,10 @@ public class Placement2MainActivity extends AppCompatActivity {
         Intent intent=new Intent(getApplicationContext(),PlacementRegistration1.class);
         startActivity(intent);
     }
+
     public  void placementlogin (View v){
         Intent intent=new Intent(getApplicationContext(), PlacementMainActivity.class);
         startActivity(intent);
-
     }
 
 }

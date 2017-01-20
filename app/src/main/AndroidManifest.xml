@@ -134,7 +134,8 @@
         <activity android:name=".Placement2.Placement2MainActivity" />
         <activity android:name=".Placement2.PlacementRegistration1" />
         <activity android:name=".Placement2.PlacementRegistration2" />
-        <activity android:name=".Placement2.PlacementRegistration3"></activity>
+        <activity android:name=".Placement2.PlacementRegistration3" />
+        <activity android:name=".FirstActivity"></activity>
     </application>
 
 </manifest>
