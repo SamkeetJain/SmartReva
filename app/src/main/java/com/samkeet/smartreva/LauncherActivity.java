@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
-import com.samkeet.smartreva.AlumniCell.AlumniLoginActivity;
 import com.samkeet.smartreva.Attendence.AttendenceMainActivity;
 import com.samkeet.smartreva.Councling.CounclingMainActivity;
 import com.samkeet.smartreva.Events.EventsMainActivity;
@@ -20,8 +19,7 @@ import com.samkeet.smartreva.Fees.FeesMainActivity;
 import com.samkeet.smartreva.Notes.NotesMainActivity;
 import com.samkeet.smartreva.Notes.NotesViewNotes;
 import com.samkeet.smartreva.Notification.NotificationMainActivity;
-import com.samkeet.smartreva.Placement.PlacementMainActivity;
-import com.samkeet.smartreva.Placement2.Placement2MainActivity;
+import com.samkeet.smartreva.Placement2.Placement2LoginActivity;
 import com.samkeet.smartreva.Results.ResultsMainActivity;
 import com.samkeet.smartreva.Timetable.TimetableMainActivity;
 import com.samkeet.smartreva.Mentor.MentorMainActivity;
@@ -92,7 +90,7 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Placements(View v) {
-        Intent intent = new Intent(getApplicationContext(), Placement2MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), Placement2LoginActivity.class);
         startActivity(intent);
     }
 

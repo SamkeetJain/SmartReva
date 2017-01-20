@@ -12,7 +12,7 @@ public class PlacementRegistration1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_placement_registration1);
+        setContentView(R.layout.activity_placement2_registration1);
     }
     public void BackButton (View v){finish();}
 

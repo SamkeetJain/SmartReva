@@ -5,7 +5,7 @@
     android:id="@+id/activity_placement_main2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.Placement2.Placement2MainActivity">
+    tools:context="com.samkeet.smartreva.Placement2.Placement2LoginActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/apppppp"

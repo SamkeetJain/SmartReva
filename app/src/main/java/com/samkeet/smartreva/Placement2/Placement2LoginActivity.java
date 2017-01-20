@@ -8,12 +8,12 @@ import android.view.View;
 import com.samkeet.smartreva.Placement.PlacementMainActivity;
 import com.samkeet.smartreva.R;
 
-public class Placement2MainActivity extends AppCompatActivity {
+public class Placement2LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_placement_main2);
+        setContentView(R.layout.activity_placement2_main);
     }
     public void BackButton (View v){finish();}
 
