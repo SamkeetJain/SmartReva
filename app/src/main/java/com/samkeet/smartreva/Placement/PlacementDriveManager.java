@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
