@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.samkeet.smartreva.AlumniCell.AlumniLoginActivity;
 import com.samkeet.smartreva.AlumniCell.AlumniMainActivity;
 import com.samkeet.smartreva.Placement2.Placement2LoginActivity;
+import com.samkeet.smartreva.Placement2.Placement2MainActivity;
 
 import org.json.JSONObject;
 
@@ -43,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
-    public boolean returnType = false;
+    public boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,23 +57,21 @@ public class LoginActivity extends AppCompatActivity {
 
         Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES, MODE_PRIVATE));
 
-        if (getIntent().getStringExtra("TYPE") != null) {
-            if (getIntent().getStringExtra("TYPE").equals("RETURN")) {
-                returnType = true;
-            }
-        }
-
         progressDialogContext = this;
         usn = (EditText) findViewById(R.id.usn);
         password = (EditText) findViewById(R.id.password);
         login_button = (Button) findViewById(R.id.login_button);
 
         if (Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
-            if(Constants.SharedPreferenceData.getIsAlumni().equals("yes")){
+            if (Constants.SharedPreferenceData.getIsAlumni().equals("yes")) {
                 Intent intent = new Intent(getApplicationContext(), AlumniMainActivity.class);
                 startActivity(intent);
                 finish();
-            }else {
+            } else if (Constants.SharedPreferenceData.getIsPlacement().equals("yes")) {
+                Intent intent = new Intent(getApplicationContext(), Placement2MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
                 Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
                 startActivity(intent);
                 finish();
@@ -95,12 +95,11 @@ public class LoginActivity extends AppCompatActivity {
     public void AluminiLogin(View v) {
         Intent intent = new Intent(getApplicationContext(), AlumniLoginActivity.class);
         startActivity(intent);
-        finish();
     }
+
     public void Placement(View v) {
         Intent intent = new Intent(getApplicationContext(), Placement2LoginActivity.class);
         startActivity(intent);
-        finish();
     }
 
     private class Login extends AsyncTask<Void, Void, Integer> {
@@ -183,9 +182,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (Constants.FireBase.token != null) {
                     UpdateToken updateToken = new UpdateToken();
                     updateToken.execute();
-                }else {
+                } else {
                     FirebaseInstanceId.getInstance().getToken();
-                    Intent intent = new Intent(getApplicationContext(),LauncherActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -193,6 +192,15 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    public void Developers(View v) {
+        Intent intent = new Intent(getApplicationContext(), DevelopersActivity.class);
+        startActivity(intent);
+    }
+    public void ContactUs (View v){
+        Intent intent =new Intent(getApplicationContext(),ContactUsActivity.class);
+        startActivity(intent);
     }
 
     private class UpdateToken extends AsyncTask<Void, Void, Integer> {
@@ -207,7 +215,7 @@ public class LoginActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL("http://revacounselling.16mb.com/firebase_reg.php");
+                java.net.URL url = new URL(Constants.URLs.BASE+Constants.URLs.FIREBASE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -264,15 +272,37 @@ public class LoginActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                if (returnType) {
-                    finish();
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+
+                Intent intent = new Intent(getApplicationContext(), LauncherActivity.class);
+                startActivity(intent);
+                finish();
+
             }
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
+
+    public void ForgetPassword(View v){
+        Toast.makeText(getApplicationContext(),"To Reset your Password, Please Contact Administrator",Toast.LENGTH_SHORT).show();
+    }
+
 }

@@ -43,7 +43,9 @@ public class Constants {
     public static class URLs {
         public static String BASE = "http://revacounselling.16mb.com/";
         public static String ALUMNI_BASE = "http://revacounselling.16mb.com/alumni/";
+        public static String PLACEMENT_BASE = "http://revacounselling.16mb.com/placement/";
         public static String LOGIN = "login.php";
+        public static String FIREBASE = "firebase_reg.php";
         public static String ALUMNI_LOGIN = "login_alumni.php";
         public static String ALUMNI_FIREBASE = "alumni_firebase.php";
         public static String ALUMNI_REG = "alumni_reg.php";
@@ -89,6 +91,7 @@ public class Constants {
         public static String USER_ID = "user_ID";
         public static String TOKEN = "token";
         public static String IS_ALUMNI = "alumni";
+        public static String IS_PLACEMENT = "placement";
 
         public static void initSharedPreferenceData(SharedPreferences sharedPreferences1) {
             sharedPreferences = sharedPreferences1;
@@ -115,6 +118,15 @@ public class Constants {
 
         public static String getIsAlumni(){
             return sharedPreferences.getString(IS_ALUMNI, "NOT_AVALIBLE");
+        }
+
+        public static String getIsPlacement(){
+            return sharedPreferences.getString(IS_PLACEMENT,"NOT AVALIBLE");
+        }
+
+        public static void setIsPlacement(String isPlacement) {
+            editor.putString(IS_PLACEMENT,"yes");
+            editor.apply();
         }
 
         public static void setIsAlumni(String isAlumni){

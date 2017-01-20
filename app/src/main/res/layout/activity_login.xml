@@ -68,6 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:onClick="ForgetPassword"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:text="Forgot password?"
             android:paddingTop="5dp"
@@ -77,37 +78,73 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
         android:layout_height="wrap_content">
-
-
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:onClick="AluminiLogin"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:text="Alumni Cell"
-            android:gravity="center"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
 
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:onClick="AluminiLogin"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:text="Alumni Cell"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_margin="8dp"
+                android:background="#808080"
+                android:layout_height="match_parent"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:onClick="Placement"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:text="Placement Cell"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+
+
+
+        </LinearLayout>
         <View
-            android:layout_width="1dp"
-            android:background="#808080"
-            android:layout_height="match_parent"/>
-        <Button
             android:layout_width="match_parent"
-            android:layout_weight="1"
+            android:background="#b1b1b1"
+            android:layout_height="1dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="AluminiLogin"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:text="Placement Cell"
-            android:gravity="center"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal"
+            android:padding="8dp">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:onClick="Developers"
+                android:text="Developers" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Contact Us"
+                android:onClick="ContactUs"/>
+
+        </LinearLayout>
     </LinearLayout>
+
+
+
 
 </RelativeLayout>

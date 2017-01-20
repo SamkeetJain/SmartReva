@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +43,8 @@ public class LauncherActivity extends AppCompatActivity {
     private SpotsDialog pd;
     private Context progressDialogContext;
 
+    public boolean doubleBackToExitPressedOnce = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,11 +68,11 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Developers(View v) {
-        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        Intent intent = new Intent(getApplicationContext(), DevelopersActivity.class);
         startActivity(intent);
     }
     public void ContactUs (View v){
-        Intent intent =new Intent(getApplicationContext(),ProfileActivity.class);
+        Intent intent =new Intent(getApplicationContext(),ContactUsActivity.class);
         startActivity(intent);
     }
 
@@ -232,7 +235,7 @@ public class LauncherActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL("http://revacounselling.16mb.com/firebase_reg.php");
+                java.net.URL url = new URL(Constants.URLs.BASE+Constants.URLs.FIREBASE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -295,6 +298,25 @@ public class LauncherActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 
 }

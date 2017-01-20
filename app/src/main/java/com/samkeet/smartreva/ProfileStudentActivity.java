@@ -3,6 +3,7 @@ package com.samkeet.smartreva;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,61 +29,34 @@ public class ProfileStudentActivity extends AppCompatActivity {
 
     public Button EditProfileStudent, LogoutStudent;
 
-    public boolean isLogedIn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_student);
 
-        if (Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
-            isLogedIn = true;
-        } else {
-            isLogedIn = false;
-        }
-
         EditProfileStudent = (Button) findViewById(R.id.EditProfileStudent_button);
         LogoutStudent = (Button) findViewById(R.id.LogoutStudent_button);
-        if (isLogedIn) {
-            LogoutStudent.setText("Logout");
-        } else {
-            LogoutStudent.setText("Login");
-        }
+        LogoutStudent.setText("Logout");
         LogoutStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isLogedIn) {
-                    Toast.makeText(getApplicationContext(), "Loged Out", Toast.LENGTH_SHORT).show();
-                    deleteToken deleteToken=new deleteToken();
-                    deleteToken.execute();
-                    Constants.SharedPreferenceData.clearData();
-                    isLogedIn = false;
-                    LogoutStudent.setText("Login");
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    intent.putExtra("TYPE", "RETURN");
-                    startActivity(intent);
-                }
+                logout();
             }
         });
     }
 
-
-    public void BackButton(View v) {
+    public void logout(){
+        deleteToken deleteToken=new deleteToken();
+        deleteToken.execute();
+        Constants.SharedPreferenceData.clearData();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
-            isLogedIn = true;
-            LogoutStudent.setText("Logout");
-        } else {
-            isLogedIn = false;
-            LogoutStudent.setText("Login");
-
-        }
+    public void BackButton(View v) {
+        finish();
     }
 
     private class deleteToken extends AsyncTask<Void, Void, Integer> {

@@ -17,38 +17,12 @@ public class AlumniAboutUs extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alumni_about_us);
 
-        deleteToken deleteToken=new deleteToken();
-        deleteToken.execute();
-        Constants.SharedPreferenceData.clearData();
+
     }
 
     public void BackButton(View v){
         finish();
     }
 
-    private class deleteToken extends AsyncTask<Void, Void, Integer> {
-
-
-        protected void onPreExecute() {
-        }
-
-        protected Integer doInBackground(Void... params) {
-            try {
-                FirebaseInstanceId.getInstance().deleteInstanceId();
-                FirebaseInstanceId.getInstance().getToken();
-                return 1;
-
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                FirebaseCrash.report(new Exception(ex));
-            }
-
-            return 1;
-        }
-
-        protected void onPostExecute(Integer result) {
-
-        }
-    }
 
 }

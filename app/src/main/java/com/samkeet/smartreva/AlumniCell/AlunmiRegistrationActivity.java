@@ -344,6 +344,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(),"Your Registration Request is Recieved",Toast.LENGTH_SHORT).show();
+                finish();
             }
 
         }

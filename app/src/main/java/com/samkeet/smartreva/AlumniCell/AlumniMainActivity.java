@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.v4.content.IntentCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mikepenz.crossfadedrawerlayout.view.CrossfadeDrawerLayout;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
@@ -34,6 +38,7 @@ import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.Councling.CounclingAboutUs;
 import com.samkeet.smartreva.Councling.CounclingMyAppointment;
 import com.samkeet.smartreva.Councling.CounclingNewAppointment;
+import com.samkeet.smartreva.LoginActivity;
 import com.samkeet.smartreva.R;
 
 import org.json.JSONObject;
@@ -65,6 +70,8 @@ public class AlumniMainActivity extends AppCompatActivity {
 
     public boolean authenticationError;
     public String errorMessage;
+
+    public boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +114,10 @@ public class AlumniMainActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName("Giving Back").withIcon(R.drawable.ic_giving_back_24dp).withIdentifier(4),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("Contact Us").withIcon(R.drawable.ic_contact_us_24dp).withIdentifier(5),
-                        new PrimaryDrawerItem().withName("About Us").withIcon(R.drawable.ic_about_24dp).withIdentifier(6)
-                        )
+                        new PrimaryDrawerItem().withName("About Us").withIcon(R.drawable.ic_about_24dp).withIdentifier(6),
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem().withName("Logout").withIcon(R.drawable.ic_logout_24dp).withIdentifier(7)
+                )
                 // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -117,24 +126,27 @@ public class AlumniMainActivity extends AppCompatActivity {
 
                         }
                         if (drawerItem.getIdentifier() == 2) {
-                            Intent intent=new Intent(getApplicationContext(),AlumniEvents.class);
+                            Intent intent = new Intent(getApplicationContext(), AlumniEvents.class);
                             startActivity(intent);
                         }
                         if (drawerItem.getIdentifier() == 3) {
-                            Intent intent=new Intent(getApplicationContext(),AlumniReferJobs.class);
+                            Intent intent = new Intent(getApplicationContext(), AlumniReferJobs.class);
                             startActivity(intent);
                         }
                         if (drawerItem.getIdentifier() == 4) {
-                            Intent intent=new Intent(getApplicationContext(),AlumniGivingBack.class);
+                            Intent intent = new Intent(getApplicationContext(), AlumniGivingBack.class);
                             startActivity(intent);
                         }
                         if (drawerItem.getIdentifier() == 5) {
-                            Intent intent=new Intent(getApplicationContext(),AlumniContactUs.class);
+                            Intent intent = new Intent(getApplicationContext(), AlumniContactUs.class);
                             startActivity(intent);
                         }
                         if (drawerItem.getIdentifier() == 6) {
-                            Intent intent=new Intent(getApplicationContext(),AlumniAboutUs.class);
+                            Intent intent = new Intent(getApplicationContext(), AlumniAboutUs.class);
                             startActivity(intent);
+                        }
+                        if (drawerItem.getIdentifier() == 7) {
+                            logout();
                         }
                         return false;
                     }
@@ -214,7 +226,7 @@ public class AlumniMainActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.ALUMNI_BASE+Constants.URLs.ALUMNI_FIREBASE);
+                java.net.URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.ALUMNI_FIREBASE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -278,5 +290,60 @@ public class AlumniMainActivity extends AppCompatActivity {
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
+    }
+
+    public void logout(){
+        deleteToken deleteToken=new deleteToken();
+        deleteToken.execute();
+        Constants.SharedPreferenceData.clearData();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private class deleteToken extends AsyncTask<Void, Void, Integer> {
+
+
+        protected void onPreExecute() {
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                FirebaseInstanceId.getInstance().deleteInstanceId();
+                FirebaseInstanceId.getInstance().getToken();
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                FirebaseCrash.report(new Exception(ex));
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+
+        }
+    }
+
 
 }

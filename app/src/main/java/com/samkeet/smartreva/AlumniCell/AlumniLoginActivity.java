@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.samkeet.smartreva.Constants;
+import com.samkeet.smartreva.Placement2.Placement2MainActivity;
 import com.samkeet.smartreva.R;
 
 import org.json.JSONObject;
@@ -41,24 +44,15 @@ public class AlumniLoginActivity extends AppCompatActivity {
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
-    public boolean returnType = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alumini_login);
 
-
         FirebaseMessaging.getInstance().subscribeToTopic("global");
         FirebaseInstanceId.getInstance().getToken();
 
         Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES, MODE_PRIVATE));
-
-        if (getIntent().getStringExtra("TYPE") != null) {
-            if (getIntent().getStringExtra("TYPE").equals("RETURN")) {
-                returnType = true;
-            }
-        }
 
         progressDialogContext = this;
         mobileno = (EditText) findViewById(R.id.mobileno);
@@ -68,6 +62,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
         if (Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
             if (Constants.SharedPreferenceData.getIsAlumni().equals("yes")) {
                 Intent intent = new Intent(getApplicationContext(), AlumniMainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             }
@@ -178,9 +173,9 @@ public class AlumniLoginActivity extends AppCompatActivity {
                 if (Constants.FireBase.token != null) {
                     UpdateToken updateToken = new UpdateToken();
                     updateToken.execute();
-                }else {
+                } else {
                     FirebaseInstanceId.getInstance().getToken();
-                    Intent intent = new Intent(getApplicationContext(),AlumniMainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), AlumniMainActivity.class);
                     startActivity(intent);
                     finish();
                 }
@@ -200,7 +195,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.ALUMNI_BASE+Constants.URLs.ALUMNI_FIREBASE);
+                java.net.URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.FIREBASE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -241,8 +236,6 @@ public class AlumniLoginActivity extends AppCompatActivity {
                         errorMessage = status;
                     }
                 }
-
-
                 return 1;
 
             } catch (Exception ex) {
@@ -259,18 +252,19 @@ public class AlumniLoginActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                if (returnType) {
-                    finish();
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), AlumniMainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+
+                Intent intent = new Intent(getApplicationContext(), AlumniMainActivity.class);
+                startActivity(intent);
+                finish();
+
             }
 
         }
     }
 
+    public void ForgetPassword(View v) {
+        Toast.makeText(getApplicationContext(), "To Reset your Password, Please Contact Administrator", Toast.LENGTH_SHORT).show();
+    }
 
 }
 
