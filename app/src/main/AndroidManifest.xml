@@ -141,7 +141,6 @@
         <activity
             android:name=".Placement2.PlacementRegistration3"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".FirstActivity" />
         <activity android:name=".Placement2.UpcommingDrivesActivity"></activity>
     </application>
 

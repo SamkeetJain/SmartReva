@@ -69,27 +69,45 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
-            android:text="Forgoten password?"
+            android:text="Forgot password?"
             android:paddingTop="5dp"
             />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"
         android:layout_height="wrap_content">
 
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:onClick="AluminiLogin"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:text="Proceed as Alumni ?"
+            android:text="Alumni Cell"
             android:gravity="center"
             android:layout_gravity="center"/>
+
+        <View
+            android:layout_width="1dp"
+            android:background="#808080"
+            android:layout_height="match_parent"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:onClick="AluminiLogin"
+            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            android:text="Placement Cell"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+
+
     </LinearLayout>
 
 </RelativeLayout>

@@ -96,6 +96,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    public void Placement(View v) {
+        Intent intent = new Intent(getApplicationContext(), AlumniLoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     private class Login extends AsyncTask<Void, Void, Integer> {
 
