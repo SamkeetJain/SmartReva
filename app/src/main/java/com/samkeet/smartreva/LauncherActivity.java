@@ -70,8 +70,9 @@ public class LauncherActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), DevelopersActivity.class);
         startActivity(intent);
     }
-    public void ContactUs (View v){
-        Intent intent =new Intent(getApplicationContext(),ContactUsActivity.class);
+
+    public void ContactUs(View v) {
+        Intent intent = new Intent(getApplicationContext(), ContactUsActivity.class);
         startActivity(intent);
     }
 
@@ -223,15 +224,12 @@ public class LauncherActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
-            pd.setTitle("Loading...");
-            pd.setCancelable(false);
-            pd.show();
+
         }
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE+Constants.URLs.FIREBASE);
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.FIREBASE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -269,8 +267,6 @@ public class LauncherActivity extends AppCompatActivity {
                         errorMessage = status;
                     }
                 }
-
-
                 return 1;
 
             } catch (Exception ex) {
@@ -281,13 +277,9 @@ public class LauncherActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Integer result) {
-            if (pd != null) {
-                pd.dismiss();
-            }
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-
             }
 
         }

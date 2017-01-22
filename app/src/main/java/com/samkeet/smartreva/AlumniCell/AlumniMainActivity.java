@@ -69,8 +69,8 @@ public class AlumniMainActivity extends AppCompatActivity {
 
     public SwipeRefreshLayout swipeRefreshLayout;
 
-    public boolean authenticationError;
-    public String errorMessage;
+    public boolean authenticationError = true;
+    public String errorMessage = "Data courpted";
 
     public boolean doubleBackToExitPressedOnce = false;
 
@@ -111,7 +111,7 @@ public class AlumniMainActivity extends AppCompatActivity {
 //                .withGenerateMiniDrawer(false)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
-                        new PrimaryDrawerItem().withName("Discussions Form").withIcon(R.drawable.ic_disscussion_24dp).withIdentifier(1),
+                        new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home_black_24dp).withIdentifier(1),
                         new PrimaryDrawerItem().withName("Events").withIcon(R.drawable.ic_event_black_24dp).withIdentifier(2),
                         new PrimaryDrawerItem().withName("Job Referral").withIcon(R.drawable.ic_job_24dp).withIdentifier(3),
                         new PrimaryDrawerItem().withName("Giving Back").withIcon(R.drawable.ic_giving_back_24dp).withIdentifier(4),
@@ -222,10 +222,6 @@ public class AlumniMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
-            pd.setTitle("Loading...");
-            pd.setCancelable(false);
-            pd.show();
         }
 
         protected Integer doInBackground(Void... params) {
@@ -280,9 +276,6 @@ public class AlumniMainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Integer result) {
-            if (pd != null) {
-                pd.dismiss();
-            }
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
@@ -311,8 +304,8 @@ public class AlumniMainActivity extends AppCompatActivity {
         }, 2000);
     }
 
-    public void logout(){
-        deleteToken deleteToken=new deleteToken();
+    public void logout() {
+        deleteToken deleteToken = new deleteToken();
         deleteToken.execute();
         Constants.SharedPreferenceData.clearData();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -351,7 +344,7 @@ public class AlumniMainActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -396,6 +389,7 @@ public class AlumniMainActivity extends AppCompatActivity {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         disscussionObject[i] = jsonObject;
                     }
+                    authenticationError = false;
                 }
                 return 1;
 
@@ -414,7 +408,7 @@ public class AlumniMainActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                mAdapter = new AlumniMainAdapter(disscussionObject);
+                mAdapter = new AlumniMainAdapter(disscussionObject, getApplicationContext());
                 mRecyclerView.setAdapter(mAdapter);
             }
         }

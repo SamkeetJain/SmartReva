@@ -115,12 +115,8 @@ public class AlumniLoginActivity extends AppCompatActivity {
     private boolean validateMobilenumber() {
         String mobile = mobileno.getText().toString().trim();
 
-        if (mobile.isEmpty() || !isValidMobilenumber(mobile)) {
+        if (mobile.isEmpty() || !isValidMobilenumber(mobile) || mobile.length() > 15) {
             ip_mobileno.setError("Invalid Phone Number");
-            requestFocus(mobileno);
-            return false;
-        } else if (mobile.length() != 10) {
-            ip_mobileno.setError("Enter 10 Digit Phone Number");
             requestFocus(mobileno);
             return false;
         } else {

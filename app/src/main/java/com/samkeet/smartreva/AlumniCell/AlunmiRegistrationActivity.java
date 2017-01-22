@@ -14,8 +14,10 @@ import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
@@ -61,11 +63,37 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
     public EditText mMobileNo, mPassword, mFullname, mEmail, mSRN, mCompany, mDesg, mLoc;
     public String mobileNo, password, fullname, email, srn, company, desg, loc;
 
+    public String countryCode;
+    public Spinner mCountryCode;
+    public String[] list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alunmi_registration);
         progressDialogContext = this;
+
+        String[] cc = Constants.Country_code;
+        String[] cn = Constants.Country_name;
+        list = new String[cn.length];
+        for(int i=0;i<cn.length;i++){
+            list[i] = cc[i] + "  "+ cn[i];
+        }
+
+        mCountryCode= (Spinner) findViewById(R.id.countrycode);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
+        mCountryCode.setAdapter(adapter2);
+        mCountryCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                countryCode = list[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         mMobileNo = (EditText) findViewById(mobileno);
         mPassword = (EditText) findViewById(R.id.password);

@@ -7,14 +7,14 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher1"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:largeHeap="true"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LauncherActivity" />
         <activity android:name=".LoginActivity">
@@ -75,8 +75,7 @@
             android:name=".Notes.NotesUploadToServer"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Fees.FeesMainActivity" />
-        <activity
-            android:name=".AlumniCell.AlumniLoginActivity" />
+        <activity android:name=".AlumniCell.AlumniLoginActivity" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".Events.EventManager" />
         <activity android:name=".Events.EventsMemberListActivity" />
@@ -142,7 +141,9 @@
             android:name=".Placement2.PlacementRegistration3"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Placement2.UpcommingDrivesActivity" />
-        <activity android:name=".Placement2.Placement2MainActivity"></activity>
+        <activity android:name=".Placement2.Placement2MainActivity" />
+        <activity android:name=".AlumniCell.AlumniDisscussionReplyActivity" />
+        <activity android:name=".AlumniCell.AlumniNewDisscussion"></activity>
     </application>
 
 </manifest>
