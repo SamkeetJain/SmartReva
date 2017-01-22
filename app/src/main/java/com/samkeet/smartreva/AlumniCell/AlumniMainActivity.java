@@ -309,6 +309,10 @@ public class AlumniMainActivity extends AppCompatActivity {
         deleteToken deleteToken=new deleteToken();
         deleteToken.execute();
         Constants.SharedPreferenceData.clearData();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
 
     }
 

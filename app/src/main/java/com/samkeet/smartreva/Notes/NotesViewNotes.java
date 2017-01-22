@@ -295,8 +295,10 @@ public class NotesViewNotes extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                mAdapter = new NotesViewNotesAdapter(mTitle, mMessage);
-                mRecyclerView.setAdapter(mAdapter);
+                if (objects.length>0) {
+                    mAdapter = new NotesViewNotesAdapter(mTitle, mMessage);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
             }
         }
     }

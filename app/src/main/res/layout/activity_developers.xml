@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="8dp"
-                        android:text="Vaibhav Krishna Bhosle"
+                        android:text="Vaibhavkrishna Bhosle"
                         android:textColor="@color/colorAccent"
                         android:textSize="20sp" />
 
@@ -150,7 +150,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:paddingTop="8dp"
-                        android:text="UI/UX Developer"
+                        android:text="UI/UX and SQL Developer"
                         android:textColor="@color/colorAccent"
                         android:textSize="16sp" />
 

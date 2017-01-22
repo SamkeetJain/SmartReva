@@ -5,19 +5,21 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.samkeet.smartreva.AlumniCell.AlumniMainActivity;
 import com.samkeet.smartreva.Constants;
-import com.samkeet.smartreva.Placement.PlacementMainActivity;
 import com.samkeet.smartreva.R;
 
 import org.json.JSONObject;
@@ -30,6 +32,8 @@ import java.net.URL;
 
 import dmax.dialog.SpotsDialog;
 
+import static com.samkeet.smartreva.R.id.mobileno;
+
 public class Placement2LoginActivity extends AppCompatActivity {
 
     public EditText srn, password;
@@ -38,6 +42,10 @@ public class Placement2LoginActivity extends AppCompatActivity {
 
     public SpotsDialog pd;
     public Context progressDialogContext;
+
+    public TextInputLayout ip_srn;
+    public TextInputLayout ip_password;
+
 
     public String token;
     public boolean authenticationError = true;
@@ -58,6 +66,14 @@ public class Placement2LoginActivity extends AppCompatActivity {
         srn = (EditText) findViewById(R.id.srn);
         password = (EditText) findViewById(R.id.password);
 
+        login_button = (Button) findViewById(R.id.login_button);
+
+        ip_srn = (TextInputLayout) findViewById(R.id.input_layout_srn);
+        ip_password = (TextInputLayout) findViewById(R.id.input_layout_password);
+
+        srn.addTextChangedListener(new MyTextWatcher(srn));
+        password.addTextChangedListener(new MyTextWatcher(password));
+
         if (Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
             if (Constants.SharedPreferenceData.getIsPlacement().equals("yes")) {
                 Intent intent = new Intent(getApplicationContext(), Placement2MainActivity.class);
@@ -69,6 +85,7 @@ public class Placement2LoginActivity extends AppCompatActivity {
 
 
     }
+
 
     public void BackButton(View v) {
         finish();
@@ -84,15 +101,81 @@ public class Placement2LoginActivity extends AppCompatActivity {
     public void placementlogin(View v) {
         ssrn = srn.getText().toString();
         spassword = password.getText().toString();
-        if (ssrn.length() == 0 || spassword.length() == 0) {
-            Toast.makeText(getApplicationContext(), "Username or Password cannot be null", Toast.LENGTH_SHORT).show();
-        } else {
-            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-                Login login = new Login();
-                login.execute();
-            }
+
+        appLogin();
+
+    }
+
+    public void appLogin() {
+        if (!validateSrn()) {
+            return;
         }
 
+        if (!validatePassword()) {
+            return;
+        }
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            Login login = new Login();
+            login.execute();
+        }
+
+    }
+    private boolean validateSrn() {
+        if (srn.getText().toString().trim().isEmpty()) {
+            ip_srn.setError("Srn you entered is not valid");
+            requestFocus(srn);
+            return false;
+        } else {
+            ip_srn.setErrorEnabled(false);
+        }
+        return true;
+    }
+    private boolean validatePassword() {
+        if (password.getText().toString().trim().isEmpty()) {
+            ip_password.setError("Password you entered is not valid");
+            requestFocus(password);
+            return false;
+        } else {
+            ip_password.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    public class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.input_layout_usn:
+                    validateSrn();
+                    break;
+
+                case R.id.input_layout_password:
+                    validatePassword();
+                    break;
+            }
+        }
     }
 
     private class Login extends AsyncTask<Void, Void, Integer> {

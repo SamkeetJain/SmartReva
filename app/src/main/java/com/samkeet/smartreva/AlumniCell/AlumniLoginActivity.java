@@ -6,18 +6,24 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.samkeet.smartreva.Constants;
-import com.samkeet.smartreva.Placement2.Placement2MainActivity;
 import com.samkeet.smartreva.R;
 
 import org.json.JSONObject;
@@ -35,6 +41,9 @@ public class AlumniLoginActivity extends AppCompatActivity {
     public EditText mobileno, password;
     public Button login_button;
     public String smobileno, spassword;
+
+    public TextInputLayout ip_mobileno;
+    public TextInputLayout ip_password;
 
     public SpotsDialog pd;
     public Context progressDialogContext;
@@ -58,6 +67,13 @@ public class AlumniLoginActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         login_button = (Button) findViewById(R.id.login_button);
 
+        ip_mobileno = (TextInputLayout) findViewById(R.id.input_layout_mobilemo);
+        ip_password = (TextInputLayout) findViewById(R.id.input_layout_password);
+
+        mobileno.addTextChangedListener(new  MyTextWatcher(mobileno));
+        password.addTextChangedListener(new MyTextWatcher(password));
+
+
         if (Constants.SharedPreferenceData.getIsLoggedIn().equals("yes")) {
             if (Constants.SharedPreferenceData.getIsAlumni().equals("yes")) {
                 Intent intent = new Intent(getApplicationContext(), AlumniMainActivity.class);
@@ -72,24 +88,74 @@ public class AlumniLoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 smobileno = mobileno.getText().toString();
                 spassword = password.getText().toString();
-                if (smobileno.length() == 0 || spassword.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Username or Password cannot be null", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-                        Login login = new Login();
-                        login.execute();
-                    }
-                }
+
+                appLogin();
+
             }
         });
 
     }
 
+    public void appLogin() {
+        if (!validateMobilenumber()) {
+            return;
+        }
+
+        if (!validatePassword()) {
+            return;
+        }
+
+
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            Login login = new Login();
+            login.execute();
+        }
+    }
+
+    private boolean validateMobilenumber() {
+        String mobile = mobileno.getText().toString().trim();
+
+        if (mobile.isEmpty() || !isValidMobilenumber(mobile)) {
+            if (mobile.length() < 11) {
+                ip_mobileno.setError("Enter 10 digit number");
+                requestFocus(mobileno);
+                return false;
+            }else{
+                ip_mobileno.setError("Invalid Phone Number");
+            }
+        }else{
+            ip_mobileno.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validatePassword() {
+        if (password.getText().toString().trim().isEmpty()) {
+            ip_password.setError("Password you entered is not valid");
+            requestFocus(password);
+            return false;
+        } else {
+            ip_password.setErrorEnabled(false);
+        }
+        return true;
+    }
+    private static boolean isValidMobilenumber(String email) {
+        return !TextUtils.isEmpty(email) && Patterns.PHONE.matcher(email).matches();
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+
     public void register(View v) {
         //TODO Release Changes
-        Toast.makeText(getApplicationContext(), "Registration is currently disabled, Please stay tuned to updates", Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(getApplicationContext(), AlunmiRegistrationActivity.class);
-//        startActivity(intent);
+        //Toast.makeText(getApplicationContext(), "Registration is currently disabled, Please stay tuned to updates", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), AlunmiRegistrationActivity.class);
+        startActivity(intent);
     }
 
     public void BackButton(View v) {
@@ -196,7 +262,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.FIREBASE);
+                URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.FIREBASE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -263,6 +329,38 @@ public class AlumniLoginActivity extends AppCompatActivity {
     public void ForgetPassword(View v) {
         Toast.makeText(getApplicationContext(), "To Reset your Password, Please Contact Administrator", Toast.LENGTH_SHORT).show();
     }
+
+    public class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.input_layout_usn:
+                    validateMobilenumber();
+                    break;
+
+                case R.id.input_layout_password:
+                    validatePassword();
+                    break;
+            }
+        }
+    }
+
 
 }
 

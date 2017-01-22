@@ -4,10 +4,17 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Patterns;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -29,6 +36,8 @@ import java.util.ArrayList;
 
 import dmax.dialog.SpotsDialog;
 
+import static com.samkeet.smartreva.R.id.mobileno;
+
 public class AlunmiRegistrationActivity extends AppCompatActivity {
 
     public SpotsDialog pd;
@@ -37,16 +46,20 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
+    public TextInputLayout ip_name, ip_mobile, ip_email, ip_password;
+    public Button send;
+    public String sname, smobileno, semail, spassword;
+
     public String course, dept, year;
     public JSONObject[] objects;
 
     public LabelledSpinner Gcourse, Gdept, Gyog;
     public String[] courseList = {"course"};
-    public String[] years = {"1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000","2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011","2012","2013","2014","2015","2016","2017","2018","2019","2020"};
+    public String[] years = {"1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"};
     public String[] deptList = {"deptCode"};
 
-    public EditText mMobileNo,mPassword,mFullname,mEmail,mSRN,mCompany,mDesg,mLoc;
-    public String mobileNo,password,fullname,email,srn,company,desg,loc;
+    public EditText mMobileNo, mPassword, mFullname, mEmail, mSRN, mCompany, mDesg, mLoc;
+    public String mobileNo, password, fullname, email, srn, company, desg, loc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +67,23 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alunmi_registration);
         progressDialogContext = this;
 
-        mMobileNo = (EditText) findViewById(R.id.mobileno);
+        mMobileNo = (EditText) findViewById(mobileno);
         mPassword = (EditText) findViewById(R.id.password);
         mFullname = (EditText) findViewById(R.id.name);
         mEmail = (EditText) findViewById(R.id.email);
         mSRN = (EditText) findViewById(R.id.srn);
-        mCompany= (EditText) findViewById(R.id.company);
-        mDesg= (EditText) findViewById(R.id.designation);
-        mLoc= (EditText) findViewById(R.id.loc);
+        mCompany = (EditText) findViewById(R.id.company);
+        mDesg = (EditText) findViewById(R.id.designation);
+        mLoc = (EditText) findViewById(R.id.loc);
+
+        ip_email = (TextInputLayout) findViewById(R.id.input_layout_email);
+        ip_password = (TextInputLayout) findViewById(R.id.input_layout_password);
+        ip_name = (TextInputLayout) findViewById(R.id.input_layout_name);
+        ip_mobile = (TextInputLayout) findViewById(R.id.input_layout_mobilemo);
+        send = (Button) findViewById(R.id.send_button);
+
+        mEmail.addTextChangedListener(new MyTextWatcher(mEmail));
+
 
         Gcourse = (LabelledSpinner) findViewById(R.id.Gcourse);
         Gdept = (LabelledSpinner) findViewById(R.id.Gdept);
@@ -73,8 +95,131 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
             GetCourseAndDeptDetails getCourseAndDeptDetails = new GetCourseAndDeptDetails();
             getCourseAndDeptDetails.execute();
         }
+        send.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                appLogin();
+            }
+        }
+        );
 
     }
+
+
+    public void appLogin() {
+        if (!validateMobilenumber()) {
+            return;
+        }
+
+        if (!validatePassword()) {
+            return;
+        }
+        if (!validateName()) {
+            return;
+
+        }
+        if (!validateEmail()) {
+            return;
+        }
+
+    }
+
+    private boolean validateMobilenumber() {
+        String mobile = mMobileNo.getText().toString().trim();
+
+        if (mobile.isEmpty() || !isValidMobilenumber(mobile)) {
+            if (mobile.length() < 11) {
+                ip_mobile.setError("Invalid Phone Number");
+                requestFocus(mMobileNo);
+                return false;
+            } else {
+                ip_mobile.setError("Phone number should be 10 digits");
+            }
+        } else {
+            ip_mobile.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validatePassword() {
+
+        if (mPassword.getText().toString().trim().isEmpty()) {
+            ip_password.setError("Password you entered is not valid");
+            requestFocus(mPassword);
+            return false;
+        } else {
+            ip_password.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateEmail() {
+        email = mEmail.getText().toString().trim();
+        if (email.isEmpty() || !isValidEmail(email)) {
+            ip_email.setError("Email you entered is not valid");
+            requestFocus(mEmail);
+            return false;
+        } else {
+            ip_email.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateName() {
+        if (mFullname.getText().toString().trim().isEmpty()) {
+            ip_name.setError("Name you entered is not valid");
+            requestFocus(mFullname);
+            return false;
+        } else {
+            ip_name.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private static boolean isValidMobilenumber(String mobileNo) {
+        return !TextUtils.isEmpty(mobileNo) && Patterns.PHONE.matcher(mobileNo).matches();
+    }
+
+    private static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    public class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.input_layout_email:
+                    validateEmail();
+                    break;
+
+            }
+        }
+    }
+
 
     public void initSpinner() {
 
@@ -131,9 +276,9 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         fullname = mFullname.getText().toString();
         email = mEmail.getText().toString();
         srn = mSRN.getText().toString();
-        company=mCompany.getText().toString();
-        desg=mDesg.getText().toString();
-        loc=mLoc.getText().toString();
+        company = mCompany.getText().toString();
+        desg = mDesg.getText().toString();
+        loc = mLoc.getText().toString();
 
         Registration registration = new Registration();
         registration.execute();
@@ -276,17 +421,17 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
                 connection.setRequestMethod("POST");
 
                 Uri.Builder _data = new Uri.Builder()
-                        .appendQueryParameter("mobileNo",mobileNo)
-                        .appendQueryParameter("password",password)
-                        .appendQueryParameter("name",fullname)
-                        .appendQueryParameter("email",email)
-                        .appendQueryParameter("srn",srn)
-                        .appendQueryParameter("course",course)
-                        .appendQueryParameter("dept",dept)
-                        .appendQueryParameter("yog",year)
-                        .appendQueryParameter("company",company)
-                        .appendQueryParameter("desg",desg)
-                        .appendQueryParameter("loc",loc);
+                        .appendQueryParameter("mobileNo", mobileNo)
+                        .appendQueryParameter("password", password)
+                        .appendQueryParameter("name", fullname)
+                        .appendQueryParameter("email", email)
+                        .appendQueryParameter("srn", srn)
+                        .appendQueryParameter("course", course)
+                        .appendQueryParameter("dept", dept)
+                        .appendQueryParameter("yog", year)
+                        .appendQueryParameter("company", company)
+                        .appendQueryParameter("desg", desg)
+                        .appendQueryParameter("loc", loc);
 
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
@@ -313,9 +458,9 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
                     String status = jsonObj.getString("status");
                     if (status.equals("success")) {
                         authenticationError = false;
-                    }else {
-                        authenticationError=true;
-                        errorMessage=status;
+                    } else {
+                        authenticationError = true;
+                        errorMessage = status;
                     }
 
                 }
@@ -336,13 +481,12 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getApplicationContext(),"Your Registration Request is Recieved",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Your Registration Request is Recieved", Toast.LENGTH_SHORT).show();
                 finish();
             }
 
         }
     }
-
 
 
 }
