@@ -46,7 +46,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
-    public TextInputLayout ip_name, ip_mobile, ip_email, ip_password,ip_loc;
+    public TextInputLayout ip_name, ip_mobile, ip_email, ip_password, ip_loc;
     public Button send;
     public String sname, smobileno, semail, spassword;
 
@@ -122,7 +122,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         if (!validateEmail()) {
             return;
         }
-        if(!validateLoc()){
+        if (!validateLoc()) {
             return;
         }
 
@@ -143,13 +143,9 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
     private boolean validateMobilenumber() {
         String mobile = mMobileNo.getText().toString().trim();
 
-        if (mobile.isEmpty() || !isValidMobilenumber(mobile)) {
+        if (mobile.isEmpty() || !isValidMobilenumber(mobile) || mobile.length() > 15) {
 
             ip_mobile.setError("Invalid Phone Number");
-            requestFocus(mMobileNo);
-            return false;
-        } else if (mobile.length() != 10) {
-            ip_mobile.setError("Enter 10 Digit Phone Number");
             requestFocus(mMobileNo);
             return false;
         } else {
