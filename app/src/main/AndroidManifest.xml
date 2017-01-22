@@ -76,8 +76,7 @@
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".Fees.FeesMainActivity" />
         <activity
-            android:name=".AlumniCell.AlumniLoginActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:name=".AlumniCell.AlumniLoginActivity" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".Events.EventManager" />
         <activity android:name=".Events.EventsMemberListActivity" />

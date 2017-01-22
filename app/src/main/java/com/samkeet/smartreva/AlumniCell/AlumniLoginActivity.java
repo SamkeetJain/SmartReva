@@ -70,7 +70,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
         ip_mobileno = (TextInputLayout) findViewById(R.id.input_layout_mobilemo);
         ip_password = (TextInputLayout) findViewById(R.id.input_layout_password);
 
-        mobileno.addTextChangedListener(new  MyTextWatcher(mobileno));
+        mobileno.addTextChangedListener(new MyTextWatcher(mobileno));
         password.addTextChangedListener(new MyTextWatcher(password));
 
 
@@ -86,8 +86,8 @@ public class AlumniLoginActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                smobileno = mobileno.getText().toString();
-                spassword = password.getText().toString();
+                smobileno = mobileno.getText().toString().trim();
+                spassword = password.getText().toString().trim();
 
                 appLogin();
 
@@ -116,17 +116,16 @@ public class AlumniLoginActivity extends AppCompatActivity {
         String mobile = mobileno.getText().toString().trim();
 
         if (mobile.isEmpty() || !isValidMobilenumber(mobile)) {
-            if (mobile.length() < 11) {
-                ip_mobileno.setError("Enter 10 digit number");
-                requestFocus(mobileno);
-                return false;
-            }else{
-                ip_mobileno.setError("Invalid Phone Number");
-            }
-        }else{
+            ip_mobileno.setError("Invalid Phone Number");
+            requestFocus(mobileno);
+            return false;
+        } else if (mobile.length() != 10) {
+            ip_mobileno.setError("Enter 10 Digit Phone Number");
+            requestFocus(mobileno);
+            return false;
+        } else {
             ip_mobileno.setErrorEnabled(false);
         }
-
         return true;
     }
 
@@ -140,6 +139,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
         }
         return true;
     }
+
     private static boolean isValidMobilenumber(String email) {
         return !TextUtils.isEmpty(email) && Patterns.PHONE.matcher(email).matches();
     }

@@ -40,7 +40,7 @@ public class Placement2MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_placement2_main2);
+        setContentView(R.layout.activity_placement2_main);
 
         if (Constants.SharedPreferenceData.isSharedPreferenceInited()) {
             Constants.SharedPreferenceData.initSharedPreferenceData(getSharedPreferences(Constants.SharedPreferenceData.SHAREDPREFERENCES, MODE_PRIVATE));

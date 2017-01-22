@@ -32,8 +32,6 @@ import java.net.URL;
 
 import dmax.dialog.SpotsDialog;
 
-import static com.samkeet.smartreva.R.id.mobileno;
-
 public class Placement2LoginActivity extends AppCompatActivity {
 
     public EditText srn, password;
@@ -54,7 +52,7 @@ public class Placement2LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_placement2_main);
+        setContentView(R.layout.activity_placement2_login);
         progressDialogContext = this;
 
         FirebaseMessaging.getInstance().subscribeToTopic("global");
@@ -99,8 +97,8 @@ public class Placement2LoginActivity extends AppCompatActivity {
     }
 
     public void placementlogin(View v) {
-        ssrn = srn.getText().toString();
-        spassword = password.getText().toString();
+        ssrn = srn.getText().toString().trim();
+        spassword = password.getText().toString().trim();
 
         appLogin();
 

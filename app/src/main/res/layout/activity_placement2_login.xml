@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lavender"
-    tools:context="com.samkeet.smartreva.AlumniCell.AlumniLoginActivity">
+    tools:context="com.samkeet.smartreva.Placement2.Placement2LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,10 +17,10 @@
             style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ALUMNI CELL"
+            android:text="Placement CELL"
+            android:textSize="26sp"
             android:textAllCaps="true"
-            android:textColor="@color/colorAccent"
-            android:textSize="26sp" />
+            android:textColor="@color/colorAccent" />
 
     </LinearLayout>
 
@@ -33,20 +33,16 @@
         android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_mobilemo"
+            android:id="@+id/input_layout_srn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/mobileno"
+                android:id="@+id/srn"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:hint="Mobile no."
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLines="1"
-                android:textColor="@color/colorAccent"
+                android:hint="SRN"
+                android:textColor="#ffa332"
                 android:textColorHint="#808080"
                 android:textSize="12sp" />
         </android.support.design.widget.TextInputLayout>
@@ -61,11 +57,9 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:hint="Password"
-                android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:lines="1"
-                android:maxLines="1"
-                android:textColor="@color/colorAccent"
+                android:text=""
+                android:textColor="#ffa332"
                 android:textColorHint="#808080"
                 android:textSize="12sp" />
         </android.support.design.widget.TextInputLayout>
@@ -75,6 +69,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="placementlogin"
             android:text="Login" />
 
         <Button
@@ -86,22 +81,23 @@
             android:onClick="ForgetPassword"
             android:text="Forget Password ?" />
 
+
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:paddingBottom="15dp">
 
         <Button
             android:id="@+id/register"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="register"
-            android:text="Register" />
+            android:text="Register"/>
     </LinearLayout>
 
 </RelativeLayout>

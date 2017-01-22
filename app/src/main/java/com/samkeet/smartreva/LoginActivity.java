@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Toast.makeText(getApplicationContext(), "This app is currently under Beta testing, Stable version will be coming soon", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "This app is currently under Beta testing, Stable version will be coming soon", Toast.LENGTH_LONG).show();
 
         FirebaseMessaging.getInstance().subscribeToTopic("global");
         FirebaseInstanceId.getInstance().getToken();
@@ -97,8 +97,8 @@ public class LoginActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                susn = usn.getText().toString();
-                spassword = password.getText().toString();
+                susn = usn.getText().toString().trim();
+                spassword = password.getText().toString().trim();
 
                 appLoin();
 

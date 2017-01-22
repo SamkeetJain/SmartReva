@@ -46,7 +46,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
-    public TextInputLayout ip_name, ip_mobile, ip_email, ip_password;
+    public TextInputLayout ip_name, ip_mobile, ip_email, ip_password,ip_loc;
     public Button send;
     public String sname, smobileno, semail, spassword;
 
@@ -80,6 +80,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         ip_password = (TextInputLayout) findViewById(R.id.input_layout_password);
         ip_name = (TextInputLayout) findViewById(R.id.input_layout_name);
         ip_mobile = (TextInputLayout) findViewById(R.id.input_layout_mobilemo);
+        ip_loc = (TextInputLayout) findViewById(R.id.input_layout_loc);
         send = (Button) findViewById(R.id.send_button);
 
         mEmail.addTextChangedListener(new MyTextWatcher(mEmail));
@@ -95,13 +96,14 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
             GetCourseAndDeptDetails getCourseAndDeptDetails = new GetCourseAndDeptDetails();
             getCourseAndDeptDetails.execute();
         }
+
         send.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                appLogin();
-            }
-        }
+                                    @Override
+                                    public void onClick(View v) {
+                                        appLogin();
+                                    }
+                                }
         );
 
     }
@@ -111,17 +113,30 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         if (!validateMobilenumber()) {
             return;
         }
-
         if (!validatePassword()) {
             return;
         }
         if (!validateName()) {
             return;
-
         }
         if (!validateEmail()) {
             return;
         }
+        if(!validateLoc()){
+            return;
+        }
+
+        mobileNo = mMobileNo.getText().toString().trim();
+        password = mPassword.getText().toString().trim();
+        fullname = mFullname.getText().toString().trim();
+        email = mEmail.getText().toString().trim();
+        srn = mSRN.getText().toString().trim();
+        company = mCompany.getText().toString().trim();
+        desg = mDesg.getText().toString().trim();
+        loc = mLoc.getText().toString().trim();
+
+        Registration registration = new Registration();
+        registration.execute();
 
     }
 
@@ -129,17 +144,17 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         String mobile = mMobileNo.getText().toString().trim();
 
         if (mobile.isEmpty() || !isValidMobilenumber(mobile)) {
-            if (mobile.length() < 11) {
-                ip_mobile.setError("Invalid Phone Number");
-                requestFocus(mMobileNo);
-                return false;
-            } else {
-                ip_mobile.setError("Phone number should be 10 digits");
-            }
+
+            ip_mobile.setError("Invalid Phone Number");
+            requestFocus(mMobileNo);
+            return false;
+        } else if (mobile.length() != 10) {
+            ip_mobile.setError("Enter 10 Digit Phone Number");
+            requestFocus(mMobileNo);
+            return false;
         } else {
             ip_mobile.setErrorEnabled(false);
         }
-
         return true;
     }
 
@@ -174,6 +189,17 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
             return false;
         } else {
             ip_name.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateLoc() {
+        if (mLoc.getText().toString().trim().isEmpty()) {
+            ip_loc.setError("Location you entered is not valid");
+            requestFocus(mLoc);
+            return false;
+        } else {
+            ip_loc.setErrorEnabled(false);
         }
         return true;
     }
@@ -219,7 +245,6 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
             }
         }
     }
-
 
     public void initSpinner() {
 
@@ -268,20 +293,6 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
 
     public void BackButton(View v) {
         finish();
-    }
-
-    public void Send(View v) {
-        mobileNo = mMobileNo.getText().toString();
-        password = mPassword.getText().toString();
-        fullname = mFullname.getText().toString();
-        email = mEmail.getText().toString();
-        srn = mSRN.getText().toString();
-        company = mCompany.getText().toString();
-        desg = mDesg.getText().toString();
-        loc = mLoc.getText().toString();
-
-        Registration registration = new Registration();
-        registration.execute();
     }
 
     private class GetCourseAndDeptDetails extends AsyncTask<Void, Void, Integer> {
