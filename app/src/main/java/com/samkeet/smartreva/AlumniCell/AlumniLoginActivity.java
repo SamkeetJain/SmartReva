@@ -248,7 +248,29 @@ public class AlumniLoginActivity extends AppCompatActivity {
                 pd.dismiss();
             }
             if (authenticationError) {
-                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_LONG).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(AlumniLoginActivity.this);
+                builder.setTitle("Oops!!! We cannot process your request at this time");
+                builder.setMessage("Response: " + "\n" + errorMessage);
+                String positiveText = "Retry";
+                builder.setPositiveButton(positiveText,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                String negativeText = "Cancel";
+                builder.setNegativeButton(negativeText,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                // display dialog
+                dialog.show();
             } else {
 
                 Constants.SharedPreferenceData.setIsLoggedIn(token);
