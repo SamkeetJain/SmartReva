@@ -1,13 +1,14 @@
 package com.samkeet.smartreva.AlumniCell;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.IntentCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -148,10 +149,32 @@ public class AlumniLoginActivity extends AppCompatActivity {
 
 
     public void register(View v) {
-        //TODO Release Changes
-        //Toast.makeText(getApplicationContext(), "Registration is currently disabled, Please stay tuned to updates", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getApplicationContext(), AlunmiRegistrationActivity.class);
-        startActivity(intent);
+        AlertDialog.Builder builder = new AlertDialog.Builder(AlumniLoginActivity.this);
+        builder.setTitle("Valid Registration only");
+        builder.setMessage("Registration is allowed only if you are a graduate of REVA University or REVA Group of Educational Institutions, Invalid registration will be rejected. As you are part of our global alumni community, we encourage you to stay in touch with us, so that we can provide you with support and benefits for life.");
+        String positiveText = "Agree";
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // positive button logic
+                        Intent intent = new Intent(getApplicationContext(), AlumniRegistrationActivity.class);
+                        startActivity(intent);
+                    }
+                });
+        String negativeText = "Disagree";
+        builder.setNegativeButton(negativeText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // negative button logic
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+
     }
 
     public void BackButton(View v) {

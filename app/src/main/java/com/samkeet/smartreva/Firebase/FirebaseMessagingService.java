@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
 import com.samkeet.smartreva.LauncherActivity;
+import com.samkeet.smartreva.LoginActivity;
 import com.samkeet.smartreva.R;
 
 /**
@@ -25,7 +26,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     private void showNotification(String message) {
 
-        Intent i = new Intent(this,LauncherActivity.class);
+        Intent i = new Intent(this,LoginActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,i,PendingIntent.FLAG_UPDATE_CURRENT);

@@ -100,7 +100,7 @@
         </service>
 
         <activity
-            android:name=".AlumniCell.AlunmiRegistrationActivity"
+            android:name=".AlumniCell.AlumniRegistrationActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name=".AlumniCell.AlumniEvents" />
         <activity android:name=".Placement.PlacementRegInit" />
@@ -143,7 +143,9 @@
         <activity android:name=".Placement2.UpcommingDrivesActivity" />
         <activity android:name=".Placement2.Placement2MainActivity" />
         <activity android:name=".AlumniCell.AlumniDisscussionReplyActivity" />
-        <activity android:name=".AlumniCell.AlumniNewDisscussion"></activity>
+        <activity android:name=".AlumniCell.AlumniNewDisscussion" />
+        <activity android:name=".AlumniCell.AlumniNotificationActivity" />
+        <activity android:name=".AlumniCell.AlumniNotificationManager"></activity>
     </application>
 
 </manifest>

@@ -6,38 +6,27 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v4.content.IntentCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mikepenz.crossfadedrawerlayout.view.CrossfadeDrawerLayout;
-import com.mikepenz.fontawesome_typeface_library.FontAwesome;
-import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.MiniDrawer;
-import com.mikepenz.materialdrawer.interfaces.ICrossfader;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
-import com.mikepenz.materialdrawer.util.DrawerUIUtils;
-import com.mikepenz.materialize.util.UIUtils;
 import com.samkeet.smartreva.Constants;
-import com.samkeet.smartreva.Councling.CounclingAboutUs;
-import com.samkeet.smartreva.Councling.CounclingMyAppointment;
-import com.samkeet.smartreva.Councling.CounclingNewAppointment;
 import com.samkeet.smartreva.LoginActivity;
 import com.samkeet.smartreva.R;
 
@@ -249,40 +238,13 @@ public class AlumniMainActivity extends AppCompatActivity {
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
-
-                authenticationError = jsonResults.toString().contains("Authentication Error");
-
-                if (authenticationError) {
-                    errorMessage = jsonResults.toString();
-                } else {
-                    // Create a JSON object hierarchy from the results
-                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
-                    String status = jsonObj.getString("status");
-                    if (status.equals("success")) {
-
-                    } else {
-                        authenticationError = true;
-                        errorMessage = status;
-                    }
-                }
-
-
                 return 1;
-
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
             return 1;
         }
-
         protected void onPostExecute(Integer result) {
-            if (authenticationError) {
-                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
-            } else {
-
-            }
-
         }
     }
 
@@ -316,8 +278,8 @@ public class AlumniMainActivity extends AppCompatActivity {
 
     }
 
-    public void FAButton(View v){
-        Intent intent=new Intent(getApplicationContext(),AlumniNewDisscussion.class);
+    public void FAButton(View v) {
+        Intent intent = new Intent(getApplicationContext(), AlumniNewDisscussion.class);
         startActivity(intent);
     }
 
@@ -491,7 +453,12 @@ public class AlumniMainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        GetDisscussionSilently getDisscussionSilently=new GetDisscussionSilently();
+        GetDisscussionSilently getDisscussionSilently = new GetDisscussionSilently();
         getDisscussionSilently.execute();
+    }
+
+    public void Notification(View v){
+        Intent intent=new Intent(getApplicationContext(), AlumniNotificationActivity.class);
+        startActivity(intent);
     }
 }

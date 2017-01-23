@@ -36,6 +36,7 @@ public class Constants {
         public static String ALUMNI_DISSCUSSION_STARS = "alumni_disscussion_stars.php";
         public static String ALUMNI_DISSCUSSION_REPLY = "alumni_disscussion_replies.php";
         public static String ALUMNI_REFER_JOB = "alumni_refer_job.php";
+        public static String ALUMNI_NOTIFICATION = "alumni_notification.php";
         public static String AUTHENTICATION = "authenticaton.php";
         public static String GENERALLIST = "get_generalList.php";
         public static String GET_STUDENTLIST = "get_studentList.php";

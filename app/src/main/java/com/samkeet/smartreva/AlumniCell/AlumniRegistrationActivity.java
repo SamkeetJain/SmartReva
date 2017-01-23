@@ -1,10 +1,13 @@
 package com.samkeet.smartreva.AlumniCell;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -40,7 +43,7 @@ import dmax.dialog.SpotsDialog;
 
 import static com.samkeet.smartreva.R.id.mobileno;
 
-public class AlunmiRegistrationActivity extends AppCompatActivity {
+public class AlumniRegistrationActivity extends AppCompatActivity {
 
     public SpotsDialog pd;
     public Context progressDialogContext;
@@ -66,6 +69,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
     public String countryCode;
     public Spinner mCountryCode;
     public String[] list;
+    public String[] cc, cn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +77,8 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_alunmi_registration);
         progressDialogContext = this;
 
-        String[] cc = Constants.Country_code;
-        String[] cn = Constants.Country_name;
+        cc = Constants.Country_code;
+        cn = Constants.Country_name;
         list = new String[cn.length];
         for (int i = 0; i < cn.length; i++) {
             list[i] = cc[i] + "  " + cn[i];
@@ -86,12 +90,12 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         mCountryCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-                countryCode = list[position];
+                countryCode = cc[position];
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                countryCode = cc[0];
             }
         });
 
@@ -488,7 +492,8 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
                         .appendQueryParameter("yog", year)
                         .appendQueryParameter("company", company)
                         .appendQueryParameter("desg", desg)
-                        .appendQueryParameter("loc", loc);
+                        .appendQueryParameter("loc", loc)
+                        .appendQueryParameter("code", countryCode);
 
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
@@ -536,10 +541,52 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
                 pd.dismiss();
             }
             if (authenticationError) {
-                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(AlumniRegistrationActivity.this);
+                builder.setTitle("Oops!!! We cannot process your request at this time");
+                builder.setMessage("Response: " + "\n" + errorMessage);
+                String positiveText = "Retry";
+                builder.setPositiveButton(positiveText,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                String negativeText = "Cancel";
+                builder.setNegativeButton(negativeText,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+
+                AlertDialog dialog = builder.create();
+                // display dialog
+                dialog.show();
             } else {
-                Toast.makeText(getApplicationContext(), "Your Registration Request is Recieved", Toast.LENGTH_SHORT).show();
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(AlumniRegistrationActivity.this);
+                builder.setTitle("Registration Successful");
+                builder.setMessage("Your registration request is received, We will further verify your details. Thank you for being a part of our family");
+                String positiveText = "Login now";
+                builder.setPositiveButton(positiveText,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        });
+
+                builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        finish();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                // display dialog
+                dialog.show();
             }
 
         }

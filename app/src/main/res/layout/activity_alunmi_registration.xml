@@ -6,7 +6,7 @@
     android:id="@+id/activity_alunmi_registration"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.AlumniCell.AlunmiRegistrationActivity">
+    tools:context="com.samkeet.smartreva.AlumniCell.AlumniRegistrationActivity">
 
 
     <android.support.design.widget.AppBarLayout
