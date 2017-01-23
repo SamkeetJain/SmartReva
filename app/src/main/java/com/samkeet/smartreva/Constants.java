@@ -26,6 +26,8 @@ public class Constants {
         public static String ALUMNI_BASE = "http://revacounselling.16mb.com/alumni/";
         public static String PLACEMENT_BASE = "http://revacounselling.16mb.com/placement/";
         public static String LOGIN = "login.php";
+        public static String ALUMNI_ABOUT_US = "about.html";
+        public static String ALUMNI_CONTACT_UD = "contactUs.html";
         public static String FIREBASE = "firebase_reg.php";
         public static String ALUMNI_LOGIN = "login_alumni.php";
         public static String ALUMNI_FIREBASE = "alumni_firebase.php";

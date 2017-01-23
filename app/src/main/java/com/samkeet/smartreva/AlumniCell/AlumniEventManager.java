@@ -122,6 +122,7 @@ public class AlumniEventManager extends AppCompatActivity {
                     errorMessage = jsonResults.toString();
                 } else {
                     results = jsonResults.toString();
+                    authenticationError=false;
                 }
 
 

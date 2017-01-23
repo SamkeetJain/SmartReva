@@ -48,7 +48,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
-    public TextInputLayout ip_name, ip_mobile, ip_email, ip_password, ip_loc;
+    public TextInputLayout ip_name, ip_mobile, ip_email, ip_password, ip_cpassword, ip_loc;
     public Button send;
     public String sname, smobileno, semail, spassword;
 
@@ -60,8 +60,8 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
     public String[] years = {"1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020"};
     public String[] deptList = {"deptCode"};
 
-    public EditText mMobileNo, mPassword, mFullname, mEmail, mSRN, mCompany, mDesg, mLoc;
-    public String mobileNo, password, fullname, email, srn, company, desg, loc;
+    public EditText mMobileNo, mPassword, mCPassword, mFullname, mEmail, mSRN, mCompany, mDesg, mLoc;
+    public String mobileNo, password, cpassword, fullname, email, srn, company, desg, loc;
 
     public String countryCode;
     public Spinner mCountryCode;
@@ -76,11 +76,11 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         String[] cc = Constants.Country_code;
         String[] cn = Constants.Country_name;
         list = new String[cn.length];
-        for(int i=0;i<cn.length;i++){
-            list[i] = cc[i] + "  "+ cn[i];
+        for (int i = 0; i < cn.length; i++) {
+            list[i] = cc[i] + "  " + cn[i];
         }
 
-        mCountryCode= (Spinner) findViewById(R.id.countrycode);
+        mCountryCode = (Spinner) findViewById(R.id.countrycode);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, list);
         mCountryCode.setAdapter(adapter2);
         mCountryCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -97,6 +97,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
 
         mMobileNo = (EditText) findViewById(mobileno);
         mPassword = (EditText) findViewById(R.id.password);
+        mCPassword = (EditText) findViewById(R.id.cpassword);
         mFullname = (EditText) findViewById(R.id.name);
         mEmail = (EditText) findViewById(R.id.email);
         mSRN = (EditText) findViewById(R.id.srn);
@@ -106,6 +107,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
 
         ip_email = (TextInputLayout) findViewById(R.id.input_layout_email);
         ip_password = (TextInputLayout) findViewById(R.id.input_layout_password);
+        ip_cpassword = (TextInputLayout) findViewById(R.id.input_layout_cpassword);
         ip_name = (TextInputLayout) findViewById(R.id.input_layout_name);
         ip_mobile = (TextInputLayout) findViewById(R.id.input_layout_mobilemo);
         ip_loc = (TextInputLayout) findViewById(R.id.input_layout_loc);
@@ -144,6 +146,9 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
         if (!validatePassword()) {
             return;
         }
+        if (!validateCPassword()) {
+            return;
+        }
         if (!validateName()) {
             return;
         }
@@ -156,6 +161,7 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
 
         mobileNo = mMobileNo.getText().toString().trim();
         password = mPassword.getText().toString().trim();
+        cpassword = mCPassword.getText().toString().trim();
         fullname = mFullname.getText().toString().trim();
         email = mEmail.getText().toString().trim();
         srn = mSRN.getText().toString().trim();
@@ -190,6 +196,22 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
             return false;
         } else {
             ip_password.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateCPassword() {
+
+        if (mCPassword.getText().toString().trim().isEmpty()) {
+            ip_cpassword.setError("Password you entered is not valid");
+            requestFocus(mCPassword);
+            return false;
+        } else if (!mCPassword.getText().toString().trim().equals(mPassword.getText().toString().trim())) {
+            ip_cpassword.setError("Password doesnt match");
+            requestFocus(mCPassword);
+            return false;
+        } else {
+            ip_cpassword.setErrorEnabled(false);
         }
         return true;
     }
@@ -522,6 +544,5 @@ public class AlunmiRegistrationActivity extends AppCompatActivity {
 
         }
     }
-
 
 }

@@ -176,6 +176,7 @@ public class AlumniReferJobs extends AppCompatActivity {
                         mJobType[i] = jsonObject.getString("job_type");
                         mDates[i] = jsonObject.getString("ddate");
                     }
+                    authenticationError=false;
                 }
                 return 1;
 

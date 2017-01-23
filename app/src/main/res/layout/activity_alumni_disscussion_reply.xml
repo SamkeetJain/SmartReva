@@ -43,7 +43,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_toRightOf="@+id/back_button"
                     android:paddingLeft="15dp"
-                    android:text="Disscussion Form"
+                    android:text="Discussion Form"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
 

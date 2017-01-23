@@ -97,6 +97,7 @@ public class AlumniMainActivity extends AppCompatActivity {
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withTranslucentStatusBar(true)
+                .withHeaderBackground(R.drawable.reva_header)
 //                .withHeaderBackground(R.drawable.header)
                 /// TODO: 19-Oct-16
                 .withSavedInstance(savedInstanceState)
@@ -315,6 +316,11 @@ public class AlumniMainActivity extends AppCompatActivity {
 
     }
 
+    public void FAButton(View v){
+        Intent intent=new Intent(getApplicationContext(),AlumniNewDisscussion.class);
+        startActivity(intent);
+    }
+
     private class deleteToken extends AsyncTask<Void, Void, Integer> {
 
 
@@ -415,4 +421,77 @@ public class AlumniMainActivity extends AppCompatActivity {
 
     }
 
+    public class GetDisscussionSilently extends AsyncTask<Void, Void, Integer> {
+
+
+        protected void onPreExecute() {
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+
+
+                URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.ALUMNI_DISSCUSSION);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "get");
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+
+                    JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                    disscussionObject = new JSONObject[jsonArray.length()];
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        disscussionObject[i] = jsonObject;
+                    }
+                    authenticationError = false;
+                }
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                mAdapter = new AlumniMainAdapter(disscussionObject, getApplicationContext());
+                mRecyclerView.setAdapter(mAdapter);
+            }
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GetDisscussionSilently getDisscussionSilently=new GetDisscussionSilently();
+        getDisscussionSilently.execute();
+    }
 }

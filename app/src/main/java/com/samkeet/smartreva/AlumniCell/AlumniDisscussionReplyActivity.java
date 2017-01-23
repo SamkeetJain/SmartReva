@@ -92,8 +92,31 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
         mTime.setText(time);
         temp = stars+ " Stars";
         mStars.setText(temp);
-        temp = stars+ " Replies";
+        temp = replies+ " Replies";
         mReplies.setText(temp);
+
+        if (starStatus.equals("YES")) {
+            mImageView.setImageResource(R.drawable.ic_star_10dp);
+        } else {
+            mImageView.setImageResource(R.drawable.ic_star_border_10dp);
+        }
+
+        mImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (starStatus.equals("YES")) {
+                    starStatus = "NO";
+                    mImageView.setImageResource(R.drawable.ic_star_border_10dp);
+                    StarDisscussion starDisscussion = new StarDisscussion();
+                    starDisscussion.execute();
+                } else {
+                    starStatus = "YES";
+                    mImageView.setImageResource(R.drawable.ic_star_10dp);
+                    StarDisscussion starDisscussion = new StarDisscussion();
+                    starDisscussion.execute();
+                }
+            }
+        });
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -162,6 +185,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
                         ddateList[i] = jsonObject.getString("ddate");
                         descList[i] = jsonObject.getString("message");
                     }
+                    authenticationError=false;
                 }
                 return 1;
 
@@ -244,6 +268,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
                         ddateList[i] = jsonObject.getString("ddate");
                         descList[i] = jsonObject.getString("message");
                     }
+                    authenticationError=false;
                 }
                 return 1;
 
@@ -280,5 +305,51 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
         InputMethodManager inputManager =(InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
     }
+
+    public class StarDisscussion extends AsyncTask<Void, Void, Integer> {
+
+        protected void onPreExecute() {
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+
+                URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.ALUMNI_DISSCUSSION_STARS);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type", "put")
+                        .appendQueryParameter("ID", ID);
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+        }
+
+    }
+
 
 }
