@@ -50,6 +50,7 @@
                     android:textSize="20sp" />
 
                 <ImageView
+                    android:id="@+id/send_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -114,18 +115,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:gravity="top"
-            android:id="@+id/desc"
-            android:inputType="textMultiLine"
-            android:textSize="12sp"
-            android:imeOptions="actionDone"
-            android:textColor="#424242"
-            android:hint="Description"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:gravity="top"
+        android:id="@+id/desc"
+        android:inputType="textMultiLine"
+        android:textSize="12sp"
+        android:imeOptions="actionDone"
+        android:textColor="#424242"
+        android:hint="Description"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="129dp" />
 
 
 </RelativeLayout>

@@ -3,10 +3,14 @@ package com.samkeet.smartreva.AlumniCell;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +31,17 @@ import dmax.dialog.SpotsDialog;
 public class AlumniPostJobReferal extends AppCompatActivity {
 
     public LabelledSpinner mJobType;
-    public TextView mCompany,mRole,mDesc;
-    public String company,role,desc,jobType;
-    public String[] types= {"Internship","Full-Time Job"};
+    public EditText mCompany, mRole, mDesc;
+    public String company, role, desc, jobType;
+    public String[] types = {"Internship", "Full-Time Job"};
+
+    public TextInputLayout ip_company;
+    public TextInputLayout ip_role;
 
     public SpotsDialog pd;
     public Context progressDialogContext;
+
+    public ImageView submit;
 
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
@@ -42,39 +51,119 @@ public class AlumniPostJobReferal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alumni_post_job_referal);
 
-        progressDialogContext=this;
+        progressDialogContext = this;
 
-        mJobType= (LabelledSpinner) findViewById(R.id.type);
-        mCompany = (TextView) findViewById(R.id.company);
-        mRole = (TextView) findViewById(R.id.role);
-        mDesc = (TextView) findViewById(R.id.desc);
+        mJobType = (LabelledSpinner) findViewById(R.id.type);
+        mCompany = (EditText) findViewById(R.id.company);
+        mRole = (EditText) findViewById(R.id.role);
+        mDesc = (EditText) findViewById(R.id.desc);
+
+        ip_company = (TextInputLayout) findViewById(R.id.input_layout_company);
+        ip_role = (TextInputLayout) findViewById(R.id.input_layout_role);
 
         mJobType.setItemsArray(types);
         mJobType.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
             @Override
             public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
-                jobType=types[position];
+                jobType = types[position];
             }
 
             @Override
             public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
-                jobType=types[1];
+                jobType = types[1];
             }
         });
 
+        submit = (ImageView) findViewById(R.id.send_button);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+
+                                      @Override
+                                      public void onClick(View v) {
+                                          appLogin();
+                                      }
+                                  }
+        );
+
     }
 
-    public void BackButton(View v){
-        finish();
-    }
-    public void Submit(View v){
-        company=mCompany.getText().toString();
-        role=mRole.getText().toString();
-        desc=mDesc.getText().toString();
+    public void appLogin() {
+        if (!validateCompany()) {
+            return;
+        }
+        if (!validateRole()) {
+            return;
+        }
+        if (!validateDesc()) {
+            return;
+        }
+        company = mCompany.getText().toString();
+        role = mRole.getText().toString();
+        desc = mDesc.getText().toString();
 
-        NewPost newPost=new NewPost();
+        NewPost newPost = new NewPost();
         newPost.execute();
     }
+
+    private boolean validateCompany() {
+        String comp = mCompany.getText().toString().trim();
+
+        if (comp.isEmpty()) {
+            ip_company.setError("Company Name is not valid");
+            requestFocus(mCompany);
+            return false;
+        }
+        if (comp.length() > 33) {
+            ip_company.setError("Company Name should be less than 32 charecters");
+            requestFocus(mCompany);
+            return false;
+        } else {
+            ip_company.setErrorEnabled(false);
+        }
+        return true;
+
+    }
+
+    private boolean validateRole() {
+        String role = mRole.getText().toString().trim();
+        if (role.isEmpty()) {
+            ip_role.setError("Role is not valid");
+            requestFocus(mRole);
+            return false;
+        }
+        if (role.length() > 33) {
+            ip_role.setError("Role should be less than 32 charesters");
+            requestFocus(mRole);
+            return false;
+
+        } else {
+            ip_role.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateDesc() {
+        String desc = mDesc.getText().toString().trim();
+        if (desc.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Decription cant be left empty", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (desc.length() < 1000) {
+            Toast.makeText(getApplicationContext(), "Description must be less than 1000 charesters", Toast.LENGTH_LONG).show();
+        }
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    public void BackButton(View v) {
+        finish();
+    }
+
 
     private class NewPost extends AsyncTask<Void, Void, Integer> {
 
@@ -94,12 +183,12 @@ public class AlumniPostJobReferal extends AppCompatActivity {
                 connection.setRequestMethod("POST");
 
                 Uri.Builder _data = new Uri.Builder()
-                        .appendQueryParameter("token",Constants.SharedPreferenceData.getTOKEN())
-                        .appendQueryParameter("type","new")
-                        .appendQueryParameter("company",company)
-                        .appendQueryParameter("role",role)
-                        .appendQueryParameter("jobType",jobType)
-                        .appendQueryParameter("desc",desc);
+                        .appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("type", "new")
+                        .appendQueryParameter("company", company)
+                        .appendQueryParameter("role", role)
+                        .appendQueryParameter("jobType", jobType)
+                        .appendQueryParameter("desc", desc);
 
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
@@ -126,9 +215,9 @@ public class AlumniPostJobReferal extends AppCompatActivity {
                     String status = jsonObj.getString("status");
                     if (status.equals("success")) {
                         authenticationError = false;
-                    }else {
-                        authenticationError=true;
-                        errorMessage=status;
+                    } else {
+                        authenticationError = true;
+                        errorMessage = status;
                     }
 
                 }
@@ -150,7 +239,7 @@ public class AlumniPostJobReferal extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
                 finish();
             } else {
-                Toast.makeText(getApplicationContext(),"Your Referal Request is Recieved",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Your Referal Request is Recieved", Toast.LENGTH_SHORT).show();
                 finish();
             }
 
