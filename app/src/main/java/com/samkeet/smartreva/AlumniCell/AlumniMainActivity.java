@@ -87,7 +87,7 @@ public class AlumniMainActivity extends AppCompatActivity {
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withTranslucentStatusBar(true)
-                .withHeaderBackground(R.drawable.reva_logo_2)
+                .withHeaderBackground(R.drawable.reva_headerp)
 //                .withHeaderBackground(R.drawable.header)
                 /// TODO: 19-Oct-16
                 .withSavedInstance(savedInstanceState)
