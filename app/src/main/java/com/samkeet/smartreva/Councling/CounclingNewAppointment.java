@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -127,40 +128,74 @@ public class CounclingNewAppointment extends AppCompatActivity implements TimePi
 //        mTime=""+result.charAt(11)+result.charAt(12)+":00";
         usn = Constants.SharedPreferenceData.getUserId();
 
-        if (validation()) {
-            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-                MakeAppointment makeAppointment = new MakeAppointment();
-                makeAppointment.execute();
-            }
-        }
-
+        validation();
     }
 
-    public boolean validation() {
+    public void validation() {
+        if (!validateTitle()) {
+            return;
+        }
+        if (!validateSummary()) {
+            return;
+        }
+        if (!validateTime()) {
+            return;
+        }
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            MakeAppointment makeAppointment = new MakeAppointment();
+            makeAppointment.execute();
+        }
+    }
+
+    private boolean validateTitle() {
+
         if (Constants.Methods.checkForSpecial(mtitle)) {
             Toast.makeText(getApplicationContext(), "Title should not include special charecters", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        if (!((mtitle.length() <= 40) && (mtitle.length() >= 1))) {
+        if (mtitle.length() <= 40) {
             Toast.makeText(getApplicationContext(), "Title should be less than 40 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (mTime.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Invalid Time",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateSummary() {
         if (Constants.Methods.checkForSpecial(mSummary)) {
             Toast.makeText(getApplicationContext(), "Message should not include special charecters", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        if (!((mSummary.length() <= 1000) && (mSummary.length() >= 1))) {
+        if (mSummary.length() <= 1000) {
             Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
+        if (mSummary.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Invalid Summary",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validateTime() {
         if (Constants.Methods.checkForSpecial(mTime)) {
             Toast.makeText(getApplicationContext(), "Time should not include special charecters", Toast.LENGTH_SHORT).show();
+            return false;
         }
-        if (!((mTime.length() <= 20) && (mTime.length() >= 1))) {
+        if (mTime.length() <= 20) {
             Toast.makeText(getApplicationContext(), "Time should be less than 20 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-
+        if (mTime.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Invalid Time",Toast.LENGTH_LONG).show();
+            return false;
+        }
         return true;
     }
+
 
     public class MakeAppointment extends AsyncTask<Void, Void, Integer> {
 

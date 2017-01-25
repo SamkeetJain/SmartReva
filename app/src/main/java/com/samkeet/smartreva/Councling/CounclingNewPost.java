@@ -5,10 +5,13 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.samkeet.smartreva.Constants;
@@ -36,6 +39,8 @@ public class CounclingNewPost extends AppCompatActivity {
     public String title, desc, datetext;
     public String responce;
 
+    public TextInputLayout ip_title;
+
     public boolean authenticationError;
     public String errorMessage;
 
@@ -46,6 +51,7 @@ public class CounclingNewPost extends AppCompatActivity {
 
         progressDialogContext = this;
 
+        ip_title = (TextInputLayout) findViewById(R.id.text_input_layout_title);
         mTitle = (EditText) findViewById(R.id.title);
         mDesc = (EditText) findViewById(R.id.message);
 
@@ -57,49 +63,89 @@ public class CounclingNewPost extends AppCompatActivity {
     }
 
     public void Send(View v) {
-        desc = mDesc.getText().toString();
-        title = mTitle.getText().toString();
+        desc = mDesc.getText().toString().trim();
+        title = mTitle.getText().toString().trim();
         datetext = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        datetext = datetext.trim();
 
-        if (validation()) {
-            if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-                SendNewPost sendNewPost = new SendNewPost();
-                sendNewPost.execute();
-            }
+        validation();
+
+    }
+
+    public void validation(){
+        if (!validateDatetext()){
+            return;
+        }
+        if (!validateTitle()){
+            return;
+        }
+        if (!validationDesc()){
+            return;
+        }
+
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            SendNewPost sendNewPost = new SendNewPost();
+            sendNewPost.execute();
         }
     }
 
-    public boolean validation() {
-        datetext = datetext.trim();
-        desc = desc.trim();
-        title = title.trim();
-
-        if (Constants.Methods.checkForSpecial(datetext)) {
-            Toast.makeText(getApplicationContext(), "Please remove special charecters in date field", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+    public boolean validationDesc() {
 
         if (Constants.Methods.checkForSpecial(desc)) {
             Toast.makeText(getApplicationContext(), "Please remove special charecters in description field", Toast.LENGTH_SHORT).show();
             return false;
         }
-
-
-        if (!((datetext.length() <= 20) && (datetext.length() >= 1))) {
-            Toast.makeText(getApplicationContext(), "Title should be less than 20 charecters", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (!((desc.length() <= 1000) && (desc.length() >= 1))) {
+        if (desc.length() <= 1000) {
             Toast.makeText(getApplicationContext(), "Message should be less than 1000 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (!((title.length() <= 60) && (title.length() >= 1))) {
-            Toast.makeText(getApplicationContext(), "Message should be less than 60 charecters", Toast.LENGTH_SHORT).show();
+        if (desc.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Invalid Message",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+    private boolean validateDatetext(){
+        if (datetext.length() <= 20) {
+            Toast.makeText(getApplicationContext(), "Title should be less than 20 charecters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (datetext.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Invalid date",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(datetext)) {
+            Toast.makeText(getApplicationContext(), "Please remove special charecters in date field", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
+     private boolean validateTitle(){
+         if (title.length() <= 60) {
+             ip_title.setError("Title Should be less than 60 charecters");
+             requestFocus(mTitle);
+             return false;
+         }if (title.isEmpty()){
+             ip_title.setError("Incalid Title");
+             requestFocus(mTitle);
+             return false;
+         }
+         if (Constants.Methods.checkForSpecial(title)) {
+             ip_title.setError("Remove Special charecters");
+             requestFocus(mTitle);
+             return false;
+         }else{
+             ip_title.setErrorEnabled(false);
+         }
+         return true;
+     }
 
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
     public class SendNewPost extends AsyncTask<Void, Void, Integer> {
 
 

@@ -41,6 +41,7 @@ import java.util.ArrayList;
 
 import dmax.dialog.SpotsDialog;
 
+import static com.samkeet.smartreva.R.id.full_name;
 import static com.samkeet.smartreva.R.id.mobileno;
 
 public class AlumniRegistrationActivity extends AppCompatActivity {
@@ -179,14 +180,18 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
     }
 
     private boolean validateMobilenumber() {
-        String mobile = mMobileNo.getText().toString().trim();
 
-        if (mobile.isEmpty() || !isValidMobilenumber(mobile) || mobile.length() > 15) {
+        if (mobileNo.isEmpty() || !isValidMobilenumber(mobileNo) || mobileNo.length() > 15) {
 
             ip_mobile.setError("Invalid Phone Number");
             requestFocus(mMobileNo);
             return false;
-        } else {
+        }if (Constants.Methods.checkForSpecial(mobileNo)){
+            ip_mobile.setError("Remove Special Charecters");
+            requestFocus(mMobileNo);
+            return false;
+        }
+        else {
             ip_mobile.setErrorEnabled(false);
         }
         return true;
@@ -194,11 +199,16 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
 
     private boolean validatePassword() {
 
-        if (mPassword.getText().toString().trim().isEmpty()) {
+        if (password.isEmpty()) {
             ip_password.setError("Password you entered is not valid");
             requestFocus(mPassword);
             return false;
-        } else {
+        }if (Constants.Methods.checkForSpecial(password)){
+            ip_password.setError("Remove Special Charecters");
+            requestFocus(mPassword);
+            return false;
+        }
+        else {
             ip_password.setErrorEnabled(false);
         }
         return true;
@@ -206,49 +216,68 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
 
     private boolean validateCPassword() {
 
-        if (mCPassword.getText().toString().trim().isEmpty()) {
+        if (cpassword.isEmpty()) {
             ip_cpassword.setError("Password you entered is not valid");
             requestFocus(mCPassword);
             return false;
-        } else if (!mCPassword.getText().toString().trim().equals(mPassword.getText().toString().trim())) {
+        } else if (!cpassword.equals(password)) {
             ip_cpassword.setError("Password doesnt match");
             requestFocus(mCPassword);
             return false;
-        } else {
+        }if (Constants.Methods.checkForSpecial(cpassword)){
+            ip_cpassword.setError("Remove Special Charecters");
+            requestFocus(mCPassword);
+            return false;
+        }
+        else {
             ip_cpassword.setErrorEnabled(false);
         }
         return true;
     }
 
     private boolean validateEmail() {
-        email = mEmail.getText().toString().trim();
         if (email.isEmpty() || !isValidEmail(email)) {
             ip_email.setError("Email you entered is not valid");
             requestFocus(mEmail);
             return false;
-        } else {
+        }if (Constants.Methods.checkForSpecial(email)){
+            ip_email.setError("Remove Special Charecters");
+            requestFocus(mEmail);
+            return false;
+        }
+        else {
             ip_email.setErrorEnabled(false);
         }
         return true;
     }
 
     private boolean validateName() {
-        if (mFullname.getText().toString().trim().isEmpty()) {
+        if (fullname.isEmpty()) {
             ip_name.setError("Name you entered is not valid");
             requestFocus(mFullname);
             return false;
-        } else {
+        }if (Constants.Methods.checkForSpecial(fullname)){
+            ip_name.setError("Remove Special Charecters");
+            requestFocus(mFullname);
+            return false;
+        }
+        else {
             ip_name.setErrorEnabled(false);
         }
         return true;
     }
 
     private boolean validateLoc() {
-        if (mLoc.getText().toString().trim().isEmpty()) {
+        if (loc.isEmpty()) {
             ip_loc.setError("Location you entered is not valid");
             requestFocus(mLoc);
             return false;
-        } else {
+        }if (Constants.Methods.checkForSpecial(loc)){
+            ip_loc.setError("Remove Special Charecters");
+            requestFocus(mLoc);
+            return false;
+        }
+        else {
             ip_loc.setErrorEnabled(false);
         }
         return true;

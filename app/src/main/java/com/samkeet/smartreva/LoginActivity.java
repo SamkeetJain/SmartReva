@@ -97,8 +97,6 @@ public class LoginActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                susn = usn.getText().toString().trim();
-                spassword = password.getText().toString().trim();
 
                 appLoin();
 
@@ -123,8 +121,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validateName() {
-        if (usn.getText().toString().trim().isEmpty()) {
+        susn = usn.getText().toString().trim();
+        if (susn.isEmpty()) {
             ip_usn.setError("SRN you entered is not valid.");
+            requestFocus(usn);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(susn)) {
+            ip_usn.setError("Remove special carecters");
             requestFocus(usn);
             return false;
         } else {
@@ -135,10 +139,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validatePassword() {
-        if (password.getText().toString().trim().isEmpty()) {
+        spassword = password.getText().toString().trim();
+        if (spassword.isEmpty()) {
             ip_password.setError("Password you entered is not valid");
             requestFocus(password);
             return false;
+        }
+        if (Constants.Methods.checkForSpecial(spassword)) {
+            ip_password.setError("Remove Special charecters");
         } else {
             ip_password.setErrorEnabled(false);
         }

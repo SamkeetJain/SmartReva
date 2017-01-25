@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class AlumniNewDisscussion extends AppCompatActivity {
 
     public EditText mTitle, mMessage;
     public String title, message;
-    public TextInputLayout ip;
+    public TextInputLayout ip_title;
 
     public SpotsDialog pd;
     public Context progressDialogContext;
@@ -45,7 +46,7 @@ public class AlumniNewDisscussion extends AppCompatActivity {
 
         mTitle = (EditText) findViewById(R.id.title);
         mMessage = (EditText) findViewById(R.id.message);
-        ip = (TextInputLayout) findViewById(R.id.titleInputLayout);
+        ip_title = (TextInputLayout) findViewById(R.id.titleInputLayout);
     }
 
     public void Submit(View v) {
@@ -56,14 +57,50 @@ public class AlumniNewDisscussion extends AppCompatActivity {
     }
 
     public void post() {
-        if (title.isEmpty()) {
-            ip.setError("Enter a title");
+        if (!validateTitle()) {
             return;
-        } else {
-            ip.setErrorEnabled(false);
+        }
+        if(!validateMessage()){
+            return;
         }
         NewPost newPost = new NewPost();
         newPost.execute();
+    }
+
+    private boolean validateTitle(){
+        if (title.isEmpty()){
+            ip_title.setError("Invaid Title");
+            requestFocus(mTitle);
+            return false;
+
+        }if (Constants.Methods.checkForSpecial(title)){
+            ip_title.setError("Remove Special charecters");
+            requestFocus(mTitle);
+            return false;
+        }
+        else{
+            ip_title.setErrorEnabled(false);
+        }
+        return true;
+    }
+
+    private boolean validateMessage(){
+        if (message.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Invalid Message",Toast.LENGTH_LONG).show();
+            requestFocus(mMessage);
+            return false;
+        }if (Constants.Methods.checkForSpecial(message)){
+            Toast.makeText(getApplicationContext(),"Remove Special Charecters fron message",Toast.LENGTH_LONG).show();
+            requestFocus(mMessage);
+            return false;
+        }
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
     }
 
     public class NewPost extends AsyncTask<Void, Void, Integer> {
