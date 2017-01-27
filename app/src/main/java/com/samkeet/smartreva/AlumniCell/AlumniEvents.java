@@ -114,7 +114,7 @@ public class AlumniEvents extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -192,8 +192,10 @@ public class AlumniEvents extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                mAdapter = new AlumniEventAdapter(mTypes, mDesc, mDates, mNames);
-                mRecyclerView.setAdapter(mAdapter);
+                if (mTypes.length > 0) {
+                    mAdapter = new AlumniEventAdapter(mTypes, mDesc, mDates, mNames);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
             }
         }
 

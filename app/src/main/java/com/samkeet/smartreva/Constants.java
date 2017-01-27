@@ -23,7 +23,7 @@ public class Constants {
 
     public static class URLs {
         public static String BASE = "http://revacounselling.16mb.com/";
-        public static String ALUMNI_BASE = "http://revacounselling.16mb.com/alumni/";
+        public static String ALUMNI_BASE = "http://www.reva.ac.in/smartreva/alumni/";
         public static String PLACEMENT_BASE = "http://revacounselling.16mb.com/placement/";
         public static String LOGIN = "login.php";
         public static String ALUMNI_ABOUT_US = "about.html";

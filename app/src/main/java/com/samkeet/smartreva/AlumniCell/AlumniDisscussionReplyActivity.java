@@ -34,7 +34,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
     public JSONObject jsonObject;
     public String data;
     public TextView mName, mloc, mTitle, mDesc, mTime, mStars, mReplies;
-    public String name, loc, title, desc, time, stars, replies,starStatus,ID;
+    public String name, loc, title, desc, time, stars, replies, starStatus, ID;
     public ImageView mImageView;
 
     private RecyclerView mRecyclerView;
@@ -48,7 +48,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
     public String errorMessage = "Data Corupted";
 
     public JSONObject[] object;
-    public String[] nameList,ddateList,descList;
+    public String[] nameList, ddateList, descList;
 
     public EditText mMessage;
     public String message;
@@ -68,7 +68,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
             time = jsonObject.getString("ddate");
             stars = jsonObject.getString("starscount");
             replies = jsonObject.getString("repliescount");
-            starStatus=jsonObject.getString("starStatus");
+            starStatus = jsonObject.getString("starStatus");
             ID = jsonObject.getString("Id");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -90,9 +90,9 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
         mTitle.setText(title);
         mDesc.setText(desc);
         mTime.setText(time);
-        temp = stars+ " Stars";
+        temp = stars + " Stars";
         mStars.setText(temp);
-        temp = replies+ " Replies";
+        temp = replies + " Replies";
         mReplies.setText(temp);
 
         if (starStatus.equals("YES")) {
@@ -124,7 +124,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         progressDialogContext = this;
 
-        GetReplyies getReplyies=new GetReplyies();
+        GetReplyies getReplyies = new GetReplyies();
         getReplyies.execute();
     }
 
@@ -132,7 +132,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -185,7 +185,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
                         ddateList[i] = jsonObject.getString("ddate");
                         descList[i] = jsonObject.getString("message");
                     }
-                    authenticationError=false;
+                    authenticationError = false;
                 }
                 return 1;
 
@@ -214,7 +214,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -233,7 +233,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
                         .appendQueryParameter("type", "put")
                         .appendQueryParameter("dID", ID)
-                        .appendQueryParameter("message",message);
+                        .appendQueryParameter("message", message);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -268,7 +268,7 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
                         ddateList[i] = jsonObject.getString("ddate");
                         descList[i] = jsonObject.getString("message");
                     }
-                    authenticationError=false;
+                    authenticationError = false;
                 }
                 return 1;
 
@@ -286,24 +286,34 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                mAdapter = new AlumniDisscussionReplyAdapter(nameList, ddateList, descList);
-                mRecyclerView.setAdapter(mAdapter);
+                if (nameList.length > 0) {
+                    mAdapter = new AlumniDisscussionReplyAdapter(nameList, ddateList, descList);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
             }
         }
 
     }
 
-    public void BackButton(View v){
+    public void BackButton(View v) {
         finish();
     }
 
-    public void Send(View v){
-        message=mMessage.getText().toString().trim();
+    public void Send(View v) {
+        message = mMessage.getText().toString().trim();
+        if (message.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Reply is not valid", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (message.length() > 99) {
+            Toast.makeText(getApplicationContext(), "Reply cannot be more than 99 characters", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mMessage.setText("");
         PutReply putReply = new PutReply();
         putReply.execute();
-        InputMethodManager inputManager =(InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+        InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     public class StarDisscussion extends AsyncTask<Void, Void, Integer> {

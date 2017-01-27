@@ -54,7 +54,6 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
 
     public TextInputLayout ip_name, ip_mobile, ip_email, ip_password, ip_cpassword, ip_loc;
     public Button send;
-    public String sname, smobileno, semail, spassword;
 
     public String course, dept, year;
     public JSONObject[] objects;
@@ -145,6 +144,15 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
 
 
     public void appLogin() {
+        mobileNo = mMobileNo.getText().toString().trim();
+        password = mPassword.getText().toString().trim();
+        cpassword = mCPassword.getText().toString().trim();
+        fullname = mFullname.getText().toString().trim();
+        email = mEmail.getText().toString().trim();
+        srn = mSRN.getText().toString().trim();
+        company = mCompany.getText().toString().trim();
+        desg = mDesg.getText().toString().trim();
+        loc = mLoc.getText().toString().trim();
         if (!validateMobilenumber()) {
             return;
         }
@@ -164,15 +172,6 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        mobileNo = mMobileNo.getText().toString().trim();
-        password = mPassword.getText().toString().trim();
-        cpassword = mCPassword.getText().toString().trim();
-        fullname = mFullname.getText().toString().trim();
-        email = mEmail.getText().toString().trim();
-        srn = mSRN.getText().toString().trim();
-        company = mCompany.getText().toString().trim();
-        desg = mDesg.getText().toString().trim();
-        loc = mLoc.getText().toString().trim();
 
         Registration registration = new Registration();
         registration.execute();
@@ -181,21 +180,22 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
 
     private boolean validateMobilenumber() {
 
-        if (mobileNo.isEmpty() || !isValidMobilenumber(mobileNo) || mobileNo.length() > 15) {
+        if (mobileNo.isEmpty() || !isValidMobilenumber(mobileNo) || mobileNo.length() < 5 || mobileNo.length() > 15) {
 
             ip_mobile.setError("Invalid Phone Number");
             requestFocus(mMobileNo);
             return false;
-        }if (Constants.Methods.checkForSpecial(mobileNo)){
+        }
+        if (Constants.Methods.checkForSpecial(mobileNo)) {
             ip_mobile.setError("Remove Special Charecters");
             requestFocus(mMobileNo);
             return false;
-        }
-        else {
+        } else {
             ip_mobile.setErrorEnabled(false);
         }
         return true;
     }
+
 
     private boolean validatePassword() {
 
@@ -203,12 +203,12 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
             ip_password.setError("Password you entered is not valid");
             requestFocus(mPassword);
             return false;
-        }if (Constants.Methods.checkForSpecial(password)){
+        }
+        if (Constants.Methods.checkForSpecial(password)) {
             ip_password.setError("Remove Special Charecters");
             requestFocus(mPassword);
             return false;
-        }
-        else {
+        } else {
             ip_password.setErrorEnabled(false);
         }
         return true;
@@ -224,12 +224,12 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
             ip_cpassword.setError("Password doesnt match");
             requestFocus(mCPassword);
             return false;
-        }if (Constants.Methods.checkForSpecial(cpassword)){
+        }
+        if (Constants.Methods.checkForSpecial(cpassword)) {
             ip_cpassword.setError("Remove Special Charecters");
             requestFocus(mCPassword);
             return false;
-        }
-        else {
+        } else {
             ip_cpassword.setErrorEnabled(false);
         }
         return true;
@@ -240,12 +240,12 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
             ip_email.setError("Email you entered is not valid");
             requestFocus(mEmail);
             return false;
-        }if (Constants.Methods.checkForSpecial(email)){
+        }
+        if (Constants.Methods.checkForSpecial(email)) {
             ip_email.setError("Remove Special Charecters");
             requestFocus(mEmail);
             return false;
-        }
-        else {
+        } else {
             ip_email.setErrorEnabled(false);
         }
         return true;
@@ -256,12 +256,17 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
             ip_name.setError("Name you entered is not valid");
             requestFocus(mFullname);
             return false;
-        }if (Constants.Methods.checkForSpecial(fullname)){
+        }
+        if (Constants.Methods.checkForSpecial(fullname)) {
             ip_name.setError("Remove Special Charecters");
             requestFocus(mFullname);
             return false;
         }
-        else {
+        if (fullname.length() > 32) {
+            ip_name.setError("Name cannot b more than 32 charecters");
+            requestFocus(mFullname);
+            return false;
+        } else {
             ip_name.setErrorEnabled(false);
         }
         return true;
@@ -272,12 +277,17 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
             ip_loc.setError("Location you entered is not valid");
             requestFocus(mLoc);
             return false;
-        }if (Constants.Methods.checkForSpecial(loc)){
+        }
+        if (Constants.Methods.checkForSpecial(loc)) {
             ip_loc.setError("Remove Special Charecters");
             requestFocus(mLoc);
             return false;
         }
-        else {
+        if (loc.length() > 20) {
+            ip_loc.setError("Location cannot be more than 20 charecters");
+            requestFocus(mLoc);
+            return false;
+        } else {
             ip_loc.setErrorEnabled(false);
         }
         return true;

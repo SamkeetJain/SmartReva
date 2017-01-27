@@ -49,6 +49,10 @@ public class AlumniNewDisscussion extends AppCompatActivity {
         ip_title = (TextInputLayout) findViewById(R.id.titleInputLayout);
     }
 
+    public void BackButton(View v){
+        finish();
+    }
+
     public void Submit(View v) {
         title = mTitle.getText().toString().trim();
         message = mMessage.getText().toString().trim();
@@ -60,37 +64,47 @@ public class AlumniNewDisscussion extends AppCompatActivity {
         if (!validateTitle()) {
             return;
         }
-        if(!validateMessage()){
+        if (!validateMessage()) {
             return;
         }
         NewPost newPost = new NewPost();
         newPost.execute();
     }
 
-    private boolean validateTitle(){
-        if (title.isEmpty()){
+    private boolean validateTitle() {
+        if (title.isEmpty()) {
             ip_title.setError("Invaid Title");
             requestFocus(mTitle);
             return false;
-
-        }if (Constants.Methods.checkForSpecial(title)){
-            ip_title.setError("Remove Special charecters");
+        }
+        if (title.length() > 99) {
+            ip_title.setError("Title should be less than 99 chareacters");
             requestFocus(mTitle);
             return false;
         }
-        else{
+        if (Constants.Methods.checkForSpecial(title)) {
+            ip_title.setError("Remove Special charecters");
+            requestFocus(mTitle);
+            return false;
+        } else {
             ip_title.setErrorEnabled(false);
         }
         return true;
     }
 
-    private boolean validateMessage(){
-        if (message.isEmpty()){
-            Toast.makeText(getApplicationContext(),"Invalid Message",Toast.LENGTH_LONG).show();
+    private boolean validateMessage() {
+        if (message.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Invalid Message", Toast.LENGTH_LONG).show();
             requestFocus(mMessage);
             return false;
-        }if (Constants.Methods.checkForSpecial(message)){
-            Toast.makeText(getApplicationContext(),"Remove Special Charecters fron message",Toast.LENGTH_LONG).show();
+        }
+        if (title.length() > 999) {
+            Toast.makeText(getApplicationContext(), "Message should be less than 999 characters", Toast.LENGTH_LONG).show();
+            requestFocus(mMessage);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(message)) {
+            Toast.makeText(getApplicationContext(), "Remove Special Charecters fron message", Toast.LENGTH_LONG).show();
             requestFocus(mMessage);
             return false;
         }
@@ -148,14 +162,14 @@ public class AlumniNewDisscussion extends AppCompatActivity {
                 if (authenticationError) {
                     errorMessage = jsonResults.toString();
                 } else {
-                    JSONObject jsonObject=new JSONObject(jsonResults.toString());
+                    JSONObject jsonObject = new JSONObject(jsonResults.toString());
                     String status = jsonObject.getString("status");
-                    if(status.equals("success")){
-                        authenticationError=false;
-                        errorMessage=status;
-                    }else{
-                        authenticationError=true;
-                        errorMessage=status;
+                    if (status.equals("success")) {
+                        authenticationError = false;
+                        errorMessage = status;
+                    } else {
+                        authenticationError = true;
+                        errorMessage = status;
                     }
 
                 }

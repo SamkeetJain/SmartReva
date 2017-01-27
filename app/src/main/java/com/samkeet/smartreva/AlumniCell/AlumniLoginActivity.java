@@ -284,6 +284,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
                 } else {
                     FirebaseInstanceId.getInstance().getToken();
                     Intent intent = new Intent(getApplicationContext(), AlumniMainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
                 }
@@ -359,6 +360,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
             } else {
 
                 Intent intent = new Intent(getApplicationContext(), AlumniMainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
 

@@ -40,7 +40,7 @@ public class AlumniReferJobs extends AppCompatActivity {
 
     public SwipeRefreshLayout swipeRefreshLayout;
 
-    public String[] mCompany,mRole,mJobType,mDates;
+    public String[] mCompany, mRole, mJobType, mDates;
     public JSONObject[] eventsObjects;
 
     public boolean authenticationError = true;
@@ -94,7 +94,7 @@ public class AlumniReferJobs extends AppCompatActivity {
         });
 
         if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
-            GetReferals getReferals= new GetReferals();
+            GetReferals getReferals = new GetReferals();
             getReferals.execute();
         }
 //        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -105,12 +105,12 @@ public class AlumniReferJobs extends AppCompatActivity {
 //        });
     }
 
-    public void BackButton(View v){
+    public void BackButton(View v) {
         finish();
     }
 
-    public void NewPost(View v){
-        Intent intent = new Intent(getApplicationContext(),AlumniPostJobReferal.class);
+    public void NewPost(View v) {
+        Intent intent = new Intent(getApplicationContext(), AlumniPostJobReferal.class);
         startActivity(intent);
     }
 
@@ -118,7 +118,7 @@ public class AlumniReferJobs extends AppCompatActivity {
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -176,7 +176,7 @@ public class AlumniReferJobs extends AppCompatActivity {
                         mJobType[i] = jsonObject.getString("job_type");
                         mDates[i] = jsonObject.getString("ddate");
                     }
-                    authenticationError=false;
+                    authenticationError = false;
                 }
                 return 1;
 
@@ -195,8 +195,10 @@ public class AlumniReferJobs extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                mAdapter = new AlumniReferJobAdapter(mCompany, mRole, mJobType, mDates);
-                mRecyclerView.setAdapter(mAdapter);
+                if (mCompany.length > 0) {
+                    mAdapter = new AlumniReferJobAdapter(mCompany, mRole, mJobType, mDates);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
             }
         }
 

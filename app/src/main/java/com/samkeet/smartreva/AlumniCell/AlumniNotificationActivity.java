@@ -180,8 +180,10 @@ public class AlumniNotificationActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                mAdapter = new AlumniNotificationAdapter(mTitle, mMessage, mDdate);
-                mRecyclerView.setAdapter(mAdapter);
+                if (mTitle.length > 0) {
+                    mAdapter = new AlumniNotificationAdapter(mTitle, mMessage, mDdate);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
             }
         }
 

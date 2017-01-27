@@ -88,6 +88,9 @@ public class AlumniPostJobReferal extends AppCompatActivity {
     }
 
     public void appLogin() {
+        company = mCompany.getText().toString();
+        role = mRole.getText().toString();
+        desc = mDesc.getText().toString();
         if (!validateCompany()) {
             return;
         }
@@ -97,9 +100,6 @@ public class AlumniPostJobReferal extends AppCompatActivity {
         if (!validateDesc()) {
             return;
         }
-        company = mCompany.getText().toString();
-        role = mRole.getText().toString();
-        desc = mDesc.getText().toString();
 
         NewPost newPost = new NewPost();
         newPost.execute();
@@ -155,7 +155,7 @@ public class AlumniPostJobReferal extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Decription cant be left empty", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (desc.length() < 1000) {
+        if (desc.length() > 1000) {
             Toast.makeText(getApplicationContext(), "Description must be less than 1000 charesters", Toast.LENGTH_LONG).show();
             return false;
         }if (Constants.Methods.checkForSpecial(desc)){

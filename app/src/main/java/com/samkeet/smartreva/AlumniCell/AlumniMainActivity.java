@@ -250,6 +250,7 @@ public class AlumniMainActivity extends AppCompatActivity {
             }
             return 1;
         }
+
         protected void onPostExecute(Integer result) {
         }
     }
@@ -382,8 +383,10 @@ public class AlumniMainActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                mAdapter = new AlumniMainAdapter(disscussionObject, getApplicationContext());
-                mRecyclerView.setAdapter(mAdapter);
+                if (disscussionObject.length > 0) {
+                    mAdapter = new AlumniMainAdapter(disscussionObject, getApplicationContext());
+                    mRecyclerView.setAdapter(mAdapter);
+                }
             }
         }
 
@@ -449,8 +452,10 @@ public class AlumniMainActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                mAdapter = new AlumniMainAdapter(disscussionObject, getApplicationContext());
-                mRecyclerView.setAdapter(mAdapter);
+                if (disscussionObject.length > 0) {
+                    mAdapter = new AlumniMainAdapter(disscussionObject, getApplicationContext());
+                    mRecyclerView.setAdapter(mAdapter);
+                }
             }
         }
 
@@ -463,8 +468,8 @@ public class AlumniMainActivity extends AppCompatActivity {
         getDisscussionSilently.execute();
     }
 
-    public void Notification(View v){
-        Intent intent=new Intent(getApplicationContext(), AlumniNotificationActivity.class);
+    public void Notification(View v) {
+        Intent intent = new Intent(getApplicationContext(), AlumniNotificationActivity.class);
         startActivity(intent);
     }
 }
