@@ -145,7 +145,8 @@
         <activity android:name=".AlumniCell.AlumniDisscussionReplyActivity" />
         <activity android:name=".AlumniCell.AlumniNewDisscussion" />
         <activity android:name=".AlumniCell.AlumniNotificationActivity" />
-        <activity android:name=".AlumniCell.AlumniNotificationManager"></activity>
+        <activity android:name=".AlumniCell.AlumniNotificationManager" />
+        <activity android:name=".Placement2.PlacementRegistration4"></activity>
     </application>
 
 </manifest>

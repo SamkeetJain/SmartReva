@@ -99,46 +99,58 @@
 
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/school_name_dpl"
+                        android:id="@+id/btech_dpl_school_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_dpl_school_name_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="School Name"
-                            android:inputType="textAutoComplete"
+                            android:imeOptions="actionNext"
+                            android:inputType="text"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/persentage_dpl"
+                        android:id="@+id/btech_dpl_percentage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_dpl_percentage_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Percentage"
-                            android:inputType="number"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/yop_dpl"
+                        android:id="@+id/btech_dpl_yop"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_dpl_yop_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Year of passing"
+                            android:hint="Year of passing (yyyy)"
+                            android:imeOptions="actionNext"
                             android:inputType="number"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -177,152 +189,173 @@
 
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/yoj_be"
+                        android:id="@+id/btech_be_yoj"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_be_yoj_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Year of Joining"
+                            android:hint="Year of Joining (yyyy)"
+                            android:imeOptions="actionNext"
                             android:inputType="number"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/sem1_marks_be"
+                        android:id="@+id/btech_be_sem1_marks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_be_sem1_marks_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 1 marks"
-                            android:inputType="number"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/sem2_marks_be"
+                        android:id="@+id/btech_be_sem2_marks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_be_sem2_marks_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 2 marks"
-                            android:inputType="number"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/sem3_marks_be"
+                        android:id="@+id/btech_be_sem3_marks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_be_sem3_marks_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 3 marks"
-                            android:inputType="number"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/sem4_marks_be"
+                        android:id="@+id/btech_be_sem4_marks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_be_sem4_marks_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 4 marks"
-                            android:inputType="number"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/sem5_marks_be"
+                        android:id="@+id/btech_be_sem5_marks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_be_sem5_marks_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 5 marks"
-                            android:inputType="number"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
 
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/sem6_marks_be"
+                        android:id="@+id/btech_be_sem6_marks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_be_sem6_marks_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 6 marks"
-                            android:inputType="number"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/sem7_marks_be"
+                        android:id="@+id/btech_be_sem7_marks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_be_sem7_marks_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 7 marks"
-                            android:inputType="number"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/sem8_marks_be"
+                        android:id="@+id/btech_be_sem8_marks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_be_sem8_marks_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 8 marks"
-                            android:inputType="number"
-                            android:textSize="12sp" />
-
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/yop_be"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp">
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Year of passing"
-                            android:inputType="number"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -331,6 +364,7 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -359,37 +393,6 @@
                         android:layout_margin="5dp"
                         android:background="#E0E0E0"></View>
 
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/backlog_sub_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp">
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Backlog Subject Name"
-                            android:inputType="textAutoComplete"
-                            android:textSize="12sp" />
-
-                    </android.support.design.widget.TextInputLayout>
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/backlog_semester"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp">
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Semester"
-                            android:inputType="number"
-                            android:textSize="12sp" />
-
-                    </android.support.design.widget.TextInputLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -397,63 +400,25 @@
 
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="Mark if cleared." />
-
-                        <CheckBox
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardBackgroundColor="#FFFFFF"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
-                        android:paddingTop="10dp"
-                        android:text="History of backlogs"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_margin="5dp"
-                        android:background="#E0E0E0"></View>
-
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/total_subjects"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp">
+                            android:gravity="center"
+                            android:text="Total Backlogs \n(both Current and Cleared)" />
 
                         <EditText
+                            android:id="@+id/btech_back_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Total number of subjects"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:hint="E.g. 5"
+                            android:imeOptions="actionNext"
                             android:inputType="number"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
 
 
                 </LinearLayout>
@@ -489,16 +454,20 @@
 
 
                     <android.support.design.widget.TextInputLayout
-                        android:id="@+id/year_gap"
+                        android:id="@+id/btech_year_gap"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="3dp">
 
                         <EditText
+                            android:id="@+id/btech_year_gap_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Year gap(in years)"
+                            android:hint="Year gap (if any)"
+                            android:imeOptions="actionDone"
                             android:inputType="number"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -507,19 +476,20 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center">
 
                 <Button
+                    android:id="@+id/btech_subbmit_button"
                     style="@style/Base.Widget.AppCompat.Button.Colored"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:onClick="SubbmitButton"
                     android:text="Subbmit" />
             </LinearLayout>
-
 
 
         </LinearLayout>

@@ -90,10 +90,8 @@ public class Placement2LoginActivity extends AppCompatActivity {
     }
 
     public void register(View v) {
-        //TODO Release Changes
-        Toast.makeText(getApplicationContext(), "Registration is currently disabled, Please stay tuned to updates", Toast.LENGTH_SHORT).show();
-//        Intent intent=new Intent(getApplicationContext(),PlacementRegistration1.class);
-//        startActivity(intent);
+        Intent intent=new Intent(getApplicationContext(),PlacementRegistration1.class);
+        startActivity(intent);
     }
 
     public void placementlogin(View v) {
