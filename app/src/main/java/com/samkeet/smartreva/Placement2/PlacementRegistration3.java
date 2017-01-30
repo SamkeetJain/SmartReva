@@ -69,6 +69,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
             tBtechBeSem8 = (TextInputLayout) findViewById(R.id.btech_be_sem8_marks);
             tBtechYeargap = (TextInputLayout) findViewById(R.id.btech_year_gap);
 
+
             //Edit text
             mBtechDplSchoolname = (EditText) findViewById(R.id.btech_dpl_school_name_et);
             mBtechDplPercentage = (EditText) findViewById(R.id.btech_dpl_percentage_et);
