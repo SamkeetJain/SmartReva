@@ -1,6 +1,9 @@
 package com.samkeet.smartreva.Placement2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,7 +19,18 @@ import android.widget.Toast;
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
+
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import dmax.dialog.SpotsDialog;
 
 public class PlacementRegistration3 extends AppCompatActivity {
 
@@ -48,17 +62,41 @@ public class PlacementRegistration3 extends AppCompatActivity {
 
     public Button MmSubmit;
 
-
     public TextInputLayout tMcaDegPercentage, tMcaDegCourse, tMcaDegUniversity, tMcaDegCollagename, tMcaDegYop, tMcaYoj, tMcaSem1, tMcaSem2, tMcaSem3, tMcaSem4, tMcaSem5, tMcaSem6, tMcaWorkxp, tMcaYeargap;
     public EditText mMcaDegPercentage, mMcaDegCourse, mMcaDegUniversity, mMcaDegCollagename, mMcaDegYop, mMcaYoj, mMcaSem1, mMcaSem2, mMcaSem3, mMcaSem4, mMcaSem5, mMcaSem6, mMcaWorkxp, mMcaYeargap, mMcaBacklog;
     public String mcaDegPercentage, mcaDegCourse, mcaDegUniversity, mcaDegCollagename, mcaDegYop, mcaYoj, mcaSem1, mcaSem2, mcaSem3, mcaSem4, mcaSem5, mcaSem6, mcaWorkxp, mcaYeargap, mcaBacklog;
 
     public Button McaSubmit;
 
+    public String object1, object2;
+    public String course;
+    public JSONObject jsonObject = new JSONObject();
+    public JSONObject jsonObject1;
+    public JSONObject jsonObject2;
+
+    public SpotsDialog pd;
+    public Context progressDialogContext = this;
+    public boolean authenticationError;
+    public String errorMessage;
+    public Uri.Builder form3;
+
+    public String YEARGAP, WORKEXP;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        object1 = getIntent().getStringExtra("OBJECT1");
+        object2 = getIntent().getStringExtra("OBJECT2");
+        course = getIntent().getStringExtra("DATA");
+
+        try {
+            jsonObject1 = new JSONObject(object1);
+            jsonObject2 = new JSONObject(object2);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         if (getIntent().getStringExtra("DATA").equals("btech")) {
             setContentView(R.layout.activity_placement2_reg_btech);
             /* all oncreate methods*/
@@ -402,6 +440,16 @@ public class PlacementRegistration3 extends AppCompatActivity {
         if (!backlogValidation(mmBacklog)) {
             return;
         }
+        try {
+            jsonObject.put("mmDegPer", mmDegPercentage);
+            jsonObject.put("mmDegUni", mmDegUniversity);
+            jsonObject.put("mmDegCol", mmDegCollagename);
+            jsonObject.put("mmDegYop", mmDegYop);
+            jsonObject.put("mmYoj", mmyoj);
+            jsonObject.put("backlog", mmBacklog);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         proceedToBackLog();
     }
 
@@ -414,6 +462,13 @@ public class PlacementRegistration3 extends AppCompatActivity {
         }
         if (!backlogValidation(degBacklog)) {
             return;
+        }
+        try {
+            jsonObject.put("degCourse", degCourse);
+            jsonObject.put("degYoj", degYoj);
+            jsonObject.put("backlog", degBacklog);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         proceedToBackLog();
     }
@@ -447,6 +502,21 @@ public class PlacementRegistration3 extends AppCompatActivity {
             if (!backlogValidation(mtechBacklog)) {
                 return;
             }
+
+            try {
+                jsonObject.put("mtDipSch", mtechDplSchoolname);
+                jsonObject.put("mtDipPer", mtechDplPercentage);
+                jsonObject.put("mtDipYop", mtechDplYop);
+                jsonObject.put("mtBePer", mtechBePercentage);
+                jsonObject.put("mtBeUni", mtechBeUniversity);
+                jsonObject.put("mtBeCol", mtechBeCollagename);
+                jsonObject.put("mtBeYop", mtechBeYop);
+                jsonObject.put("mtMtYoj", mtechMtYoj);
+                jsonObject.put("backlog", mtechBacklog);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             proceedToBackLog();
         } else {
             if (!percentageValidation(mtechBePercentage, mMtechBePercentage, tMtechBePercentage)) {
@@ -466,6 +536,19 @@ public class PlacementRegistration3 extends AppCompatActivity {
             }
             if (!backlogValidation(mtechBacklog)) {
                 return;
+            }
+            try {
+                jsonObject.put("mtDipSch", "NA");
+                jsonObject.put("mtDipPer", "NA");
+                jsonObject.put("mtDipYop", "NA");
+                jsonObject.put("mtBePer", mtechBePercentage);
+                jsonObject.put("mtBeUni", mtechBeUniversity);
+                jsonObject.put("mtBeCol", mtechBeCollagename);
+                jsonObject.put("mtBeYop", mtechBeYop);
+                jsonObject.put("mtMtYoj", mtechMtYoj);
+                jsonObject.put("backlog", mtechBacklog);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             proceedToBackLog();
         }
@@ -488,6 +571,16 @@ public class PlacementRegistration3 extends AppCompatActivity {
             if (!backlogValidation(btechBacklog)) {
                 return;
             }
+            try {
+                jsonObject.put("btDipSch", btechDplSchoolname);
+                jsonObject.put("btDipPer", btechDplPercentage);
+                jsonObject.put("btDipYop", btechDplYop);
+                jsonObject.put("BtBeYoj", btechBeYoj);
+                jsonObject.put("backlog", btechBacklog);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             proceedToBackLog();
         } else {
             if (!yearValidation(btechBeYoj, mBtechBeYoj, tBtechBeYoj)) {
@@ -495,6 +588,16 @@ public class PlacementRegistration3 extends AppCompatActivity {
             }
             if (!backlogValidation(btechBacklog)) {
                 return;
+            }
+            try {
+                jsonObject.put("btDipSch", "NA");
+                jsonObject.put("btDipPer", "NA");
+                jsonObject.put("btDipYop", "NA");
+                jsonObject.put("BtBeYoj", btechBeYoj);
+                jsonObject.put("backlog", btechBacklog);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             proceedToBackLog();
         }
@@ -662,17 +765,348 @@ public class PlacementRegistration3 extends AppCompatActivity {
         String bb = "";
         if (getIntent().getStringExtra("DATA").equals("btech")) {
             bb = mBtechBacklog.getText().toString();
+            YEARGAP = btechYeargap;
+            WORKEXP = "NA";
         } else if (getIntent().getStringExtra("DATA").equals("mtech")) {
             bb = mMtechBacklog.getText().toString();
+            YEARGAP = mtechYearGap;
+            WORKEXP = mtechWorkxp;
         } else if (getIntent().getStringExtra("DATA").equals("mba_mcom")) {
             bb = mMmBacklog.getText().toString();
+            YEARGAP = mmYeargap;
+            WORKEXP = mmWorkxp;
         } else if (getIntent().getStringExtra("DATA").equals("degree")) {
             bb = mDegBacklog.getText().toString();
+            YEARGAP = degYeargap;
+            WORKEXP = "NA";
         } else if (getIntent().getStringExtra("DATA").equals("mca")) {
             bb = mMcaBacklog.getText().toString();
+            YEARGAP = mcaYeargap;
+            WORKEXP = mcaWorkxp;
         }
+
         Intent intent = new Intent(getApplicationContext(), PlacementRegistration4.class);
+        intent.putExtra("OBJECT1", jsonObject.toString());
+        intent.putExtra("OBJECT2", object2);
+        intent.putExtra("OBJECT3", jsonObject.toString());
+        intent.putExtra("course", course);
         intent.putExtra("DATA", bb);
         startActivity(intent);
     }
+
+    private class PutRegForm1 extends AsyncTask<Void, Void, Integer> {
+
+        protected void onPreExecute() {
+            authenticationError = true;
+            errorMessage = "Data Courpted";
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
+            pd.setTitle("Loading...");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COURSE_DEPT);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "put")
+                        .appendQueryParameter("name", jsonObject1.getString("name"))
+                        .appendQueryParameter("gender", jsonObject1.getString("gender"))
+                        .appendQueryParameter("dob", jsonObject1.getString("dob"))
+                        .appendQueryParameter("PhoneNo", jsonObject1.getString("phoneno"))
+                        .appendQueryParameter("CurrentAddress", jsonObject1.getString("ca"))
+                        .appendQueryParameter("PermanentAddress", jsonObject1.getString("pa"))
+                        .appendQueryParameter("email", jsonObject1.getString("email"))
+                        .appendQueryParameter("branch", jsonObject2.getString("branch"))
+                        .appendQueryParameter("course", course)
+                        .appendQueryParameter("yeargap", YEARGAP)
+                        .appendQueryParameter("workexperience", WORKEXP);
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if (status.equals("success")) {
+                        authenticationError = false;
+                    } else {
+                        authenticationError = true;
+                        errorMessage = status;
+                    }
+                }
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+
+            }
+
+        }
+    }
+
+    private class PutRegForm2 extends AsyncTask<Void, Void, Integer> {
+
+        protected void onPreExecute() {
+            authenticationError = true;
+            errorMessage = "Data Courpted";
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
+            pd.setTitle("Loading...");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COURSE_DEPT);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "put")
+                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
+                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
+                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
+                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
+                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
+                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
+                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
+                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if (status.equals("success")) {
+                        authenticationError = false;
+                    } else {
+                        authenticationError = true;
+                        errorMessage = status;
+                    }
+                }
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+
+            }
+
+        }
+    }
+
+    public void putRegForm3() {
+
+        if (course.equals("btech")) {
+            try {
+                form3 = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "put")
+                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
+                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
+                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
+                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
+                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
+                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
+                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
+                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if (course.equals("mtech")) {
+            try {
+                form3 = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "put")
+                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
+                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
+                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
+                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
+                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
+                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
+                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
+                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if (course.equals("mba_mcom")) {
+            try {
+                form3 = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "put")
+                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
+                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
+                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
+                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
+                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
+                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
+                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
+                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if (course.equals("degree")) {
+            try {
+                form3 = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "put")
+                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
+                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
+                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
+                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
+                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
+                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
+                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
+                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else if (course.equals("mca")) {
+            try {
+                form3 = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "put")
+                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
+                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
+                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
+                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
+                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
+                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
+                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
+                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class PutRegForm3 extends AsyncTask<Void, Void, Integer> {
+
+        protected void onPreExecute() {
+            authenticationError = true;
+            errorMessage = "Data Courpted";
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
+            pd.setTitle("Loading...");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COURSE_DEPT);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Uri.Builder _data = form3;
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if (status.equals("success")) {
+                        authenticationError = false;
+                    } else {
+                        authenticationError = true;
+                        errorMessage = status;
+                    }
+                }
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+
+            }
+
+        }
+    }
+
+
 }

@@ -1,6 +1,10 @@
 package com.samkeet.smartreva.Placement2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,16 +16,25 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
 import com.satsuware.usefulviews.LabelledSpinner;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+
+import dmax.dialog.SpotsDialog;
 
 public class PlacementRegistration2 extends AppCompatActivity {
 
@@ -40,12 +53,21 @@ public class PlacementRegistration2 extends AppCompatActivity {
     public LinearLayout twelthLayout;
 
     public String object1;
-    public JSONObject jsonObject;
+    public JSONObject jsonObject = new JSONObject();
+
+    public SpotsDialog pd;
+    public Context progressDialogContext;
+    public boolean authenticationError;
+    public String errorMessage;
+
+    public ArrayList<String> cList = new ArrayList<String>();
+    public ArrayList<String> bList = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_placement2_registration2);
+        progressDialogContext = this;
 
         object1 = getIntent().getStringExtra("OBJECT1");
 
@@ -89,31 +111,10 @@ public class PlacementRegistration2 extends AppCompatActivity {
         courseSpin = (LabelledSpinner) findViewById(R.id.course_spin);
         branchSpin = (LabelledSpinner) findViewById(R.id.branch_spin);
 
-        courseSpin.setItemsArray(courseList);
-        courseSpin.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
-            @Override
-            public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
-                scourse = courseList[position];
-            }
-
-            @Override
-            public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
-                scourse = courseList[0];
-            }
-        });
-        branchSpin.setItemsArray(branchList);
-        branchSpin.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
-            @Override
-            public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
-                sbranch = branchList[position];
-            }
-
-            @Override
-            public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
-                sbranch = branchList[0];
-            }
-        });
-
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            GetCourseDeptDetails getCourseDeptDetails = new GetCourseDeptDetails();
+            getCourseDeptDetails.execute();
+        }
 
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -198,6 +199,7 @@ public class PlacementRegistration2 extends AppCompatActivity {
                 jsonObject.put("twelthsn", "NA");
                 jsonObject.put("twelths", "NA");
                 jsonObject.put("twelthpy", "NA");
+                jsonObject.put("branch", sbranch);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -387,5 +389,133 @@ public class PlacementRegistration2 extends AppCompatActivity {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
+
+    private class GetCourseDeptDetails extends AsyncTask<Void, Void, Integer> {
+
+        protected void onPreExecute() {
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
+            pd.setTitle("Loading...");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_COURSE_DEPT);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN());
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONArray jsonArray = new JSONArray(jsonResults.toString());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        String coursetemp = jsonObject.getString("course");
+                        String depttemp = jsonObject.getString("dept");
+                        cList.add(coursetemp);
+                        bList.add(depttemp);
+                    }
+                    authenticationError = false;
+                }
+                return 1;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                initCourseList();
+            }
+
+        }
+    }
+
+    public void initCourseList() {
+
+        ArrayList<String> temp = new ArrayList<String>();
+        for (int i = 0; i < cList.size(); i++) {
+            boolean flag = false;
+            for (int j = 0; j < temp.size(); j++) {
+                if (temp.get(j).equals(cList.get(i))) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                temp.add(cList.get(i));
+            }
+        }
+        courseList = null;
+        courseList = temp.toArray(new String[temp.size()]);
+        courseSpin.setItemsArray(courseList);
+        courseSpin.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
+            @Override
+            public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
+                scourse = courseList[position];
+                initDeptList();
+            }
+
+            @Override
+            public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
+                scourse = courseList[0];
+            }
+        });
+    }
+
+    public void initDeptList() {
+
+        ArrayList<String> temp = new ArrayList<String>();
+        for (int i = 0; i < cList.size(); i++) {
+            if (cList.get(i).equals(scourse)) {
+                temp.add(bList.get(i));
+            }
+        }
+
+        branchList = null;
+        branchList = temp.toArray(new String[temp.size()]);
+
+        branchSpin.setItemsArray(branchList);
+        branchSpin.setOnItemChosenListener(new LabelledSpinner.OnItemChosenListener() {
+            @Override
+            public void onItemChosen(View labelledSpinner, AdapterView<?> adapterView, View itemView, int position, long id) {
+                sbranch = branchList[position];
+            }
+
+            @Override
+            public void onNothingChosen(View labelledSpinner, AdapterView<?> adapterView) {
+                sbranch = branchList[0];
+            }
+        });
+    }
+
 
 }
