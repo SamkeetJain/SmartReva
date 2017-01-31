@@ -189,14 +189,28 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
-                        android:paddingTop="10dp"
-                        android:text="12th - Secondary School"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="15dp"
+                            android:text="12th - Secondary School"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/twelthSwitcher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:paddingRight="15dp" />
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -204,81 +218,88 @@
                         android:layout_margin="5dp"
                         android:background="#E0E0E0"></View>
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/board_12"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="3dp">
+                        android:id="@+id/twelthlayout"
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/board_12_et"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/board_12"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Board"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:textSize="12sp" />
+                            android:padding="3dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/board_12_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Board"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textSize="12sp" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/school_name_12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp">
+                        </android.support.design.widget.TextInputLayout>
 
-                        <EditText
-                            android:id="@+id/school_name_12_et"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/school_name_12"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="School Name"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:textSize="12sp" />
+                            android:padding="3dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/school_name_12_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="School Name"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textSize="12sp" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/percentage_12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp">
+                        </android.support.design.widget.TextInputLayout>
 
-                        <EditText
-                            android:id="@+id/percentage_12_et"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/percentage_12"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Percentage"
-                            android:imeOptions="actionNext"
-                            android:inputType="numberDecimal"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:textSize="12sp" />
+                            android:padding="3dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/percentage_12_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Percentage"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberDecimal"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textSize="12sp" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/yop_12"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp">
+                        </android.support.design.widget.TextInputLayout>
 
-                        <EditText
-                            android:id="@+id/yop_12_et"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/yop_12"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Year of passing (yyyy)"
-                            android:imeOptions="actionDone"
-                            android:inputType="number"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:textSize="12sp" />
+                            android:padding="3dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/yop_12_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Year of passing (yyyy)"
+                                android:imeOptions="actionDone"
+                                android:inputType="number"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textSize="12sp" />
+
+                        </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
 
 
                 </LinearLayout>

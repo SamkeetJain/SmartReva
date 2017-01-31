@@ -79,14 +79,29 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
-                        android:paddingTop="10dp"
-                        android:text="Diploma"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingLeft="15dp"
+                            android:text="Diploma"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/diplomaSwitcher"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:paddingRight="15dp" />
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
@@ -94,65 +109,70 @@
                         android:layout_margin="5dp"
                         android:background="#E0E0E0"></View>
 
-
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/mtech_dpl_schoolname"
+                    <LinearLayout
+                        android:id="@+id/diplomaView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="3dp">
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/mtech_dpl_schoolname_et"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/mtech_dpl_schoolname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="School Name"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:imeOptions="actionNext"
-                            android:textSize="12sp" />
+                            android:padding="3dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/mtech_dpl_schoolname_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="School Name"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textSize="12sp" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/mtech_dpl_percentage"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp">
+                        </android.support.design.widget.TextInputLayout>
 
-                        <EditText
-                            android:id="@+id/mtech_dpl_percentage_et"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/mtech_dpl_percentage"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Percentage"
-                            android:inputType="number"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:imeOptions="actionNext"
-                            android:textSize="12sp" />
+                            android:padding="3dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/mtech_dpl_percentage_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Percentage"
+                                android:imeOptions="actionNext"
+                                android:inputType="numberDecimal"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textSize="12sp" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/mtech_dpl_yop"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp">
+                        </android.support.design.widget.TextInputLayout>
 
-                        <EditText
-                            android:id="@+id/mtech_dpl_yop_et"
+                        <android.support.design.widget.TextInputLayout
+                            android:id="@+id/mtech_dpl_yop"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Year of passing (yyyy)"
-                            android:inputType="number"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:imeOptions="actionNext"
-                            android:textSize="12sp" />
+                            android:padding="3dp">
 
-                    </android.support.design.widget.TextInputLayout>
+                            <EditText
+                                android:id="@+id/mtech_dpl_yop_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Year of passing (yyyy)"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:lines="1"
+                                android:maxLines="1"
+                                android:textSize="12sp" />
 
+                        </android.support.design.widget.TextInputLayout>
 
+                    </LinearLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
@@ -184,7 +204,6 @@
                         android:layout_margin="5dp"
                         android:background="#E0E0E0"></View>
 
-
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/mtech_be_percentage"
                         android:layout_width="match_parent"
@@ -196,10 +215,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Percentage"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal"
                             android:lines="1"
                             android:maxLines="1"
-                            android:imeOptions="actionNext"
-                            android:inputType="number"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -215,10 +234,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="University"
-                            android:lines="1"
-                            android:maxLines="1"
                             android:imeOptions="actionNext"
                             android:inputType="text"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -234,10 +253,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="College Name"
-                            android:lines="1"
-                            android:maxLines="1"
                             android:imeOptions="actionNext"
                             android:inputType="text"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -253,14 +272,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Year Of Passing (yyyy)"
+                            android:imeOptions="actionNext"
                             android:inputType="number"
                             android:lines="1"
                             android:maxLines="1"
-                            android:imeOptions="actionNext"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
-
 
                 </LinearLayout>
 
@@ -305,10 +323,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Year of Joining (yyyy)"
-                            android:lines="1"
-                            android:maxLines="1"
                             android:imeOptions="actionNext"
                             android:inputType="number"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -324,10 +342,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 1 marks"
+                            android:imeOptions="actionNext"
                             android:inputType="numberDecimal"
                             android:lines="1"
                             android:maxLines="1"
-                            android:imeOptions="actionNext"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -343,10 +361,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 2 marks"
-                            android:lines="1"
-                            android:maxLines="1"
                             android:imeOptions="actionNext"
                             android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -362,10 +380,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 3 marks"
-                            android:lines="1"
-                            android:maxLines="1"
                             android:imeOptions="actionNext"
                             android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -381,14 +399,13 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Semester 4 marks"
-                            android:lines="1"
-                            android:maxLines="1"
                             android:imeOptions="actionNext"
                             android:inputType="numberDecimal"
+                            android:lines="1"
+                            android:maxLines="1"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
-
 
 
                 </LinearLayout>
@@ -432,25 +449,22 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Total Backlogs \n(both Current and Cleared)"/>
+                            android:text="Total Backlogs \n(both Current and Cleared)" />
+
                         <EditText
                             android:id="@+id/mtech_backlog"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:hint="E.g. 2"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
                             android:lines="1"
                             android:maxLines="1"
-                            android:imeOptions="actionNext"
-                            android:gravity="center"
                             android:textSize="12sp" />
 
                     </LinearLayout>
-
-
-
-
 
 
                 </LinearLayout>
@@ -496,10 +510,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Work Experience (if any) (in months)"
+                            android:imeOptions="actionNext"
                             android:inputType="number"
                             android:lines="1"
                             android:maxLines="1"
-                            android:imeOptions="actionNext"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -548,10 +562,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Year gap (if any)"
+                            android:imeOptions="actionNext"
                             android:inputType="number"
                             android:lines="1"
                             android:maxLines="1"
-                            android:imeOptions="actionNext"
                             android:textSize="12sp" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -560,6 +574,7 @@
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

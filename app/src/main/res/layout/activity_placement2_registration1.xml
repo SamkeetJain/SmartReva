@@ -213,26 +213,27 @@
                         android:padding="3dp"
                         app:labelText="Gender" />
 
-                    <android.support.design.widget.TextInputLayout
-                        android:id="@+id/tDOB"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="3dp">
-
-                        <EditText
-                            android:id="@+id/dob_et"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:text="DOB"
+                            android:paddingLeft="5dp"
+                            android:layout_height="wrap_content" />
+                        <Button
+                            style="@style/Base.Widget.AppCompat.Button.Borderless.Colored"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:hint="Date of Birth"
-                            android:imeOptions="actionNext"
-                            android:inputType="text"
-                            android:lines="1"
-                            android:maxLines="1"
-                            android:padding="3dp"
-                            android:textSize="12sp" />
+                            android:onClick="DateButton"
+                            android:id="@+id/dateButton"
+                            android:textAlignment="textStart"
+                            android:textColor="#808080" />
 
-                    </android.support.design.widget.TextInputLayout>
+                    </LinearLayout>
+
+
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 

@@ -1,12 +1,16 @@
 package com.samkeet.smartreva.Placement2;
 
+import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.samkeet.smartreva.Constants;
@@ -21,12 +25,16 @@ public class PlacementRegistration3 extends AppCompatActivity {
     public String btechDplSchoolname, btechDplPercentage, btechDplYop, btechBeYoj, btechBeSem1, btechBeSem2, btechBeSem3, btechBeSem4, btechBeSem5, btechBeSem6, btechBeSem7, btechBeSem8, btechYeargap, btechBacklog;
 
     public Button BtechSubbmit;
+    public Switch btechDipSwitch;
+    public LinearLayout btechDipLayout;
 
     public TextInputLayout tMtechDplSchoolname, tMtechDplPercentage, tMtechDplYop, tMtechBePercentage, tMtechBeUniversity, tMtechBeCollagename, tMtechBeYop, tMtechMtYoj, tMtechMtSem1, tMtechMtSem2, tMtechMtSem3, tMtechMtSem4, tMtechWorkxp, tMtechYearGap;
     public EditText mMtechDplSchoolname, mMtechDplPercentage, mMtechDplYop, mMtechBePercentage, mMtechBeUniversity, mMtechBeCollagename, mMtechBeYop, mMtechMtYoj, mMtechMtSem1, mMtechMtSem2, mMtechMtSem3, mMtechMtSem4, mMtechWorkxp, mMtechYearGap, mMtechBacklog;
     public String mtechDplSchoolname, mtechDplPercentage, mtechDplYop, mtechBePercentage, mtechBeUniversity, mtechBeCollagename, mtechBeYop, mtechMtYoj, mtechMtSem1, mtechMtSem2, mtechMtSem3, mtechMtSem4, mtechWorkxp, mtechYearGap, mtechBacklog;
 
     public Button MtechSubbmit;
+    public Switch mtechDipSwitch;
+    public LinearLayout mtechDipLayout;
 
     public TextInputLayout tDegCourse, tDegYoj, tDegSem1, tDegSem2, tDegSem3, tDegSem4, tDegSem5, tDegSem6, tDegYeargap;
     public EditText mDegCourse, mDegYoj, mDegSem1, mDegSem2, mDegSem3, mDegSem4, mDegSem5, mDegSem6, mDegYeargap, mDegBacklog;
@@ -51,7 +59,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getIntent().getStringExtra("DATA").equals("B Tech.")) {
+        if (getIntent().getStringExtra("DATA").equals("btech")) {
             setContentView(R.layout.activity_placement2_reg_btech);
             /* all oncreate methods*/
 
@@ -86,6 +94,21 @@ public class PlacementRegistration3 extends AppCompatActivity {
             mBtechYeargap = (EditText) findViewById(R.id.btech_year_gap_et);
             mBtechBacklog = (EditText) findViewById(R.id.btech_back_et);
 
+            btechDipLayout = (LinearLayout) findViewById(R.id.diplomaView);
+            btechDipSwitch = (Switch) findViewById(R.id.diplomaSwitcher);
+            btechDipSwitch.setChecked(false);
+            btechDipLayout.setVisibility(View.GONE);
+            btechDipSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if (isChecked) {
+                        btechDipLayout.setVisibility(View.VISIBLE);
+                    } else {
+                        btechDipLayout.setVisibility(View.GONE);
+                    }
+                }
+            });
+
             BtechSubbmit = (Button) findViewById(R.id.btech_subbmit_button);
 
             BtechSubbmit.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +133,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
                 }
             });
 
-        } else if (getIntent().getStringExtra("DATA").equals("M Tech.")) {
+        } else if (getIntent().getStringExtra("DATA").equals("mtech")) {
             setContentView(R.layout.activity_placement2_reg_mtech);
 
             //Text input layout
@@ -146,6 +169,20 @@ public class PlacementRegistration3 extends AppCompatActivity {
             mMtechYearGap = (EditText) findViewById(R.id.mtech_year_gap_et);
             mMtechBacklog = (EditText) findViewById(R.id.mtech_backlog);
 
+            mtechDipLayout = (LinearLayout) findViewById(R.id.diplomaView);
+            mtechDipSwitch = (Switch) findViewById(R.id.diplomaSwitcher);
+            mtechDipSwitch.setChecked(false);
+            mtechDipLayout.setVisibility(View.GONE);
+            mtechDipSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                    if (isChecked) {
+                        mtechDipLayout.setVisibility(View.VISIBLE);
+                    } else {
+                        mtechDipLayout.setVisibility(View.GONE);
+                    }
+                }
+            });
             MtechSubbmit = (Button) findViewById(R.id.mtech_subbmit_button);
 
             MtechSubbmit.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +210,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
             });
 
 
-        } else if (getIntent().getStringExtra("DATA").equals("M.B.A./M Com.")) {
+        } else if (getIntent().getStringExtra("DATA").equals("mba_mcom")) {
             setContentView(R.layout.activity_placement2_reg_mba_mcom);
 
             //TextInputLayout
@@ -228,9 +265,8 @@ public class PlacementRegistration3 extends AppCompatActivity {
             });
 
 
-        } else if (getIntent().getStringExtra("DATA").equals("Degree")) {
+        } else if (getIntent().getStringExtra("DATA").equals("degree")) {
             setContentView(R.layout.activity_placement2_reg_deg);
-
 
             //TextInputLayout
 
@@ -245,7 +281,6 @@ public class PlacementRegistration3 extends AppCompatActivity {
             tDegYeargap = (TextInputLayout) findViewById(R.id.deg_year_gap);
 
             //EditText
-
 
             mDegCourse = (EditText) findViewById(R.id.course_deg_et);
             mDegYoj = (EditText) findViewById(R.id.yoj_deg_et);
@@ -281,7 +316,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
             });
 
 
-        } else if (getIntent().getStringExtra("DATA").equals("M.C.A.")) {
+        } else if (getIntent().getStringExtra("DATA").equals("mca")) {
             setContentView(R.layout.activity_placement2_reg_mca);
 
 
@@ -325,7 +360,6 @@ public class PlacementRegistration3 extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //String
-
                     mcaDegPercentage = mMcaDegPercentage.getText().toString().trim();
                     mcaDegCourse = mMcaDegCourse.getText().toString().trim();
                     mcaDegUniversity = mMcaDegUniversity.getText().toString().trim();
@@ -347,1450 +381,298 @@ public class PlacementRegistration3 extends AppCompatActivity {
             });
 
         }
-
-
     }
-
 
     public void mmValidation() {
-        if (!validMmDegPercentage()) {
+        if (!percentageValidation(mmDegPercentage, mMmDegPercentage, tMmDegPercentage)) {
             return;
         }
-        if (!validMmDegUniversity()) {
+        if (!universityValidation(mmDegUniversity, mMmDegUniversity, tMmDegUniversity)) {
             return;
         }
-        if (!validMmDegCollagename()) {
+        if (!collegeNameValidation(mmDegCollagename, mMmDegCollagename, tMmDegCollagename)) {
             return;
         }
-        if (!validMmDegYop()) {
+        if (!yearValidation(mmDegYop, mMmDegYop, tMmDegYop)) {
             return;
         }
-        if (!validMmYoj()) {
+        if (!yearValidation(mmyoj, mMmyoj, tMmyoj)) {
             return;
         }
-        /*if (!validMmS1()) {
+        if (!backlogValidation(mmBacklog)) {
             return;
         }
-        if (!validMmS2()) {
-            return;
-        }
-        if (!validMmS3()) {
-            return;
-        }
-        if (!validMmS4()) {
-            return;
-        }*/
-        if (!validMmBacklog()) {
-            return;
-        }
-        /*if (!validMmWorkxp()) {
-            return;
-        }
-        if (!validMmyeargap()) {
-            return;
-        }*/
+        proceedToBackLog();
     }
-
-    private boolean validMmDegPercentage() {
-        if (mmDegPercentage.isEmpty()) {
-            tMmDegPercentage.setError("Invalid Percentage");
-            requestFocus(mMmDegPercentage);
-            return false;
-        }
-        if (mmDegPercentage.length() > 5) {
-            tMmDegPercentage.setError("Percentage should be less then 5 Characters");
-            requestFocus(mMmDegPercentage);
-            return false;
-        }
-        if (mmDegPercentage.length() < 2) {
-            tMmDegPercentage.setError("Invalid Percentage");
-            requestFocus(mMmDegPercentage);
-            return false;
-
-        }
-        if (Constants.Methods.checkForSpecial(mmDegPercentage)) {
-            tMmDegPercentage.setError("Remove Special Characters");
-            requestFocus(mMmDegPercentage);
-            return false;
-        } else {
-            tMmDegPercentage.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMmDegUniversity() {
-        if (mmDegUniversity.isEmpty()) {
-            tMmDegUniversity.setError("Invalid University Name");
-            requestFocus(mMmDegUniversity);
-            return false;
-        }
-        if (mmDegUniversity.length() > 32) {
-            tMmDegUniversity.setError("University Name should be less then 32 Characters");
-            requestFocus(mMmDegUniversity);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mmDegUniversity)) {
-            tMmDegUniversity.setError("Remove Special Characters");
-            requestFocus(mMmDegUniversity);
-            return false;
-        } else {
-            tMmDegUniversity.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMmDegCollagename() {
-        if (mmDegCollagename.isEmpty()) {
-            tMmDegCollagename.setError("Invalid Collage Name");
-            requestFocus(mMmDegCollagename);
-            return false;
-        }
-        if (mmDegCollagename.length() > 128) {
-            tMmDegCollagename.setError("Collage Name should be less then 128 Characters");
-            requestFocus(mMmDegCollagename);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mmDegCollagename)) {
-            tMmDegCollagename.setError("Remove Special Characters");
-            requestFocus(mMmDegCollagename);
-            return false;
-        } else {
-            tMmDegCollagename.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMmDegYop() {
-        if (mmDegYop.isEmpty()) {
-            tMmDegYop.setError("Invalid YOP");
-            requestFocus(mMmDegYop);
-            return false;
-        }
-        if (!(mmDegYop.length() == 4)) {
-            tMmDegYop.setError("YOP should be of 4 characters");
-            requestFocus(mMmDegYop);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mmDegYop)) {
-            tMmDegYop.setError("Remove Special Characters");
-            requestFocus(mMmDegYop);
-            return false;
-        } else {
-            tMmDegYop.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMmYoj() {
-        if (mmyoj.isEmpty()) {
-            tMmyoj.setError("Invalid YOP");
-            requestFocus(mMmyoj);
-            return false;
-        }
-        if (!(mmyoj.length() == 4)) {
-            tMmyoj.setError("YOP should be of 4 characters");
-            requestFocus(mMmyoj);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mmyoj)) {
-            tMmyoj.setError("Remove Special Characters");
-            requestFocus(mMmyoj);
-            return false;
-        } else {
-            tMmyoj.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMmS1() {
-        if (mmSem1.isEmpty() || mmSem1.length() > 5 || mmSem1.length() < 2) {
-            tMmSem1.setError("Invalid Marks");
-            requestFocus(mMmSem1);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mmSem1)) {
-            tMmSem1.setError("Remove Special Characters");
-            requestFocus(mMmSem1);
-            return false;
-        } else {
-            tMmSem1.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMmS2() {
-        if (mmSem2.isEmpty() || mmSem2.length() > 5 || mmSem2.length() < 2) {
-            tMmSem2.setError("Invalid Marks");
-            requestFocus(mMmSem2);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mmSem2)) {
-            tMmSem2.setError("Remove Special Characters");
-            requestFocus(mMmSem2);
-            return false;
-        } else {
-            tMmSem2.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMmS3() {
-        if (mmSem3.isEmpty() || mmSem3.length() > 5 || mmSem3.length() < 2) {
-            tMmSem3.setError("Invalid Marks");
-            requestFocus(mMmSem3);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mmSem3)) {
-            tMmSem3.setError("Remove Special Characters");
-            requestFocus(mMmSem3);
-            return false;
-        } else {
-            tMmSem3.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMmS4() {
-        if (mmSem4.isEmpty() || mmSem4.length() > 5 || mmSem4.length() < 2) {
-            tMmSem4.setError("Invalid Marks");
-            requestFocus(mMmSem4);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mmSem4)) {
-            tMmSem4.setError("Remove Special Characters");
-            requestFocus(mMmSem4);
-            return false;
-        } else {
-            tMmSem4.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMmBacklog() {
-        if (mmBacklog.length() > 2 || mmBacklog.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Invalid Backlog", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mmBacklog)) {
-            Toast.makeText(getApplicationContext(), "Remove Special Charecters", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validMmWorkxp() {
-        if (mmWorkxp.isEmpty()) {
-            tMmWorkxp.setError("Invalid Work Experience");
-            requestFocus(mMmWorkxp);
-            return false;
-        }
-
-        if (Constants.Methods.checkForSpecial(mmWorkxp)) {
-            tMmWorkxp.setError("Remove Special Characters");
-            requestFocus(mMmWorkxp);
-            return false;
-        } else {
-            tMmWorkxp.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMmyeargap() {
-        if (mmYeargap.isEmpty()) {
-            tMmYeargap.setError("Invalid number of Year Gap");
-            requestFocus(mMmYeargap);
-            return false;
-        }
-        if (mmYeargap.length() > 2) {
-            tMmYeargap.setError("Invalid Input");
-            requestFocus(mMmYeargap);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mmYeargap)) {
-            tMmYeargap.setError("Remove Special Characters");
-            requestFocus(mMmYeargap);
-            return false;
-        } else {
-            tMmYeargap.setErrorEnabled(false);
-        }
-        return true;
-    }
-
 
     public void degreeValidation() {
-        if (!validDegCourse()) {
+        if (!universityValidation(degCourse, mDegCourse, tDegCourse)) {
             return;
         }
-        if (!validDegyoj()) {
+        if (!yearValidation(degYoj, mDegYoj, tDegYoj)) {
             return;
         }
-        /*if (!validDegS1()) {
+        if (!backlogValidation(degBacklog)) {
             return;
         }
-        if (!validDegS2()) {
-            return;
-        }
-        if (!validDegS3()) {
-            return;
-        }
-        if (!validDegS4()) {
-            return;
-        }
-        if (!validDegS5()) {
-            return;
-        }
-        if (!validDegS6()) {
-            return;
-        }*/
-        if (!validDegBacklog()) {
-            return;
-        }
-        /*if (!validDegYeargap()) {
-            return;
-        }*/
+        proceedToBackLog();
     }
-
-    public boolean validDegCourse() {
-        if (degCourse.isEmpty()) {
-            tDegCourse.setError("Invalid Course");
-            requestFocus(mDegCourse);
-            return false;
-        }
-        if (degCourse.length() > 32) {
-            tDegCourse.setError("Course should be less than 32 characters");
-            requestFocus(mDegCourse);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(degCourse)) {
-            tDegCourse.setError("Remove special charecters");
-            requestFocus(mDegCourse);
-            return false;
-        } else {
-            tDegCourse.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validDegyoj() {
-        if (degYoj.isEmpty()) {
-            tDegYoj.setError("Invalid YOP");
-            requestFocus(mDegYoj);
-            return false;
-        }
-        if(!(degYoj.length() == 4)){
-            tDegYoj.setError("YOP should be of 4 character");
-            requestFocus(mDegYoj);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(degYoj)) {
-            tDegYoj.setError("Remove Special Characters");
-            requestFocus(mDegYoj);
-            return false;
-        } else {
-            tDegYoj.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validDegS1() {
-        if (degSem1.isEmpty() || degSem1.length() > 5 || degSem1.length() < 2) {
-            tDegSem1.setError("Invalid Marks");
-            requestFocus(mDegSem1);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(degSem1)) {
-            tDegSem1.setError("Remove Special Characters");
-            requestFocus(mDegSem1);
-            return false;
-        } else {
-            tDegSem1.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validDegS2() {
-        if (degSem2.isEmpty() || degSem2.length() > 5 || degSem2.length() < 2) {
-            tDegSem2.setError("Invalid Marks");
-            requestFocus(mDegSem2);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(degSem2)) {
-            tDegSem2.setError("Remove Special Characters");
-            requestFocus(mDegSem2);
-            return false;
-        } else {
-            tDegSem2.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validDegS3() {
-        if (degSem3.isEmpty() || degSem3.length() > 5 || degSem3.length() < 2) {
-            tDegSem3.setError("Invalid Marks");
-            requestFocus(mDegSem3);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(degSem3)) {
-            tDegSem3.setError("Remove Special Characters");
-            requestFocus(mDegSem3);
-            return false;
-        } else {
-            tDegSem3.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validDegS4() {
-        if (degSem4.isEmpty() || degSem4.length() > 5 || degSem4.length() < 2) {
-            tDegSem4.setError("Invalid Marks");
-            requestFocus(mDegSem4);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(degSem4)) {
-            tDegSem4.setError("Remove Special Characters");
-            requestFocus(mDegSem4);
-            return false;
-        } else {
-            tDegSem4.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validDegS5() {
-        if (degSem5.isEmpty() || degSem5.length() > 5 || degSem5.length() < 2) {
-            tDegSem5.setError("Invalid Marks");
-            requestFocus(mDegSem5);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(degSem5)) {
-            tDegSem5.setError("Remove Special Characters");
-            requestFocus(mDegSem5);
-            return false;
-        } else {
-            tDegSem5.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validDegS6() {
-        if (degSem6.isEmpty() || degSem6.length() > 5 || degSem6.length() < 2) {
-            tDegSem6.setError("Invalid Marks");
-            requestFocus(mDegSem6);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(degSem6)) {
-            tDegSem6.setError("Remove Special Characters");
-            requestFocus(mDegSem6);
-            return false;
-        } else {
-            tDegSem6.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validDegBacklog() {
-        if (degBacklog.length() > 2 || degBacklog.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Invalid Backlog", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-
-
-    public boolean validDegYeargap() {
-        if (degYeargap.isEmpty()) {
-            tDegYeargap.setError("Invalid number of Year Gap");
-            requestFocus(mDegYeargap);
-            return false;
-        }
-        if (degYeargap.length() > 2) {
-            tDegYeargap.setError("Invalid Input");
-            requestFocus(mDegYeargap);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(degYeargap)) {
-            tDegYeargap.setError("Remove Special Characters");
-            requestFocus(mDegYeargap);
-            return false;
-        } else {
-            tDegYeargap.setErrorEnabled(false);
-        }
-        return true;
-    }
-
 
     public void mtechvalidation() {
-        if (!validmtechDlpSchoolname()) {
-            return;
-        }
-        if (!validmtechDlpPercentage()) {
-            return;
-        }
-        if (!validmtechDlpYop()) {
-            return;
-        }
-        if (!validatemtechBePercentage()) {
-            return;
-        }
-        if (!validmtechBeUniversity()) {
-            return;
-        }
-        if (!validmtechBeCollagename()) {
-            return;
-        }
-        if (!validmtechBeYop()) {
-            return;
-        }
-        if (!validmtechMtYoj()) {
-            return;
-        }
-        /*if (!validmtechMtS1()) {
-            return;
-        }
-        if (!validmtechMtS2()) {
-            return;
-        }
-        if (!validmtechMtS3()) {
-            return;
-        }
-        if (!validmtechMtS4()) {
-            return;
-        }*/
-        if (!validmtechBacklog()) {
-            return;
-        }
-        /*if (!validmtechWorkxp()) {
-            return;
-        }
-        if (!validmtechYeargap()) {
-            return;
-        }*/
-    }
-
-    private boolean validmtechDlpSchoolname() {
-        if (mtechDplSchoolname.isEmpty()) {
-            tMtechDplSchoolname.setError("Invalid School Name");
-            requestFocus(mMtechDplSchoolname);
-            return false;
-        }
-        if (mtechDplSchoolname.length() > 128) {
-            tMtechDplSchoolname.setError("School Name should be less then 128 Characters");
-            requestFocus(mMtechDplSchoolname);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechDplSchoolname)) {
-            tMtechDplSchoolname.setError("Remove Special Characters");
-            requestFocus(mMtechDplSchoolname);
-            return false;
+        if (mtechDipSwitch.isChecked()) {
+            if (!collegeNameValidation(mtechDplSchoolname, mMtechDplSchoolname, tMtechDplSchoolname)) {
+                return;
+            }
+            if (!percentageValidation(mtechDplPercentage, mMtechDplPercentage, tMtechDplPercentage)) {
+                return;
+            }
+            if (!yearValidation(mtechDplYop, mMtechDplYop, tMtechDplYop)) {
+                return;
+            }
+            if (!percentageValidation(mtechBePercentage, mMtechBePercentage, tMtechBePercentage)) {
+                return;
+            }
+            if (!universityValidation(mtechBeUniversity, mMtechBeUniversity, tMtechBeUniversity)) {
+                return;
+            }
+            if (!collegeNameValidation(mtechBeCollagename, mMtechBeCollagename, tMtechBeCollagename)) {
+                return;
+            }
+            if (!yearValidation(mtechBeYop, mMtechBeYop, tMtechBeYop)) {
+                return;
+            }
+            if (!yearValidation(mtechMtYoj, mMtechMtYoj, tMtechMtYoj)) {
+                return;
+            }
+            if (!backlogValidation(mtechBacklog)) {
+                return;
+            }
+            proceedToBackLog();
         } else {
-            tMtechDplSchoolname.setErrorEnabled(false);
+            if (!percentageValidation(mtechBePercentage, mMtechBePercentage, tMtechBePercentage)) {
+                return;
+            }
+            if (!universityValidation(mtechBeUniversity, mMtechBeUniversity, tMtechBeUniversity)) {
+                return;
+            }
+            if (!collegeNameValidation(mtechBeCollagename, mMtechBeCollagename, tMtechBeCollagename)) {
+                return;
+            }
+            if (!yearValidation(mtechBeYop, mMtechBeYop, tMtechBeYop)) {
+                return;
+            }
+            if (!yearValidation(mtechMtYoj, mMtechMtYoj, tMtechMtYoj)) {
+                return;
+            }
+            if (!backlogValidation(mtechBacklog)) {
+                return;
+            }
+            proceedToBackLog();
         }
-        return true;
     }
-
-    private boolean validmtechDlpPercentage() {
-        if (mtechDplPercentage.isEmpty()) {
-            tMtechDplPercentage.setError("Invalid Percentage");
-            requestFocus(mMtechDplPercentage);
-            return false;
-        }
-        if (mtechDplPercentage.length() > 5) {
-            tMtechDplPercentage.setError("Percentage Name should be less then 5 Characters");
-            requestFocus(mMtechDplPercentage);
-            return false;
-        }
-        if (mtechDplPercentage.length() < 2) {
-            tMtechDplPercentage.setError("Invalid Percentage");
-            requestFocus(mMtechDplPercentage);
-            return false;
-
-        }
-        if (Constants.Methods.checkForSpecial(mtechDplPercentage)) {
-            tMtechDplPercentage.setError("Remove Special Characters");
-            requestFocus(mMtechDplPercentage);
-            return false;
-        } else {
-            tMtechDplPercentage.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validmtechDlpYop() {
-        if (mtechDplYop.isEmpty()) {
-            tMtechDplYop.setError("Invalid YOP");
-            requestFocus(mMtechDplYop);
-            return false;
-        }
-        if (!(mtechDplYop.length() == 4)) {
-            tMtechDplYop.setError("YOP should be of 4 characters");
-            requestFocus(mMtechDplYop);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechDplYop)) {
-            tMtechDplYop.setError("Remove Special Characters");
-            requestFocus(mMtechDplYop);
-            return false;
-        } else {
-            tMtechDplYop.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validatemtechBePercentage() {
-        if (mtechBePercentage.isEmpty()) {
-            tMtechBePercentage.setError("Invalid Percentage");
-            requestFocus(mMtechBePercentage);
-            return false;
-        }
-        if (mtechBePercentage.length() > 5) {
-            tMtechBePercentage.setError("Percentage Name should be less then 5 Characters");
-            requestFocus(mMtechBePercentage);
-            return false;
-        }
-        if (mtechBePercentage.length() < 2) {
-            tMtechBePercentage.setError("Invalid Percentage");
-            requestFocus(mMtechBePercentage);
-            return false;
-
-        }
-        if (Constants.Methods.checkForSpecial(mtechBePercentage)) {
-            tMtechBePercentage.setError("Remove Special Characters");
-            requestFocus(mMtechBePercentage);
-            return false;
-        } else {
-            tMtechBePercentage.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validmtechBeUniversity() {
-        if (mtechBeUniversity.isEmpty()) {
-            tMtechBeUniversity.setError("Invalid University Name");
-            requestFocus(mMtechBeUniversity);
-            return false;
-        }
-        if (mtechBeUniversity.length() > 32) {
-            tMtechBeUniversity.setError("University Name should be less then 32 Characters");
-            requestFocus(mMtechBeUniversity);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechBeUniversity)) {
-            tMtechBeUniversity.setError("Remove Special Characters");
-            requestFocus(mMtechBeUniversity);
-            return false;
-        } else {
-            tMtechBeUniversity.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validmtechBeCollagename() {
-        if (mtechBeCollagename.isEmpty()) {
-            tMtechBeCollagename.setError("Invalid Collage Name");
-            requestFocus(mMtechBeCollagename);
-            return false;
-        }
-        if (mtechBeCollagename.length() > 32) {
-            tMtechBeCollagename.setError("Collage Name should be less then 32 Characters");
-            requestFocus(mMtechBeCollagename);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechBeCollagename)) {
-            tMtechBeCollagename.setError("Remove Special Characters");
-            requestFocus(mMtechBeCollagename);
-            return false;
-        } else {
-            tMtechBeCollagename.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-
-    private boolean validmtechBeYop() {
-        if (mtechBeYop.isEmpty()) {
-            tMtechBeYop.setError("Invalid YOP");
-            requestFocus(mMtechBeYop);
-            return false;
-        }
-        if (!(mtechBeYop.length() == 4)) {
-            tMtechBeYop.setError("YOP should be of 4 characters");
-            requestFocus(mMtechBeYop);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechBeYop)) {
-            tMtechBeYop.setError("Remove Special Characters");
-            requestFocus(mMtechBeYop);
-            return false;
-        } else {
-            tMtechBeYop.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-
-    private boolean validmtechMtYoj() {
-        if (mtechMtYoj.isEmpty() || !(mtechMtYoj.length() == 4)) {
-            tMtechMtYoj.setError("Invalid YOP");
-            requestFocus(mMtechMtYoj);
-            return false;
-        }
-        if (!(mtechMtYoj.length() == 4)) {
-            tMtechMtYoj.setError("YOP should be of 4 characters");
-            requestFocus(mMtechMtYoj);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechMtYoj)) {
-            tMtechMtYoj.setError("Remove Special Characters");
-            requestFocus(mMtechMtYoj);
-            return false;
-        } else {
-            tMtechMtYoj.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validmtechMtS1() {
-        if (mtechMtSem1.isEmpty() || mtechMtSem1.length() > 5 || mtechMtSem1.length() < 2) {
-            tMtechMtSem1.setError("Invalid Marks");
-            requestFocus(mMtechMtSem1);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechMtSem1)) {
-            tMtechMtSem1.setError("Remove Special Characters");
-            requestFocus(mMtechMtSem1);
-            return false;
-        } else {
-            tMtechMtSem1.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validmtechMtS2() {
-        if (mtechMtSem2.isEmpty() || mtechMtSem2.length() > 5 || mtechMtSem2.length() < 2) {
-            tMtechMtSem2.setError("Invalid Marks");
-            requestFocus(mMtechMtSem2);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechMtSem2)) {
-            tMtechMtSem2.setError("Remove Special Characters");
-            requestFocus(mMtechMtSem2);
-            return false;
-        } else {
-            tMtechMtSem2.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validmtechMtS3() {
-        if (mtechMtSem3.isEmpty() || mtechMtSem3.length() > 5 || mtechMtSem3.length() < 2) {
-            tMtechMtSem3.setError("Invalid Marks");
-            requestFocus(mMtechMtSem3);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechMtSem3)) {
-            tMtechMtSem3.setError("Remove Special Characters");
-            requestFocus(mMtechMtSem3);
-            return false;
-        } else {
-            tMtechMtSem3.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validmtechMtS4() {
-        if (mtechMtSem4.isEmpty() || mtechMtSem4.length() > 5 || mtechMtSem4.length() < 2) {
-            tMtechMtSem4.setError("Invalid Marks");
-            requestFocus(mMtechMtSem4);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechMtSem4)) {
-            tMtechMtSem4.setError("Remove Special Characters");
-            requestFocus(mMtechMtSem4);
-            return false;
-        } else {
-            tMtechMtSem4.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validmtechBacklog() {
-        if (mtechBacklog.length() > 2 || mtechBacklog.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Invalid Backlog", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechBacklog)) {
-            Toast.makeText(getApplicationContext(), "Remove Special Characters", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-
-    private boolean validmtechWorkxp() {
-        if (mtechWorkxp.isEmpty()) {
-            tMtechWorkxp.setError("Invalid Work Experience");
-            requestFocus(mMtechWorkxp);
-            return false;
-        }
-
-        if (Constants.Methods.checkForSpecial(mtechWorkxp)) {
-            tMtechWorkxp.setError("Remove Special Characters");
-            requestFocus(mMtechWorkxp);
-            return false;
-        } else {
-            tMtechWorkxp.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validmtechYeargap() {
-        if (mtechYearGap.isEmpty()) {
-            tMtechYearGap.setError("Invalid number of Year Gap");
-            requestFocus(mMtechYearGap);
-            return false;
-        }
-        if (mtechYearGap.length() > 2) {
-            tMtechYearGap.setError("Invalid Input");
-            requestFocus(mMtechYearGap);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mtechYearGap)) {
-            tMtechYearGap.setError("Remove Special Characters");
-            requestFocus(mMtechYearGap);
-            return false;
-        } else {
-            tMtechYearGap.setErrorEnabled(false);
-        }
-        return true;
-    }
-
 
     public void btechvaliditaion() {
-        if (!validbtechDplSchoolname()) {
-            return;
-        }
-        if (!validbtechDplPercentage()) {
-            return;
-        }
-        if (!validbtechDplYop()) {
-            return;
-        }
-        if (!validbtechBeYoj()) {
-            return;
-        }
-        /*if (!validbtechBeS1()) {
-            return;
-        }
-        if (!validbtechBeS2()) {
-            return;
-        }
-        if (!validbtechBeS3()) {
-            return;
-        }
-        if (!validbtechBeS4()) {
-            return;
-        }
-        if (!validbtechBeS5()) {
-            return;
-        }
-        if (!validbtechBeS6()) {
-            return;
-        }
-        if (!validbtechBeS7()) {
-            return;
-        }
-        if (!validbtechBeS8()) {
-            return;
-        }*/
-        if (!validbtechBacklog()) {
-            return;
-        }
-        /*if (!validbtechYeargap()) {
-            return;
-        }*/
-
-    }
-
-    public boolean validbtechDplSchoolname() {
-        if (btechDplSchoolname.isEmpty()) {
-            tBtechDplSchoolname.setError("Invalid School Name");
-            requestFocus(mBtechDplSchoolname);
-            return false;
-        }
-        if (btechDplSchoolname.length() > 128) {
-            tBtechDplSchoolname.setError("School Name should be less then 128 Characters");
-            requestFocus(mBtechDplSchoolname);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(btechDplSchoolname)) {
-            tBtechDplSchoolname.setError("Remove Special Characters");
-            requestFocus(mBtechDplSchoolname);
-            return false;
+        if (btechDipSwitch.isChecked()) {
+            if (!collegeNameValidation(btechDplSchoolname, mBtechDplSchoolname, tBtechDplSchoolname)) {
+                return;
+            }
+            if (!percentageValidation(btechDplPercentage, mBtechDplPercentage, tBtechDplPercentage)) {
+                return;
+            }
+            if (!yearValidation(btechDplYop, mBtechDplYop, tBtechDplYop)) {
+                return;
+            }
+            if (!yearValidation(btechBeYoj, mBtechBeYoj, tBtechBeYoj)) {
+                return;
+            }
+            if (!backlogValidation(btechBacklog)) {
+                return;
+            }
+            proceedToBackLog();
         } else {
-            tBtechDplSchoolname.setErrorEnabled(false);
+            if (!yearValidation(btechBeYoj, mBtechBeYoj, tBtechBeYoj)) {
+                return;
+            }
+            if (!backlogValidation(btechBacklog)) {
+                return;
+            }
+            proceedToBackLog();
         }
-        return true;
     }
-
-    public boolean validbtechDplPercentage() {
-        if (btechDplPercentage.isEmpty()) {
-            tBtechDplPercentage.setError("Invalid Percentage");
-            requestFocus(mBtechDplPercentage);
-            return false;
-        }
-        if (btechDplPercentage.length() > 5) {
-            tBtechDplPercentage.setError("YOP Name should be less then 5 Characters");
-            requestFocus(mBtechDplPercentage);
-            return false;
-        }
-        if (btechDplPercentage.length() < 2) {
-            tBtechDplPercentage.setError("Invalid Percentage");
-            requestFocus(mBtechDplPercentage);
-            return false;
-
-        }
-        if (Constants.Methods.checkForSpecial(btechDplPercentage)) {
-            tBtechDplPercentage.setError("Remove Special Characters");
-            requestFocus(mBtechDplPercentage);
-            return false;
-        } else {
-            tBtechDplPercentage.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechDplYop() {
-        if (btechDplYop.isEmpty()) {
-            tBtechDplYop.setError("Invalid YOP");
-            requestFocus(mBtechDplYop);
-            return false;
-        }
-        if (!(btechDplYop.length() == 4)) {
-            tBtechDplYop.setError("YOP should be of 4 characters");
-            requestFocus(mBtechDplYop);
-            return false;
-        }
-
-        if (Constants.Methods.checkForSpecial(btechDplYop)) {
-            tBtechDplYop.setError("Remove Special Characters");
-            requestFocus(mBtechDplYop);
-            return false;
-        } else {
-            tBtechDplYop.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechBeYoj() {
-        if (btechBeYoj.isEmpty() || btechBeYoj.length() != 4) {
-            tBtechBeYoj.setError("Invalid YOJ");
-            requestFocus(mBtechBeYoj);
-            return false;
-        }
-
-        if (Constants.Methods.checkForSpecial(btechBeYoj)) {
-            tBtechBeYoj.setError("Remove Special Characters");
-            requestFocus(mBtechBeYoj);
-            return false;
-        } else {
-            tBtechBeYoj.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechBeS1() {
-        if (btechBeSem1.isEmpty() || btechBeSem1.length() > 5 || btechBeSem1.length() < 2) {
-            tBtechBeSem1.setError("Invalid Marks");
-            requestFocus(mBtechBeSem1);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(btechDplSchoolname)) {
-            tBtechBeSem1.setError("Remove Special Characters");
-            requestFocus(mBtechBeSem1);
-            return false;
-        } else {
-            tBtechBeSem1.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechBeS2() {
-        if (btechBeSem2.isEmpty() || btechBeSem2.length() > 5 || btechBeSem2.length() < 2) {
-            tBtechBeSem2.setError("Invalid Marks");
-            requestFocus(mBtechBeSem2);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(btechDplSchoolname)) {
-            tBtechBeSem2.setError("Remove Special Characters");
-            requestFocus(mBtechBeSem2);
-            return false;
-        } else {
-            tBtechBeSem2.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechBeS3() {
-        if (btechBeSem3.isEmpty() || btechBeSem3.length() > 5 || btechBeSem3.length() < 2) {
-            tBtechBeSem3.setError("Invalid Marks");
-            requestFocus(mBtechBeSem3);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(btechDplSchoolname)) {
-            tBtechBeSem3.setError("Remove Special Characters");
-            requestFocus(mBtechBeSem3);
-            return false;
-        } else {
-            tBtechBeSem3.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechBeS4() {
-        if (btechBeSem4.isEmpty() || btechBeSem4.length() > 5 || btechBeSem4.length() < 2) {
-            tBtechBeSem4.setError("Invalid Marks");
-            requestFocus(mBtechBeSem4);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(btechDplSchoolname)) {
-            tBtechBeSem4.setError("Remove Special Characters");
-            requestFocus(mBtechBeSem4);
-            return false;
-        } else {
-            tBtechBeSem4.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechBeS5() {
-        if (btechBeSem5.isEmpty() || btechBeSem5.length() > 5 || btechBeSem5.length() < 2) {
-            tBtechBeSem5.setError("Invalid Marks");
-            requestFocus(mBtechBeSem5);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(btechDplSchoolname)) {
-            tBtechBeSem5.setError("Remove Special Characters");
-            requestFocus(mBtechBeSem5);
-            return false;
-        } else {
-            tBtechBeSem5.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechBeS6() {
-        if (btechBeSem6.isEmpty() || btechBeSem6.length() > 5 || btechBeSem6.length() < 2) {
-            tBtechBeSem6.setError("Invalid Marks");
-            requestFocus(mBtechBeSem6);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(btechDplSchoolname)) {
-            tBtechBeSem6.setError("Remove Special Characters");
-            requestFocus(mBtechBeSem6);
-            return false;
-        } else {
-            tBtechBeSem6.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechBeS7() {
-        if (btechBeSem7.isEmpty() || btechBeSem7.length() > 5 || btechBeSem7.length() < 2) {
-            tBtechBeSem7.setError("Invalid Marks");
-            requestFocus(mBtechBeSem7);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(btechDplSchoolname)) {
-            tBtechBeSem7.setError("Remove Special Characters");
-            requestFocus(mBtechBeSem7);
-            return false;
-        } else {
-            tBtechBeSem7.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechBeS8() {
-        if (btechBeSem8.isEmpty() || btechBeSem8.length() > 5 || btechBeSem8.length() < 2) {
-            tBtechBeSem8.setError("Invalid Marks");
-            requestFocus(mBtechBeSem8);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(btechDplSchoolname)) {
-            tBtechBeSem8.setError("Remove Special Characters");
-            requestFocus(mBtechBeSem8);
-            return false;
-        } else {
-            tBtechBeSem8.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    public boolean validbtechBacklog() {
-        if (btechBacklog.length() > 2 || btechBacklog.isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Invalid Backlog", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        return true;
-    }
-
-
-    public boolean validbtechYeargap() {
-        if (btechYeargap.isEmpty()) {
-            tBtechYeargap.setError("Invalid number of Year Gap");
-            requestFocus(mBtechYeargap);
-            return false;
-        }
-        if (btechYeargap.length() > 2) {
-            tBtechYeargap.setError("Invalid Input");
-            requestFocus(mBtechYeargap);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(btechYeargap)) {
-            tBtechYeargap.setError("Remove Special Characters");
-            requestFocus(mBtechYeargap);
-            return false;
-        } else {
-            tBtechYeargap.setErrorEnabled(false);
-        }
-        return true;
-    }
-
 
     public void mcaValidate() {
-        if (!validMcaDegPercentage()) {
+        if (!percentageValidation(mcaDegPercentage, mMcaDegPercentage, tMcaDegPercentage)) {
             return;
         }
-        if (!validMcaDegCourse()) {
+        if (!courseValidation(mcaDegCourse, mMcaDegCourse, tMcaDegCourse)) {
             return;
         }
-        if (!validMcaDegUniversity()) {
+        if (!universityValidation(mcaDegUniversity, mMcaDegUniversity, tMcaDegUniversity)) {
             return;
         }
-        if (!validMcaDegCollagename()) {
+        if (!collegeNameValidation(mcaDegCollagename, mMcaDegCollagename, tMcaDegCollagename)) {
             return;
         }
-        if (!validMcaDegYop()) {
+        if (!yearValidation(mcaDegYop, mMcaDegYop, tMcaDegYop)) {
             return;
         }
-        if (!validMcaYoj()) {
+        if (!yearValidation(mcaYoj, mMcaYoj, tMcaYoj)) {
             return;
         }
-        /*if (!validMcaS1()) {
+        if (!backlogValidation(mcaBacklog)) {
             return;
         }
-        if (!validMcaS2()) {
-            return;
-        }
-        if (!validMcaS3()) {
-            return;
-        }
-        if (!validMcaS4()) {
-            return;
-        }
-        if (!validMcaS5()) {
-            return;
-        }
-        if (!validMcaS6()) {
-            return;
-        }*/
-        if (!validMcaBacklog()) {
-            return;
-        }
-        /*if (!validMcaWorkxp()) {
-            return;
-        }
-        if (!validMcaYeargap()) {
-            return;
-        }*/
+        proceedToBackLog();
     }
 
-    private boolean validMcaDegPercentage() {
-        if (mcaDegPercentage.isEmpty()) {
-            tMcaDegPercentage.setError("Invalid Percentage");
-            requestFocus(mMcaDegPercentage);
+    private boolean percentageValidation(String check, EditText mCheck, TextInputLayout tCheck) {
+        if (check.isEmpty()) {
+            tCheck.setError("Invalid Percentage");
+            requestFocus(mCheck);
             return false;
         }
-        if (mcaDegPercentage.length() > 5) {
-            tMcaDegPercentage.setError("Percentage Name should be less then 5 Characters");
-            requestFocus(mMcaDegPercentage);
+        if (check.length() > 5) {
+            tCheck.setError("Percentage Name should be less then 5 Characters");
+            requestFocus(mCheck);
             return false;
         }
-        if (mcaDegPercentage.length() < 2) {
-            tMcaDegPercentage.setError("Invalid Percentage");
-            requestFocus(mMcaDegPercentage);
+        if (check.length() < 2) {
+            tCheck.setError("Invalid Percentage");
+            requestFocus(mCheck);
             return false;
 
         }
-        if (Constants.Methods.checkForSpecial(mcaDegPercentage)) {
-            tMcaDegPercentage.setError("Remove Special Characters");
-            requestFocus(mMcaDegPercentage);
+        if (Constants.Methods.checkForSpecial(check)) {
+            tCheck.setError("Remove Special Characters");
+            requestFocus(mCheck);
             return false;
         } else {
-            tMcaDegPercentage.setErrorEnabled(false);
+            tCheck.setErrorEnabled(false);
         }
         return true;
     }
 
-    private boolean validMcaDegCourse() {
-        if (mcaDegCourse.isEmpty()) {
-            tMcaDegCourse.setError("Invalid Course");
+    private boolean courseValidation(String check, EditText mCheck, TextInputLayout tCheck) {
+        if (check.isEmpty()) {
+            tCheck.setError("Invalid Course");
+            requestFocus(mCheck);
+            return false;
+        }
+        if (check.length() > 10) {
+            tCheck.setError("Courseshould be less then 32 Characters");
             requestFocus(mMcaDegCourse);
             return false;
         }
-        if (mcaDegCourse.length() > 10) {
-            tMcaDegCourse.setError("Courseshould be less then 32 Characters");
-            requestFocus(mMcaDegCourse);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mcaDegCourse)) {
-            tMcaDegCourse.setError("Remove Special Characters");
-            requestFocus(mMcaDegCourse);
+        if (Constants.Methods.checkForSpecial(check)) {
+            tCheck.setError("Remove Special Characters");
+            requestFocus(mCheck);
             return false;
         } else {
-            tMcaDegCourse.setErrorEnabled(false);
+            tCheck.setErrorEnabled(false);
         }
         return true;
     }
 
-    private boolean validMcaDegUniversity() {
-        if (mcaDegUniversity.isEmpty()) {
-            tMcaDegUniversity.setError("Invalid University Name");
-            requestFocus(mMcaDegUniversity);
+    private boolean universityValidation(String check, EditText mCheck, TextInputLayout tCheck) {
+        if (check.isEmpty()) {
+            tCheck.setError("Invalid University Name");
+            requestFocus(mCheck);
             return false;
         }
-        if (mcaDegUniversity.length() > 32) {
-            tMcaDegUniversity.setError("University Name should be less then 32 Characters");
-            requestFocus(mMcaDegUniversity);
+        if (check.length() > 32) {
+            tCheck.setError("University Name should be less then 32 Characters");
+            requestFocus(mCheck);
             return false;
         }
-        if (Constants.Methods.checkForSpecial(mcaDegUniversity)) {
-            tMcaDegUniversity.setError("Remove Special Characters");
-            requestFocus(mMcaDegUniversity);
+        if (Constants.Methods.checkForSpecial(check)) {
+            tCheck.setError("Remove Special Characters");
+            requestFocus(mCheck);
             return false;
         } else {
-            tMcaDegUniversity.setErrorEnabled(false);
+            tCheck.setErrorEnabled(false);
         }
         return true;
     }
 
-    private boolean validMcaDegCollagename() {
-        if (mcaDegCollagename.isEmpty()) {
-            tMcaDegCollagename.setError("Invalid Collage Name");
-            requestFocus(mMcaDegCollagename);
+    private boolean collegeNameValidation(String check, EditText mCheck, TextInputLayout tCheck) {
+        if (check.isEmpty()) {
+            tCheck.setError("Invalid College Name");
+            requestFocus(mCheck);
             return false;
         }
-        if (mcaDegCollagename.length() > 128) {
-            tMcaDegCollagename.setError("Collage Name should be less then 128 Characters");
-            requestFocus(mMcaDegCollagename);
+        if (check.length() > 128) {
+            tCheck.setError("College name should be less then 128 Characters");
+            requestFocus(mCheck);
             return false;
         }
-        if (Constants.Methods.checkForSpecial(mcaDegCollagename)) {
-            tMcaDegCollagename.setError("Remove Special Characters");
-            requestFocus(mMcaDegCollagename);
+        if (Constants.Methods.checkForSpecial(check)) {
+            tCheck.setError("Remove Special Characters");
+            requestFocus(mCheck);
             return false;
         } else {
-            tMcaDegCollagename.setErrorEnabled(false);
+            tCheck.setErrorEnabled(false);
         }
         return true;
     }
 
-    private boolean validMcaDegYop() {
-        if (mcaDegYop.isEmpty()) {
-            tMcaDegYop.setError("Invalid YOP");
-            requestFocus(mMcaDegYop);
-            return false;
-        }
-        if (!((mcaDegYop.length() == 4))){
-            tMcaDegYop.setError("YOP should be of 4 characters");
-            requestFocus(mMcaDegYop);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mcaDegYop)) {
-            tMcaDegYop.setError("Remove Special Characters");
-            requestFocus(mMcaDegYop);
-            return false;
-        } else {
-            tMcaDegYop.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMcaYoj() {
-        if (mcaYoj.isEmpty()) {
-            tMcaYoj.setError("Invalid YOP");
-            requestFocus(mMcaYoj);
-            return false;
-        }
-        if (!((mcaYoj.length() == 4))){
-            tMcaYoj.setError("YOP should be of 4 characters");
-            requestFocus(mMcaYoj);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mcaYoj)) {
-            tMcaYoj.setError("Remove Special Characters");
-            requestFocus(mMcaYoj);
-            return false;
-        } else {
-            tMcaYoj.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMcaS1() {
-        if (mcaSem1.isEmpty() || mcaSem1.length() > 5 || mcaSem1.length() < 2) {
-            tMcaSem1.setError("Invalid Marks");
-            requestFocus(mMcaSem1);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mcaSem1)) {
-            tMcaSem1.setError("Remove Special Characters");
-            requestFocus(mMcaSem1);
-            return false;
-        } else {
-            tMcaSem1.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMcaS2() {
-        if (mcaSem2.isEmpty() || mcaSem2.length() > 5 || mcaSem2.length() < 2) {
-            tMcaSem2.setError("Invalid Marks");
-            requestFocus(mMcaSem2);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mcaSem2)) {
-            tMcaSem2.setError("Remove Special Characters");
-            requestFocus(mMcaSem2);
-            return false;
-        } else {
-            tMcaSem2.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMcaS3() {
-        if (mcaSem3.isEmpty() || mcaSem3.length() > 5 || mcaSem3.length() < 2) {
-            tMcaSem3.setError("Invalid Marks");
-            requestFocus(mMcaSem3);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mcaSem3)) {
-            tMcaSem3.setError("Remove Special Characters");
-            requestFocus(mMcaSem3);
-            return false;
-        } else {
-            tMcaSem3.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMcaS4() {
-        if (mcaSem4.isEmpty() || mcaSem4.length() > 5 || mcaSem4.length() < 2) {
-            tMcaSem4.setError("Invalid Marks");
-            requestFocus(mMcaSem4);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mcaSem4)) {
-            tMcaSem4.setError("Remove Special Characters");
-            requestFocus(mMcaSem4);
-            return false;
-        } else {
-            tMcaSem4.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMcaS5() {
-        if (mcaSem5.isEmpty() || mcaSem5.length() > 5 || mcaSem5.length() < 2) {
-            tMcaSem5.setError("Invalid Marks");
-            requestFocus(mMcaSem5);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mcaSem5)) {
-            tMcaSem5.setError("Remove Special Characters");
-            requestFocus(mMcaSem5);
-            return false;
-        } else {
-            tMcaSem5.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMcaS6() {
-        if (mcaSem6.isEmpty() || mcaSem6.length() > 5 || mcaSem6.length() < 2) {
-            tMcaSem6.setError("Invalid Marks");
-            requestFocus(mMcaSem6);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mcaSem6)) {
-            tMcaSem6.setError("Remove Special Characters");
-            requestFocus(mMcaSem6);
-            return false;
-        } else {
-            tMcaSem6.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validMcaBacklog() {
-        if (mcaBacklog.length() > 2 || mcaBacklog.isEmpty()) {
+    private boolean backlogValidation(String check) {
+        if (check.length() > 2 || check.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Invalid Backlog", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (Constants.Methods.checkForSpecial(mcaBacklog)) {
+        if (Constants.Methods.checkForSpecial(check)) {
             Toast.makeText(getApplicationContext(), "Remove Special Charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
-    private boolean validMcaWorkxp() {
-        if (mcaWorkxp.isEmpty()) {
-            tMcaWorkxp.setError("Invalid Work Experience");
-            requestFocus(mMcaWorkxp);
+    private boolean yearValidation(String check, EditText mCheck, TextInputLayout tCheck) {
+        if (check.isEmpty()) {
+            tCheck.setError("Invalid year");
+            requestFocus(mCheck);
             return false;
         }
-
-        if (Constants.Methods.checkForSpecial(mcaWorkxp)) {
-            tMcaWorkxp.setError("Remove Special Characters");
-            requestFocus(mMcaWorkxp);
+        if (!((check.length() == 4))) {
+            tCheck.setError("Year should be of 4 characters");
+            requestFocus(mCheck);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(check)) {
+            tCheck.setError("Remove Special Characters");
+            requestFocus(mCheck);
             return false;
         } else {
-            tMcaWorkxp.setErrorEnabled(false);
+            tCheck.setErrorEnabled(false);
         }
         return true;
     }
-
-    private boolean validMcaYeargap() {
-        if (mcaYeargap.isEmpty()) {
-            tMcaYeargap.setError("Invalid number of Year Gap");
-            requestFocus(mMcaYeargap);
-            return false;
-        }
-        if (mcaYeargap.length() > 2) {
-            tMcaYeargap.setError("Invalid Input");
-            requestFocus(mMcaYeargap);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(mcaYeargap)) {
-            tMcaYeargap.setError("Remove Special Characters");
-            requestFocus(mMcaYeargap);
-            return false;
-        } else {
-            tMcaYeargap.setErrorEnabled(false);
-        }
-        return true;
-    }
-
 
     public void BackButton(View v) {
         finish();
     }
 
-
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    public void proceedToBackLog() {
+        String bb = "";
+        if (getIntent().getStringExtra("DATA").equals("btech")) {
+            bb = mBtechBacklog.getText().toString();
+        } else if (getIntent().getStringExtra("DATA").equals("mtech")) {
+            bb = mMtechBacklog.getText().toString();
+        } else if (getIntent().getStringExtra("DATA").equals("mba_mcom")) {
+            bb = mMmBacklog.getText().toString();
+        } else if (getIntent().getStringExtra("DATA").equals("degree")) {
+            bb = mDegBacklog.getText().toString();
+        } else if (getIntent().getStringExtra("DATA").equals("mca")) {
+            bb = mMcaBacklog.getText().toString();
+        }
+        Intent intent = new Intent(getApplicationContext(), PlacementRegistration4.class);
+        intent.putExtra("DATA", bb);
+        startActivity(intent);
     }
 }

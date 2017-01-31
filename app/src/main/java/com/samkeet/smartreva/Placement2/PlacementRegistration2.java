@@ -8,7 +8,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import com.google.firebase.crash.FirebaseCrash;
 import com.samkeet.smartreva.Constants;
@@ -27,16 +30,24 @@ public class PlacementRegistration2 extends AppCompatActivity {
     public String board10, board12, schoolname10, schoolname12, percentage10, percentage12, yop10, yop12;
 
     public LabelledSpinner courseSpin, branchSpin;
-    public String[] courseList = {"B Tech.", "M Tech.", "M.B.A./M Com.", "Degree", "M.C.A."};
+    public String[] courseList = {"btech", "mtech", "mba_mcom", "degree", "mca"};
     public String[] branchList = {"Branch"};
     public String scourse, sbranch;
 
     public Button Next;
 
+    public Switch twelthSwitcher;
+    public LinearLayout twelthLayout;
+
+    public String object1;
+    public JSONObject jsonObject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_placement2_registration2);
+
+        object1 = getIntent().getStringExtra("OBJECT1");
 
         //Text input layout
         tBoard10 = (TextInputLayout) findViewById(R.id.board_10);
@@ -59,6 +70,20 @@ public class PlacementRegistration2 extends AppCompatActivity {
         mYop12 = (EditText) findViewById(R.id.yop_12_et);
 
         Next = (Button) findViewById(R.id.next_button);
+
+        twelthLayout = (LinearLayout) findViewById(R.id.twelthlayout);
+        twelthSwitcher = (Switch) findViewById(R.id.twelthSwitcher);
+        twelthSwitcher.setChecked(true);
+        twelthSwitcher.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked) {
+                    twelthLayout.setVisibility(View.VISIBLE);
+                } else {
+                    twelthLayout.setVisibility(View.GONE);
+                }
+            }
+        });
 
         //spinner
         courseSpin = (LabelledSpinner) findViewById(R.id.course_spin);
@@ -108,33 +133,81 @@ public class PlacementRegistration2 extends AppCompatActivity {
     }
 
     public void validation() {
-        if (!validBoard10()) {
-            return;
+        if (twelthSwitcher.isChecked()) {
+            if (!validBoard10()) {
+                return;
+            }
+            if (!validSchoolname10()) {
+                return;
+            }
+            if (!validPercentage10()) {
+                return;
+            }
+            if (!validYop10()) {
+                return;
+            }
+            if (!validBoard12()) {
+                return;
+            }
+            if (!validSchoolname12()) {
+                return;
+            }
+            if (!validPercentage12()) {
+                return;
+            }
+            if (!validYop12()) {
+                return;
+            }
+            try {
+                jsonObject.put("tenthb", board10);
+                jsonObject.put("tenthsn", schoolname10);
+                jsonObject.put("tenths", percentage10);
+                jsonObject.put("tenthpy", yop10);
+                jsonObject.put("twelthb", board12);
+                jsonObject.put("twelthsn", schoolname12);
+                jsonObject.put("twelths", percentage12);
+                jsonObject.put("twelthpy", yop12);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent(getApplicationContext(), PlacementRegistration3.class);
+            intent.putExtra("OBJECT1", object1);
+            intent.putExtra("OBJECT2", jsonObject.toString());
+            intent.putExtra("DATA", scourse);
+            startActivity(intent);
+        } else {
+            if (!validBoard10()) {
+                return;
+            }
+            if (!validSchoolname10()) {
+                return;
+            }
+            if (!validPercentage10()) {
+                return;
+            }
+            if (!validYop10()) {
+                return;
+            }
+            try {
+                jsonObject.put("tenthb", board10);
+                jsonObject.put("tenthsn", schoolname10);
+                jsonObject.put("tenths", percentage10);
+                jsonObject.put("tenthpy", yop10);
+                jsonObject.put("twelthb", "NA");
+                jsonObject.put("twelthsn", "NA");
+                jsonObject.put("twelths", "NA");
+                jsonObject.put("twelthpy", "NA");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent(getApplicationContext(), PlacementRegistration3.class);
+            intent.putExtra("OBJECT1", object1);
+            intent.putExtra("OBJECT2", jsonObject.toString());
+            intent.putExtra("DATA", scourse);
+            startActivity(intent);
         }
-        if (!validSchoolname10()) {
-            return;
-        }
-        if (!validPercentage10()) {
-            return;
-        }
-        if (!validYop10()) {
-            return;
-        }
-        if (!validBoard12()) {
-            return;
-        }
-        if (!validSchoolname12()) {
-            return;
-        }
-        if (!validPercentage12()) {
-            return;
-        }
-        if (!validYop12()) {
-            return;
-        }
-        Intent intent = new Intent(getApplicationContext(), PlacementRegistration3.class);
-        intent.putExtra("DATA", scourse);
-        startActivity(intent);
     }
 
     public void BackButton(View v) {

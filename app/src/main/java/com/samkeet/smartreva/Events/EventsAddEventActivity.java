@@ -59,7 +59,7 @@ public class EventsAddEventActivity extends AppCompatActivity implements DatePic
         dates = mDates.getText().toString();
         desc = mDesc.getText().toString();
 
-        if(validation()) {
+        if (validation()) {
             if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
                 NewEvent newEvent = new NewEvent();
                 newEvent.execute();
@@ -67,39 +67,40 @@ public class EventsAddEventActivity extends AppCompatActivity implements DatePic
         }
     }
 
-    public boolean validation(){
-        if(Constants.Methods.checkForSpecial(name)) {
-            Toast.makeText(getApplicationContext(),"Name should not include special charecters",Toast.LENGTH_SHORT).show();
+    public boolean validation() {
+        if (Constants.Methods.checkForSpecial(name)) {
+            Toast.makeText(getApplicationContext(), "Name should not include special charecters", Toast.LENGTH_SHORT).show();
         }
 
-        if (!(name.length() <= 60) && (name.length()>= 1)) {
+        if (!(name.length() <= 60) && (name.length() >= 1)) {
             Toast.makeText(getApplicationContext(), "Name should be less than 60 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(Constants.Methods.checkForSpecial(dates)) {
-        Toast.makeText(getApplicationContext(),"Dates should not include special charecters", Toast.LENGTH_SHORT).show();
+        if (Constants.Methods.checkForSpecial(dates)) {
+            Toast.makeText(getApplicationContext(), "Dates should not include special charecters", Toast.LENGTH_SHORT).show();
 
         }
-        if (!(dates.length() <= 20) && (dates.length()>= 1)) {
+        if (!(dates.length() <= 20) && (dates.length() >= 1)) {
             Toast.makeText(getApplicationContext(), "Dates should be less than 20 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (Constants.Methods.checkForSpecial(type)){
-            Toast.makeText(getApplicationContext(),"Type should not include special charecters", Toast.LENGTH_SHORT).show();
+        if (Constants.Methods.checkForSpecial(type)) {
+            Toast.makeText(getApplicationContext(), "Type should not include special charecters", Toast.LENGTH_SHORT).show();
         }
-        if (!(type.length() <= 60) && (type.length()>= 1)) {
+        if (!(type.length() <= 60) && (type.length() >= 1)) {
             Toast.makeText(getApplicationContext(), "Type should be less than 60 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (Constants.Methods.checkForSpecial(desc)){
-            Toast.makeText(getApplicationContext(),"Description should not include special charecters", Toast.LENGTH_SHORT).show();
+        if (Constants.Methods.checkForSpecial(desc)) {
+            Toast.makeText(getApplicationContext(), "Description should not include special charecters", Toast.LENGTH_SHORT).show();
         }
-        if (!(desc.length() <= 5000) && (desc.length()>= 1)) {
+        if (!(desc.length() <= 5000) && (desc.length() >= 1)) {
             Toast.makeText(getApplicationContext(), "Description should be less than 5000 charecters", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
+
     public void DateButton(View v) {
         Calendar now = Calendar.getInstance();
         DatePickerDialog dpd = DatePickerDialog.newInstance(
@@ -117,10 +118,15 @@ public class EventsAddEventActivity extends AppCompatActivity implements DatePic
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String fullDate;
+        String dayofmonth = "" + dayOfMonth;
+        String monthofyear = "" + monthOfYear;
         if (dayOfMonth < 10)
-            fullDate = year + "-" + (++monthOfYear) + "-" + "0" + dayOfMonth;
-        else
-            fullDate = year + "-" + (++monthOfYear) + "-" + dayOfMonth;
+            dayofmonth = "0" + dayOfMonth;
+        if (++monthOfYear < 10) {
+            monthofyear = "0" + monthOfYear;
+        }
+
+        fullDate = year + "-" + (monthofyear) + "-" + dayofmonth;
 
         mDates.setText(fullDate);
     }
@@ -129,7 +135,7 @@ public class EventsAddEventActivity extends AppCompatActivity implements DatePic
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();

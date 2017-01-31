@@ -80,17 +80,14 @@ public class Placement2LoginActivity extends AppCompatActivity {
                 finish();
             }
         }
-
-
     }
-
 
     public void BackButton(View v) {
         finish();
     }
 
     public void register(View v) {
-        Intent intent=new Intent(getApplicationContext(),PlacementRegistration1.class);
+        Intent intent = new Intent(getApplicationContext(), PlacementRegistration1.class);
         startActivity(intent);
     }
 
@@ -116,6 +113,7 @@ public class Placement2LoginActivity extends AppCompatActivity {
         }
 
     }
+
     private boolean validateSrn() {
         if (srn.getText().toString().trim().isEmpty()) {
             ip_srn.setError("Srn you entered is not valid");
@@ -126,6 +124,7 @@ public class Placement2LoginActivity extends AppCompatActivity {
         }
         return true;
     }
+
     private boolean validatePassword() {
         if (password.getText().toString().trim().isEmpty()) {
             ip_password.setError("Password you entered is not valid");
