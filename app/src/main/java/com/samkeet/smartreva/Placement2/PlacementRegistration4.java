@@ -45,6 +45,7 @@ public class PlacementRegistration4 extends AppCompatActivity {
     public Context progressDialogContext;
     public boolean authenticationError;
     public String errorMessage;
+    public Boolean[] finish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +53,11 @@ public class PlacementRegistration4 extends AppCompatActivity {
         progressDialogContext = this;
         setContentView(R.layout.activity_placement_registration4);
         mainLayout = (LinearLayout) findViewById(R.id.mainview);
-
         String temp = getIntent().getStringExtra("DATA");
         count = Integer.valueOf(temp);
 
         if (count > 0) {
-
+            finish = new Boolean[count];
             mFailedSemester = new EditText[count];
             mSubjectName = new EditText[count];
             mCleared = new Switch[count];
@@ -185,28 +185,34 @@ public class PlacementRegistration4 extends AppCompatActivity {
             } else {
                 check = "NO";
             }
-            String data[] = new String[3];
+            String data[] = new String[4];
             data[0] = sub_sem;
             data[1] = sub_name;
             data[2] = check;
+            data[3] = String.valueOf(i);
 
+            BacklogReg backlogReg = new BacklogReg();
+            backlogReg.execute(data);
 
         }
 
     }
 
-    private class BacklogReg extends AsyncTask<Void, Void, Integer> {
+    private class BacklogReg extends AsyncTask<String, Void, Integer> {
+
 
         protected void onPreExecute() {
             authenticationError = true;
             errorMessage = "Data Courpted";
-            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
-            pd.setTitle("Loading...");
-            pd.setCancelable(false);
-            pd.show();
         }
 
-        protected Integer doInBackground(Void... params) {
+        protected Integer doInBackground(String... params) {
+            String sem, name, ch, i;
+            sem = params[0];
+            name = params[1];
+            ch = params[2];
+            i = params[3];
+
             try {
                 java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_BACKLOG);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -214,8 +220,8 @@ public class PlacementRegistration4 extends AppCompatActivity {
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
-                        .appendQueryParameter("requestType", "put").appendQueryParameter("sub_name", "dfsd")
-                        .appendQueryParameter("sub_sem", "sdfd").appendQueryParameter("cleared", "sdfnd");
+                        .appendQueryParameter("requestType", "put").appendQueryParameter("sub_name", name)
+                        .appendQueryParameter("sub_sem", sem).appendQueryParameter("cleared", ch);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -246,6 +252,7 @@ public class PlacementRegistration4 extends AppCompatActivity {
                         authenticationError = true;
                         errorMessage = status;
                     }
+                    finish[Integer.valueOf(i)] = !authenticationError;
                 }
                 return 1;
 
@@ -257,15 +264,25 @@ public class PlacementRegistration4 extends AppCompatActivity {
         }
 
         protected void onPostExecute(Integer result) {
-            if (pd != null) {
-                pd.dismiss();
-            }
-            if (authenticationError) {
-                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
-            } else {
-            }
-
+            proceed();
         }
+    }
+
+    public void proceed() {
+        boolean status;
+        boolean complete = true;
+        for (int i = 0; i < count; i++) {
+            if (finish[i] == null) {
+                complete = false;
+            }
+        }
+        for (int i = 0; i < count; i++) {
+            if (finish[i] == false) {
+                status = false;
+                break;
+            }
+        }
+
     }
 
 }
