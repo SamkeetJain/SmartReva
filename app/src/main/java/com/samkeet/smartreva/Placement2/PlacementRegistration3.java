@@ -820,23 +820,23 @@ public class PlacementRegistration3 extends AppCompatActivity {
     public void proceedToBackLog() {
         bb = "";
         if (getIntent().getStringExtra("DATA").equals("btech")) {
-            bb = mBtechBacklog.getText().toString();
+            bb = mBtechBacklog.getText().toString().trim();
             YEARGAP = btechYeargap.isEmpty() ? "NA" : btechYeargap;
             WORKEXP = "NA";
         } else if (getIntent().getStringExtra("DATA").equals("mtech")) {
-            bb = mMtechBacklog.getText().toString();
+            bb = mMtechBacklog.getText().toString().trim();
             YEARGAP = mtechYearGap.isEmpty() ? "NA" : mtechYearGap;
             WORKEXP = mtechWorkxp.isEmpty() ? "NA" : mtechWorkxp;
         } else if (getIntent().getStringExtra("DATA").equals("mba_mcom")) {
-            bb = mMmBacklog.getText().toString();
+            bb = mMmBacklog.getText().toString().trim();
             YEARGAP = mmYeargap.isEmpty() ? "NA" : mmYeargap;
             WORKEXP = mmWorkxp.isEmpty() ? "NA" : mmWorkxp;
         } else if (getIntent().getStringExtra("DATA").equals("degree")) {
-            bb = mDegBacklog.getText().toString();
+            bb = mDegBacklog.getText().toString().trim();
             YEARGAP = degYeargap.isEmpty() ? "NA" : degYeargap;
             WORKEXP = "NA";
         } else if (getIntent().getStringExtra("DATA").equals("mca")) {
-            bb = mMcaBacklog.getText().toString();
+            bb = mMcaBacklog.getText().toString().trim();
             YEARGAP = mcaYeargap.isEmpty() ? "NA" : mcaYeargap;
             WORKEXP = mcaWorkxp.isEmpty() ? "NA" : mcaWorkxp;
         }

@@ -250,13 +250,13 @@ public class Placement2MainActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.FIREBASE);
+                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_CHECK);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
 
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN()).appendQueryParameter("firebasetoken", Constants.FireBase.token);
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN());
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -279,13 +279,16 @@ public class Placement2MainActivity extends AppCompatActivity {
                 } else {
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     String status = jsonObj.getString("status");
-                    if (status.equals("success")) {
+                    if (status.equals("PENDING")) {
                         authenticationError = false;
                     } else {
                         authenticationError = true;
-                        errorMessage = status;
+                        if (status.equals("APPROVED") || status.equals("SUBMITTED")) {
+                            errorMessage = "Already Registered";
+                        } else {
+                            errorMessage = status;
+                        }
                     }
-
                 }
                 return 1;
 
@@ -304,7 +307,7 @@ public class Placement2MainActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Placement2MainActivity.this);
                 builder.setTitle("Oops!!! We cannot process your request at this time");
                 builder.setMessage("Response: " + "\n" + errorMessage);
-                String positiveText = "Retry";
+                String positiveText = "Okay";
                 builder.setPositiveButton(positiveText,
                         new DialogInterface.OnClickListener() {
                             @Override

@@ -1,6 +1,7 @@
 package com.samkeet.smartreva.Placement2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -52,7 +53,8 @@ public class PlacementRegistration4 extends AppCompatActivity {
         setContentView(R.layout.activity_placement_registration4);
         mainLayout = (LinearLayout) findViewById(R.id.mainview);
 
-        count = Integer.valueOf(getIntent().getStringExtra("DATA"));
+        String temp = getIntent().getStringExtra("DATA");
+        count = Integer.valueOf(temp);
 
         if (count > 0) {
 
@@ -160,7 +162,8 @@ public class PlacementRegistration4 extends AppCompatActivity {
             }
 
         } else {
-
+            Intent intent = new Intent(getApplicationContext(), Placement2MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -173,6 +176,22 @@ public class PlacementRegistration4 extends AppCompatActivity {
     }
 
     public void Submit(View v) {
+        for (int i = 0; i < count; i++) {
+            String sub_name = mSubjectName[i].getText().toString().trim();
+            String sub_sem = mFailedSemester[i].getText().toString().trim();
+            String check;
+            if (mCleared[i].isChecked()) {
+                check = "YES";
+            } else {
+                check = "NO";
+            }
+            String data[] = new String[3];
+            data[0] = sub_sem;
+            data[1] = sub_name;
+            data[2] = check;
+
+
+        }
 
     }
 
@@ -189,12 +208,14 @@ public class PlacementRegistration4 extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_ACADEMIC);
+                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_BACKLOG);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
-                Uri.Builder _data = new Uri.Builder().appendQueryParameter("get", "sds");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "put").appendQueryParameter("sub_name", "dfsd")
+                        .appendQueryParameter("sub_sem", "sdfd").appendQueryParameter("cleared", "sdfnd");
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
