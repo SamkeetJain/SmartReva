@@ -25,6 +25,7 @@ public class Constants {
         public static String BASE = "http://revacounselling.16mb.com/";
         public static String ALUMNI_BASE = "http://www.reva.ac.in/smartreva/alumni/";
         public static String PLACEMENT_BASE = "http://revacounselling.16mb.com/placement/";
+        public static String PLACEMENT_COURSE_DEPT = "course_dept.php";
         public static String LOGIN = "login.php";
         public static String ALUMNI_ABOUT_US = "about.html";
         public static String ALUMNI_CONTACT_UD = "contactUs.html";
@@ -204,7 +205,7 @@ public class Constants {
     public static final String[] Country_name = {"India", "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica (Australian bases)", "Antigua and Barbuda",
             "Argentina", "Armenia", "Aruba", "Ascension", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize",
             "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "British Indian Ocean Territory", "British Virgin Island", "Brunei", "Bulgaria",
-            "Burkina", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic","Chad", "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic",
+            "Burkina", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo, Democratic Republic",
             "Congo, Republic", "Cook Iseland", "Costa Rica", "Cote d'Ivoire", "Croatia", "Cuba", "Curaçao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica",
             "Dominica Republic", "Dominica Republic", "Dominica Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia",
             "Falkland Iseland", "Faroe Iseland", "Fiji", "Finland", "France", "French Guiana", "French Polynesia", "Gabon", "Gambia", "Gaza Strip", "Georgia", "Germany", "Ghana",
@@ -217,7 +218,7 @@ public class Constants {
             "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico ", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda",
             "Saint-Barthélemy", "Saint Helena", "Saint Kitts and Nevis", "Saint Lucia", "Saint Martin", "Saint Pierre and Miquelon", "Saint Vincent and Grenadines",
             "Samoa", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Sint Maarten", "Singapore", "Slovakia", "Slovenia", "Solomon Iseland",
-            "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland","Sweden","Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand",
+            "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand",
             "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Iseland", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates",
             "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "U.S. Virgin Iseland", "Wallis and Futuna", "West Bank",
             "Yemen", "Zambia", "Zimbabwe"};
@@ -230,7 +231,7 @@ public class Constants {
             "+81", "+962", "+7", "+254", "+686", "+377", "+381", "+386", "+965", "+966", "+856", "+371", "+961", "+266", "+231", "+218", "+423", "+370", "+352", "+853", "+389", "+261", "+265",
             "+60", "+960", "+233", "+356", "+692", "+596", "+222", "+230", "+262", "+52", "+691", "+373", "+377", "+976", "+382", "+1664", "+212", "+258", "+95", "+264", "+674", "+31",
             "+599", "+977", "+687", "+64", "+505", "+227", "+234", "+683", "+6723", "+850", "+4428", "+1670", "+47", "+968", "+92", "+680", "+507", "+675", "+595", "+51", "+63", "+48",
-            "+351", "+1787", "+1939", "+974", "+262", "+40", "+7", "+250","+590", "+290", "+1869", "+1758", "+590", "+508", "+1784", "+658", "+239", "+966", "+221", "+381", "+248", "+232", "+1721"
+            "+351", "+1787", "+1939", "+974", "+262", "+40", "+7", "+250", "+590", "+290", "+1869", "+1758", "+590", "+508", "+1784", "+658", "+239", "+966", "+221", "+381", "+248", "+232", "+1721"
             , "+65", "+421", "+386", "+677", "+252", "+27", "+82", "+211", "+34", "+94", "+249", "+597", "+268", "+46", "+41", "+963", "+886", "+992", "255", "+66", "+228", "+690", "+676"
             , "+1868", "+216", "+90", "+993", "+1649", "+688", "+256", "+380", "+971", "+44", "+1", "+598", "+998", "+678", "+58", "+84", "+1340", "+681", "+970", "+967", "+260", "+263"};
 

@@ -37,7 +37,7 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
     String[] genderList = {"Male", "Female"};
 
     public Button Next;
-    public JSONObject jsonObject;
+    public JSONObject jsonObject = new JSONObject();
     public Button mDob;
 
     @Override
@@ -235,7 +235,6 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
         return true;
     }
 
-
     private boolean validPhoneno() {
 
         if (phone.isEmpty() || !isValidMobilenumber(phone) || phone.length() < 5 || phone.length() > 10) {
@@ -281,7 +280,6 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
         return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-
     private boolean validCurrentaddress() {
         if (currentAddress.isEmpty()) {
             tCurrentAddress.setError("Invalid Address");
@@ -323,7 +321,6 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
         }
         return true;
     }
-
 
     private void requestFocus(View view) {
         if (view.requestFocus()) {
