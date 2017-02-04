@@ -27,9 +27,9 @@ import java.util.Calendar;
 
 public class PlacementRegistration1 extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    public EditText mSrn, mPassword, mCPassword, mFullname, mPhone, mEmail, mCurrentAddress, mPermanentAddress;
-    public TextInputLayout tSrn, tPassword, tCPassword, tFullname, tPhone, tEmail, tCurrentAddress, tPermanentAddress;
-    public String srn, password, cpassword, fullname, dob, phone, email, currentAddress, permanentAddress;
+    public EditText mFullname, mPhone, mEmail, mCurrentAddress, mPermanentAddress;
+    public TextInputLayout tFullname, tPhone, tEmail, tCurrentAddress, tPermanentAddress;
+    public String fullname, dob, phone, email, currentAddress, permanentAddress;
     public CheckBox addressCheckBox;
 
     public LabelledSpinner genderSpin;
@@ -46,9 +46,6 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
         setContentView(R.layout.activity_placement2_registration1);
 
         //Edit text
-        mSrn = (EditText) findViewById(R.id.srn_et);
-        mCPassword = (EditText) findViewById(R.id.cpassword_et);
-        mPassword = (EditText) findViewById(R.id.password_et);
         mFullname = (EditText) findViewById(R.id.fullname_et);
         mPhone = (EditText) findViewById(R.id.phoneno_et);
         mEmail = (EditText) findViewById(R.id.email_et);
@@ -56,9 +53,6 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
         mPermanentAddress = (EditText) findViewById(R.id.paddress_et);
 
         //Text input layout
-        tSrn = (TextInputLayout) findViewById(R.id.tsrn);
-        tPassword = (TextInputLayout) findViewById(R.id.tpassword);
-        tCPassword = (TextInputLayout) findViewById(R.id.tcpassword);
         tFullname = (TextInputLayout) findViewById(R.id.tfull_name);
         tPhone = (TextInputLayout) findViewById(R.id.tphoneno);
         tEmail = (TextInputLayout) findViewById(R.id.temail);
@@ -103,9 +97,6 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
 
                                     @Override
                                     public void onClick(View v) {
-                                        srn = mSrn.getText().toString().trim();
-                                        password = mPassword.getText().toString().trim();
-                                        cpassword = mCPassword.getText().toString().trim();
                                         fullname = mFullname.getText().toString().trim();
                                         dob = mDob.getText().toString().trim();
                                         phone = mPhone.getText().toString().trim();
@@ -123,15 +114,6 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
     }
 
     public void validation() {
-        if (!validSrn()) {
-            return;
-        }
-        if (!validPassword()) {
-            return;
-        }
-        if (!validCpassword()) {
-            return;
-        }
         if (!validFullname()) {
             return;
         }
@@ -147,9 +129,11 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
         if (!validPermanentaddress()) {
             return;
         }
+        if (mDob.getText().toString().trim().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Invalid Date", Toast.LENGTH_SHORT).show();
+            return;
+        }
         try {
-            jsonObject.put("srn", srn);
-            jsonObject.put("password", password);
             jsonObject.put("name", fullname);
             jsonObject.put("gender", sGender);
             jsonObject.put("dob", dob);
@@ -163,55 +147,6 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
         Intent intent = new Intent(getApplicationContext(), PlacementRegistration2.class);
         intent.putExtra("OBJECT1", jsonObject.toString());
         startActivity(intent);
-    }
-
-    private boolean validSrn() {
-        if (srn.isEmpty()) {
-            tSrn.setError("Invalid srn");
-            requestFocus(mSrn);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(srn)) {
-            tSrn.setError("Remove Special characters");
-            requestFocus(mSrn);
-            return false;
-        }
-        if (srn.length() > 10) {
-            tSrn.setError("Srn Should be less than 10 characters");
-            requestFocus(mSrn);
-            return false;
-        } else {
-            tSrn.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validPassword() {
-        if (password.isEmpty()) {
-            tPassword.setError("Invalid Password");
-            requestFocus(mPassword);
-            return false;
-        }
-        if (Constants.Methods.checkForSpecial(password)) {
-            tSrn.setError("Remove Special characters");
-            requestFocus(mPassword);
-            return false;
-        } else {
-            tPassword.setErrorEnabled(false);
-        }
-        return true;
-    }
-
-    private boolean validCpassword() {
-
-        if (!cpassword.equals(password)) {
-            tCPassword.setError("Password doesnt match");
-            requestFocus(mCPassword);
-            return false;
-        } else {
-            tCPassword.setErrorEnabled(false);
-        }
-        return true;
     }
 
     private boolean validFullname() {

@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -75,17 +76,19 @@ public class PlacementRegistration3 extends AppCompatActivity {
     public JSONObject jsonObject2;
 
     public SpotsDialog pd;
-    public Context progressDialogContext = this;
+    public Context progressDialogContext;
     public boolean authenticationError;
     public String errorMessage;
     public Uri.Builder form3;
 
-    public String YEARGAP, WORKEXP;
+    public String bb;
+    public String YEARGAP, WORKEXP, URLFORM;
 
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        progressDialogContext = this;
         object1 = getIntent().getStringExtra("OBJECT1");
         object2 = getIntent().getStringExtra("OBJECT2");
         course = getIntent().getStringExtra("DATA");
@@ -295,7 +298,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
                     mmSem3 = mMmSem3.getText().toString().trim();
                     mmSem4 = mMmSem4.getText().toString().trim();
                     mmWorkxp = mMmWorkxp.getText().toString().trim();
-
+                    mmYeargap = mMmYeargap.getText().toString().trim();
                     mmBacklog = mMmBacklog.getText().toString().trim();
 
                     mmValidation();
@@ -406,8 +409,8 @@ public class PlacementRegistration3 extends AppCompatActivity {
                     mcaYoj = mMcaYoj.getText().toString().trim();
                     mcaSem1 = mMcaSem1.getText().toString().trim();
                     mcaSem2 = mMcaSem2.getText().toString().trim();
-                    mcaSem2 = mMcaSem3.getText().toString().trim();
-                    mcaSem3 = mMcaSem4.getText().toString().trim();
+                    mcaSem3 = mMcaSem3.getText().toString().trim();
+                    mcaSem4 = mMcaSem4.getText().toString().trim();
                     mcaSem5 = mMcaSem5.getText().toString().trim();
                     mcaSem6 = mMcaSem6.getText().toString().trim();
                     mcaWorkxp = mMcaWorkxp.getText().toString().trim();
@@ -447,6 +450,10 @@ public class PlacementRegistration3 extends AppCompatActivity {
             jsonObject.put("mmDegYop", mmDegYop);
             jsonObject.put("mmYoj", mmyoj);
             jsonObject.put("backlog", mmBacklog);
+            jsonObject.put("s1", mmSem1.isEmpty() ? "NA" : mmSem1);
+            jsonObject.put("s2", mmSem2.isEmpty() ? "NA" : mmSem2);
+            jsonObject.put("s3", mmSem3.isEmpty() ? "NA" : mmSem3);
+            jsonObject.put("s4", mmSem4.isEmpty() ? "NA" : mmSem4);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -466,6 +473,12 @@ public class PlacementRegistration3 extends AppCompatActivity {
         try {
             jsonObject.put("degCourse", degCourse);
             jsonObject.put("degYoj", degYoj);
+            jsonObject.put("s1", degSem1.isEmpty() ? "NA" : degSem1);
+            jsonObject.put("s2", degSem2.isEmpty() ? "NA" : degSem2);
+            jsonObject.put("s3", degSem3.isEmpty() ? "NA" : degSem3);
+            jsonObject.put("s4", degSem4.isEmpty() ? "NA" : degSem4);
+            jsonObject.put("s5", degSem5.isEmpty() ? "NA" : degSem5);
+            jsonObject.put("s6", degSem6.isEmpty() ? "NA" : degSem6);
             jsonObject.put("backlog", degBacklog);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -512,6 +525,10 @@ public class PlacementRegistration3 extends AppCompatActivity {
                 jsonObject.put("mtBeCol", mtechBeCollagename);
                 jsonObject.put("mtBeYop", mtechBeYop);
                 jsonObject.put("mtMtYoj", mtechMtYoj);
+                jsonObject.put("s1", mtechMtSem1.isEmpty() ? "NA" : mtechMtSem1);
+                jsonObject.put("s2", mtechMtSem2.isEmpty() ? "NA" : mtechMtSem2);
+                jsonObject.put("s3", mtechMtSem3.isEmpty() ? "NA" : mtechMtSem3);
+                jsonObject.put("s4", mtechMtSem4.isEmpty() ? "NA" : mtechMtSem4);
                 jsonObject.put("backlog", mtechBacklog);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -546,6 +563,10 @@ public class PlacementRegistration3 extends AppCompatActivity {
                 jsonObject.put("mtBeCol", mtechBeCollagename);
                 jsonObject.put("mtBeYop", mtechBeYop);
                 jsonObject.put("mtMtYoj", mtechMtYoj);
+                jsonObject.put("s1", mtechMtSem1.isEmpty() ? "NA" : mtechMtSem1);
+                jsonObject.put("s2", mtechMtSem2.isEmpty() ? "NA" : mtechMtSem2);
+                jsonObject.put("s3", mtechMtSem3.isEmpty() ? "NA" : mtechMtSem3);
+                jsonObject.put("s4", mtechMtSem4.isEmpty() ? "NA" : mtechMtSem4);
                 jsonObject.put("backlog", mtechBacklog);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -577,6 +598,14 @@ public class PlacementRegistration3 extends AppCompatActivity {
                 jsonObject.put("btDipYop", btechDplYop);
                 jsonObject.put("BtBeYoj", btechBeYoj);
                 jsonObject.put("backlog", btechBacklog);
+                jsonObject.put("s1", btechBeSem1.isEmpty() ? "NA" : btechBeSem1);
+                jsonObject.put("s2", btechBeSem2.isEmpty() ? "NA" : btechBeSem2);
+                jsonObject.put("s3", btechBeSem3.isEmpty() ? "NA" : btechBeSem3);
+                jsonObject.put("s4", btechBeSem4.isEmpty() ? "NA" : btechBeSem4);
+                jsonObject.put("s5", btechBeSem5.isEmpty() ? "NA" : btechBeSem5);
+                jsonObject.put("s6", btechBeSem6.isEmpty() ? "NA" : btechBeSem6);
+                jsonObject.put("s7", btechBeSem7.isEmpty() ? "NA" : btechBeSem7);
+                jsonObject.put("s8", btechBeSem8.isEmpty() ? "NA" : btechBeSem8);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -595,6 +624,14 @@ public class PlacementRegistration3 extends AppCompatActivity {
                 jsonObject.put("btDipYop", "NA");
                 jsonObject.put("BtBeYoj", btechBeYoj);
                 jsonObject.put("backlog", btechBacklog);
+                jsonObject.put("s1", btechBeSem1.isEmpty() ? "NA" : btechBeSem1);
+                jsonObject.put("s2", btechBeSem2.isEmpty() ? "NA" : btechBeSem2);
+                jsonObject.put("s3", btechBeSem3.isEmpty() ? "NA" : btechBeSem3);
+                jsonObject.put("s4", btechBeSem4.isEmpty() ? "NA" : btechBeSem4);
+                jsonObject.put("s5", btechBeSem5.isEmpty() ? "NA" : btechBeSem5);
+                jsonObject.put("s6", btechBeSem6.isEmpty() ? "NA" : btechBeSem6);
+                jsonObject.put("s7", btechBeSem7.isEmpty() ? "NA" : btechBeSem7);
+                jsonObject.put("s8", btechBeSem8.isEmpty() ? "NA" : btechBeSem8);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -624,6 +661,25 @@ public class PlacementRegistration3 extends AppCompatActivity {
         }
         if (!backlogValidation(mcaBacklog)) {
             return;
+        }
+        try {
+            jsonObject.put("deg_per", mcaDegPercentage);
+            jsonObject.put("deg_course", mcaDegCourse);
+            jsonObject.put("deg_uni", mcaDegUniversity);
+            jsonObject.put("deg_cname", mcaDegCollagename);
+            jsonObject.put("deg_yop", mcaDegYop);
+            jsonObject.put("mca_yoj", mcaYoj);
+            jsonObject.put("s1", mcaSem1.isEmpty() ? "NA" : mcaSem1);
+            jsonObject.put("s2", mcaSem2.isEmpty() ? "NA" : mcaSem2);
+            jsonObject.put("s3", mcaSem3.isEmpty() ? "NA" : mcaSem3);
+            jsonObject.put("s4", mcaSem4.isEmpty() ? "NA" : mcaSem4);
+            jsonObject.put("s5", mcaSem5.isEmpty() ? "NA" : mcaSem5);
+            jsonObject.put("s6", mcaSem6.isEmpty() ? "NA" : mcaSem6);
+            jsonObject.put("backlog", mcaBacklog);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         proceedToBackLog();
     }
@@ -762,36 +818,31 @@ public class PlacementRegistration3 extends AppCompatActivity {
     }
 
     public void proceedToBackLog() {
-        String bb = "";
+        bb = "";
         if (getIntent().getStringExtra("DATA").equals("btech")) {
             bb = mBtechBacklog.getText().toString();
-            YEARGAP = btechYeargap;
+            YEARGAP = btechYeargap.isEmpty() ? "NA" : btechYeargap;
             WORKEXP = "NA";
         } else if (getIntent().getStringExtra("DATA").equals("mtech")) {
             bb = mMtechBacklog.getText().toString();
-            YEARGAP = mtechYearGap;
-            WORKEXP = mtechWorkxp;
+            YEARGAP = mtechYearGap.isEmpty() ? "NA" : mtechYearGap;
+            WORKEXP = mtechWorkxp.isEmpty() ? "NA" : mtechWorkxp;
         } else if (getIntent().getStringExtra("DATA").equals("mba_mcom")) {
             bb = mMmBacklog.getText().toString();
-            YEARGAP = mmYeargap;
-            WORKEXP = mmWorkxp;
+            YEARGAP = mmYeargap.isEmpty() ? "NA" : mmYeargap;
+            WORKEXP = mmWorkxp.isEmpty() ? "NA" : mmWorkxp;
         } else if (getIntent().getStringExtra("DATA").equals("degree")) {
             bb = mDegBacklog.getText().toString();
-            YEARGAP = degYeargap;
+            YEARGAP = degYeargap.isEmpty() ? "NA" : degYeargap;
             WORKEXP = "NA";
         } else if (getIntent().getStringExtra("DATA").equals("mca")) {
             bb = mMcaBacklog.getText().toString();
-            YEARGAP = mcaYeargap;
-            WORKEXP = mcaWorkxp;
+            YEARGAP = mcaYeargap.isEmpty() ? "NA" : mcaYeargap;
+            WORKEXP = mcaWorkxp.isEmpty() ? "NA" : mcaWorkxp;
         }
 
-        Intent intent = new Intent(getApplicationContext(), PlacementRegistration4.class);
-        intent.putExtra("OBJECT1", jsonObject.toString());
-        intent.putExtra("OBJECT2", object2);
-        intent.putExtra("OBJECT3", jsonObject.toString());
-        intent.putExtra("course", course);
-        intent.putExtra("DATA", bb);
-        startActivity(intent);
+        PutRegForm1 putRegForm1 = new PutRegForm1();
+        putRegForm1.execute();
     }
 
     private class PutRegForm1 extends AsyncTask<Void, Void, Integer> {
@@ -807,7 +858,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COURSE_DEPT);
+                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_PROFILE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -842,6 +893,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
                 connection.disconnect();
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
+                Log.d("return from server", jsonResults.toString());
 
                 if (authenticationError) {
                     errorMessage = jsonResults.toString();
@@ -850,6 +902,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
                     String status = jsonObj.getString("status");
                     if (status.equals("success")) {
                         authenticationError = false;
+                        errorMessage = status;
                     } else {
                         authenticationError = true;
                         errorMessage = status;
@@ -871,7 +924,8 @@ public class PlacementRegistration3 extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-
+                PutRegForm2 putRegForm2 = new PutRegForm2();
+                putRegForm2.execute();
             }
 
         }
@@ -890,7 +944,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COURSE_DEPT);
+                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_ACADEMIC);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -930,6 +984,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
                     String status = jsonObj.getString("status");
                     if (status.equals("success")) {
                         authenticationError = false;
+                        errorMessage = status;
                     } else {
                         authenticationError = true;
                         errorMessage = status;
@@ -951,7 +1006,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-
+                putRegForm3();
             }
 
         }
@@ -961,16 +1016,23 @@ public class PlacementRegistration3 extends AppCompatActivity {
 
         if (course.equals("btech")) {
             try {
+
                 form3 = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
                         .appendQueryParameter("requestType", "put")
-                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
-                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
-                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
-                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
-                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
-                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
-                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
-                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+                        .appendQueryParameter("diploma_per", jsonObject.getString("btDipPer"))
+                        .appendQueryParameter("diploma_cname", jsonObject.getString("btDipSch"))
+                        .appendQueryParameter("diploma_yop", jsonObject.getString("btDipYop"))
+                        .appendQueryParameter("bt_yoj", jsonObject.getString("BtBeYoj"))
+                        .appendQueryParameter("bt_sem1", jsonObject.getString("s1"))
+                        .appendQueryParameter("bt_sem2", jsonObject.getString("s2"))
+                        .appendQueryParameter("bt_sem3", jsonObject.getString("s3"))
+                        .appendQueryParameter("bt_sem4", jsonObject.getString("s4"))
+                        .appendQueryParameter("bt_sem5", jsonObject.getString("s5"))
+                        .appendQueryParameter("bt_sem6", jsonObject.getString("s6"))
+                        .appendQueryParameter("bt_sem7", jsonObject.getString("s7"))
+                        .appendQueryParameter("bt_sem8", jsonObject.getString("s8"));
+
+                URLFORM = Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_BTECH;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -978,14 +1040,21 @@ public class PlacementRegistration3 extends AppCompatActivity {
             try {
                 form3 = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
                         .appendQueryParameter("requestType", "put")
-                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
-                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
-                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
-                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
-                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
-                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
-                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
-                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+                        .appendQueryParameter("diploma_per", jsonObject.getString("mtDipPer"))
+                        .appendQueryParameter("diploma_cname", jsonObject.getString("mtDipSch"))
+                        .appendQueryParameter("diploma_yop", jsonObject.getString("mtDipYop"))
+                        .appendQueryParameter("bt_per", jsonObject.getString("mtBePer"))
+                        .appendQueryParameter("bt_university", jsonObject.getString("mtBeUni"))
+                        .appendQueryParameter("bt_cname", jsonObject.getString("mtBeCol"))
+                        .appendQueryParameter("bt_yop", jsonObject.getString("mtBeYop"))
+                        .appendQueryParameter("mt_yoj", jsonObject.getString("mtMtYoj"))
+                        .appendQueryParameter("mt_sem1", jsonObject.getString("s1"))
+                        .appendQueryParameter("mt_sem2", jsonObject.getString("s2"))
+                        .appendQueryParameter("mt_sem3", jsonObject.getString("s3"))
+                        .appendQueryParameter("mt_sem4", jsonObject.getString("s4"));
+
+                URLFORM = Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_MTECH;
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -993,14 +1062,18 @@ public class PlacementRegistration3 extends AppCompatActivity {
             try {
                 form3 = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
                         .appendQueryParameter("requestType", "put")
-                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
-                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
-                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
-                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
-                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
-                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
-                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
-                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+                        .appendQueryParameter("degree_per", jsonObject.getString("mmDegPer"))
+                        .appendQueryParameter("degree_university", jsonObject.getString("mmDegUni"))
+                        .appendQueryParameter("degree_cname", jsonObject.getString("mmDegCol"))
+                        .appendQueryParameter("degree_yop", jsonObject.getString("mmDegYop"))
+                        .appendQueryParameter("mba_mcom_yoj", jsonObject.getString("mmYoj"))
+                        .appendQueryParameter("mba_mcom_sem1", jsonObject.getString("s1"))
+                        .appendQueryParameter("mba_mcom_sem2", jsonObject.getString("s2"))
+                        .appendQueryParameter("mba_mcom_sem3", jsonObject.getString("s3"))
+                        .appendQueryParameter("mba_mcom_sem4", jsonObject.getString("s4"));
+
+                URLFORM = Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_MBAMCOM;
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1008,14 +1081,17 @@ public class PlacementRegistration3 extends AppCompatActivity {
             try {
                 form3 = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
                         .appendQueryParameter("requestType", "put")
-                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
-                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
-                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
-                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
-                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
-                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
-                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
-                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+                        .appendQueryParameter("degree_coursename", jsonObject.getString("degCourse"))
+                        .appendQueryParameter("degree_yoj", jsonObject.getString("degYoj"))
+                        .appendQueryParameter("degree_sem1", jsonObject.getString("s1"))
+                        .appendQueryParameter("degree_sem2", jsonObject.getString("s2"))
+                        .appendQueryParameter("degree_sem3", jsonObject.getString("s3"))
+                        .appendQueryParameter("degree_sem4", jsonObject.getString("s4"))
+                        .appendQueryParameter("degree_sem5", jsonObject.getString("s5"))
+                        .appendQueryParameter("degree_sem6", jsonObject.getString("s6"));
+
+                URLFORM = Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_DEGREE;
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1023,18 +1099,27 @@ public class PlacementRegistration3 extends AppCompatActivity {
             try {
                 form3 = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
                         .appendQueryParameter("requestType", "put")
-                        .appendQueryParameter("tenth_per", jsonObject2.getString("tenths"))
-                        .appendQueryParameter("tenth_board", jsonObject2.getString("tenthb"))
-                        .appendQueryParameter("tenth_sname", jsonObject2.getString("tenthsn"))
-                        .appendQueryParameter("tenth_yop", jsonObject2.getString("tenthpy"))
-                        .appendQueryParameter("twelth_per", jsonObject2.getString("twelths"))
-                        .appendQueryParameter("twelth_board", jsonObject2.getString("twelthb"))
-                        .appendQueryParameter("twelth_sname", jsonObject2.getString("twelthsn"))
-                        .appendQueryParameter("twelth_yop", jsonObject2.getString("twelthpy"));
+                        .appendQueryParameter("degree_per", jsonObject.getString("deg_per"))
+                        .appendQueryParameter("degree_coursename", jsonObject.getString("deg_course"))
+                        .appendQueryParameter("degree_university", jsonObject.getString("deg_uni"))
+                        .appendQueryParameter("degree_cname", jsonObject.getString("deg_cname"))
+                        .appendQueryParameter("degree_yop", jsonObject.getString("deg_yop"))
+                        .appendQueryParameter("mca_yoj", jsonObject.getString("mca_yoj"))
+                        .appendQueryParameter("mca_sem1", jsonObject.getString("s1"))
+                        .appendQueryParameter("mca_sem2", jsonObject.getString("s2"))
+                        .appendQueryParameter("mca_sem3", jsonObject.getString("s3"))
+                        .appendQueryParameter("mca_sem4", jsonObject.getString("s4"))
+                        .appendQueryParameter("mca_sem5", jsonObject.getString("s5"))
+                        .appendQueryParameter("mca_sem6", jsonObject.getString("s6"));
+
+                URLFORM = Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_MCA;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+
+        PutRegForm3 putRegForm3 = new PutRegForm3();
+        putRegForm3.execute();
     }
 
     private class PutRegForm3 extends AsyncTask<Void, Void, Integer> {
@@ -1050,7 +1135,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                java.net.URL url = new URL(Constants.URLs.BASE + Constants.URLs.COURSE_DEPT);
+                java.net.URL url = new URL(URLFORM);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
@@ -1073,7 +1158,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
                 connection.disconnect();
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
-
+                Log.d("return from server", jsonResults.toString());
                 if (authenticationError) {
                     errorMessage = jsonResults.toString();
                 } else {
@@ -1081,6 +1166,7 @@ public class PlacementRegistration3 extends AppCompatActivity {
                     String status = jsonObj.getString("status");
                     if (status.equals("success")) {
                         authenticationError = false;
+                        errorMessage = status;
                     } else {
                         authenticationError = true;
                         errorMessage = status;
@@ -1102,11 +1188,13 @@ public class PlacementRegistration3 extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
+                Toast.makeText(getApplicationContext(), "success full", Toast.LENGTH_SHORT).show();
 
+                Intent intent = new Intent(getApplicationContext(), PlacementRegistration4.class);
+                intent.putExtra("DATA", bb);
+                startActivity(intent);
             }
 
         }
     }
-
-
 }
