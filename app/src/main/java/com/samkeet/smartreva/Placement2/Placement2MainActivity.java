@@ -28,6 +28,7 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.samkeet.smartreva.Constants;
+import com.samkeet.smartreva.DevelopersActivity;
 import com.samkeet.smartreva.LoginActivity;
 import com.samkeet.smartreva.R;
 
@@ -101,13 +102,14 @@ public class Placement2MainActivity extends AppCompatActivity {
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home_black_24dp).withIdentifier(1),
                         new PrimaryDrawerItem().withName("Academic Profile").withIcon(R.drawable.ic_event_black_24dp).withIdentifier(2),
-                        new PrimaryDrawerItem().withName("Registration Form").withIcon(R.drawable.ic_job_24dp).withIdentifier(3),
+                        new PrimaryDrawerItem().withName("Backlog Details").withIcon(R.drawable.ic_event_black_24dp).withIdentifier(3),
+                        new PrimaryDrawerItem().withName("Registration Form").withIcon(R.drawable.ic_job_24dp).withIdentifier(4),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName("Contact Us").withIcon(R.drawable.ic_contact_us_24dp).withIdentifier(4),
-                        new PrimaryDrawerItem().withName("About Us").withIcon(R.drawable.ic_about_24dp).withIdentifier(5),
+                        new PrimaryDrawerItem().withName("Contact Us").withIcon(R.drawable.ic_contact_us_24dp).withIdentifier(5),
+                        new PrimaryDrawerItem().withName("About Us").withIcon(R.drawable.ic_about_24dp).withIdentifier(6),
                         new DividerDrawerItem(),
-                        new PrimaryDrawerItem().withName("Logout").withIcon(R.drawable.ic_logout_24dp).withIdentifier(6),
-                        new PrimaryDrawerItem().withName("Developer").withIcon(R.drawable.ic_android_black_24dp).withIdentifier(7)
+                        new PrimaryDrawerItem().withName("Logout").withIcon(R.drawable.ic_logout_24dp).withIdentifier(7),
+                        new PrimaryDrawerItem().withName("Developer").withIcon(R.drawable.ic_android_black_24dp).withIdentifier(8)
                 )
                 // add the items we want to use with our Drawer
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -117,19 +119,28 @@ public class Placement2MainActivity extends AppCompatActivity {
 
                         }
                         if (drawerItem.getIdentifier() == 2) {
+
                         }
                         if (drawerItem.getIdentifier() == 3) {
+                            Intent intent = new Intent(getApplicationContext(), PlacementBackLogDetails.class);
+                            startActivity(intent);
+                        }
+                        if (drawerItem.getIdentifier() == 4) {
                             CheckRegistration checkRegistration = new CheckRegistration();
                             checkRegistration.execute();
                         }
-                        if (drawerItem.getIdentifier() == 4) {
-                        }
                         if (drawerItem.getIdentifier() == 5) {
+
                         }
                         if (drawerItem.getIdentifier() == 6) {
-                            Logout();
+
                         }
                         if (drawerItem.getIdentifier() == 7) {
+                            Logout();
+                        }
+                        if (drawerItem.getIdentifier() == 8) {
+                            Intent intent = new Intent(getApplicationContext(), DevelopersActivity.class);
+                            startActivity(intent);
                         }
                         return false;
                     }

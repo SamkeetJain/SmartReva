@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -875,7 +876,8 @@ public class PlacementRegistration3 extends AppCompatActivity {
                         .appendQueryParameter("branch", jsonObject2.getString("branch"))
                         .appendQueryParameter("course", course)
                         .appendQueryParameter("yeargap", YEARGAP)
-                        .appendQueryParameter("workexperience", WORKEXP);
+                        .appendQueryParameter("workexperience", WORKEXP)
+                        .appendQueryParameter("backlogs", bb);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();
@@ -1188,11 +1190,11 @@ public class PlacementRegistration3 extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getApplicationContext(), "success full", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(getApplicationContext(), PlacementRegistration4.class);
-                intent.putExtra("DATA", bb);
+                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), Placement2MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finish();
             }
 
         }
