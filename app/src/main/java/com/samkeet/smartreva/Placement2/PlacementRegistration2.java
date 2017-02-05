@@ -168,6 +168,7 @@ public class PlacementRegistration2 extends AppCompatActivity {
                 jsonObject.put("twelthsn", schoolname12);
                 jsonObject.put("twelths", percentage12);
                 jsonObject.put("twelthpy", yop12);
+                jsonObject.put("branch", sbranch);
 
             } catch (JSONException e) {
                 e.printStackTrace();

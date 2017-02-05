@@ -49,7 +49,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
     public SpotsDialog pd;
     public Context progressDialogContext;
 
-    public String token;
+    public String token, name;
     public boolean authenticationError = true;
     public String errorMessage = "Data Corrupted";
 
@@ -185,6 +185,8 @@ public class AlumniLoginActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
+            authenticationError = true;
+            errorMessage = "Data corrupt";
             pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
@@ -225,6 +227,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     String status = jsonObj.getString("status");
                     if (status.equals("success")) {
+                        name = jsonObj.getString("name");
                         token = jsonObj.getString("token");
                         authenticationError = false;
 
@@ -275,12 +278,16 @@ public class AlumniLoginActivity extends AppCompatActivity {
 
                 Constants.SharedPreferenceData.setIsLoggedIn(token);
                 Constants.SharedPreferenceData.setTOKEN(token);
+                Constants.SharedPreferenceData.setNAME(name);
                 Constants.SharedPreferenceData.setUserId(smobileno);
                 Constants.SharedPreferenceData.setIsAlumni("yes");
 
                 if (Constants.FireBase.token != null) {
-                    UpdateToken updateToken = new UpdateToken();
-                    updateToken.execute();
+                    if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+
+                        UpdateToken updateToken = new UpdateToken();
+                        updateToken.execute();
+                    }
                 } else {
                     FirebaseInstanceId.getInstance().getToken();
                     Intent intent = new Intent(getApplicationContext(), AlumniMainActivity.class);
@@ -296,6 +303,8 @@ public class AlumniLoginActivity extends AppCompatActivity {
 
 
         protected void onPreExecute() {
+            authenticationError = true;
+            errorMessage = "Data Courpted";
             pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
@@ -304,7 +313,7 @@ public class AlumniLoginActivity extends AppCompatActivity {
 
         protected Integer doInBackground(Void... params) {
             try {
-                URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.FIREBASE);
+                URL url = new URL(Constants.URLs.ALUMNI_BASE + Constants.URLs.ALUMNI_FIREBASE);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setDoOutput(true);

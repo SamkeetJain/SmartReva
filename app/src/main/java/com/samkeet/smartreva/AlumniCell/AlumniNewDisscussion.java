@@ -1,6 +1,7 @@
 package com.samkeet.smartreva.AlumniCell;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
@@ -49,7 +50,7 @@ public class AlumniNewDisscussion extends AppCompatActivity {
         ip_title = (TextInputLayout) findViewById(R.id.titleInputLayout);
     }
 
-    public void BackButton(View v){
+    public void BackButton(View v) {
         finish();
     }
 
@@ -67,8 +68,11 @@ public class AlumniNewDisscussion extends AppCompatActivity {
         if (!validateMessage()) {
             return;
         }
-        NewPost newPost = new NewPost();
-        newPost.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+
+            NewPost newPost = new NewPost();
+            newPost.execute();
+        }
     }
 
     private boolean validateTitle() {

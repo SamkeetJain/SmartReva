@@ -102,7 +102,7 @@
         <activity
             android:name=".AlumniCell.AlumniRegistrationActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".AlumniCell.AlumniEventsActivity" />
+        <activity android:name=".AlumniCell.AlumniEvents" />
         <activity android:name=".Placement.PlacementRegInit" />
         <activity
             android:name=".Placement.PlacementRegForm2"
@@ -146,12 +146,8 @@
         <activity android:name=".AlumniCell.AlumniNewDisscussion" />
         <activity android:name=".AlumniCell.AlumniNotificationActivity" />
         <activity android:name=".AlumniCell.AlumniNotificationManager" />
-        <activity android:name=".Placement2.PlacementRegistration4" />
-        <activity android:name=".Mentor.MentorPlavementMainActivity" />
-        <activity android:name=".Mentor.MentorPlacementAddStudentActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity android:name=".Mentor.MentorPlacementAcademicDetailsActivity" />
-        <activity android:name=".Mentor.MentorPlacementAcademicDetailsManager"></activity>
+        <activity android:name=".Placement2.PlacementBackLogDetails" />
+        <activity android:name=".Placement2.PlacementRegistration0"></activity>
     </application>
 
 </manifest>

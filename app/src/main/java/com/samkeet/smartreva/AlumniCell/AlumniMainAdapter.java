@@ -2,6 +2,7 @@ package com.samkeet.smartreva.AlumniCell;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
@@ -141,13 +142,19 @@ public class AlumniMainAdapter extends RecyclerView.Adapter<AlumniMainAdapter.Vi
                 if (starStatus[position].equals("YES")) {
                     starStatus[position] = "NO";
                     h.mImageView.setImageResource(R.drawable.ic_star_border_10dp);
-                    StarDisscussion starDisscussion = new StarDisscussion();
-                    starDisscussion.execute();
+                    if (Constants.Methods.networkState(context, (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE))) {
+
+                        StarDisscussion starDisscussion = new StarDisscussion();
+                        starDisscussion.execute();
+                    }
                 } else {
                     starStatus[position] = "YES";
                     h.mImageView.setImageResource(R.drawable.ic_star_10dp);
-                    StarDisscussion starDisscussion = new StarDisscussion();
-                    starDisscussion.execute();
+                    if (Constants.Methods.networkState(context, (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE))) {
+
+                        StarDisscussion starDisscussion = new StarDisscussion();
+                        starDisscussion.execute();
+                    }
                 }
             }
         });

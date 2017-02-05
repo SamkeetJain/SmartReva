@@ -26,6 +26,16 @@ public class Constants {
         public static String ALUMNI_BASE = "http://www.reva.ac.in/smartreva/alumni/";
         public static String PLACEMENT_BASE = "http://revacounselling.16mb.com/placement/";
         public static String PLACEMENT_COURSE_DEPT = "course_dept.php";
+        public static String PLACEMENT_PROFILE = "profile.php";
+        public static String PLACEMENT_REGISTRATION = "placement_reg.php";
+        public static String PLACEMENT_BACKLOG = "back_log.php";
+        public static String PLACEMENT_ACADEMIC = "academic_details.php";
+        public static String PLACEMENT_BTECH = "btech.php";
+        public static String PLACEMENT_MTECH = "mtech.php";
+        public static String PLACEMENT_MBAMCOM = "mba_mcom.php";
+        public static String PLACEMENT_DEGREE = "degree.php";
+        public static String PLACEMENT_MCA = "mca.php";
+        public static String PLACEMENT_CHECK = "check_reg.php";
         public static String LOGIN = "login.php";
         public static String ALUMNI_ABOUT_US = "about.html";
         public static String ALUMNI_CONTACT_UD = "contactUs.html";
@@ -77,6 +87,7 @@ public class Constants {
         public static String SHAREDPREFERENCES = "SmartReva";
         public static String IS_LOGGED_IN = "isloggedin";
         public static String USER_ID = "user_ID";
+        public static String NAME = "name";
         public static String TOKEN = "token";
         public static String IS_ALUMNI = "alumni";
         public static String IS_PLACEMENT = "placement";
@@ -100,6 +111,10 @@ public class Constants {
             return sharedPreferences.getString(USER_ID, "NOT_AVALIBLE");
         }
 
+        public static String getNAME() {
+            return sharedPreferences.getString(NAME, "NOT_AVALIBLE");
+        }
+
         public static String getTOKEN() {
             return sharedPreferences.getString(TOKEN, "NOT_AVALIBLE");
         }
@@ -110,6 +125,11 @@ public class Constants {
 
         public static String getIsPlacement() {
             return sharedPreferences.getString(IS_PLACEMENT, "NOT AVALIBLE");
+        }
+
+        public static void setNAME(String name) {
+            editor.putString(NAME, name);
+            editor.apply();
         }
 
         public static void setIsPlacement(String isPlacement) {

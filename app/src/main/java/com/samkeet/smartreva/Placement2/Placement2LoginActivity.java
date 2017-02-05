@@ -87,7 +87,7 @@ public class Placement2LoginActivity extends AppCompatActivity {
     }
 
     public void register(View v) {
-        Intent intent = new Intent(getApplicationContext(), PlacementRegistration1.class);
+        Intent intent = new Intent(getApplicationContext(), PlacementRegistration0.class);
         startActivity(intent);
     }
 

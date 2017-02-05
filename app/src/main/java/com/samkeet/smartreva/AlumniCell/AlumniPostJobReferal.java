@@ -1,6 +1,7 @@
 package com.samkeet.smartreva.AlumniCell;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputLayout;
@@ -100,9 +101,11 @@ public class AlumniPostJobReferal extends AppCompatActivity {
         if (!validateDesc()) {
             return;
         }
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
 
-        NewPost newPost = new NewPost();
-        newPost.execute();
+            NewPost newPost = new NewPost();
+            newPost.execute();
+        }
     }
 
     private boolean validateCompany() {
@@ -116,12 +119,12 @@ public class AlumniPostJobReferal extends AppCompatActivity {
             ip_company.setError("Company Name should be less than 32 charecters");
             requestFocus(mCompany);
             return false;
-        }if (Constants.Methods.checkForSpecial(company)){
+        }
+        if (Constants.Methods.checkForSpecial(company)) {
             ip_company.setError("Remove Special charecters");
             requestFocus(mCompany);
             return false;
-        }
-        else {
+        } else {
             ip_company.setErrorEnabled(false);
         }
         return true;
@@ -139,12 +142,12 @@ public class AlumniPostJobReferal extends AppCompatActivity {
             requestFocus(mRole);
             return false;
 
-        }if (Constants.Methods.checkForSpecial(role)){
+        }
+        if (Constants.Methods.checkForSpecial(role)) {
             ip_role.setError("Remove Special charecters");
             requestFocus(mRole);
             return false;
-        }
-        else {
+        } else {
             ip_role.setErrorEnabled(false);
         }
         return true;
@@ -158,8 +161,9 @@ public class AlumniPostJobReferal extends AppCompatActivity {
         if (desc.length() > 1000) {
             Toast.makeText(getApplicationContext(), "Description must be less than 1000 charesters", Toast.LENGTH_LONG).show();
             return false;
-        }if (Constants.Methods.checkForSpecial(desc)){
-            Toast.makeText(getApplicationContext(),"Remove Special charecter",Toast.LENGTH_LONG).show();
+        }
+        if (Constants.Methods.checkForSpecial(desc)) {
+            Toast.makeText(getApplicationContext(), "Remove Special charecter", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
