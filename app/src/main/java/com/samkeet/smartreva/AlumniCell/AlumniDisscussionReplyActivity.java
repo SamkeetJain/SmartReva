@@ -1,6 +1,7 @@
 package com.samkeet.smartreva.AlumniCell;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -107,13 +108,17 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
                 if (starStatus.equals("YES")) {
                     starStatus = "NO";
                     mImageView.setImageResource(R.drawable.ic_star_border_10dp);
-                    StarDisscussion starDisscussion = new StarDisscussion();
-                    starDisscussion.execute();
+                    if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                        StarDisscussion starDisscussion = new StarDisscussion();
+                        starDisscussion.execute();
+                    }
                 } else {
                     starStatus = "YES";
                     mImageView.setImageResource(R.drawable.ic_star_10dp);
-                    StarDisscussion starDisscussion = new StarDisscussion();
-                    starDisscussion.execute();
+                    if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+                        StarDisscussion starDisscussion = new StarDisscussion();
+                        starDisscussion.execute();
+                    }
                 }
             }
         });
@@ -123,9 +128,11 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         progressDialogContext = this;
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
 
-        GetReplyies getReplyies = new GetReplyies();
-        getReplyies.execute();
+            GetReplyies getReplyies = new GetReplyies();
+            getReplyies.execute();
+        }
     }
 
     public class GetReplyies extends AsyncTask<Void, Void, Integer> {
@@ -310,8 +317,10 @@ public class AlumniDisscussionReplyActivity extends AppCompatActivity {
             return;
         }
         mMessage.setText("");
-        PutReply putReply = new PutReply();
-        putReply.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            PutReply putReply = new PutReply();
+            putReply.execute();
+        }
         InputMethodManager inputManager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }

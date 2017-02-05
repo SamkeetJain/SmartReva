@@ -99,8 +99,11 @@ public class AlumniNotificationActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                GetNotification getNotification = new GetNotification();
-                getNotification.execute();
+                if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+
+                    GetNotification getNotification = new GetNotification();
+                    getNotification.execute();
+                }
             }
         });
 

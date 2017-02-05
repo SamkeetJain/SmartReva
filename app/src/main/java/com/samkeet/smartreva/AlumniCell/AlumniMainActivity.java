@@ -2,6 +2,8 @@ package com.samkeet.smartreva.AlumniCell;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -25,6 +27,8 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.MiniDrawer;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.DevelopersActivity;
@@ -84,6 +88,7 @@ public class AlumniMainActivity extends AppCompatActivity {
             updateToken.execute();
         }
 
+
         headerResult = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withTranslucentStatusBar(true)
@@ -102,6 +107,8 @@ public class AlumniMainActivity extends AppCompatActivity {
 //                .withGenerateMiniDrawer(false)
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
+                        new ProfileDrawerItem().withEmail(Constants.SharedPreferenceData.getUserId()).withName(Constants.SharedPreferenceData.getNAME().toUpperCase()).withNameShown(true).withSelectable(false),
+                        new DividerDrawerItem(),
                         new PrimaryDrawerItem().withName("Home").withIcon(R.drawable.ic_home_black_24dp).withIdentifier(1),
                         new PrimaryDrawerItem().withName("Events").withIcon(R.drawable.ic_event_black_24dp).withIdentifier(2),
                         new PrimaryDrawerItem().withName("Job Referral").withIcon(R.drawable.ic_job_24dp).withIdentifier(3),
@@ -153,46 +160,6 @@ public class AlumniMainActivity extends AppCompatActivity {
                 .withSavedInstance(savedInstanceState)
                 .withShowDrawerOnFirstLaunch(false)
                 .build();
-/*        crossfadeDrawerLayout = (CrossfadeDrawerLayout) result.getDrawerLayout();
-
-        //define maxDrawerWidth
-        crossfadeDrawerLayout.setMaxWidthPx(DrawerUIUtils.getOptimalDrawerWidth(this));
-        //add second view (which is the miniDrawer)
-       MiniDrawer miniResult = result.getMiniDrawer();
-        //build the view for the MiniDrawer
-        View view = miniResult.build(this);
-        //set the background of the MiniDrawer as this would be transparent
-//        view.setBackgroundColor(Color.BLACK);
-        view.setBackgroundColor(UIUtils.getThemeColorFromAttrOrRes(this, com.mikepenz.materialdrawer.R.attr.material_drawer_background, com.mikepenz.materialdrawer.R.color.material_drawer_background));
-        //we do not have the MiniDrawer view during CrossfadeDrawerLayout creation so we will add it here
-        crossfadeDrawerLayout.getSmallView().addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        //define the crossfader to be used with the miniDrawer. This is required to be able to automatically toggle open / close
-        miniResult.withCrossFader(new ICrossfader() {
-            @Override
-            public void crossfade() {
-                boolean isFaded = isCrossfaded();
-                crossfadeDrawerLayout.crossfade(400);
-
-                //only close the drawer if we were already faded and want to close it now
-                if (isFaded) {
-                    result.getDrawerLayout().closeDrawer(GravityCompat.START);
-                }
-            }
-
-            @Override
-            public boolean isCrossfaded() {
-                return crossfadeDrawerLayout.isCrossfaded();
-            }
-        });
-
-        //hook to the crossfade event
-        crossfadeDrawerLayout.withCrossfadeListener(new CrossfadeDrawerLayout.CrossfadeListener() {
-            @Override
-            public void onCrossfade(View containerView, float currentSlidePercentage, int slideOffset) {
-            }
-        });*/
-
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -204,14 +171,18 @@ public class AlumniMainActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                GetDisscussion getDisscussion = new GetDisscussion();
-                getDisscussion.execute();
+                if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+
+                    GetDisscussion getDisscussion = new GetDisscussion();
+                    getDisscussion.execute();
+                }
             }
         });
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
 
-        GetDisscussion getDisscussion = new GetDisscussion();
-        getDisscussion.execute();
-
+            GetDisscussion getDisscussion = new GetDisscussion();
+            getDisscussion.execute();
+        }
     }
 
     private class UpdateToken extends AsyncTask<Void, Void, Integer> {
@@ -275,8 +246,11 @@ public class AlumniMainActivity extends AppCompatActivity {
     }
 
     public void logout() {
-        deleteToken deleteToken = new deleteToken();
-        deleteToken.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+
+            deleteToken deleteToken = new deleteToken();
+            deleteToken.execute();
+        }
         Constants.SharedPreferenceData.clearData();
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
@@ -464,8 +438,11 @@ public class AlumniMainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        GetDisscussionSilently getDisscussionSilently = new GetDisscussionSilently();
-        getDisscussionSilently.execute();
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+
+            GetDisscussionSilently getDisscussionSilently = new GetDisscussionSilently();
+            getDisscussionSilently.execute();
+        }
     }
 
     public void Notification(View v) {

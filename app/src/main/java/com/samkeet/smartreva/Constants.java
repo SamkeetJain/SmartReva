@@ -87,6 +87,7 @@ public class Constants {
         public static String SHAREDPREFERENCES = "SmartReva";
         public static String IS_LOGGED_IN = "isloggedin";
         public static String USER_ID = "user_ID";
+        public static String NAME = "name";
         public static String TOKEN = "token";
         public static String IS_ALUMNI = "alumni";
         public static String IS_PLACEMENT = "placement";
@@ -110,6 +111,10 @@ public class Constants {
             return sharedPreferences.getString(USER_ID, "NOT_AVALIBLE");
         }
 
+        public static String getNAME() {
+            return sharedPreferences.getString(NAME, "NOT_AVALIBLE");
+        }
+
         public static String getTOKEN() {
             return sharedPreferences.getString(TOKEN, "NOT_AVALIBLE");
         }
@@ -120,6 +125,11 @@ public class Constants {
 
         public static String getIsPlacement() {
             return sharedPreferences.getString(IS_PLACEMENT, "NOT AVALIBLE");
+        }
+
+        public static void setNAME(String name) {
+            editor.putString(NAME, name);
+            editor.apply();
         }
 
         public static void setIsPlacement(String isPlacement) {

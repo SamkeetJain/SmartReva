@@ -12,8 +12,8 @@ import org.json.JSONObject;
 
 public class AlumniReferJobManager extends AppCompatActivity {
 
-    public TextView mName, mCompany, mRole, mType, mDate, mDesc;
-    public String name, company, role, type, date, desc;
+    public TextView mName, mCompany, mRole, mType, mDate, mDesc, mRemarks;
+    public String name, company, role, type, date, desc, remarks;
 
     public JSONObject object;
     public String data;
@@ -33,6 +33,7 @@ public class AlumniReferJobManager extends AppCompatActivity {
             type = object.getString("job_type");
             date = object.getString("ddate");
             desc = object.getString("description");
+            remarks = object.getString("remarks");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -43,6 +44,7 @@ public class AlumniReferJobManager extends AppCompatActivity {
         mType = (TextView) findViewById(R.id.type);
         mDate = (TextView) findViewById(R.id.date);
         mDesc = (TextView) findViewById(R.id.desc);
+        mRemarks = (TextView) findViewById(R.id.remarks);
 
         mName.setText(name);
         mCompany.setText(company);
@@ -50,8 +52,7 @@ public class AlumniReferJobManager extends AppCompatActivity {
         mType.setText(type);
         mDate.setText(date);
         mDesc.setText(desc);
-
-
+        mRemarks.setText(remarks);
     }
 
     public void BackButton(View v) {

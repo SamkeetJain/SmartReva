@@ -100,8 +100,11 @@ public class AlumniEvents extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                GetEvents getEvents = new GetEvents();
-                getEvents.execute();
+                if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+
+                    GetEvents getEvents = new GetEvents();
+                    getEvents.execute();
+                }
             }
         });
     }

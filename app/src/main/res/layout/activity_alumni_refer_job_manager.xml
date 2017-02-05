@@ -65,6 +65,7 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="5dp"
             android:text="name"
             android:textSize="12sp" />
 
@@ -79,15 +80,15 @@
 
         <View
             android:layout_width="match_parent"
-            android:background="#E0E0E0"
-            android:paddingTop="5dp"
-            android:layout_height="1dp"/>
+            android:layout_height="1dp"
+            android:layout_margin="5dp"
+            android:background="#E0E0E0" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,51 +99,79 @@
             <TextView
                 android:id="@+id/role"
                 android:layout_width="wrap_content"
-                android:paddingLeft="25dp"
                 android:layout_height="wrap_content"
+                android:paddingLeft="25dp"
                 android:text="Developer"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:background="#E0E0E0"
-            android:paddingTop="5dp"
-            android:layout_height="1dp"/>
+            android:layout_height="1dp"
+            android:layout_margin="5dp"
+            android:background="#E0E0E0" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/type"
                 android:layout_width="wrap_content"
-                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="12sp" />
+                android:gravity="center"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_weight="1"
-                android:textSize="12sp" />
+                android:gravity="center"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:background="#E0E0E0"
-            android:paddingTop="5dp"
-            android:layout_height="1dp"/>
+            android:layout_height="1dp"
+            android:layout_margin="5dp"
+            android:background="#E0E0E0" />
+
         <TextView
-            android:layout_width="match_parent"
             android:id="@+id/desc"
-            android:paddingTop="5dp"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="5dp"
+            android:background="#E0E0E0" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Admin Remarks"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:textSize="14sp" />
+        </LinearLayout>
 
     </LinearLayout>
 

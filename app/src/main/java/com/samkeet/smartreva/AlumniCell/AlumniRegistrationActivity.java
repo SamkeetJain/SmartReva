@@ -171,11 +171,10 @@ public class AlumniRegistrationActivity extends AppCompatActivity {
         if (!validateLoc()) {
             return;
         }
-
-
-        Registration registration = new Registration();
-        registration.execute();
-
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            Registration registration = new Registration();
+            registration.execute();
+        }
     }
 
     private boolean validateMobilenumber() {
