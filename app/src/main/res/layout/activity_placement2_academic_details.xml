@@ -115,6 +115,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -139,6 +140,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_gender"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -163,6 +165,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_dob"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -187,6 +190,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_phoneno"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -211,6 +215,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_email"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -235,6 +240,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_course"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -259,6 +265,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_branch"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -283,6 +290,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_yeargap"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -307,6 +315,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_workxp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -331,6 +340,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_current_address"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -355,6 +365,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/PD_permanent_address"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -419,6 +430,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/AD_10_score"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -443,6 +455,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/AD_10_board"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -467,6 +480,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/AD_10_school_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -491,6 +505,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/AD_10_yop"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -515,6 +530,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/AD_12_score"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -539,6 +555,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/AD_12_board"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -563,6 +580,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/AD_12_school_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -587,6 +605,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/AD_12_yop"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -649,6 +668,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_dpl_score"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -673,6 +693,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_dpl_school_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -697,6 +718,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_dpl_yop"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -721,6 +743,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_yoj"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -745,6 +768,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_sem1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -769,6 +793,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_sem2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -793,6 +818,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_sem3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -817,6 +843,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_sem4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -841,6 +868,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_sem5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -865,6 +893,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_sem6"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -889,6 +918,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_sem7"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -913,6 +943,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/BT_sem8"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -975,6 +1006,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_dpl_score"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -999,6 +1031,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_dpl_college_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1023,6 +1056,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_dpl_yop"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1047,6 +1081,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_bt_score"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1071,6 +1106,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_bt_university"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1095,6 +1131,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_bt_collage_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1119,6 +1156,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_bt_yop"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1143,6 +1181,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_yoj"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1167,6 +1206,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_sem1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1191,6 +1231,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_sem2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1215,6 +1256,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_sem3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1239,6 +1281,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MT_sem4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1301,6 +1344,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/DEG_course"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1325,6 +1369,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/DEG_yoj"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1349,6 +1394,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/DEG_sem1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1373,6 +1419,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/DEG_sem2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1397,6 +1444,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/DEG_sem3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1421,6 +1469,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/DEG_sem4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1445,6 +1494,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/DEG_sem5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1469,6 +1519,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/DEG_sem6"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1531,6 +1582,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_deg_score"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1555,6 +1607,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_deg_course"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1579,6 +1632,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_deg_university"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1603,6 +1657,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_deg_college_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1627,6 +1682,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_deg_yop"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1651,6 +1707,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_yoj"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1675,6 +1732,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_sem1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1699,6 +1757,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_sem2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1723,6 +1782,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_sem3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1747,6 +1807,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_sem4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1771,6 +1832,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_sem5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1795,6 +1857,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MCA_sem6"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1857,6 +1920,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MM_deg_score"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1881,6 +1945,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MM_deg_university"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1905,6 +1970,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MM_deg_college_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1929,6 +1995,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MM_deg_yop"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1953,6 +2020,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MM_yoj"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -1977,6 +2045,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MM_sem1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -2001,6 +2070,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MM_sem2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -2025,6 +2095,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MM_sem3"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -2049,6 +2120,7 @@
                                 android:textSize="14sp" />
 
                             <EditText
+                                android:id="@+id/MM_sem4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
