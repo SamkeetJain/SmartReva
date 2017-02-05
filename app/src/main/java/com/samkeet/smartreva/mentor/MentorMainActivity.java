@@ -28,9 +28,5 @@ public class MentorMainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MentorSendNotificationActivity.class);
         startActivity(intent);
     }
-    public void Placement(View v){
-        Intent intent =new Intent(getApplicationContext(),MentorPlavementMainActivity.class);
-        startActivity(intent);
-    }
 
 }
