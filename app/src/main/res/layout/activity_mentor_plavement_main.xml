@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_mentor_main"
+    android:id="@+id/activity_mentor_plavement_main"
     android:layout_width="match_parent"
+    android:background="@color/lavender"
     android:layout_height="match_parent"
-    tools:context="com.samkeet.smartreva.Mentor.MentorMainActivity">
-
+    tools:context="com.samkeet.smartreva.Mentor.MentorPlavementMainActivity">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/apppppp"
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_toRightOf="@+id/back_button"
                     android:paddingLeft="15dp"
-                    android:text="Mentor"
+                    android:text="Placement"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
 
@@ -88,14 +88,14 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/student_details_button"
+                    android:id="@+id/add_student_button"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:gravity="center"
-                    android:onClick="StudentDetails"
-                    android:text="STUDENT DETAILS"
+                    android:onClick="AddStudents"
+                    android:text="ADD STUDENT"
 
                     />
             </LinearLayout>
@@ -108,61 +108,19 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/academic_details_button"
+                    android:id="@+id/Acedemic_detail_button"
                     android:layout_width="200dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:gravity="center"
                     android:onClick="StudentAcademicDetails"
-                    android:text="Academis Details"
+                    android:text="Academic Details"
 
                     />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/send_notificatation_button"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:gravity="center"
-                    android:onClick="SendNotification"
-                    android:text="Send Notification"
-
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/placement_button"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:gravity="center"
-                    android:onClick="Placement"
-                    android:text="Placement"
-
-                    />
-            </LinearLayout>
-
-
 
         </LinearLayout>
 
     </ScrollView>
-
 </RelativeLayout>

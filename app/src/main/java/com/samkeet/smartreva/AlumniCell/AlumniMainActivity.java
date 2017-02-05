@@ -121,7 +121,7 @@ public class AlumniMainActivity extends AppCompatActivity {
 
                         }
                         if (drawerItem.getIdentifier() == 2) {
-                            Intent intent = new Intent(getApplicationContext(), AlumniEvents.class);
+                            Intent intent = new Intent(getApplicationContext(), AlumniEventsActivity.class);
                             startActivity(intent);
                         }
                         if (drawerItem.getIdentifier() == 3) {

@@ -29,7 +29,7 @@ import java.net.URL;
 
 import dmax.dialog.SpotsDialog;
 
-public class AlumniEvents extends AppCompatActivity {
+public class AlumniEventsActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
