@@ -119,6 +119,8 @@ public class Placement2MainActivity extends AppCompatActivity {
 
                         }
                         if (drawerItem.getIdentifier() == 2) {
+                            CheckRegistration2 checkRegistration2 = new CheckRegistration2();
+                            checkRegistration2.execute();
 
                         }
                         if (drawerItem.getIdentifier() == 3) {
@@ -351,6 +353,94 @@ public class Placement2MainActivity extends AppCompatActivity {
 
                 AlertDialog dialog = builder.create();
                 dialog.show();
+            }
+        }
+    }
+
+    private class CheckRegistration2 extends AsyncTask<Void, Void, Integer> {
+
+
+        protected void onPreExecute() {
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
+            pd.setTitle("Loading...");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_CHECK);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN());
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if (status.equals("APPROVED") || status.equals("SUBMITTED")) {
+                        authenticationError = false;
+                    } else {
+                        authenticationError = true;
+                        if (status.equals("PENDING")) {
+                            errorMessage = "You need to Register first";
+                        } else {
+                            errorMessage = status;
+                        }
+                    }
+                }
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (authenticationError) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Placement2MainActivity.this);
+                builder.setTitle("Oops!!! We cannot process your request at this time");
+                builder.setMessage("Response: " + "\n" + errorMessage);
+                String positiveText = "Okay";
+                builder.setPositiveButton(positiveText,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else {
+
+                Intent intent = new Intent(getApplicationContext(), Placement2AcademicDetails.class);
+                startActivity(intent);
+
             }
         }
     }
