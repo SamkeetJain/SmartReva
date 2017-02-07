@@ -491,7 +491,7 @@ public class PlacementRegistration2 extends AppCompatActivity {
             }
         });
     }
-
+    
     public void initDeptList() {
 
         ArrayList<String> temp = new ArrayList<String>();
