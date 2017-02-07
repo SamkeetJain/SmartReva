@@ -3,15 +3,19 @@ package com.samkeet.smartreva.Placement2;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.GridLayoutAnimationController;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -84,19 +88,30 @@ public class Placement2AcademicDetails extends AppCompatActivity {
         mSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                editable = !editable;
-                setEditable(editable);
-                if (editable) {
+
+                if (!editable) {
+                    editable = !editable;
+                    setEditable(editable);
                     mSubmit.setText("SAVE");
                 } else {
-                    mSubmit.setText("EDIT");
-                    sendData();
+
+                    checkData();
                 }
             }
         });
         GetProfile getProfile = new GetProfile();
         getProfile.execute();
 
+    }
+
+    public void sendData() {
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+            editable = !editable;
+            setEditable(editable);
+            mSubmit.setText("EDIT");
+            PutRegForm1 putRegForm1 = new PutRegForm1();
+            putRegForm1.execute();
+        }
     }
 
     public void BackButton(View v) {
@@ -784,7 +799,7 @@ public class Placement2AcademicDetails extends AppCompatActivity {
 //        }
 //    }
 
-    public void sendData() {
+    public void checkData() {
         pdname = PDname.getText().toString().trim();
         pdgender = PDgender.getText().toString().trim();
         pddob = PDdob.getText().toString().trim();
@@ -819,6 +834,8 @@ public class Placement2AcademicDetails extends AppCompatActivity {
             btsem6 = BTsem6.getText().toString().trim();
             btsem7 = BTsem7.getText().toString().trim();
             btsem8 = BTsem8.getText().toString().trim();
+
+            validbt();
         } else if (pdcourse.equals("mtech")) {
             mtdplscore = MTdplscore.getText().toString().trim();
             mtdplschoolname = MTdplschoolname.getText().toString().trim();
@@ -829,9 +846,12 @@ public class Placement2AcademicDetails extends AppCompatActivity {
             mtbtyop = MTbtyop.getText().toString().trim();
             mtyoj = MTyoj.getText().toString().trim();
             mtsem1 = MTsem1.getText().toString().trim();
-            mtsem1 = MTsem2.getText().toString().trim();
-            mtsem1 = MTsem3.getText().toString().trim();
-            mtsem1 = MTsem4.getText().toString().trim();
+            mtsem2 = MTsem2.getText().toString().trim();
+            mtsem3 = MTsem3.getText().toString().trim();
+            mtsem4 = MTsem4.getText().toString().trim();
+
+            validmt();
+
         } else if (pdcourse.equals("degree")) {
             degcourse = Degcourse.getText().toString().trim();
             degyoj = Degyoj.getText().toString().trim();
@@ -841,6 +861,9 @@ public class Placement2AcademicDetails extends AppCompatActivity {
             degsem4 = Degsem4.getText().toString().trim();
             degsem5 = Degsem5.getText().toString().trim();
             degsem6 = Degsem6.getText().toString().trim();
+
+            validDeg();
+
         } else if (pdcourse.equals("mca")) {
             mcadegscore = MCAdegscore.getText().toString().trim();
             mcadegcourse = MCAdegcourse.getText().toString().trim();
@@ -854,6 +877,8 @@ public class Placement2AcademicDetails extends AppCompatActivity {
             mcasem4 = MCAsem4.getText().toString().trim();
             mcasem5 = MCAsem5.getText().toString().trim();
             mcasem6 = MCAsem6.getText().toString().trim();
+
+            validMca();
         } else if (pdcourse.equals("mba_mcom")) {
             mmdegscore = MMdegscore.getText().toString().trim();
             mmdeguniversity = MMdeguniversity.getText().toString().trim();
@@ -861,14 +886,408 @@ public class Placement2AcademicDetails extends AppCompatActivity {
             mmdegyop = MMdegyop.getText().toString().trim();
             mmyoj = MMyoj.getText().toString().trim();
             mmsem1 = MMsem1.getText().toString().trim();
-            mmsem1 = MMsem2.getText().toString().trim();
-            mmsem1 = MMsem3.getText().toString().trim();
-            mmsem1 = MMsem4.getText().toString().trim();
+            mmsem2 = MMsem2.getText().toString().trim();
+            mmsem3 = MMsem3.getText().toString().trim();
+            mmsem4 = MMsem4.getText().toString().trim();
+
+            validmm();
 
         }
 
-        PutRegForm1 putRegForm1 = new PutRegForm1();
-        putRegForm1.execute();
+
+    }
+
+    public void validmm() {
+        if (!validpd()) {
+            return;
+        }
+        if (!validScore(mmdegscore, MMdegscore)) {
+            return;
+        }
+        if (!validUniversity(mmdeguniversity, MMdeguniversity)) {
+            return;
+        }
+        if (!validSchoolname(mmdegcollegename, MMdegcollegename)) {
+            return;
+        }
+        if (!validYear(mmdegyop, MMdegyop)) {
+            return;
+        }
+        if (!validYear(mmyoj, MMyoj)) {
+            return;
+        }
+        if (!validSem(mmsem1, MMsem1)) {
+            return;
+        }
+        if (!validSem(mmsem2, MMsem2)) {
+            return;
+        }
+        if (!validSem(mmsem3, MMsem3)) {
+            return;
+        }
+        if (!validSem(mmsem4, MMsem4)) {
+            return;
+        }
+        sendData();
+    }
+
+    public void validMca() {
+        if (!validpd()) {
+            return;
+        }
+        if (!validScore(mcadegscore, MCAdegscore)) {
+            return;
+        }
+        if (!validCourse(mcadegcourse, MCAdegcourse)) {
+            return;
+        }
+        if (!validUniversity(mcadeguniversity, MCAdeguniversity)) {
+            return;
+        }
+        if (!validSchoolname(mcadegcollegename, MCAdegcollegename)) {
+            return;
+        }
+        if (!validYear(mcadegyop, MCAdegyop)) {
+            return;
+        }
+        if (!validYear(mcayoj, MCAyoj)) {
+            return;
+        }
+        if (!validSem(mcasem1, MCAsem1)) {
+            return;
+        }
+        if (!validSem(mcasem2, MCAsem2)) {
+            return;
+        }
+        if (!validSem(mcasem3, MCAsem3)) {
+            return;
+        }
+        if (!validSem(mcasem4, MCAsem4)) {
+            return;
+        }
+        if (!validSem(mcasem5, MCAsem5)) {
+            return;
+        }
+        if (!validSem(mcasem6, MCAsem6)) {
+            return;
+        }
+        sendData();
+    }
+
+    public void validDeg() {
+        if (!validpd()) {
+            return;
+        }
+        if (!validCourse(degcourse, Degcourse)) {
+            return;
+        }
+        if (!validYear(degyoj, Degyoj)) {
+            return;
+        }
+        if (!validSem(degsem1, Degsem1)) {
+            return;
+        }
+        if (!validSem(degsem2, Degsem2)) {
+            return;
+        }
+        if (!validSem(degsem3, Degsem3)) {
+            return;
+        }
+        if (!validSem(degsem4, Degsem4)) {
+            return;
+        }
+        if (!validSem(degsem5, Degsem5)) {
+            return;
+        }
+        if (!validSem(degsem6, Degsem6)) {
+            return;
+        }
+        sendData();
+    }
+
+    private boolean validCourse(String course, EditText course_et) {
+        if (course.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Invalid Course Name", Toast.LENGTH_SHORT).show();
+            requestFocus(course_et);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(course)) {
+            Toast.makeText(getApplicationContext(), "Remove Special Charecters from Course Name", Toast.LENGTH_SHORT).show();
+            requestFocus(course_et);
+            return false;
+        }
+        if (course.length() > 32) {
+            Toast.makeText(getApplicationContext(), "Course Name should be less than 32 charecters", Toast.LENGTH_SHORT).show();
+            requestFocus(course_et);
+            return false;
+        }
+        return true;
+    }
+
+    public void validmt() {
+        if (!validpd()) {
+            return;
+        }
+        if (!validScore(mtdplscore, MTdplscore)) {
+            return;
+        }
+        if (!validSchoolname(mtdplschoolname, MTdplschoolname)) {
+            return;
+        }
+        if (!validYear(mtdplyop, MTdplyop)) {
+            return;
+        }
+        if (!validScore(mtbtscore, MTbtscore)) {
+            return;
+        }
+        if (!validSchoolname(mtbtcollegename, MTbtcollegename)) {
+            return;
+        }
+        if (!validUniversity(mtbtuniversity, MTbtuniversity)) {
+            return;
+        }
+        if (!validYear(mtbtyop, MTbtyop)) {
+            return;
+        }
+        if (!validYear(mtyoj, MTyoj)) {
+            return;
+        }
+        if (!validSem(mtsem1, MTsem1)) {
+            return;
+        }
+        if (!validSem(mtsem2, MTsem2)) {
+            return;
+        }
+        if (!validSem(mtsem3, MTsem3)) {
+            return;
+        }
+        if (!validSem(mtsem4, MTsem4)) {
+            return;
+        }
+        sendData();
+    }
+
+    private boolean validUniversity(String university, EditText university_et) {
+        if (university.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Invalid University Name", Toast.LENGTH_SHORT).show();
+            requestFocus(university_et);
+            return false;
+        }
+        if (university.length() > 32) {
+            Toast.makeText(getApplicationContext(), "University Name should be less than 32 charecters", Toast.LENGTH_SHORT).show();
+            requestFocus(university_et);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(university)) {
+            Toast.makeText(getApplicationContext(), "Remove special charecters from University Name", Toast.LENGTH_SHORT).show();
+            requestFocus(university_et);
+            return false;
+        }
+        return true;
+    }
+
+    public void validbt() {
+        if (!validpd()) {
+            return;
+        }
+        if (!validSchoolname(btdplschoolname, BTdplschoolname)) {
+            return;
+        }
+        if (!validScore(btdplScore, BTdplScore)) {
+            return;
+        }
+        if (!validYear(btdplyop, BTdplyop)) {
+            return;
+        }
+        if (!validYear(btyoj, BTyoj)) {
+            return;
+        }
+        if (!validSem(btsem1, BTsem1)) {
+            return;
+        }
+        if (!validSem(btsem2, BTsem2)) {
+            return;
+        }
+        if (!validSem(btsem3, BTsem3)) {
+            return;
+        }
+        if (!validSem(btsem4, BTsem4)) {
+            return;
+        }
+        if (!validSem(btsem5, BTsem5)) {
+            return;
+        }
+        if (!validSem(btsem6, BTsem6)) {
+            return;
+        }
+        if (!validSem(btsem7, BTsem7)) {
+            return;
+        }
+        if (!validSem(btsem8, BTsem8)) {
+            return;
+        }
+        sendData();
+    }
+
+    private boolean validSem(String sem, EditText sem_et) {
+        if (sem.isEmpty() || sem.length() > 5) {
+            Toast.makeText(getApplicationContext(), "Invalid Marks", Toast.LENGTH_SHORT).show();
+            requestFocus(sem_et);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(sem)) {
+            Toast.makeText(getApplicationContext(), "Remove special charecters from Marks", Toast.LENGTH_SHORT).show();
+            requestFocus(sem_et);
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validYear(String year, EditText year_et) {
+        if (year.isEmpty() || year.length() != 4) {
+            Toast.makeText(getApplicationContext(), "Invalid Year", Toast.LENGTH_SHORT).show();
+            requestFocus(year_et);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(year)) {
+            Toast.makeText(getApplicationContext(), "Remove special charecters from Year", Toast.LENGTH_SHORT).show();
+            requestFocus(year_et);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validScore(String score, EditText score_et) {
+        if (score.isEmpty() || score.length() > 5) {
+            Toast.makeText(getApplicationContext(), "Invalid Score", Toast.LENGTH_SHORT).show();
+            requestFocus(score_et);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(score)) {
+            Toast.makeText(getApplicationContext(), "Remove special charecters from Score", Toast.LENGTH_SHORT).show();
+            requestFocus(score_et);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validSchoolname(String school, EditText school_et) {
+        if (school.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Invalid School Name", Toast.LENGTH_SHORT).show();
+            requestFocus(school_et);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(school)) {
+            Toast.makeText(getApplicationContext(), "Remove special charecters from School Name", Toast.LENGTH_SHORT).show();
+            requestFocus(school_et);
+            return false;
+        }
+        if (school.length() > 128) {
+            Toast.makeText(getApplicationContext(), "School Name should be less than 128", Toast.LENGTH_SHORT).show();
+            requestFocus(school_et);
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validpd() {
+        if (!validPhone(pdphoneno, PDphoneno)) {
+            return false;
+        }
+        if (!validEmail(pdemail, PDemail)) {
+            return false;
+        }
+        if (!validYeargap(pdyeargap, PDyeargap)) {
+            return false;
+        }
+        if (!validAddress(pdpaddress, PDpaddress)) {
+            return false;
+        }
+        if (!validAddress(pdcaddress, PDcaddress)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validPhone(String phone, EditText phone_et) {
+        if (!isValidMobilenumber(phone) || phone.isEmpty() || phone.length() < 5 || phone.length() > 15) {
+            Toast.makeText(getApplicationContext(), "Invalid Phone number", Toast.LENGTH_SHORT).show();
+            requestFocus(phone_et);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(phone)) {
+            Toast.makeText(getApplicationContext(), "Remove Special Charecters from phone number", Toast.LENGTH_SHORT).show();
+            requestFocus(phone_et);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validEmail(String email, EditText email_et) {
+        if (!isValidEmail(email) || email.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
+            requestFocus(email_et);
+            return false;
+        }
+        if (email.length() > 32) {
+            Toast.makeText(getApplicationContext(), "Email should be less than 32 charecters", Toast.LENGTH_SHORT).show();
+            requestFocus(email_et);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(email)) {
+            Toast.makeText(getApplicationContext(), "Remove Special Charecters from Email", Toast.LENGTH_SHORT).show();
+            requestFocus(email_et);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validYeargap(String yg, EditText yg_et) {
+        if (yg.isEmpty() || yg.length() > 2) {
+            Toast.makeText(getApplicationContext(), "Invalid Year Gap", Toast.LENGTH_SHORT).show();
+            requestFocus(yg_et);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(yg)) {
+            Toast.makeText(getApplicationContext(), "Remove Special Charecters from Year gap", Toast.LENGTH_SHORT).show();
+            requestFocus(yg_et);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validAddress(String address, EditText address_et) {
+        if (address.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Invalid Address", Toast.LENGTH_SHORT).show();
+            requestFocus(address_et);
+            return false;
+        }
+        if (Constants.Methods.checkForSpecial(address)) {
+            Toast.makeText(getApplicationContext(), "Remove Special Charecters from Address", Toast.LENGTH_SHORT).show();
+            requestFocus(address_et);
+            return false;
+        }
+        if (address.length() > 256) {
+            Toast.makeText(getApplicationContext(), "Address should be less than 256 charecters", Toast.LENGTH_SHORT).show();
+            requestFocus(address_et);
+            return false;
+        }
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private static boolean isValidMobilenumber(String mobileNo) {
+        return !TextUtils.isEmpty(mobileNo) && Patterns.PHONE.matcher(mobileNo).matches();
+    }
+
+    private static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private class PutRegForm1 extends AsyncTask<Void, Void, Integer> {
