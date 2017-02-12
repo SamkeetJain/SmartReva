@@ -37,6 +37,9 @@ public class Constants {
         public static String PLACEMENT_MCA = "mca.php";
         public static String PLACEMENT_CHECK = "check_reg.php";
         public static String PLACEMENT_VIEW = "viewprofile.php";
+        public static String PLACEMENT_INVITE = "placement_invite.php";
+        public static String PLACEMENT_DRIVE_REG = "placement_drives_reg.php";
+        public static String PLACEMENT_MY_DRIVE = "mydrives.php";
         public static String LOGIN = "login.php";
         public static String ALUMNI_ABOUT_US = "about.html";
         public static String ALUMNI_CONTACT_UD = "contactUs.html";

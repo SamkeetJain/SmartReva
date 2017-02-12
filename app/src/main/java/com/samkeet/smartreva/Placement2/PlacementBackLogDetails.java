@@ -49,8 +49,12 @@ public class PlacementBackLogDetails extends AppCompatActivity {
     public String errorMessage;
     public Boolean[] finish;
 
-    public Button submit;
+    public Button submit, addnew, cancel, addbacklog;
+    public LinearLayout newBackLogView;
     public TextView submitText;
+    public EditText addbacklogSubName, addbacklogSubSem;
+    public Switch addbacklogCleared;
+    public String addbacklogsubname, addbacklogsubsem, addbacklogcleared;
 
     public String[] mName, mSem, mCh;
 
@@ -60,15 +64,47 @@ public class PlacementBackLogDetails extends AppCompatActivity {
         progressDialogContext = this;
         setContentView(R.layout.activity_placement_backlog_details);
         mainLayout = (LinearLayout) findViewById(R.id.mainview);
-
         submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Save();
+                Delete();
             }
         });
         submitText = (TextView) findViewById(R.id.submitText);
+        submitText.setVisibility(View.GONE);
+        addnew = (Button) findViewById(R.id.addnew);
+        addnew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newBackLogView.setVisibility(View.VISIBLE);
+                mainLayout.setVisibility(View.GONE);
+                submit.setVisibility(View.GONE);
+            }
+        });
+        newBackLogView = (LinearLayout) findViewById(R.id.newBacklog);
+        newBackLogView.setVisibility(View.GONE);
+        cancel = (Button) findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                newBackLogView.setVisibility(View.GONE);
+                mainLayout.setVisibility(View.VISIBLE);
+                if (count > 0) {
+                    submit.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        addbacklog = (Button) findViewById(R.id.addbacklog);
+        addbacklog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addBackLog();
+            }
+        });
+        addbacklogSubName = (EditText) findViewById(R.id.sn);
+        addbacklogSubSem = (EditText) findViewById(R.id.fs);
+        addbacklogCleared = (Switch) findViewById(R.id.c);
 
         CheckRegistration checkRegistration = new CheckRegistration();
         checkRegistration.execute();
@@ -83,7 +119,7 @@ public class PlacementBackLogDetails extends AppCompatActivity {
         finish();
     }
 
-    public void Save() {
+    public void Delete() {
         DeleteBacklog deleteBacklog = new DeleteBacklog();
         deleteBacklog.execute();
     }
@@ -191,6 +227,8 @@ public class PlacementBackLogDetails extends AppCompatActivity {
 
     private class GetPreviousData extends AsyncTask<Void, Void, Integer> {
 
+        private int c;
+
         protected void onPreExecute() {
             authenticationError = true;
             errorMessage = "Data Courpted";
@@ -231,7 +269,8 @@ public class PlacementBackLogDetails extends AppCompatActivity {
                     errorMessage = jsonResults.toString();
                 } else {
                     JSONArray jsonArray = new JSONArray(jsonResults.toString());
-                    for (int i = 0; i < count; i++) {
+                    c = jsonArray.length();
+                    for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         mName[i] = jsonObject.getString("sub_name");
                         mSem[i] = jsonObject.getString("sub_sem");
@@ -255,7 +294,8 @@ public class PlacementBackLogDetails extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                for (int i = 0; i < count; i++) {
+
+                for (int i = 0; i < c; i++) {
                     mSubjectName[i].setText(mName[i]);
                     mFailedSemester[i].setText(mSem[i]);
                     if (mCh[i].equals("YES")) {
@@ -381,8 +421,9 @@ public class PlacementBackLogDetails extends AppCompatActivity {
             getPreviousData.execute();
 
         } else {
-            submit.setVisibility(View.INVISIBLE);
+            submit.setVisibility(View.GONE);
             submitText.setText("NO BACKLOGS");
+            submitText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -507,6 +548,86 @@ public class PlacementBackLogDetails extends AppCompatActivity {
                 pd.dismiss();
             }
             Submit();
+        }
+    }
+
+    private class AddBacklog extends AsyncTask<Void, Void, Integer> {
+
+
+        protected void onPreExecute() {
+            authenticationError = true;
+            errorMessage = "Data Courpted";
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
+            pd.setTitle("Loading...");
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+        protected Integer doInBackground(Void... params) {
+            try {
+                java.net.URL url = new URL(Constants.URLs.PLACEMENT_BASE + Constants.URLs.PLACEMENT_BACKLOG);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
+                        .appendQueryParameter("requestType", "put")
+                        .appendQueryParameter("sub_name", addbacklogsubname)
+                        .appendQueryParameter("sub_sem", addbacklogsubsem)
+                        .appendQueryParameter("cleared", addbacklogcleared);
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
+                writer.write(_data.build().getEncodedQuery());
+                writer.flush();
+                writer.close();
+
+                InputStreamReader in = new InputStreamReader(connection.getInputStream());
+
+                StringBuilder jsonResults = new StringBuilder();
+                // Load the results into a StringBuilder
+                int read;
+                char[] buff = new char[1024];
+                while ((read = in.read(buff)) != -1) {
+                    jsonResults.append(buff, 0, read);
+                }
+                connection.disconnect();
+                authenticationError = jsonResults.toString().contains("Authentication Error");
+
+                if (authenticationError) {
+                    errorMessage = jsonResults.toString();
+                } else {
+                    JSONObject jsonObj = new JSONObject(jsonResults.toString());
+                    String status = jsonObj.getString("status");
+                    if (status.equals("success")) {
+                        authenticationError = false;
+                        errorMessage = status;
+                    } else {
+                        authenticationError = true;
+                        errorMessage = status;
+                    }
+                }
+                return 1;
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+            return 1;
+        }
+
+        protected void onPostExecute(Integer result) {
+            if (pd != null) {
+                pd.dismiss();
+            }
+            if (authenticationError) {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
+                newBackLogView.setVisibility(View.GONE);
+                mainLayout.setVisibility(View.VISIBLE);
+                if (count > 0) {
+                    submit.setVisibility(View.VISIBLE);
+                }
+            }
         }
     }
 
@@ -635,6 +756,21 @@ public class PlacementBackLogDetails extends AppCompatActivity {
                 getNoOfBackLogs.execute();
             }
         }
+    }
+
+    public void addBackLog() {
+        addbacklogsubname = addbacklogSubName.getText().toString().trim();
+        addbacklogsubsem = addbacklogSubSem.getText().toString().trim();
+        if (addbacklogCleared.isChecked()) {
+            addbacklogcleared = "YES";
+        } else {
+            addbacklogcleared = "NO";
+        }
+
+        AddBacklog addBacklog = new AddBacklog();
+        addBacklog.execute();
+
+
     }
 
 

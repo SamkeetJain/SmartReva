@@ -102,7 +102,7 @@
         <activity
             android:name=".AlumniCell.AlumniRegistrationActivity"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".AlumniCell.AlumniEvents" />
+        <activity android:name=".AlumniCell.AlumniEventsActivity" />
         <activity android:name=".Placement.PlacementRegInit" />
         <activity
             android:name=".Placement.PlacementRegForm2"
@@ -140,7 +140,6 @@
         <activity
             android:name=".Placement2.PlacementRegistration3"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name=".Placement2.UpcommingDrivesActivity" />
         <activity android:name=".Placement2.Placement2MainActivity" />
         <activity android:name=".AlumniCell.AlumniDisscussionReplyActivity" />
         <activity android:name=".AlumniCell.AlumniNewDisscussion" />
@@ -148,7 +147,9 @@
         <activity android:name=".AlumniCell.AlumniNotificationManager" />
         <activity android:name=".Placement2.PlacementBackLogDetails" />
         <activity android:name=".Placement2.PlacementRegistration0" />
-        <activity android:name=".Placement2.Placement2AcademicDetails"></activity>
+        <activity android:name=".Placement2.Placement2AcademicDetails" />
+        <activity android:name=".Placement2.Placement2DriveManager" />
+        <activity android:name=".Placement2.Placement2MyDrivesActivity"></activity>
     </application>
 
 </manifest>

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -25,9 +25,9 @@
                 android:id="@+id/company_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left"
-                android:paddingTop="5dp"
+                android:gravity="center"
                 android:paddingLeft="10dp"
+                android:paddingTop="5dp"
                 android:textSize="14dp" />
 
             <View
@@ -36,41 +36,15 @@
                 android:background="#E0E0E0"
                 android:paddingTop="5dp" />
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/datetext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="left"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
-                    android:textSize="10dp" />
-
-                <TextView
-                    android:id="@+id/dept"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingRight="5dp"
-                    android:paddingTop="5dp"
-                    android:textSize="10dp" />
-            </LinearLayout>
-
             <TextView
-                android:id="@+id/role"
+                android:id="@+id/datetext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:paddingLeft="5dp"
                 android:paddingTop="5dp"
-                android:textSize="12sp"/>
-
+                android:textSize="10dp" />
 
         </LinearLayout>
 
