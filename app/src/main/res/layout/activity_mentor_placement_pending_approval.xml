@@ -2,11 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_mentor_placement_add_student"
+    android:id="@+id/activity_metor_placement_academic_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lavender"
-    tools:context="com.samkeet.smartreva.Mentor.MentorPlacementAddStudentActivity">
+    tools:context="com.samkeet.smartreva.Mentor.MentorPlacementPendingApprovalActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/apppppp"
@@ -43,12 +43,11 @@
                     android:layout_centerHorizontal="true"
                     android:layout_toRightOf="@+id/back_button"
                     android:paddingLeft="15dp"
-                    android:text="Add Student"
+                    android:text="Pending Approvals"
                     android:textColor="#ffffff"
                     android:textSize="20sp" />
 
             </RelativeLayout>
-
 
         </android.support.v7.widget.Toolbar>
 
@@ -57,71 +56,13 @@
             android:layout_height="2dp"
             android:background="@color/colorAccent" />
 
-
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/apppppp"
-        android:orientation="vertical"
-        android:padding="25dp">
+        android:scrollbars="vertical" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="50dp" />
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/srn_til"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="SRN">
-
-            <EditText
-                android:id="@+id/srn_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLines="1"
-                android:textAlignment="center"
-                android:textSize="16sp" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/def_til"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Default Password">
-
-            <EditText
-                android:id="@+id/def_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:lines="1"
-                android:maxLines="1"
-                android:textAlignment="center"
-                android:textSize="16sp" />
-
-        </android.support.design.widget.TextInputLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingTop="15dp">
-
-            <Button
-                style="@style/Base.Widget.AppCompat.Button.Colored"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:onClick="Submit"
-                android:text="submit" />
-        </LinearLayout>
-    </LinearLayout>
 </RelativeLayout>

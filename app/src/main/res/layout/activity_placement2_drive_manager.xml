@@ -70,7 +70,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Hewlett Packard"
                 android:textSize="16sp" />
 
             <View
@@ -89,7 +88,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
-                    android:text="On 2017-02-15"
                     android:textSize="12sp" />
 
                 <TextView
@@ -97,7 +95,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
-                    android:text="Course: BTECH"
                     android:textSize="12sp" />
 
                 <TextView
@@ -105,7 +102,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="3dp"
-                    android:text="Branch: CSE|MECH|ECE"
                     android:textSize="12sp" />
 
             </LinearLayout>

@@ -31,9 +31,9 @@ import dmax.dialog.SpotsDialog;
 
 public class PlacementRegistration0 extends AppCompatActivity {
 
-    public EditText mSrn, mPassword, mCPassword;
-    public TextInputLayout tSrn, tPassword, tCPassword;
-    public String srn, password, cpassword;
+    public EditText mSrn, mPassword, mCPassword, mDefault;
+    public TextInputLayout tSrn, tPassword, tCPassword, tDefault;
+    public String srn, password, cpassword, ddefault;
 
     public SpotsDialog pd;
     public Context progressDialogContext;
@@ -49,10 +49,12 @@ public class PlacementRegistration0 extends AppCompatActivity {
         tSrn = (TextInputLayout) findViewById(R.id.tsrn);
         tPassword = (TextInputLayout) findViewById(R.id.tpassword);
         tCPassword = (TextInputLayout) findViewById(R.id.tcpassword);
+        tDefault = (TextInputLayout) findViewById(R.id.tdefault);
 
         mSrn = (EditText) findViewById(R.id.srn_et);
         mPassword = (EditText) findViewById(R.id.password_et);
         mCPassword = (EditText) findViewById(R.id.cpassword_et);
+        mDefault = (EditText) findViewById(R.id.default_et);
     }
 
     public void BackButton(View v) {
@@ -63,6 +65,7 @@ public class PlacementRegistration0 extends AppCompatActivity {
         srn = mSrn.getText().toString().trim();
         password = mPassword.getText().toString().trim();
         cpassword = mCPassword.getText().toString().trim();
+        ddefault = mDefault.getText().toString().trim();
         validation();
     }
 
@@ -157,7 +160,8 @@ public class PlacementRegistration0 extends AppCompatActivity {
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("UserID", srn)
-                        .appendQueryParameter("password", password);
+                        .appendQueryParameter("password", password)
+                        .appendQueryParameter("defaultP", ddefault);
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
                 writer.flush();

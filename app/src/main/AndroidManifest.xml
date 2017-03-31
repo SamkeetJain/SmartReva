@@ -129,6 +129,10 @@
         <activity android:name=".Mentor.MentorStudentAcademicDetailsActivity" />
         <activity android:name=".Mentor.MentorSendNotificationActivity" />
         <activity android:name=".Mentor.MentorStudentAcademicDetailsManager" />
+        <activity android:name=".Mentor.MentorPlacementMainActivity" />
+        <activity android:name=".Mentor.MentorPlacementAddStudentActivity" />
+        <activity android:name=".Mentor.MentorPlacementAcademicDetailsManager" />
+        <activity android:name=".Mentor.MentorPlacementAcademicDetailsActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".Placement2.Placement2LoginActivity" />
         <activity
@@ -149,7 +153,8 @@
         <activity android:name=".Placement2.PlacementRegistration0" />
         <activity android:name=".Placement2.Placement2AcademicDetails" />
         <activity android:name=".Placement2.Placement2DriveManager" />
-        <activity android:name=".Placement2.Placement2MyDrivesActivity"></activity>
+        <activity android:name=".Placement2.Placement2MyDrivesActivity" />
+        <activity android:name=".Mentor.MentorPlacementPendingApprovalActivity"></activity>
     </application>
 
 </manifest>

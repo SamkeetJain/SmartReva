@@ -39,7 +39,6 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:onClick="Notification"
                     android:paddingRight="20dp"
                     android:src="@drawable/ic_notifications_black_24dp" />
 

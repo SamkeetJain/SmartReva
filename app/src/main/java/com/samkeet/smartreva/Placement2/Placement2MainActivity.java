@@ -596,8 +596,10 @@ public class Placement2MainActivity extends AppCompatActivity {
             if (authenticationError) {
                 Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             } else {
-                mAdapter = new Placement2MainAdapter(mTitle, mDate);
-                mRecyclerView.setAdapter(mAdapter);
+                if (driveObjects.length > 0) {
+                    mAdapter = new Placement2MainAdapter(mTitle, mDate);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
             }
         }
 

@@ -22,9 +22,9 @@ public class Constants {
 
 
     public static class URLs {
-        public static String BASE = "http://revacounselling.16mb.com/";
-        public static String ALUMNI_BASE = "http://www.reva.ac.in/smartreva/alumni/";
-        public static String PLACEMENT_BASE = "http://revacounselling.16mb.com/placement/";
+        public static String BASE = "http://35.154.54.229/SmartReva/";
+        public static String ALUMNI_BASE = "http://35.154.54.229/SmartReva/alumni/";
+        public static String PLACEMENT_BASE = "http://35.154.54.229/SmartReva/placement/";
         public static String PLACEMENT_COURSE_DEPT = "course_dept.php";
         public static String PLACEMENT_PROFILE = "profile.php";
         public static String PLACEMENT_REGISTRATION = "placement_reg.php";
@@ -40,6 +40,9 @@ public class Constants {
         public static String PLACEMENT_INVITE = "placement_invite.php";
         public static String PLACEMENT_DRIVE_REG = "placement_drives_reg.php";
         public static String PLACEMENT_MY_DRIVE = "mydrives.php";
+        public static String PLACEMENT_MENTOR = "mentor.php";
+        public static String PLACEMENT_MENTOR_VIEWPROFILE = "mentor_getdata.php";
+        public static String PLACEMENT_MENTOR_GETLIST = "mentor_getlist.php";
         public static String LOGIN = "login.php";
         public static String ALUMNI_ABOUT_US = "about.html";
         public static String ALUMNI_CONTACT_UD = "contactUs.html";

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -327,7 +328,7 @@ public class AlumniMainActivity extends AppCompatActivity {
                 connection.disconnect();
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
-
+                Log.d("return from server", jsonResults.toString());
                 if (authenticationError) {
                     errorMessage = jsonResults.toString();
                 } else {

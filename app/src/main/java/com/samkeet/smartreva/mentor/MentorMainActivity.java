@@ -14,18 +14,28 @@ public class MentorMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mentor_main);
     }
-    public void BackButton (View v){finish();}
 
-    public void StudentDetails (View v){
+    public void BackButton(View v) {
+        finish();
+    }
+
+    public void StudentDetails(View v) {
         Intent intent = new Intent(getApplicationContext(), MentorStudentListActivity.class);
         startActivity(intent);
     }
-    public void StudentAcademicDetails (View v){
-        Intent intent = new Intent(getApplicationContext(),MentorStudentAcademicDetailsActivity.class);
+
+    public void StudentAcademicDetails(View v) {
+        Intent intent = new Intent(getApplicationContext(), MentorStudentAcademicDetailsActivity.class);
         startActivity(intent);
     }
-    public void SendNotification (View v){
+
+    public void SendNotification(View v) {
         Intent intent = new Intent(getApplicationContext(), MentorSendNotificationActivity.class);
+        startActivity(intent);
+    }
+
+    public void Placement(View v) {
+        Intent intent = new Intent(getApplicationContext(), MentorPlacementMainActivity.class);
         startActivity(intent);
     }
 

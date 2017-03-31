@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,8 +44,8 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
     public String[] mTypes, mNames, mDesc, mDates, mIDs;
     public JSONObject[] eventsObjects;
 
-    public boolean authenticationError=true;
-    public String errorMessage="Data Corupted";
+    public boolean authenticationError = true;
+    public String errorMessage = "Data Corupted";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +113,7 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
 
     @Override
     public void onRefresh() {
-        if(Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
+        if (Constants.Methods.networkState(getApplicationContext(), (ConnectivityManager) getSystemService(getApplicationContext().CONNECTIVITY_SERVICE))) {
             GetEvents getEvents = new GetEvents();
             getEvents.execute();
         }
@@ -122,7 +123,7 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
 
 
         protected void onPreExecute() {
-            pd = new SpotsDialog(progressDialogContext,R.style.CustomPD);
+            pd = new SpotsDialog(progressDialogContext, R.style.CustomPD);
             pd.setTitle("Loading...");
             pd.setCancelable(false);
             pd.show();
@@ -158,13 +159,13 @@ public class EventsMainActivity extends AppCompatActivity implements SwipeRefres
                     jsonResults.append(buff, 0, read);
                 }
                 connection.disconnect();
+                Log.d("return from server", jsonResults.toString());
 
                 authenticationError = jsonResults.toString().contains("Authentication Error");
 
                 if (authenticationError) {
                     errorMessage = jsonResults.toString();
                 } else {
-
                     JSONArray jsonArray = new JSONArray(jsonResults.toString());
                     eventsObjects = new JSONObject[jsonArray.length()];
                     mTypes = new String[jsonArray.length()];

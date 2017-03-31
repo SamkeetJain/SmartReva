@@ -4,17 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.samkeet.smartreva.AlumniCell.AlumniEventManager;
 import com.samkeet.smartreva.Constants;
 import com.samkeet.smartreva.R;
 
@@ -29,13 +28,14 @@ import java.net.URL;
 
 import dmax.dialog.SpotsDialog;
 
-public class MentorPlacementAcademicDetailsActivity extends AppCompatActivity {
+public class MentorPlacementPendingApprovalActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    public String[] mName, mSrn;
+    public String[] mName;
+    public String[] mSrn;
     public JSONObject[] jsonObjects;
 
     public boolean authenticationError = true;
@@ -46,10 +46,8 @@ public class MentorPlacementAcademicDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mentor_placement_academic_details);
-
+        setContentView(R.layout.activity_mentor_placement_pending_approval);
         progressDialogContext = this;
-
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
@@ -92,11 +90,6 @@ public class MentorPlacementAcademicDetailsActivity extends AppCompatActivity {
 
         GetList getList = new GetList();
         getList.execute();
-
-    }
-
-    public void BackButton(View v) {
-        finish();
     }
 
     private class GetList extends AsyncTask<Void, Void, Integer> {
@@ -120,7 +113,7 @@ public class MentorPlacementAcademicDetailsActivity extends AppCompatActivity {
                 connection.setRequestMethod("POST");
 
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("UserID", Constants.SharedPreferenceData.getUserId())
-                        .appendQueryParameter("requestType", "getAll");
+                        .appendQueryParameter("requestType", "getPending");
 
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream(), "UTF-8"));
                 writer.write(_data.build().getEncodedQuery());
@@ -177,4 +170,8 @@ public class MentorPlacementAcademicDetailsActivity extends AppCompatActivity {
         }
     }
 
+
+    public void BackButton(View v) {
+        finish();
+    }
 }
