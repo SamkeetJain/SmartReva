@@ -571,7 +571,7 @@ public class PlacementBackLogDetails extends AppCompatActivity {
                 connection.setDoOutput(true);
                 connection.setRequestMethod("POST");
                 Uri.Builder _data = new Uri.Builder().appendQueryParameter("token", Constants.SharedPreferenceData.getTOKEN())
-                        .appendQueryParameter("requestType", "put")
+                        .appendQueryParameter("requestType", "putfromadd")
                         .appendQueryParameter("sub_name", addbacklogsubname)
                         .appendQueryParameter("sub_sem", addbacklogsubsem)
                         .appendQueryParameter("cleared", addbacklogcleared);

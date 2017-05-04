@@ -93,8 +93,7 @@ public class LauncherActivity extends AppCompatActivity {
     }
 
     public void Placements(View v) {
-        Intent intent = new Intent(getApplicationContext(), Placement2LoginActivity.class);
-        startActivity(intent);
+
     }
 
     public void Notification(View v) {

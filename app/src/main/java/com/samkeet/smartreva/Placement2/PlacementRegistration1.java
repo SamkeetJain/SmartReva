@@ -5,6 +5,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -278,7 +279,7 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String fullDate;
         String dayofmonth = "" + dayOfMonth;
-        String monthofyear = "" + monthOfYear;
+        String monthofyear = "" + (++monthOfYear);
         if (dayOfMonth < 10)
             dayofmonth = "0" + dayOfMonth;
         if (++monthOfYear < 10) {
@@ -286,5 +287,6 @@ public class PlacementRegistration1 extends AppCompatActivity implements DatePic
         }
         fullDate = year + "-" + (monthofyear) + "-" + dayofmonth;
         mDob.setText(fullDate);
+
     }
 }

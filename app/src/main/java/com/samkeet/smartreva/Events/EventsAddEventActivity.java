@@ -119,7 +119,7 @@ public class EventsAddEventActivity extends AppCompatActivity implements DatePic
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         String fullDate;
         String dayofmonth = "" + dayOfMonth;
-        String monthofyear = "" + monthOfYear;
+        String monthofyear = "" + (++monthOfYear);
         if (dayOfMonth < 10)
             dayofmonth = "0" + dayOfMonth;
         if (++monthOfYear < 10) {

@@ -475,7 +475,7 @@ public class Placement2MainActivity extends AppCompatActivity {
                 } else {
                     JSONObject jsonObj = new JSONObject(jsonResults.toString());
                     String status = jsonObj.getString("status");
-                    if (status.equals("APPROVED") || status.equals("SUBMITTED")) {
+                    if (status.equals("APPROVE") || status.equals("SUBMITTED")) {
                         authenticationError = false;
                     } else {
                         authenticationError = true;
